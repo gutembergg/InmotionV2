@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57">
+  <g id="Icon" transform="translate(-0.116 -0.261)">
+    <rect id="Area" width="57" height="57" transform="translate(0.116 0.261)" fill="#fcfcfc" opacity="0"/>
+    <g id="Icon-2" data-name="Icon" transform="translate(7.228 6.7)">
+      <circle id="Path" cx="19.102" cy="19.102" r="19.102" transform="translate(0 0)" fill="none" stroke="#1e1e1e" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+      <line id="Line" x1="10.387" y1="10.387" transform="translate(32.593 32.593)" fill="none" stroke="#1e1e1e" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.667"/>
+    </g>
+  </g>
+</svg>

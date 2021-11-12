@@ -1,0 +1,33 @@
+{
+  "locales": ["en", "fr", "de"],
+  "defaultLocale": "fr",
+  "pages": {
+    "*": ["common", "headerMobility"],
+    "/": ["home"],
+    "/inmotion-mobility": ["headerMobility"],
+    "/inmotion-mobility/[slug]": ["headerMobility"],
+    "/inmotion-mobility/categorie_/[slug]": [
+      "headerMobility",
+      "equipmentsPage",
+      "productDetail"
+    ],
+    "/inmotion-mobility/categorie/[slug]": [
+      "headerMobility",
+      "productDetail",
+      "equipmentsPage"
+    ],
+    "/inmotion-mobility/categories/[slug]": ["headerMobility", "productDetail"],
+    "/inmotion-mobility/produit/[slug]": ["headerMobility", "productDetail"],
+    "/inmotion-mobility/produits/[slug]": [
+      "headerMobility",
+      "productDetail",
+      "common"
+    ],
+    "/inmotion-mobility/panier": ["headerMobility", "common"],
+    "/inmotion-mobility/checkout-mobility": [
+      "headerMobility",
+      "checkout-mobility",
+      "forms"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "haveAccount": "Do you have account?",
+  "deliveryInfo": "Delivery informations",
+  "wayDelivery": "Delivery way",
+  "payment": "Payment",
+  "emptyCartMessage": "You have no products in your cart",
+  "subTotal": " Sub total",
+  "addPromoDode": "add promo code",
+  "addTVA": "add tva",
+  "addPtotalPrice": "add total price",
+  "btnSend": "send",
+  "doYouHaveCodePromo": "Do you have a promo code?",
+  "createAccount": "Create account"
+}

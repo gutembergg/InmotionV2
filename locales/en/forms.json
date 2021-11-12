@@ -1,0 +1,18 @@
+{
+  "firstName": "First name",
+  "lastName": "Last name",
+  "phone": "Phone",
+  "address": "Address",
+  "city": "City",
+  "state": "State",
+  "otherAddress": "Different delivery address ?",
+  "register": "Register",
+  "swiss": "Swiss",
+  "france": "France",
+  "germany": "Germany",
+  "italy": "Italy",
+  "belgium": "Belgium",
+  "spain": "Spain",
+  "austria": "Austria",
+  "holland": "Holland"
+}

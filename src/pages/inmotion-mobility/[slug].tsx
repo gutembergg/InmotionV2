@@ -1,0 +1,106 @@
+import Image from "next/image";
+import Link from "next/link";
+import { LightBackground } from "../../styles/BackgroundStyle";
+import conditionIcon from "../../../public/images/icons/conditionsgen.svg";
+
+import { GetStaticPaths, GetStaticProps } from "next";
+import { wc_getSubCategories } from "../../services/woocommerceApi/Categories";
+import { ICategories } from "../../interfaces/ICategories";
+
+import { Container, MainContent } from "../../styles/Boutique";
+import LayoutMobility from "../../Layout/LayoutMobility";
+
+interface IProps {
+  subCategories: ICategories[];
+}
+
+const MobiliteEletrique = ({ subCategories }: IProps) => {
+  return (
+    <LightBackground>
+      <LayoutMobility icon={conditionIcon}>
+        <Container>
+          <MainContent>
+            {subCategories.map((category) => {
+              return (
+                <div key={category.id}>
+                  <Link
+                    href={
+                      category.slug === "pieces-detachees-mobility" ||
+                      category.slug === "detached-pieces-3" ||
+                      category.slug === "abgeloeste-teile"
+                        ? `/inmotion-mobility/categorie/${category.slug}`
+                        : category.slug === "equipements" ||
+                          category.slug === "equipments" ||
+                          category.slug === "ausruestungen"
+                        ? `/inmotion-mobility/categorie_/${category.slug}`
+                        : category.slug === "occasions" ||
+                          category.slug === "gelegenheiten"
+                        ? `/inmotion-mobility/produits/${category.slug}`
+                        : `/inmotion-mobility/categories/${category.slug}`
+                    }
+                  >
+                    <a className="link">
+                      <div className="category_card">
+                        <div className="care_blue_hover"></div>
+                        {category.image?.src && (
+                          <Image
+                            src={category.image?.src}
+                            alt={category.name}
+                            width={300}
+                            height={300}
+                          />
+                        )}
+
+                        <div className="category_name">{category.name}</div>
+                      </div>
+                    </a>
+                  </Link>
+                </div>
+              );
+            })}
+          </MainContent>
+        </Container>
+      </LayoutMobility>
+    </LightBackground>
+  );
+};
+
+export default MobiliteEletrique;
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const slug: any = ctx.params?.slug;
+  const lang = ctx.locale;
+
+  const subCategoriesWithLang = await wc_getSubCategories(slug, lang);
+
+  if (subCategoriesWithLang.length === 0) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  const mainCategories = subCategoriesWithLang.filter(
+    (category: ICategories) => category.slug !== "non-classe"
+  );
+
+  mainCategories.sort((a: any, b: any) => {
+    return a.menu_order - b.menu_order;
+  });
+
+  return {
+    props: {
+      subCategories: mainCategories,
+    },
+    revalidate: 60 * 10, // 10min
+  };
+};

@@ -1,0 +1,17 @@
+export enum CouponsMessages {
+
+    InputHasntValue = "Insérez un code dans le champ",
+    CartIsEmpty = "Votre panier est vide",
+    couponNotValable = "Ce code n'existe pas",
+    couponDateExpired = "Validité du code expiré ",
+    couponWrongUser = "Votre compte est inéligible ",
+    couponLimitReached = "Limite d'utilisation atteinte",
+    soldedItemInCart = "Produits soldés non éligible",
+    minCartAmount = "Montant du panier insuffisant pour ce code",
+    maxCartAmount = "Montant du panier dépasse le montant autorisé",
+    validCoupon = "Le code promo à bien été ajouté ",
+    singleCouponOnly = "Ce code n'est pas cumulable, retirez le / les autres codes promo ",
+    singleCouponUsed = "Vous avez déja rentrer un code promo non cumulable ",
+    warningNoMoreAvailableCoupon = "vous ne pourez pas utiliser d'autre coupon, champ desactivé",
+    alreadyUsedCoupon =` à déja été utilisé`
+}

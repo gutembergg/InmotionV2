@@ -1,0 +1,14 @@
+{
+  "haveAccount": "Hast du einen Account?",
+  "deliveryInfo": "Lieferinformationen",
+  "wayDelivery": "Versandart",
+  "payment": "Zahlung",
+  "emptyCartMessage": "Sie haben keine Produkte in Ihrem Warenkorb",
+  "subTotal": "Zwischensumme",
+  "addPromoDode": "Gutscheincode hinzufügen",
+  "addTVA": "hinzufügen tva",
+  "addPtotalPrice": "Gesamtpreis hinzufügen",
+  "btnSend": "senden",
+  "doYouHaveCodePromo": "Hast du einen promo-code?",
+  "createAccount": "Ein Konto erstellen"
+}

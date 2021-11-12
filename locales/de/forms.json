@@ -1,0 +1,18 @@
+{
+  "firstName": "Vorname",
+  "lastName": "Name",
+  "phone": "Telefon",
+  "address": "die Anschrift",
+  "city": "Stadt",
+  "state": "Kanton",
+  "otherAddress": "Andere Lieferadresse?",
+  "register": "Speichern",
+  "swiss": "Schweizerisch",
+  "france": "Frankreich",
+  "germany": "Deutschland",
+  "italy": "Italien",
+  "belgium": "Belgien",
+  "spain": "Spanien",
+  "austria": "Österreich",
+  "holland": "Holland"
+}
