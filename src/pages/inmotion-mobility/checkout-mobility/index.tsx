@@ -141,7 +141,6 @@ const CheckoutMobility: NextPage = () => {
 
   const getPayment = async () => {
     const _paymentMethods = await wc_paymentGateWays();
-    console.log("test:", _paymentMethods);
     setPaymentmethods(_paymentMethods);
   };
 

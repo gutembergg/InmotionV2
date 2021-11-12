@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import { LightBackground } from "../../../styles/BackgroundStyle";
 import HouseIcon from "../../../../public/images/icons/house.svg";
-import { wc_getProductsByCategorySlug } from "../../../services/woocommerceApi/Products";
 import SliderCustom from "../../../components/SliderCustom";
 import { IProduct } from "../../../interfaces/IProducts";
 
@@ -17,6 +16,7 @@ import AccessoriesDetail from "../../../components/AccessoriesTemplate/Accessori
 import { wc_getCategoriesBySlug } from "../../../services/woocommerceApi/Categories";
 import { ICategories } from "../../../interfaces/ICategories";
 import useTranslation from "next-translate/useTranslation";
+import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
 
 interface Props {
   products: IProduct[];
@@ -68,7 +68,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const category = await wc_getCategoriesBySlug(slug as string, lang as string);
-  const products = await wc_getProductsByCategorySlug(
+  const products = await getProduitsByCategoriesSlug(
     slug as string,
     lang as string
   );
