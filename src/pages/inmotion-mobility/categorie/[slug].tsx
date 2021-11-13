@@ -188,7 +188,11 @@ export default AccessoryPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [
+      {
+        params: { slug: "pieces-detachees-mobility" },
+      },
+    ],
     fallback: "blocking",
   };
 };
