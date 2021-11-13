@@ -4,6 +4,8 @@ import { validatorSchema } from "./validator";
 
 import { Container, FormSession, ButtonRegiste } from "./styles";
 import useTranslation from "next-translate/useTranslation";
+import { useEffect, useState } from "react";
+import { IUserState } from "../Context/UserContext";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -33,8 +35,6 @@ interface Props {
 }
 
 const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
-  const { user } = useUser();
-
   const { t } = useTranslation();
   const firstName = t("forms:firstName");
   const lastName = t("forms:lastName");
@@ -64,21 +64,21 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     holland,
   ];
 
-  const initialValues = {
-    billing_last_name: user.billing_info?.billing_last_name || "",
-    billing_first_name: user.billing_info?.billing_first_name || "",
-    billing_email: user.billing_info?.billing_email || "",
-    billing_phone: user.billing_info?.billing_phone || "",
-    billing_address_1: user.billing_info?.billing_address_1 || "",
-    billing_address_2: user.billing_info?.billing_address_2 || "",
-    billing_postcode: user.billing_info?.billing_postcode || "",
-    billing_city: user.billing_info?.billing_city || "",
-    billing_state: user.billing_info?.billing_state || "",
-    billing_country: user.billing_info?.billing_country || authorizedCounty[0],
-    isShippingForm:
-      user.shipping_info?.shipping_address_1.length !== 0
-        ? true
-        : false || false,
+  const { user } = useUser();
+  const [_user, _setUser] = useState<IUserState>(user);
+
+  const [formValues, setFormValues] = useState<IFormValues>({
+    billing_last_name: _user.billing_info?.billing_last_name || "",
+    billing_first_name: _user.billing_info?.billing_first_name || "",
+    billing_email: _user.billing_info?.billing_email || "",
+    billing_phone: _user.billing_info?.billing_phone || "",
+    billing_address_1: _user.billing_info?.billing_address_1 || "",
+    billing_address_2: _user.billing_info?.billing_address_2 || "",
+    billing_postcode: _user.billing_info?.billing_postcode || "",
+    billing_city: _user.billing_info?.billing_city || "",
+    billing_state: _user.billing_info?.billing_state || "",
+    billing_country: _user.billing_info?.billing_country || authorizedCounty[0],
+    isShippingForm: true,
     shipping_last_name: user.shipping_info?.shipping_last_name || "",
     shipping_first_name: user.shipping_info?.shipping_first_name || "",
     shipping_phone: user.shipping_info?.shipping_phone || "",
@@ -89,20 +89,54 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     shipping_state: user.shipping_info?.shipping_state || "",
     shipping_country:
       user.shipping_info?.shipping_country || authorizedCounty[0],
-  };
+  });
+
+  useEffect(() => {
+    if (user.token) {
+      // initialValues
+      console.log("user::::", user);
+      const initialValues = {
+        billing_last_name: user.billing_info?.billing_last_name,
+        billing_first_name: user.billing_info?.billing_first_name,
+        billing_email: user.billing_info?.billing_email,
+        billing_phone: user.billing_info?.billing_phone,
+        billing_address_1: user.billing_info?.billing_address_1,
+        billing_address_2: user.billing_info?.billing_address_2,
+        billing_postcode: user.billing_info?.billing_postcode,
+        billing_city: user.billing_info?.billing_city,
+        billing_state: user.billing_info?.billing_state,
+        billing_country:
+          user.billing_info?.billing_country || authorizedCounty[0],
+        isShippingForm: true,
+        shipping_last_name: user.shipping_info?.shipping_last_name,
+        shipping_first_name: user.shipping_info?.shipping_first_name,
+        shipping_phone: user.shipping_info?.shipping_phone,
+        shipping_address_1: user.shipping_info?.shipping_address_1,
+        shipping_address_2: user.shipping_info?.shipping_address_2,
+        shipping_postcode: user.shipping_info?.shipping_postcode,
+        shipping_city: user.shipping_info?.shipping_city,
+        shipping_state: user.shipping_info?.shipping_state,
+        shipping_country:
+          user.shipping_info?.shipping_country || authorizedCounty[0],
+      };
+
+      setFormValues(initialValues);
+    }
+  }, [user]);
+  console.log("formValues", formValues);
 
   return (
     <Container>
       <FormSession>
         <Formik
-          initialValues={initialValues}
+          initialValues={formValues}
           validationSchema={validatorSchema}
           onSubmit={(value) => {
             console.log("value", value);
             handleBillingShippingData(value);
           }}
         >
-          {(props: FormikProps<IFormValues>, errors: any, touched: any) => (
+          {(props: FormikProps<IFormValues>) => (
             <Form className="form">
               <div className="forms_session">
                 <div className="form_1">

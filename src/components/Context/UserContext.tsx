@@ -62,7 +62,6 @@ export interface IBillingInfo {
 export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 const UserProvider = ({ children }: Children) => {
-  const [user, setUser] = useState<IUserState>({} as IUserState);
   const [data, setData] = useState<IUserState>(() => {
     if (typeof window !== "undefined") {
       const userAuthenticated = localStorage.getItem("inmotion:user");

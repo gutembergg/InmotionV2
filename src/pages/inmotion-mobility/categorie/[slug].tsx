@@ -58,7 +58,9 @@ const AccessoryPage: NextPage<Props> = ({
   const [productsModelsUpSell, setProductsModelsUpSell] = useState<IProduct[]>(
     _productsUpSellModelsByDefault
   );
-  const [modelsActivated, setModelsActivated] = useState(0);
+  const [modelsActivated, setModelsActivated] = useState(
+    _productsUpSellModelsByDefault.length
+  );
 
   useEffect(() => {
     setSelectedProductsCategory(productsByCategoryDefault);
@@ -220,16 +222,15 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     lang as string
   );
 
-  const _productsByCategoryDefault = await getProduitsByCategoriesSlug(
-    wc_subCategories[0].slug,
-    lang as string
+  const productsByDefault = _productsByCategory.filter((product) =>
+    product.categories.find((cat) => cat.slug === wc_subCategories[0].slug)
   );
 
   const mobilityProducts = await getProduitsByCategoriesSlug("boutique", "fr");
 
   /// Get upSell_ids products ///////////////////////////////////////
   const productsUpSellResult = getProductsUpSells(
-    _productsByCategoryDefault,
+    productsByDefault,
     mobilityProducts,
     wc_subCategories[0].slug,
     wc_subCategories[0].id
@@ -240,7 +241,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     props: {
       productsWithVariation: _productsByCategory,
       subCategories: wc_subCategories,
-      productsByCategoryDefault: _productsByCategoryDefault,
+      productsByCategoryDefault: productsByDefault,
       mobilityProducts,
       _productsUpSellModelsByDefault,
       _categoryBySlug,

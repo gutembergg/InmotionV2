@@ -17,9 +17,10 @@ import {
 import BillingShippingForm, {
   IFormValues,
 } from "../../../components/BillingShippingForm";
-
 import { wc_createOrder } from "../../../services/woocommerceApi/Orders";
 import { wc_paymentGateWays } from "../../../services/woocommerceApi/PaymentGateWays";
+import useTranslation from "next-translate/useTranslation";
+import { PaymentGateWays } from "../../../interfaces/PaymentGateWays";
 
 import {
   Container,
@@ -28,8 +29,6 @@ import {
   OrderSession,
   Payment,
 } from "../../../styles/CheckoutMobility";
-import useTranslation from "next-translate/useTranslation";
-import { PaymentGateWays } from "../../../interfaces/PaymentGateWays";
 
 const CheckoutMobility: NextPage = () => {
   const [loged, setloged] = useState(false);
@@ -64,8 +63,6 @@ const CheckoutMobility: NextPage = () => {
       setLineItems(_lineItems);
     }
   }, [cart]);
-
-  console.log("lineItems", lineItems);
 
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {

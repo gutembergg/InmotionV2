@@ -1,6 +1,6 @@
-var FtpDeploy = require('ftp-deploy');
+var FtpDeploy = require("ftp-deploy");
 var ftpDeploy = new FtpDeploy();
-require('dotenv').config({ path: '.env.local' });
+require("dotenv").config({ path: ".env.local" });
 
 var config = {
   user: process.env.FTP_USER,
@@ -11,16 +11,16 @@ var config = {
   localRoot: __dirname,
   remoteRoot: process.env.FTP_REMOTE_ROOT,
   // this would upload everything
-  include: ['*'],
+  include: ["*"],
   // e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
   exclude: [
-    ".git/**", 
-    ".env.local", 
+    ".git/**",
+    ".env.local",
     "node_modules/**",
     "node_modules/**/.*",
     "node_modules/**/.*/**",
-    "node_modules/**/*", 
-    "node_modules/@types/*"
+    "node_modules/**/*",
+    "node_modules/@types/*",
   ],
   // delete ALL existing files at destination before uploading, if true
   deleteRemote: process.env.FTP_DELETE,
@@ -30,15 +30,25 @@ var config = {
 
 ftpDeploy
   .deploy(config)
-  .then((res) => console.log('finished ;)'))
+  .then((res) => console.log("finished ;)"))
   .catch((err) => console.log(err));
 
-ftpDeploy.on('uploading', (d) => {
+ftpDeploy.on("uploading", (d) => {
   console.log(
     `${d.transferredFileCount} / ${d.totalFilesCount} => ${d.filename}`
   );
 });
 
-ftpDeploy.on('upload-error', function (data) {
-  console.log('upload-error =>', data.err); // data will also include filename, relativePath, and other goodies
+ftpDeploy.on("upload-error", function (data) {
+  console.log("upload-error =>", data.err); // data will also include filename, relativePath, and other goodies
 });
+
+/**
+ * FTP_USER=fate
+FTP_PASS=9kwxjosg8z4d
+FTP_HOST=ftp.fat-e.ch
+
+FTP_PORT=21
+FTP_REMOTE_ROOT =/inmotion.fat-e.ch
+
+ */

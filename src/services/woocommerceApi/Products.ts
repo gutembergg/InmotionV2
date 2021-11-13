@@ -1,5 +1,4 @@
 import { IProduct } from "../../interfaces/IProducts";
-import { IVariation } from "../../interfaces/IVariation";
 import wcApi from "./wcAxiosConfig";
 import { wooCommerce } from "./woocommerceConfig";
 
@@ -111,7 +110,7 @@ export const wc_getProductsByCategory = async (
 export const getProduitsByCategoriesSlug = async (
   slug: string,
   lang: string
-) => {
+): Promise<IProduct[]> => {
   const { data } = await wcApi.get("products/categories", {
     params: {
       slug,
