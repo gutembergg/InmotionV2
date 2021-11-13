@@ -28,7 +28,7 @@ export const getCategoryById = async (id: string) => {
   return response;
 };
 
-export const getSubCategories = async (slug: string) => {
+/* export const getSubCategories = async (slug: string) => {
   const category = await getCategoriesBySlug(slug);
   const categoryId = category.id;
 
@@ -38,9 +38,9 @@ export const getSubCategories = async (slug: string) => {
 
   return data;
 };
-
+ */
 // Get accessoires sub categories///////////////////////////////
-export const getAccessorySubCategories = async () => {
+/* export const getAccessorySubCategories = async () => {
   const accessoriesCategory = await getCategoriesBySlug(
     "pieces-detachees-mobility"
   );
@@ -51,10 +51,10 @@ export const getAccessorySubCategories = async () => {
   });
 
   return response;
-};
+}; */
 
 // Get mobility menu categories for Header component///////////////
-export const getMobilityCategoriesMenu = async () => {
+/* export const getMobilityCategoriesMenu = async () => {
   const mobilityCategory = await getCategoriesBySlug("boutique");
   const mobilityId = mobilityCategory.id;
 
@@ -68,9 +68,9 @@ export const getMobilityCategoriesMenu = async () => {
   );
 
   return mobilityCategories;
-};
+}; */
 
-export const getSubCategoriesEquipimentPilote = async () => {
+/* export const getSubCategoriesEquipimentPilote = async () => {
   const response = await getCategoriesBySlug("equipements");
 
   const { data } = await wooCommerce.get("products/categories", {
@@ -78,7 +78,7 @@ export const getSubCategoriesEquipimentPilote = async () => {
   });
 
   return data;
-};
+}; */
 
 // Functions with woocommerce rest api without library ///////////////////////
 
@@ -96,7 +96,7 @@ export const wc_getCategoriesBySlug = async (
   return data[0];
 };
 
-export const wc_getSubCategories = async (
+/* export const wc_getSubCategories = async (
   slug: string,
   lang = "fr"
 ): Promise<ICategories[]> => {
@@ -110,9 +110,12 @@ export const wc_getSubCategories = async (
   });
 
   return subCat;
-};
+}; */
 
-export const wc_getSub_categories = async (lang: string, parentId: number) => {
+export const wc_getSub_categories = async (
+  lang: string,
+  parentId: number
+): Promise<ICategories[]> => {
   const { data: subCat } = await wcApi.get("products/categories", {
     params: {
       lang: lang,

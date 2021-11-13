@@ -246,7 +246,11 @@ export default Category;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [
+      { params: { slug: "velos-electriques" }, locale: "en" },
+      { params: { slug: "velos-electriques" }, locale: "fr" },
+      { params: { slug: "velos-electriques" }, locale: "de" },
+    ],
     fallback: "blocking",
   };
 };

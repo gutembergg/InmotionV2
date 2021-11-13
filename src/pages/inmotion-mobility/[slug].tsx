@@ -4,7 +4,10 @@ import { LightBackground } from "../../styles/BackgroundStyle";
 import conditionIcon from "../../../public/images/icons/conditionsgen.svg";
 
 import { GetStaticPaths, GetStaticProps } from "next";
-import { wc_getSubCategories } from "../../services/woocommerceApi/Categories";
+import {
+  wc_getCategoriesBySlug,
+  wc_getSub_categories,
+} from "../../services/woocommerceApi/Categories";
 import { ICategories } from "../../interfaces/ICategories";
 
 import { Container, MainContent } from "../../styles/Boutique";
@@ -69,7 +72,11 @@ export default MobiliteEletrique;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [
+      { params: { slug: "boutique" }, locale: "en" },
+      { params: { slug: "boutique" }, locale: "fr" },
+      { params: { slug: "boutique" }, locale: "de" },
+    ],
     fallback: "blocking",
   };
 };
@@ -78,9 +85,11 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug: any = ctx.params?.slug;
   const lang = ctx.locale;
 
-  const subCategoriesWithLang = await wc_getSubCategories(slug, lang);
+  const category = await wc_getCategoriesBySlug(slug, lang as string);
 
-  if (subCategoriesWithLang.length === 0) {
+  const subCategories = await wc_getSub_categories(lang as string, category.id);
+
+  if (subCategories.length === 0) {
     return {
       redirect: {
         destination: "/",
@@ -89,7 +98,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  const mainCategories = subCategoriesWithLang.filter(
+  const mainCategories = subCategories.filter(
     (category: ICategories) => category.slug !== "non-classe"
   );
 

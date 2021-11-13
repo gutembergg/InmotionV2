@@ -132,7 +132,6 @@ const CheckoutMobility: NextPage = () => {
 
     //Recuperer ici la reponse de la commande crée//////////////////
     const response = await wc_createOrder(order);
-    console.log("response: ", response);
     ///////////////////////////////////////////////////////////////
   }, [_billingShippingData.billing, _billingShippingData.shipping, lineItems]);
 

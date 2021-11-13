@@ -24,3 +24,8 @@
       "checkout-mobility",
       "forms"
     ]
+
+
+    package.json
+
+    "start": "NODE_ENV=production node server.js",
