@@ -1,6 +1,7 @@
 import React from "react";
 import { ICategories } from "../../../interfaces/ICategories";
 import ButtonSkew from "../../ButtonSkew";
+import CustomSlider from "./customSlider";
 import { Container, MenuCategoriesResponsive, MenuCategories } from "./styles";
 
 interface Props {
@@ -20,6 +21,7 @@ const SideMenuCategories = ({
     <Container>
       <MenuCategoriesResponsive>
         <div className="menu_block">
+          {/*  <CustomSlider subCategories={subCategories} /> */}
           {subCategories.map((category, index) => {
             return (
               <div

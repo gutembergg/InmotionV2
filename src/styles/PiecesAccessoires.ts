@@ -18,10 +18,9 @@ export const Content = styled.div`
 export const ProductArea = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
 
-  gap: 5rem;
   width: 100%;
+  gap: 5rem;
 
   @media (max-width: 1225px) {
     flex-direction: column;
@@ -30,6 +29,8 @@ export const ProductArea = styled.div`
 
     .menu_block {
       order: -1;
+      width: 100%;
+      max-width: 900px;
     }
   }
 `;

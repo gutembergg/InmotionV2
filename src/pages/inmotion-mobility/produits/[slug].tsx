@@ -58,7 +58,11 @@ export default Occasions;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [
+      { params: { slug: "occasions" }, locale: "en" },
+      { params: { slug: "occasions" }, locale: "fr" },
+      { params: { slug: "occasions" }, locale: "de" },
+    ],
     fallback: "blocking",
   };
 };

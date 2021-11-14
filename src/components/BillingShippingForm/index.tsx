@@ -68,15 +68,15 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
   const [_user, _setUser] = useState<IUserState>(user);
 
   const [formValues, setFormValues] = useState<IFormValues>({
-    billing_last_name: _user.billing_info?.billing_last_name || "",
-    billing_first_name: _user.billing_info?.billing_first_name || "",
-    billing_email: _user.billing_info?.billing_email || "",
-    billing_phone: _user.billing_info?.billing_phone || "",
-    billing_address_1: _user.billing_info?.billing_address_1 || "",
-    billing_address_2: _user.billing_info?.billing_address_2 || "",
-    billing_postcode: _user.billing_info?.billing_postcode || "",
-    billing_city: _user.billing_info?.billing_city || "",
-    billing_state: _user.billing_info?.billing_state || "",
+    billing_last_name: user.billing_info?.billing_last_name || "",
+    billing_first_name: user.billing_info?.billing_first_name || "",
+    billing_email: user.billing_info?.billing_email || "",
+    billing_phone: user.billing_info?.billing_phone || "",
+    billing_address_1: user.billing_info?.billing_address_1 || "",
+    billing_address_2: user.billing_info?.billing_address_2 || "",
+    billing_postcode: user.billing_info?.billing_postcode || "",
+    billing_city: user.billing_info?.billing_city || "",
+    billing_state: user.billing_info?.billing_state || "",
     billing_country: _user.billing_info?.billing_country || authorizedCounty[0],
     isShippingForm: true,
     shipping_last_name: user.shipping_info?.shipping_last_name || "",
@@ -93,8 +93,6 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
 
   useEffect(() => {
     if (user.token) {
-      // initialValues
-      console.log("user::::", user);
       const initialValues = {
         billing_last_name: user.billing_info?.billing_last_name,
         billing_first_name: user.billing_info?.billing_first_name,
@@ -122,14 +120,16 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
 
       setFormValues(initialValues);
     }
+    // eslint-disable-next-line
   }, [user]);
-  console.log("formValues", formValues);
+  console.log("formValues===>", formValues);
 
   return (
     <Container>
       <FormSession>
         <Formik
           initialValues={formValues}
+          enableReinitialize={true}
           validationSchema={validatorSchema}
           onSubmit={(value) => {
             console.log("value", value);

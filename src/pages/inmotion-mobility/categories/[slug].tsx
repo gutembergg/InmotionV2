@@ -250,6 +250,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
       { params: { slug: "velos-electriques" }, locale: "en" },
       { params: { slug: "velos-electriques" }, locale: "fr" },
       { params: { slug: "velos-electriques" }, locale: "de" },
+      { params: { slug: "trottinettes" }, locale: "en" },
+      { params: { slug: "trottinettes" }, locale: "fr" },
+      { params: { slug: "trottinettes" }, locale: "de" },
+      { params: { slug: "gyroroues" }, locale: "en" },
+      { params: { slug: "gyroroues" }, locale: "fr" },
+      { params: { slug: "gyroroues" }, locale: "de" },
     ],
     fallback: "blocking",
   };
