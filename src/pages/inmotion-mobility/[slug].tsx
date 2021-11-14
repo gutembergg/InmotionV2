@@ -87,9 +87,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const category = await wc_getCategoriesBySlug(slug, lang as string);
 
-  const subCategories = await wc_getSub_categories(lang as string, category.id);
-
-  if (subCategories.length === 0) {
+  if (!category) {
     return {
       redirect: {
         destination: "/",
@@ -97,6 +95,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       },
     };
   }
+
+  const subCategories = await wc_getSub_categories(lang as string, category.id);
 
   const mainCategories = subCategories.filter(
     (category: ICategories) => category.slug !== "non-classe"
