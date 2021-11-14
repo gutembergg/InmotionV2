@@ -192,6 +192,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       { params: { slug: "pieces-detachees-mobility" }, locale: "en" },
       { params: { slug: "pieces-detachees-mobility" }, locale: "fr" },
       { params: { slug: "pieces-detachees-mobility" }, locale: "de" },
+      { params: { slug: "detached-pieces-3" }, locale: "en" },
     ],
     fallback: "blocking",
   };
