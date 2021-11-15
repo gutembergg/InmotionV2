@@ -8,7 +8,7 @@ interface Props {
   subCategories: ICategories[];
   activedMenuIndex: number;
   selectCategory: (categorySlug: string, categoryIndex: number) => void;
-  _categoryBySlug: ICategories;
+  _categoryBySlug: string;
 }
 
 const SideMenuCategories = ({
@@ -21,27 +21,16 @@ const SideMenuCategories = ({
     <Container>
       <MenuCategoriesResponsive>
         <div className="menu_block">
-          {/*  <CustomSlider subCategories={subCategories} /> */}
-          {subCategories.map((category, index) => {
-            return (
-              <div
-                className={
-                  activedMenuIndex === index
-                    ? "menu_buttons active_menu"
-                    : "menu_buttons"
-                }
-                key={category.id}
-                onClick={() => selectCategory(category.slug, index)}
-              >
-                {category.name}
-              </div>
-            );
-          })}
+          <CustomSlider
+            subCategories={subCategories}
+            selectCategory={selectCategory}
+            activedMenuIndex={activedMenuIndex}
+          />
         </div>
       </MenuCategoriesResponsive>
       <MenuCategories>
         <span className="skew">
-          <ButtonSkew text={_categoryBySlug.name} />
+          <ButtonSkew text={_categoryBySlug} />
         </span>
 
         <div className="prod_model_marque">

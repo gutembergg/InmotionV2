@@ -12,9 +12,15 @@ SwiperCore.use([Scrollbar]);
 
 interface Props {
   subCategories: ICategories[];
+  activedMenuIndex: number;
+  selectCategory: (categorySlug: string, index: number) => void;
 }
 
-const CustomSlider = ({ subCategories }: Props) => {
+const CustomSlider = ({
+  subCategories,
+  selectCategory,
+  activedMenuIndex,
+}: Props) => {
   return (
     <SliderContainer>
       <Swiper
@@ -23,23 +29,42 @@ const CustomSlider = ({ subCategories }: Props) => {
         spaceBetween={0.5}
         breakpoints={{
           320: {
+            slidesPerView: 1,
+          },
+          370: {
             slidesPerView: 1.5,
+            spaceBetween: 0,
           },
-          480: {
+          570: {
             slidesPerView: 2,
+            spaceBetween: 0,
           },
-          630: {
+          606: {
             slidesPerView: 2.5,
+            spaceBetween: 0,
           },
-          900: {
+          730: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+          },
+          860: {
             slidesPerView: 3,
           },
         }}
       >
-        {subCategories.map((category) => {
+        {subCategories.map((category, index) => {
           return (
             <SwiperSlide key={category.id}>
-              <Button>{category.name}</Button>
+              <Button
+                className={
+                  activedMenuIndex === index
+                    ? "menu_buttons active_menu"
+                    : "menu_buttons"
+                }
+                onClick={() => selectCategory(category.slug, index)}
+              >
+                {category.name}
+              </Button>
             </SwiperSlide>
           );
         })}

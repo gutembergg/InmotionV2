@@ -10,13 +10,13 @@ export const getProducts = async () => {
 };
 
 // Get All product without limit per_page /////////////////////
-export const getAllProductsInDatabase = async () => {
+/* export const getAllProductsInDatabase = async () => {
   const response = await wooCommerce.get("products", {
     per_page: 100,
   });
 
   return response;
-};
+}; */
 
 // Get Product by ID ///////////////////////////////////////////
 export const getProductById = async (id: number) => {

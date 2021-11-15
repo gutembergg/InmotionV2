@@ -158,7 +158,7 @@ const AccessoryPage: NextPage<Props> = ({
                   subCategories={subCategories}
                   activedMenuIndex={activedMenuIndex}
                   selectCategory={selectCategory}
-                  _categoryBySlug={_categoryBySlug}
+                  _categoryBySlug={_categoryBySlug.name}
                 />
               </div>
             </ProductArea>
@@ -250,6 +250,5 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       _productsUpSellModelsByDefault,
       _categoryBySlug,
     },
-    revalidate: 60 * 10, // 10min
   };
 };

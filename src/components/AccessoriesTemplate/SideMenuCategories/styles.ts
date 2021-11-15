@@ -14,7 +14,7 @@ export const MenuCategoriesResponsive = styled.div`
   .menu_block {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: end;
 
     @media (max-width: 716px) {
       display: flex;
@@ -110,4 +110,9 @@ export const Button = styled.div`
 
   font-size: 0.8rem;
   font-weight: 600;
+
+  .active_menu {
+    background: var(--Blue);
+    color: var(--White);
+  }
 `;

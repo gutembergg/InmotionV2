@@ -20,12 +20,13 @@ export const ProductArea = styled.div`
   flex-direction: row;
 
   width: 100%;
-  gap: 5rem;
+  gap: 6rem;
 
   @media (max-width: 1225px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2rem;
 
     .menu_block {
       order: -1;
