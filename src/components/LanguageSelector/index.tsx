@@ -1,69 +1,68 @@
-import { ChangeEvent, DOMAttributes, MouseEventHandler, useState } from "react";
-import { StyledLangSelector, StyledLangSelector2 } from "./styles";
-// import { ILangState } from "../Context/LanguageContext";
-import router, { useRouter } from "next/router";
-import Link from "next/link";
+import {  StyledLangSelector2 } from "./styles";
+import { useRouter } from "next/router";
 import Image from "next/image";
+import deflag from "../../../public/images/icons/deflag.svg";
+import frflag from "../../../public/images/icons/frflag.svg";
+import enflag from "../../../public/images/icons/enflag.svg";
+
 
 const LanguageSelector = () => {
   const router = useRouter();
   const { pathname, asPath, query } = router;
-  //console.log(router)
-  // Languages selector //
+
+
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("value",e.currentTarget.id)
+    console.log("value", e.currentTarget.id);
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
   };
 
   return (
-    <div>
-      {/* <StyledLangSelector
-      defaultValue={router.locale}
-      onChange={getSelectedLanguage}
-    >
-      {router.locales?.map((locale) => (
-        <option key={locale} value={locale}>
-          {locale}
-        </option>
-      ))}
-    </StyledLangSelector> */}
-      <StyledLangSelector2>
-        <div className="langSelector">
-          <div className="langSelectorHeader">
-            <b className="langSelectorTitle">
-              <div className="langSelectorListNameFlag">
-              {/* <Image
-                width={250}
-                height={250}
-                src={product.images[0].src && placeholder.src} 
-                alt={product.name}
-              /> */}
-                <img
-                  src="//upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/150px-Flag_of_France.svg.png"
-                  alt="Flag of France"
+    <StyledLangSelector2>
+      <div className="langSelector">
+        <div className="langSelectorListNameFlag">
+          <div className="flagImgBox">
+            <Image
+              width={40}
+              height={27}
+              src={
+                (router.locale === "en" && enflag) ||
+                (router.locale === "de" && deflag) ||
+                (router.locale === "fr" && frflag)
+              }
+              alt={router.locale + "flag"}
+            />
+            </div>
+          <p>
+            <strong>
+              {(router.locale === "fr" && "Français") ||
+                (router.locale === "de" && "Deutsch") ||
+                (router.locale === "en" && "English")}
+            </strong>
+            <span>
+              &#9662;
+              </span>
+          </p>
+        </div>
+        <ul className="langSelectorList">
+          {router.locales?.filter((local) => { return local !== router.locale }).map((locale) => (
+            <li key={locale} value={locale}>
+              <div id={locale} onClick={getSelectedLanguage}>
+                <Image
+                  width={40}
+                  height={27}
+                  src={
+                    (locale === "en" && enflag) ||
+                    (locale === "de" && deflag) ||
+                    (locale === "fr" && frflag)
+                  }
+                  alt={locale + "flag"}
                 />
               </div>
-              <abbr className="langSelectorListNameLabel" title="Français">
-                {router.locale}
-              </abbr>
-              <i className="fa fa-caret-down" aria-hidden="true"></i>
-            </b>
-          </div>
-          <div className="langSelectorBody">
-            <ul className="langSelectorList">
-            {router.locales?.map((locale) => (
-        <li key={locale} value={locale}>
-            <div id={locale} onClick={getSelectedLanguage}>
-            {locale}
-            </div>
-            
-        </li>
-      ))}
-            </ul>
-          </div>
-        </div>
-      </StyledLangSelector2>
-    </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </StyledLangSelector2>
   );
 };
 export default LanguageSelector;
