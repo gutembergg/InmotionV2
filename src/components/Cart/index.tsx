@@ -74,7 +74,7 @@ const Cart = () => {
             )}
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
               <div className="btnCommander">
-                <Link href="/inmotion-mobility/checkout">
+                <Link href="/inmotion-mobility/checkout-mobility">
                   <a className="btnVoirCheckoutText">Checkout</a>
                 </Link>
               </div>
