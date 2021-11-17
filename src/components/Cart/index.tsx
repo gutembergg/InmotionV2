@@ -61,13 +61,28 @@ const Cart = () => {
             <h5 className="sousTotalTxt">
               Sous total: <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
             </h5>
-            <div className="btnVoirPanier">
-              <Link href="/inmotion-mobility/panier">
-                <a className="btnVoirPanierText">Voir le panier</a>
-              </Link>
-            </div>
-
-            <button className="btnCommander">Commander</button>
+            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
+              <div className="btnVoirPanier">
+                <Link href="/inmotion-mobility/panier">
+                  <a className="btnVoirPanierText">Voir le panier</a>
+                </Link>
+              </div>
+            ) : (
+              <div className="btnVoirPanier disabled">
+                <p>panier non disponible</p>
+              </div>
+            )}
+            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
+              <div className="btnCommander">
+                <Link href="/inmotion-mobility/checkout">
+                  <a className="btnVoirCheckoutText">Checkout</a>
+                </Link>
+              </div>
+            ) : (
+              <div className="btnCommander disabled">
+                <p>checkout non disponible</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
