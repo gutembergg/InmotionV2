@@ -29,10 +29,12 @@ import {
   OrderSession,
   Payment,
 } from "../../../styles/CheckoutMobility";
+import useUser from "../../../hooks/useUser";
 
 const CheckoutMobility: NextPage = () => {
-  const [loged, setloged] = useState(false);
   const { cart, removeCartItem } = useCart();
+  const { user } = useUser();
+  const [loged, setloged] = useState(false);
 
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
@@ -63,6 +65,14 @@ const CheckoutMobility: NextPage = () => {
       setLineItems(_lineItems);
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (user.token) {
+      setloged(true);
+    } else {
+      setloged(false);
+    }
+  }, [user]);
 
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {
@@ -149,6 +159,7 @@ const CheckoutMobility: NextPage = () => {
       <LayoutMobility icon={thankIcon}>
         <Container>
           <StyledCheckout>
+            <h1>Aperçu de votre commande </h1>
             <FormSession>
               {!loged && (
                 <div>
@@ -162,7 +173,7 @@ const CheckoutMobility: NextPage = () => {
                 <BillingShippingForm
                   handleBillingShippingData={_handleBillingShippingData}
                 />
-                <ValidationSchemaExample />
+                {/* <ValidationSchemaExample /> */}
               </section>
               <section>
                 <h2>{wayDelivery}</h2>
