@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import Modal from "../Modal";
-import { LoginContainer, LoginLink, MyAccountLink,LogoutLink } from "./styles";
+import { LoginContainer, LoginLink, MyAccountLink, LogoutLink } from "./styles";
 import Link from "next/link";
 import Input from "../Input";
 import Notiflix from "notiflix";
@@ -15,9 +15,8 @@ import { AuthUser } from "../../interfaces/AuthUser";
 import RegisterForm from "../Register";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
-import loginIcon from "../../../public/images/icons/login.svg"
-import myAcount from "../../../public/images/icons/moncompte.svg"
-
+import loginIcon from "../../../public/images/icons/login.svg";
+import myAcount from "../../../public/images/icons/moncompte.svg";
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -89,38 +88,32 @@ const LoginForm = () => {
       </Modal>
       {loged ? (
         <div>
-
-        <LogoutLink onClick={logout}>!logout</LogoutLink>
-        <MyAccountLink>
-          <Link href={`/user`}>
-          <a>
-          <p>
-           <Image
-              src={myAcount}
-              width={30}
-              height={30}
-              alt="login icon"
-              />{"  "}
-            <span>
-          Mon compte
-            </span>
-              </p>
+          <LogoutLink onClick={logout}>!logout</LogoutLink>
+          <MyAccountLink>
+            <Link href={`/user`}>
+              <a>
+                <p>
+                  <Image
+                    src={myAcount}
+                    width={30}
+                    height={30}
+                    alt="login icon"
+                  />
+                  {"  "}
+                  <span>Mon compte</span>
+                </p>
               </a>
-              </Link>
+            </Link>
           </MyAccountLink>
-              </div>
+        </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
           <p>
-            <Image
-              src={loginIcon}
-              width={30}
-              height={30}
-              alt="login icon"
-            />{"  "}
+            <Image src={loginIcon} width={30} height={30} alt="login icon" />
+            {"  "}
             <span>
               {menuLogin} / {menuRegister}
-              </span>
+            </span>
           </p>
         </LoginLink>
       )}
