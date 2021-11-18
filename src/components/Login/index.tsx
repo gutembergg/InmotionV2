@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import Modal from "../Modal";
-import { LoginContainer, LoginLink, LogoutLink } from "./styles";
+import { LoginContainer, LoginLink, MyAccountLink,LogoutLink } from "./styles";
 import Link from "next/link";
 import Input from "../Input";
 import Notiflix from "notiflix";
@@ -14,6 +14,10 @@ import useUser from "../../hooks/useUser";
 import { AuthUser } from "../../interfaces/AuthUser";
 import RegisterForm from "../Register";
 import useTranslation from "next-translate/useTranslation";
+import Image from "next/image";
+import loginIcon from "../../../public/images/icons/login.svg"
+import myAcount from "../../../public/images/icons/moncompte.svg"
+
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -84,11 +88,39 @@ const LoginForm = () => {
         </LoginContainer>
       </Modal>
       {loged ? (
-        <LogoutLink onClick={logout}>se déconnecter</LogoutLink>
+        <div>
+
+        <LogoutLink onClick={logout}>!logout</LogoutLink>
+        <MyAccountLink>
+          <Link href={`/user`}>
+          <a>
+          <p>
+           <Image
+              src={myAcount}
+              width={30}
+              height={30}
+              alt="login icon"
+              />{"  "}
+            <span>
+          Mon compte
+            </span>
+              </p>
+              </a>
+              </Link>
+          </MyAccountLink>
+              </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
           <p>
-            {menuLogin} / {menuRegister}
+            <Image
+              src={loginIcon}
+              width={30}
+              height={30}
+              alt="login icon"
+            />{"  "}
+            <span>
+              {menuLogin} / {menuRegister}
+              </span>
           </p>
         </LoginLink>
       )}

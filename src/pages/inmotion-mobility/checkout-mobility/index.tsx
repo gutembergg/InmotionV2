@@ -28,10 +28,12 @@ import {
   OrderSession,
   Payment,
 } from "../../../styles/CheckoutMobility";
+import useUser from "../../../hooks/useUser";
 
 export default function CheckoutMobility() {
   const [loged, setloged] = useState(false);
   const { cart, removeCartItem } = useCart();
+  const { user } = useUser();
 
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
@@ -62,6 +64,14 @@ export default function CheckoutMobility() {
       setLineItems(_lineItems);
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (user.token) {
+      setloged(true);
+    } else {
+      setloged(false);
+    }
+  }, [user]);
 
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {

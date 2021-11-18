@@ -55,6 +55,7 @@ export const StyledCart = styled.div`
         width: 300px;
         border-top: none;
         box-shadow: 0px 7px 8px 0px #2121211c;
+        padding-bottom: 2px;
 
         li {
           list-style: none;
@@ -122,7 +123,7 @@ export const StyledCart = styled.div`
           margin-bottom: 20px;
           height: 40px;
           border: none;
-          background-color: var(--LightGray);
+          background-color: var(--Blue);
           color: var(--White);
           text-transform: uppercase;
           font-weight: bold;
@@ -131,9 +132,12 @@ export const StyledCart = styled.div`
             transition: all ease-in 0.1s;
             background-color: var(--DarkGray);
           }
-        }
-
-        a.btnVoirPanierText {
+          &.disabled{
+            background-color: var(--LightGray);
+            cursor: not-allowed;
+          
+          }
+          p {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -141,11 +145,21 @@ export const StyledCart = styled.div`
           text-decoration: none;
           color: var(--White);
         }
+          a.btnVoirPanierText {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+            color: var(--White);
+          }
+        }
+
         .btnCommander {
           font-size: 0.8em;
           width: calc(100% - 24px);
           margin-left: 12px;
-          margin-bottom: 25px;
+          margin-bottom: 20px;
           height: 40px;
           border: none;
           background-color: var(--Blue);
@@ -157,6 +171,27 @@ export const StyledCart = styled.div`
             transition: all ease-in 0.1s;
             background-color: #1186c0;
           }
+          &.disabled{
+            cursor: not-allowed;
+            background-color: var(--LightGray);
+          }
+
+          p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          text-decoration: none;
+          color: var(--White);
+        }
+          a.btnVoirCheckoutText {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          text-decoration: none;
+          color: var(--White);
+        }
         }
       }
     }
