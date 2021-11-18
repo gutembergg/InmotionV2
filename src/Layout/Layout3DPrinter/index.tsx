@@ -5,20 +5,18 @@ import { GlobalContainer } from "./styles";
 import parse from "html-react-parser";
 import PrinterFooter from "../../components/Footers/PrinterFooter";
 import HeaderPrinter from "../../components/headers/HeaderPrinters";
+import React from "react";
+import HeaderPrinterV2 from "../../components/headers/HeaderPrintersV2";
 
 interface LayoutProps {
   children: ReactNode;
-  icon: string;
-  yoast_head?: string;
+  icon?: any;
 }
 
-export default function Layout3DPrinter({ children, icon, yoast_head }: LayoutProps) {
-  const fullHead = yoast_head && parse(yoast_head);
-
+export default function Layout3DPrinter({ children, icon }: LayoutProps) {
   return (
     <GlobalContainer>
-      <Head>{fullHead}</Head>
-      <HeaderPrinter icon={icon} />
+      <HeaderPrinterV2 />
       <HeaderMobile />
       <main>{children}</main>
       <PrinterFooter />

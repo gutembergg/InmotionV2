@@ -18,12 +18,12 @@ import {
 } from "../styles/mainHome";
 import { useState } from "react";
 
-export interface IProducts {
+export interface Props {
   categories: ICategories[];
   menu_order: ICategories[];
 }
 
-const Home: NextPage<IProducts> = () => {
+const Home: NextPage<Props> = () => {
   const [playTrot, setplayTrot] = useState(false);
   const [playPrint, setplayPrint] = useState(false);
 

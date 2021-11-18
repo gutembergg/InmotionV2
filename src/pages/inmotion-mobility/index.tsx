@@ -1,39 +1,36 @@
 import HomeIcon from "../../../public/images/icons/house.svg";
-import type { NextPage } from "next";
 import { ICategories } from "../../interfaces/ICategories";
 import { Container, MainContent } from "../../styles/HomeStyles";
-import { CurvedBackground } from "../../styles/BackgroundStyle";
-import LayoutMobility from "../../Layout/LayoutMobility";
 import useUser from "../../hooks/useUser";
-import { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
+import LayoutMobility from "../../Layout/LayoutMobility";
 
-export interface IProducts {
+export interface Props {
   categories: ICategories[];
   menu_order: ICategories[];
 }
 
-const Home: NextPage<IProducts> = () => {
+export default function Home({ categories, menu_order }: Props) {
   const { user } = useUser();
   const [loged, setloged] = useState(false);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (user.token) {
       setloged(true);
     } else {
       setloged(false);
     }
-  }, [user]);
+  }, [user]); */
 
   return (
-    <CurvedBackground>
-      <LayoutMobility icon={HomeIcon}>
-        <Container>
-          <MainContent>
-            {loged ? JSON.stringify(user) : ""}page accueil section Mobility
-          </MainContent>
-        </Container>
-      </LayoutMobility>
-    </CurvedBackground>
+    <Container>
+      <MainContent>
+        {loged ? JSON.stringify(user) : ""} page accueil section Mobility
+      </MainContent>
+    </Container>
   );
+}
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
 };
-export default Home;

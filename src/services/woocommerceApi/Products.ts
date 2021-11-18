@@ -4,23 +4,9 @@ import { wooCommerce } from "./woocommerceConfig";
 
 // Get all products////////////////////////////////////////////
 export const getProducts = async () => {
-  const response = await wooCommerce.get("products");
-
-  return response;
-};
-
-// Get All product without limit per_page /////////////////////
-/* export const getAllProductsInDatabase = async () => {
   const response = await wooCommerce.get("products", {
     per_page: 100,
   });
-
-  return response;
-}; */
-
-// Get Product by ID ///////////////////////////////////////////
-export const getProductById = async (id: number) => {
-  const response = await wooCommerce.get(`products/${id}`);
 
   return response;
 };

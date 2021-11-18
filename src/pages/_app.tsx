@@ -1,15 +1,26 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
-import React, { useEffect } from "react";
+import React, { ReactElement, ReactNode, useEffect } from "react";
 import AppProvider from "../components/Context";
 import GlobalStyles from "../styles/globalStyles";
 import Head from "next/head";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
+import { NextPage } from "next";
 
-  useEffect(() => {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const router = useRouter();
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  /* useEffect(() => {
     Notiflix.Notify.init({
       position: "center-top",
       width: "60%",
@@ -44,20 +55,23 @@ function MyApp({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeComplete", handleStop);
       router.events.off("routeChangeError", handleStop);
     };
-  }, [router]);
+  }, [router]); */
+
   return (
-    <>
-      <AppProvider>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1"
-          ></meta>
-        </Head>
-        <Component {...pageProps} />
-        <GlobalStyles />
-      </AppProvider>
-    </>
+    <AppProvider>
+      {getLayout(
+        <>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            ></meta>
+          </Head>
+          <Component {...pageProps} />
+          <GlobalStyles />
+        </>
+      )}
+    </AppProvider>
   );
 }
 export default MyApp;

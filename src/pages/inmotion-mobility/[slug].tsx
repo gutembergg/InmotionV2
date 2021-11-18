@@ -1,9 +1,7 @@
+import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { LightBackground } from "../../styles/BackgroundStyle";
 import conditionIcon from "../../../public/images/icons/conditionsgen.svg";
-
-import { GetStaticPaths, GetStaticProps } from "next";
 import {
   wc_getCategoriesBySlug,
   wc_getSub_categories,
@@ -11,64 +9,63 @@ import {
 import { ICategories } from "../../interfaces/ICategories";
 
 import { Container, MainContent } from "../../styles/Boutique";
+import React, { ReactElement } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 
 interface IProps {
   subCategories: ICategories[];
 }
 
-const MobiliteEletrique = ({ subCategories }: IProps) => {
+export default function MobiliteEletrique({ subCategories }: IProps) {
   return (
-    <LightBackground>
-      <LayoutMobility icon={conditionIcon}>
-        <Container>
-          <MainContent>
-            {subCategories.map((category) => {
-              return (
-                <div key={category.id}>
-                  <Link
-                    href={
-                      category.slug === "pieces-detachees-mobility" ||
-                      category.slug === "detached-pieces-3" ||
-                      category.slug === "abgeloeste-teile"
-                        ? `/inmotion-mobility/categorie/${category.slug}`
-                        : category.slug === "equipements" ||
-                          category.slug === "equipments" ||
-                          category.slug === "ausruestungen"
-                        ? `/inmotion-mobility/categorie_/${category.slug}`
-                        : category.slug === "occasions" ||
-                          category.slug === "gelegenheiten"
-                        ? `/inmotion-mobility/produits/${category.slug}`
-                        : `/inmotion-mobility/categories/${category.slug}`
-                    }
-                  >
-                    <a className="link">
-                      <div className="category_card">
-                        <div className="care_blue_hover"></div>
-                        {category.image?.src && (
-                          <Image
-                            src={category.image?.src}
-                            alt={category.name}
-                            width={300}
-                            height={300}
-                          />
-                        )}
+    <Container>
+      <MainContent>
+        {subCategories.map((category) => {
+          return (
+            <div key={category.id}>
+              <Link
+                href={
+                  category.slug === "pieces-detachees-mobility" ||
+                  category.slug === "detached-pieces-3" ||
+                  category.slug === "abgeloeste-teile"
+                    ? `/inmotion-mobility/categorie/${category.slug}`
+                    : category.slug === "equipements" ||
+                      category.slug === "equipments" ||
+                      category.slug === "ausruestungen"
+                    ? `/inmotion-mobility/categorie_/${category.slug}`
+                    : category.slug === "occasions" ||
+                      category.slug === "gelegenheiten"
+                    ? `/inmotion-mobility/produits/${category.slug}`
+                    : `/inmotion-mobility/categories/${category.slug}`
+                }
+              >
+                <a className="link">
+                  <div className="category_card">
+                    <div className="care_blue_hover"></div>
+                    {category.image?.src && (
+                      <Image
+                        src={category.image?.src}
+                        alt={category.name}
+                        width={300}
+                        height={300}
+                      />
+                    )}
 
-                        <div className="category_name">{category.name}</div>
-                      </div>
-                    </a>
-                  </Link>
-                </div>
-              );
-            })}
-          </MainContent>
-        </Container>
-      </LayoutMobility>
-    </LightBackground>
+                    <div className="category_name">{category.name}</div>
+                  </div>
+                </a>
+              </Link>
+            </div>
+          );
+        })}
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default MobiliteEletrique;
+MobiliteEletrique.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={conditionIcon}>{page}</LayoutMobility>;
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {

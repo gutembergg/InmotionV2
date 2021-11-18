@@ -1,14 +1,11 @@
-import { NextPage } from "next";
 import Image from "next/image";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
 import RegisterForm from "../../../components/Register";
 import { ValidationSchemaExample } from "../../../components/UserShippingForm";
 import useCart from "../../../hooks/useCart";
-import LayoutMobility from "../../../Layout/LayoutMobility";
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import {
   LineItemsDTO,
@@ -22,6 +19,8 @@ import { wc_paymentGateWays } from "../../../services/woocommerceApi/PaymentGate
 import useTranslation from "next-translate/useTranslation";
 import { PaymentGateWays } from "../../../interfaces/PaymentGateWays";
 
+import LayoutMobility from "../../../Layout/LayoutMobility";
+
 import {
   Container,
   StyledCheckout,
@@ -30,7 +29,7 @@ import {
   Payment,
 } from "../../../styles/CheckoutMobility";
 
-const CheckoutMobility: NextPage = () => {
+export default function CheckoutMobility() {
   const [loged, setloged] = useState(false);
   const { cart, removeCartItem } = useCart();
 
@@ -145,95 +144,93 @@ const CheckoutMobility: NextPage = () => {
   }, []);
 
   return (
-    <LightBackground>
-      <LayoutMobility icon={thankIcon}>
-        <Container>
-          <StyledCheckout>
-            <FormSession>
-              {!loged && (
-                <div>
-                  <p>{haveAccount}</p>
-                  <LoginForm />
-                  <RegisterForm />
-                </div>
-              )}
-              <section>
-                <h2>{deliveryInfo}</h2>
-                <BillingShippingForm
-                  handleBillingShippingData={_handleBillingShippingData}
-                />
-                <ValidationSchemaExample />
-              </section>
-              <section>
-                <h2>{wayDelivery}</h2>
-              </section>
-              <Payment>
-                <h2>{payment}</h2>
+    <Container>
+      <StyledCheckout>
+        <FormSession>
+          {!loged && (
+            <div>
+              <p>{haveAccount}</p>
+              <LoginForm />
+              <RegisterForm />
+            </div>
+          )}
+          <section>
+            <h2>{deliveryInfo}</h2>
+            <BillingShippingForm
+              handleBillingShippingData={_handleBillingShippingData}
+            />
+            <ValidationSchemaExample />
+          </section>
+          <section>
+            <h2>{wayDelivery}</h2>
+          </section>
+          <Payment>
+            <h2>{payment}</h2>
 
-                <div className="payment_list">
-                  {paymentMethods.map((payment) => {
-                    return <div key={payment.id}>{payment.title}</div>;
-                  })}
-                </div>
-              </Payment>
-            </FormSession>
-            <OrderSession>
-              <div>
-                <div>
-                  <ul>
-                    {cart.totalProductsCount > 0 ? (
-                      cart.products.map((product) => {
-                        return (
-                          <li className="products_list" key={product.id}>
-                            <button
-                              className="closeButton"
-                              onClick={() => removeCartItem(product.id)}
-                            ></button>
-                            <div className="cartProductInfos">
-                              <h5>{product.name}</h5>
-                              <p>
-                                {product.qty}x CHF {product.price}
-                              </p>
-                            </div>
-                            <div className="cartProductThmbnail">
-                              <Image
-                                src={product.images[0].src}
-                                alt={product.name}
-                                height={50}
-                                width={50}
-                              />
-                            </div>
-                          </li>
-                        );
-                      })
-                    ) : (
-                      <li>
-                        <p>{emptyCartMessage}</p>
+            <div className="payment_list">
+              {paymentMethods.map((payment) => {
+                return <div key={payment.id}>{payment.title}</div>;
+              })}
+            </div>
+          </Payment>
+        </FormSession>
+        <OrderSession>
+          <div>
+            <div>
+              <ul>
+                {cart.totalProductsCount > 0 ? (
+                  cart.products.map((product) => {
+                    return (
+                      <li className="products_list" key={product.id}>
+                        <button
+                          className="closeButton"
+                          onClick={() => removeCartItem(product.id)}
+                        ></button>
+                        <div className="cartProductInfos">
+                          <h5>{product.name}</h5>
+                          <p>
+                            {product.qty}x CHF {product.price}
+                          </p>
+                        </div>
+                        <div className="cartProductThmbnail">
+                          <Image
+                            src={product.images[0].src}
+                            alt={product.name}
+                            height={50}
+                            width={50}
+                          />
+                        </div>
                       </li>
-                    )}
-                  </ul>
-                  <h5 className="sousTotalTxt">
-                    {subTotal}:{" "}
-                    <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
-                  </h5>
-                </div>
-              </div>
+                    );
+                  })
+                ) : (
+                  <li>
+                    <p>{emptyCartMessage}</p>
+                  </li>
+                )}
+              </ul>
+              <h5 className="sousTotalTxt">
+                {subTotal}:{" "}
+                <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+              </h5>
+            </div>
+          </div>
 
-              <CouponsCode />
-              <p>{addPromoDode}</p>
-              <p>
-                ajouter fonction if userbillig & shipping !== formulaire data
-                register new data dans user (lien avec formulaire mon compte)
-              </p>
-              <p>{addTVA}</p>
-              <p>{addPtotalPrice}</p>
-              <button onClick={sendOrder}>{btnSend}</button>
-            </OrderSession>
-          </StyledCheckout>
-        </Container>
-      </LayoutMobility>
-    </LightBackground>
+          <CouponsCode />
+          <p>{addPromoDode}</p>
+          <p>
+            ajouter fonction if userbillig & shipping !== formulaire data
+            register new data dans user (lien avec formulaire mon compte)
+          </p>
+          <p>{addTVA}</p>
+          <p>{addPtotalPrice}</p>
+          <button onClick={sendOrder}>{btnSend}</button>
+        </OrderSession>
+      </StyledCheckout>
+    </Container>
   );
-};
+}
 
-export default CheckoutMobility;
+CheckoutMobility.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
+};

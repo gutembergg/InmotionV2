@@ -1,7 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import React, { useState } from "react";
-import LayoutMobility from "../../../Layout/LayoutMobility";
-import { LightBackground } from "../../../styles/BackgroundStyle";
+import React, { ReactElement, useState } from "react";
 import HouseIcon from "../../../../public/images/icons/house.svg";
 import SliderCustom from "../../../components/SliderCustom";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -17,13 +15,14 @@ import { wc_getCategoriesBySlug } from "../../../services/woocommerceApi/Categor
 import { ICategories } from "../../../interfaces/ICategories";
 import useTranslation from "next-translate/useTranslation";
 import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
+import LayoutMobility from "../../../Layout/LayoutMobility";
 
 interface Props {
   products: IProduct[];
   category: ICategories;
 }
 
-const Occasions: NextPage<Props> = ({ products, category }) => {
+export default function Occasions({ products, category }: Props) {
   const { t } = useTranslation();
   const title = t("common:ourOccasions");
 
@@ -34,27 +33,25 @@ const Occasions: NextPage<Props> = ({ products, category }) => {
     setProductIndex(index);
   };
   return (
-    <LightBackground>
-      <LayoutMobility icon={HouseIcon}>
-        <Container>
-          <Title>{title}</Title>
-          <ProductDetail>
-            <AccessoriesDetail
-              products={_products}
-              productIndex={productIndex}
-              subCategoryActived={category}
-            />
-          </ProductDetail>
-          <ProductsFooter>
-            <SliderCustom products={_products} selectProduct={selectProduct} />
-          </ProductsFooter>
-        </Container>
-      </LayoutMobility>
-    </LightBackground>
+    <Container>
+      <Title>{title}</Title>
+      <ProductDetail>
+        <AccessoriesDetail
+          products={_products}
+          productIndex={productIndex}
+          subCategoryActived={category}
+        />
+      </ProductDetail>
+      <ProductsFooter>
+        <SliderCustom products={_products} selectProduct={selectProduct} />
+      </ProductsFooter>
+    </Container>
   );
-};
+}
 
-export default Occasions;
+Occasions.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={HouseIcon}>{page}</LayoutMobility>;
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {

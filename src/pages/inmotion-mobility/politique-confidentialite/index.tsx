@@ -1,23 +1,19 @@
-import type {  NextPage } from "next";
-import confidentialiteIcon from"../../../../public/images/icons/confidentialite.svg"
+import confidentialiteIcon from "../../../../public/images/icons/confidentialite.svg";
 import { Container } from "../../../components/HomeMainComponent/styles";
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import { MainContent } from "../../../styles/HomeStyles";
+import React, { ReactElement } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 
-const PolitiqueConfidentialite: NextPage = () => {
- 
+export default function PolitiqueConfidentialite() {
   return (
-    <LightBackground>
-      <LayoutMobility icon={confidentialiteIcon}>
-        <Container>
-          <MainContent>
-            <p>Politique de confidentialité</p>
-          </MainContent>
-        </Container>
-      </LayoutMobility>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>Politique de confidentialité</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default PolitiqueConfidentialite;
+PolitiqueConfidentialite.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={confidentialiteIcon}>{page}</LayoutMobility>;
+};

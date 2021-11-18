@@ -13,13 +13,15 @@ import Link from "next/link";
 import { LinkMobility } from "../HeaderAdmin/styles";
 import escooter from "../../../../public/images/icons/electric-scooter.svg";
 
-interface ILanguages {}
-
-interface ISvgProps {
+/* interface ISvgProps {
   icon: SVGProps<SVGElement>;
+} */
+
+interface Props {
+  icon?: any;
 }
 
-const HeaderPrinter = (icon: any) => {
+const HeaderPrinterV2 = ({ icon }: Props) => {
   const [loged, setLoged] = useState("");
 
   return (
@@ -58,9 +60,9 @@ const HeaderPrinter = (icon: any) => {
       <div className="bottomBlock">
         <p>Votre spécialiste en impression 3D & Filaments</p>
         <FilAriane />
-        <CurrentPageIcon bgcolor="blue" icon={icon.icon} />
+        {/*  <CurrentPageIcon bgcolor="blue" icon={icon.icon} /> */}
       </div>
     </StyledHeader>
   );
 };
-export default HeaderPrinter;
+export default HeaderPrinterV2;

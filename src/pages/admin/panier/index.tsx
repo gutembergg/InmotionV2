@@ -1,20 +1,17 @@
-import type { NextPage } from "next";
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import LayoutAdmin from "../../../Layout/LayoutAdmin";
-import { Button } from "../../../styles/ProductDetail";
 import CartResume from "../../../components/CartResume";
 import PreviousPageLink from "../../../components/PreviousPageLink";
+import { ReactElement } from "react";
 
-const CaisseMagasin: NextPage = () => {
-
+export default function CaisseMagasin() {
   return (
-    <LightBackground>
-      <LayoutAdmin>
-        <PreviousPageLink text='&#8592; Continuer mes achats' />
-        <CartResume />
-      </LayoutAdmin>
-    </LightBackground>
+    <>
+      <PreviousPageLink text="&#8592; Continuer mes achats" />
+      <CartResume />
+    </>
   );
-};
+}
 
-export default CaisseMagasin;
+CaisseMagasin.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutAdmin>{page}</LayoutAdmin>;
+};
