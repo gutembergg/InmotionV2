@@ -277,6 +277,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       category,
       productsByCategory: productsByCategory,
     },
-    revalidate: 10,
+    revalidate: 60 * 60, // 1h
   };
 };
