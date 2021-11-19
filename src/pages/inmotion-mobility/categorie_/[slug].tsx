@@ -191,7 +191,11 @@ Equipements.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [
+      { params: { slug: "equipements" }, locale: "en" },
+      { params: { slug: "equipements" }, locale: "fr" },
+      { params: { slug: "equipements" }, locale: "de" },
+    ],
     fallback: "blocking",
   };
 };

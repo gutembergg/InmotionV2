@@ -188,10 +188,9 @@ AccessoryPage.getLayout = function getLayout(page: ReactElement) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
-      /*   { params: { slug: "pieces-detachees-mobility" }, locale: "en" },
+      { params: { slug: "pieces-detachees-mobility" }, locale: "en" },
       { params: { slug: "pieces-detachees-mobility" }, locale: "fr" },
       { params: { slug: "pieces-detachees-mobility" }, locale: "de" },
-     */
     ],
     fallback: "blocking",
   };
