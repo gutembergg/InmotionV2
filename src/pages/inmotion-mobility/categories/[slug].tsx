@@ -238,7 +238,7 @@ Category.getLayout = function getLayout(page: ReactElement) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
-      /*  { params: { slug: "velos-electriques" }, locale: "en" },
+      { params: { slug: "velos-electriques" }, locale: "en" },
       { params: { slug: "velos-electriques" }, locale: "fr" },
       { params: { slug: "velos-electriques" }, locale: "de" },
       { params: { slug: "trottinettes" }, locale: "en" },
@@ -246,7 +246,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       { params: { slug: "trottinettes" }, locale: "de" },
       { params: { slug: "gyroroues" }, locale: "en" },
       { params: { slug: "gyroroues" }, locale: "fr" },
-      { params: { slug: "gyroroues" }, locale: "de" }, */
+      { params: { slug: "gyroroues" }, locale: "de" },
     ],
     fallback: "blocking",
   };
