@@ -188,9 +188,10 @@ AccessoryPage.getLayout = function getLayout(page: ReactElement) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
-      { params: { slug: "pieces-detachees-mobility" }, locale: "en" },
+      /*   { params: { slug: "pieces-detachees-mobility" }, locale: "en" },
       { params: { slug: "pieces-detachees-mobility" }, locale: "fr" },
       { params: { slug: "pieces-detachees-mobility" }, locale: "de" },
+     */
     ],
     fallback: "blocking",
   };
@@ -249,6 +250,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       _productsUpSellModelsByDefault,
       _categoryBySlug,
     },
-    revalidate: 60, // 1min
+    revalidate: 10, // 10s
   };
 };

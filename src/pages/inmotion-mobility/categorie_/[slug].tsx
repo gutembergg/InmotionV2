@@ -191,11 +191,7 @@ Equipements.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      { params: { slug: "equipements" }, locale: "en" },
-      { params: { slug: "equipements" }, locale: "fr" },
-      { params: { slug: "equipements" }, locale: "de" },
-    ],
+    paths: [],
     fallback: "blocking",
   };
 };
@@ -234,6 +230,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       equipements: wc_equipements,
       _productsByCategory: productsByCategory,
     },
-    revalidate: 60, // 1min
+    revalidate: 10, // 10s
   };
 };

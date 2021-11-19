@@ -38,7 +38,7 @@ const HeaderComponent = ({ icon }: Props) => {
             </LinkPrint>
           </a>
         </Link>
-        <Login />
+        {/*    <Login /> */}
         <LanguageSelector />
       </div>
 
