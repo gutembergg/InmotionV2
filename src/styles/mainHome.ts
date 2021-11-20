@@ -42,7 +42,7 @@ export const Video2Style = styled.video`
 `;
 
 export const VideoBox1 = styled.div`
-  background-color: var(--Red);
+  background-color: #ac2c39;
   width: 50%;
   height: 100%;
   transform: skew(-15deg);
@@ -96,7 +96,8 @@ export const MainContent = styled.div`
           margin-left: 0;
         }
         @media (max-width: 540px){
-        width: 200px;
+          width: 270px
+;
       }
         image {
           object-fit: contain;
@@ -175,6 +176,7 @@ export const MainContent = styled.div`
             }
             @media (max-width: 960px) {
               font-size: 1em;
+              text-align: left ;
             }
           }
           h2 {
@@ -182,6 +184,10 @@ export const MainContent = styled.div`
             font-weight: normal;
             font-style: italic;
             text-align: center;
+            @media (max-width: 960px) {
+              font-size: 1em;
+              text-align: left ;
+            }
           }
         }
 
@@ -214,7 +220,9 @@ export const MainContent = styled.div`
       flex-direction: column;
       .left,
       .right {
-        width: 90%;
+        width: 82%;
+    min-height: auto;
+    height: 50%;
         a {
           flex-direction: row;
           flex-wrap: nowrap;
@@ -227,6 +235,7 @@ export const MainContent = styled.div`
             display: flex;
             justify-content: center;
             padding: 0 0%;
+            min-width: 226px;
             
           }
         }
@@ -253,6 +262,46 @@ export const MainContent = styled.div`
             display: flex;
             justify-content: center;
             padding: 0 0%;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) and (orientation: portrait) {
+    .content {
+      flex-direction: column;
+      .left,
+      .right {
+        width: 82%;
+    min-height: auto;
+    height: 50%;
+        a {
+          flex-direction: column;
+          flex-wrap: nowrap;
+          .container{
+
+            p{
+              text-align:center;
+            }
+            h2{
+              text-align:center ;
+            }
+            .logoMobilityBox{
+              max-width: 280px;
+            }
+          } 
+
+          .topBlock {
+            margin-left: 0px;
+            height: 45%;
+            position: relative;
+            width: 93%;
+            display: flex;
+            justify-content: center;
+            padding: 0 0%;
+            min-width: 226px;
+            
           }
         }
       }
