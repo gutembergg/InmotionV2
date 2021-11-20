@@ -17,6 +17,15 @@ export default createGlobalStyle`
     --LightGray:#a0a0a0;
 
   }
+  html{
+    min-height: -webkit-fill-available;
+
+  }
+  body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
   button{
       cursor: pointer;
   }
