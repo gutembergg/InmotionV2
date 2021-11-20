@@ -37,12 +37,6 @@ const HeaderMobile = () => {
       <FilAriane />
       <div className="mobileButton" onClick={menuToggle}>
         <div id="nav-icon2" className={menuOpen === true ? "open" : ""}>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
         </div>
       </div>
       <div className={menuOpen === true ? "mainBlock open" : "mainBlock"}>

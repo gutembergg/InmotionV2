@@ -31,7 +31,8 @@ export const StyledHeader = styled.header`
     }
     //closed menu container//
     .mainBlock {
-      visibility: hidden;
+      /* visibility: hidden; */
+      display: none;
       opacity: 0;
       transition: opacity ease-in 0.1s;
       position: fixed;
@@ -91,8 +92,9 @@ export const StyledHeader = styled.header`
 
     //opened menu container//
     .mainBlock.open {
+      display: inline-block;
       transition: opacity ease-in 0.2s;
-      visibility: visible;
+      /* visibility: visible; */
       opacity: 1;
       background-color:#000000ed;
       top: 0;
