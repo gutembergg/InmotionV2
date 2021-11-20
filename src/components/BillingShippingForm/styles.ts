@@ -33,6 +33,7 @@ export const Container = styled.div`
       }
       input {
         width: 100%;
+        padding: 7px;
       }
 
       .input_erros {
@@ -57,11 +58,21 @@ export const Container = styled.div`
       }
       input {
         width: 100%;
+        padding: 7px;
       }
-
+      
       .input_erros {
         font-size: 0.7rem;
         color: red;
+      }
+    }
+    select{
+      width:100%;
+      padding: 7px;
+      color: var(--DarkGray);
+      
+      option{
+        color: var(--DarkGray);
       }
     }
   }

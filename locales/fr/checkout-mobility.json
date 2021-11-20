@@ -1,5 +1,6 @@
 {
-  "haveAccount": "Vous avez un compte?",
+  "haveAccount": "Avant de continuer avez vous un compte ou désirez-vous en créer un?",
+  "orderPreview": "Aperçu de votre commande",
   "deliveryInfo": "Informations de livraison",
   "wayDelivery": "Mode de livraison",
   "payment": "Paiment",

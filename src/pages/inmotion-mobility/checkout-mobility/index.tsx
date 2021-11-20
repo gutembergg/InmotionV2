@@ -38,6 +38,7 @@ const CheckoutMobility: NextPage = () => {
 
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
+  const orderPreview = t("checkout-mobility:orderPreview");
   const deliveryInfo = t("checkout-mobility:deliveryInfo");
   const wayDelivery = t("checkout-mobility:wayDelivery");
   const payment = t("checkout-mobility:payment");
@@ -159,13 +160,13 @@ const CheckoutMobility: NextPage = () => {
       <LayoutMobility icon={thankIcon}>
         <Container>
           <StyledCheckout>
-            <h1>Aperçu de votre commande </h1>
+            <h1>{orderPreview}</h1>
             <FormSession>
               {!loged && (
                 <div>
                   <p>{haveAccount}</p>
                   <LoginForm />
-                  <RegisterForm />
+                  {/* <RegisterForm /> */}
                 </div>
               )}
               <section>
