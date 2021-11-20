@@ -12,7 +12,7 @@ const MenuMainPrinter = () => {
   const [categories, setCategories] = useState<ICategories[]>([]);
 
   const _getCategories = useCallback(async () => {
-    const { data } = await getCategories();
+    const data = await getCategories();
 
     const categories: ICategories[] = data;
 
@@ -40,12 +40,20 @@ const MenuMainPrinter = () => {
       <MainMenu>
         <li>
           <Link href="/inmotion-print">
-            <a className={router.pathname === "/inmotion-print" ? "active" : ""}>Home</a>
+            <a
+              className={router.pathname === "/inmotion-print" ? "active" : ""}
+            >
+              Home
+            </a>
           </Link>
         </li>
         <li>
           <Link href="/inmotion-print/boutique">
-            <a className={router.pathname === "/inmotion-print/boutique" ? "active" : ""}>
+            <a
+              className={
+                router.pathname === "/inmotion-print/boutique" ? "active" : ""
+              }
+            >
               Boutique
             </a>
           </Link>
@@ -69,7 +77,11 @@ const MenuMainPrinter = () => {
         </li>
         <li>
           <Link href="/inmotion-print/services">
-            <a className={router.pathname === "/inmotion-print/services" ? "active" : ""}>
+            <a
+              className={
+                router.pathname === "/inmotion-print/services" ? "active" : ""
+              }
+            >
               Services
             </a>
           </Link>
@@ -88,7 +100,11 @@ const MenuMainPrinter = () => {
         </li>
         <li>
           <Link href="/inmotion-print/contact">
-            <a className={router.pathname === "/inmotion-print/contact" ? "active" : ""}>
+            <a
+              className={
+                router.pathname === "/inmotion-print/contact" ? "active" : ""
+              }
+            >
               Contact
             </a>
           </Link>

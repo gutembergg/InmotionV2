@@ -1,13 +1,13 @@
-import type { NextPage } from "next";
+import { ReactElement } from "react";
 import { Container } from "../../components/HomeMainComponent/styles";
 import useUser from "../../hooks/useUser";
 import LayoutAdmin from "../../Layout/LayoutAdmin";
 import { LightBackground } from "../../styles/BackgroundStyle";
 import { MainContent } from "../../styles/HomeStyles";
 
-const AdminPage: NextPage = () => {
-  const {user} = useUser();
-  console.log('pageuseradmin',user)
+export default function AdminPage() {
+  const { user } = useUser();
+  console.log("pageuseradmin", user);
 
   return (
     <LightBackground>
@@ -20,6 +20,8 @@ const AdminPage: NextPage = () => {
       </LayoutAdmin>
     </LightBackground>
   );
-};
+}
 
-export default AdminPage;
+AdminPage.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutAdmin>{page}</LayoutAdmin>;
+};

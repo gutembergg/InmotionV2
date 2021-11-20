@@ -1,29 +1,28 @@
 import type { GetStaticProps, NextPage } from "next";
-import { useCallback, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import MenuCategories from "../../../components/menus/MenuCategories";
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
 import { getCategories } from "../../../services/woocommerceApi/Categories";
 import { getProducts } from "../../../services/woocommerceApi/Products";
 
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import LayoutAdmin from "../../../Layout/LayoutAdmin";
 import CartAdmin from "../../../components/CartAdmin";
 import CaisseProductList from "../../../components/CaisseProductList";
 
 import { Container, MainContent } from "../../../styles/HomeStyles";
 
-export interface IProducts {
+export interface Props {
   products: IProduct[];
   categories: ICategories[];
   menu_order: ICategories[];
 }
 
-const CaisseMagasin: NextPage<IProducts> = ({
+export default function CaisseMagasin({
   products,
   categories,
   menu_order,
-}) => {
+}: Props) {
   const [_productByCategory, setProductByCategory] = useState<IProduct[]>([]);
   const [showAllProducts, setShowAllProducts] = useState(true);
 
@@ -49,32 +48,30 @@ const CaisseMagasin: NextPage<IProducts> = ({
   );
 
   return (
-    <LightBackground>
-      <LayoutAdmin>
-        <Container>
-          <MainContent>
-            <CaisseProductList
-              products={products}
-              productByCategory={_productByCategory}
-              showAllProducts={showAllProducts}
-            />
-            <div>
-              <MenuCategories
-                categories={categories}
-                productsByCategories={productsByCategories}
-                menu_order={menu_order}
-                displayAllProducts={displayAllProducts}
-              />
-              <CartAdmin />
-            </div>
-          </MainContent>
-        </Container>
-      </LayoutAdmin>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <CaisseProductList
+          products={products}
+          productByCategory={_productByCategory}
+          showAllProducts={showAllProducts}
+        />
+        <div>
+          <MenuCategories
+            categories={categories}
+            productsByCategories={productsByCategories}
+            menu_order={menu_order}
+            displayAllProducts={displayAllProducts}
+          />
+          <CartAdmin />
+        </div>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default CaisseMagasin;
+CaisseMagasin.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutAdmin>{page}</LayoutAdmin>;
+};
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { data } = await getProducts();

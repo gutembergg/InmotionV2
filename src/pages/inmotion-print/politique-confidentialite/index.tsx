@@ -1,23 +1,20 @@
-import type {  NextPage } from "next";
-import confidentialiteIcon from"../../../../public/images/icons/confidentialite.svg"
+import type { NextPage } from "next";
+import confidentialiteIcon from "../../../../public/images/icons/confidentialite.svg";
 import { Container } from "../../../components/HomeMainComponent/styles";
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import { MainContent } from "../../../styles/HomeStyles";
+import React, { ReactElement } from "react";
 import Layout3DPrinter from "../../../Layout/Layout3DPrinter";
 
-const PolitiqueConfidentialite: NextPage = () => {
- 
+export default function PolitiqueConfidentialite() {
   return (
-    <LightBackground>
-      <Layout3DPrinter icon={confidentialiteIcon}>
-        <Container>
-          <MainContent>
-            <p>Politique de confidentialité</p>
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>Politique de confidentialité</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default PolitiqueConfidentialite;
+PolitiqueConfidentialite.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
+};

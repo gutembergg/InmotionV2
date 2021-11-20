@@ -1,23 +1,20 @@
-import type {  NextPage } from "next";
-import servicesIcon from"../../../../public/images/icons/services.svg"
-import { LightBackground } from "../../../styles/BackgroundStyle";
+import type { NextPage } from "next";
+import servicesIcon from "../../../../public/images/icons/services.svg";
 import { Container } from "../../../components/HomeMainComponent/styles";
 import { MainContent } from "../../../styles/Boutique";
+import React, { ReactElement } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 
-const Services: NextPage = () => {
- 
+export default function Services() {
   return (
-    <LightBackground>
-    <LayoutMobility icon={servicesIcon}>
-      <Container>
-        <MainContent>
-          <p>services</p>
-        </MainContent>
-      </Container>
-    </LayoutMobility>
-  </LightBackground>
+    <Container>
+      <MainContent>
+        <p>services</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default Services;
+Services.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={servicesIcon}>{page}</LayoutMobility>;
+};

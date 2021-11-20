@@ -1,23 +1,19 @@
-import type {  NextPage } from "next";
-import conditionIcon from"../../../../public/images/icons/conditionsgen.svg"
-import { LightBackground } from "../../../styles/BackgroundStyle";
+import React, { ReactElement } from "react";
+import conditionIcon from "../../../../public/images/icons/conditionsgen.svg";
 import { Container } from "../../../components/HomeMainComponent/styles";
-import { MainContent } from "../../../styles/HomeStyles";
 import Layout3DPrinter from "../../../Layout/Layout3DPrinter";
+import { MainContent } from "../../../styles/HomeStyles";
 
-const ConditionsGenerales: NextPage = () => {
- 
+export default function ConditionsGenerales() {
   return (
-    <LightBackground>
-      <Layout3DPrinter icon={conditionIcon}>
-        <Container>
-          <MainContent>
-            <p>conditions générales</p>
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>conditions générales</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default ConditionsGenerales;
+ConditionsGenerales.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
+};

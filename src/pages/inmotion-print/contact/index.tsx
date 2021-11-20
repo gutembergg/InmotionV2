@@ -1,24 +1,19 @@
-import type {  NextPage } from "next";
-import thankIcon from"../../../../public/images/icons/thank-you.svg"
-import { LightBackground } from "../../../styles/BackgroundStyle";
+import React, { ReactElement } from "react";
+import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import { Container } from "../../../components/HomeMainComponent/styles";
-import { MainContent } from "../../../styles/HomeStyles";
 import Layout3DPrinter from "../../../Layout/Layout3DPrinter";
+import { MainContent } from "../../../styles/HomeStyles";
 
-const Contact: NextPage = () => {
- 
+export default function Contact() {
   return (
-    <LightBackground>
-
-      <Layout3DPrinter icon={thankIcon}>
-        <Container>
-          <MainContent>
-            <p>contact Print</p>
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>contact Print</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default Contact;
+Contact.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
+};

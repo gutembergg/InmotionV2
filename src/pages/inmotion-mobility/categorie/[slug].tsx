@@ -1,8 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
-import LayoutMobility from "../../../Layout/LayoutMobility";
-import { CurvedBackground } from "../../../styles/BackgroundStyle";
 import HomeIcon from "../../../../public/images/icons/house.svg";
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -13,6 +11,10 @@ import {
   wc_getSub_categories,
 } from "../../../services/woocommerceApi/Categories";
 import { getProductsUpSells } from "../../../utils/getProductsUpsells";
+import useTranslation from "next-translate/useTranslation";
+import SliderCustom from "../../../components/SliderCustom";
+import SideMenuCategories from "../../../components/AccessoriesTemplate/SideMenuCategories";
+import SliderModelsUpsell from "../../../components/SliderModelsUpsell";
 
 import {
   Container,
@@ -21,10 +23,7 @@ import {
   ProductsFooter,
   ProductInfo,
 } from "../../../styles/PiecesAccessoires";
-import useTranslation from "next-translate/useTranslation";
-import SliderCustom from "../../../components/SliderCustom";
-import SideMenuCategories from "../../../components/AccessoriesTemplate/SideMenuCategories";
-import SliderModelsUpsell from "../../../components/SliderModelsUpsell";
+import LayoutMobility from "../../../Layout/LayoutMobility";
 
 interface Props {
   productsWithVariation: IProduct[];
@@ -35,14 +34,14 @@ interface Props {
   _productsUpSellModelsByDefault: IProduct[];
 }
 
-const AccessoryPage: NextPage<Props> = ({
+export default function AccessoryPage({
   productsWithVariation,
   subCategories,
   productsByCategoryDefault,
   mobilityProducts,
   _productsUpSellModelsByDefault,
   _categoryBySlug,
-}) => {
+}: Props) {
   const { t } = useTranslation();
   const allArticlesTraduction = t("equipmentsPage:allArticles");
 
@@ -61,6 +60,8 @@ const AccessoryPage: NextPage<Props> = ({
   const [modelsActivated, setModelsActivated] = useState(
     _productsUpSellModelsByDefault.length
   );
+
+  console.log("pieces-accessoires-page");
 
   useEffect(() => {
     setSelectedProductsCategory(productsByCategoryDefault);
@@ -140,51 +141,49 @@ const AccessoryPage: NextPage<Props> = ({
   );
 
   return (
-    <CurvedBackground>
-      <LayoutMobility icon={HomeIcon}>
-        <Container>
-          <Content>
-            <ProductArea>
-              <ProductInfo>
-                <AccessoriesDetail
-                  products={selectedProductsCategory}
-                  productIndex={productIndex}
-                  subCategoryActived={subCategoryActived}
-                />
-              </ProductInfo>
+    <Container>
+      <Content>
+        <ProductArea>
+          <ProductInfo>
+            <AccessoriesDetail
+              products={selectedProductsCategory}
+              productIndex={productIndex}
+              subCategoryActived={subCategoryActived}
+            />
+          </ProductInfo>
 
-              <div className="menu_block">
-                <SideMenuCategories
-                  subCategories={subCategories}
-                  activedMenuIndex={activedMenuIndex}
-                  selectCategory={selectCategory}
-                  _categoryBySlug={_categoryBySlug.name}
-                />
-              </div>
-            </ProductArea>
-            <ProductsFooter>
-              <SliderModelsUpsell
-                productsModelsUpSell={productsModelsUpSell}
-                modelsActivated={modelsActivated}
-                allArticlesTraduction={allArticlesTraduction}
-                selectModelProducts={selectModelProducts}
-                displayAllProducts={displayAllProducts}
-              />
-              <div>
-                <SliderCustom
-                  products={selectedProductsCategory}
-                  selectProduct={selectProduct}
-                />
-              </div>
-            </ProductsFooter>
-          </Content>
-        </Container>
-      </LayoutMobility>
-    </CurvedBackground>
+          <div className="menu_block">
+            <SideMenuCategories
+              subCategories={subCategories}
+              activedMenuIndex={activedMenuIndex}
+              selectCategory={selectCategory}
+              _categoryBySlug={_categoryBySlug.name}
+            />
+          </div>
+        </ProductArea>
+        <ProductsFooter>
+          <SliderModelsUpsell
+            productsModelsUpSell={productsModelsUpSell}
+            modelsActivated={modelsActivated}
+            allArticlesTraduction={allArticlesTraduction}
+            selectModelProducts={selectModelProducts}
+            displayAllProducts={displayAllProducts}
+          />
+          <div>
+            <SliderCustom
+              products={selectedProductsCategory}
+              selectProduct={selectProduct}
+            />
+          </div>
+        </ProductsFooter>
+      </Content>
+    </Container>
   );
-};
+}
 
-export default AccessoryPage;
+AccessoryPage.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -250,5 +249,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       _productsUpSellModelsByDefault,
       _categoryBySlug,
     },
+    revalidate: 60 * 60, // 1h
   };
 };

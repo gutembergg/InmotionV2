@@ -2,28 +2,22 @@ import HomeIcon from "../../../../../public/images/icons/house.svg";
 import type { NextPage } from "next";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { Container, MainContent } from "../../../../styles/HomeStyles";
-import { LightBackground } from "../../../../styles/BackgroundStyle";
+import React, { ReactElement } from "react";
 import Layout3DPrinter from "../../../../Layout/Layout3DPrinter";
-
 
 export interface IProducts {
   categories: ICategories[];
   menu_order: ICategories[];
 }
 
-const ServicesImpression: NextPage<IProducts> = () => {
-
-
+export default function ServicesImpression() {
   return (
-    <LightBackground>
-      <Layout3DPrinter icon={HomeIcon}>
-        <Container>
-          <MainContent>
-          page IMPRESSIONS 3D section print
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </LightBackground>
+    <Container>
+      <MainContent>page IMPRESSIONS 3D section print</MainContent>
+    </Container>
   );
+}
+
+ServicesImpression.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
 };
-export default ServicesImpression;

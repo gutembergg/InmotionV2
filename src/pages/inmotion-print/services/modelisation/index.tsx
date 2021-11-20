@@ -1,29 +1,16 @@
 import HomeIcon from "../../../../../public/images/icons/house.svg";
-import type { NextPage } from "next";
-import { ICategories } from "../../../../interfaces/ICategories";
 import { Container, MainContent } from "../../../../styles/HomeStyles";
-import { LightBackground } from "../../../../styles/BackgroundStyle";
+import React, { ReactElement } from "react";
 import Layout3DPrinter from "../../../../Layout/Layout3DPrinter";
 
-
-export interface IProducts {
-  categories: ICategories[];
-  menu_order: ICategories[];
+export default function ServicesModelisation() {
+  return (
+    <Container>
+      <MainContent>page MODELISATION 3D section print</MainContent>
+    </Container>
+  );
 }
 
-const ServicesModelisation: NextPage<IProducts> = () => {
-
-
-  return (
-    <LightBackground>
-      <Layout3DPrinter icon={HomeIcon}>
-        <Container>
-          <MainContent>
-          page MODELISATION 3D section print
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </LightBackground>
-  );
+ServicesModelisation.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
 };
-export default ServicesModelisation;

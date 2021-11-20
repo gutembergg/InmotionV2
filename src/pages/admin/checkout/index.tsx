@@ -12,7 +12,7 @@ import useUser from "../../../hooks/useUser";
 import { createOrder } from "../../../services/woocommerceApi/Orders";
 import LoginForm from "../../../components/Login";
 import { StyledCheckout } from "../../../styles/CheckoutStyle";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 
 import UserBillingShippingForm, {
   FormValues,
@@ -23,7 +23,7 @@ import { ValidationSchemaExample } from "../../../components/UserShippingForm";
 
 //-----
 
-const CheckoutMagasin: NextPage = () => {
+export default function CheckoutMagasin() {
   const { login, logout, user } = useUser();
   const [loged, setloged] = useState(false);
 
@@ -77,88 +77,85 @@ const CheckoutMagasin: NextPage = () => {
   }, [user]);
 
   return (
-    <LightBackground>
-      <LayoutAdmin>
-        <StyledCheckout>
-          <div className="left">
-            {!loged ? (
-              <div>
-                <p>Vous avez un compte?</p>
-                <LoginForm />
-                <RegisterForm />
-              </div>
-            ) : null}
-            <section>
-              <h2>Informations de livraison</h2>
-              <UserBillingShippingForm
-                handleBillingShippingData={handleBillingShippingData}
-              />
-              <ValidationSchemaExample />
-              {/* <Basic /> */}
-            </section>
-            <section>
-              <h2>Mode de livraison</h2>
-            </section>
-            <section>
-              <h2>Paiement</h2>
-            </section>
+    <StyledCheckout>
+      <div className="left">
+        {!loged ? (
+          <div>
+            <p>Vous avez un compte?</p>
+            <LoginForm />
+            <RegisterForm />
           </div>
-          <div className="right">
-            <div className="cartPreview">
-              <div className="cartContainer">
-                <ul>
-                  {cart.totalProductsCount > 0 ? (
-                    cart.products.map((product) => {
-                      return (
-                        <li key={product.id}>
-                          <button
-                            className="closeButton"
-                            onClick={() => removeCartItem(product.id)}
-                          ></button>
-                          <div className="cartProductInfos">
-                            <h5>{product.name}</h5>
-                            <p>
-                              {product.qty}x CHF {product.price}
-                            </p>
-                          </div>
-                          <div className="cartProductThmbnail">
-                            <Image
-                              src={product.images[0].src}
-                              alt={product.name}
-                              height={50}
-                              width={50}
-                            />
-                          </div>
-                        </li>
-                      );
-                    })
-                  ) : (
-                    <li>
-                      <p>Vous n&apos; avez aucun produit dans votre panier</p>
+        ) : null}
+        <section>
+          <h2>Informations de livraison</h2>
+          <UserBillingShippingForm
+            handleBillingShippingData={handleBillingShippingData}
+          />
+          <ValidationSchemaExample />
+          {/* <Basic /> */}
+        </section>
+        <section>
+          <h2>Mode de livraison</h2>
+        </section>
+        <section>
+          <h2>Paiement</h2>
+        </section>
+      </div>
+      <div className="right">
+        <div className="cartPreview">
+          <div className="cartContainer">
+            <ul>
+              {cart.totalProductsCount > 0 ? (
+                cart.products.map((product) => {
+                  return (
+                    <li key={product.id}>
+                      <button
+                        className="closeButton"
+                        onClick={() => removeCartItem(product.id)}
+                      ></button>
+                      <div className="cartProductInfos">
+                        <h5>{product.name}</h5>
+                        <p>
+                          {product.qty}x CHF {product.price}
+                        </p>
+                      </div>
+                      <div className="cartProductThmbnail">
+                        <Image
+                          src={product.images[0].src}
+                          alt={product.name}
+                          height={50}
+                          width={50}
+                        />
+                      </div>
                     </li>
-                  )}
-                </ul>
-                <h5 className="sousTotalTxt">
-                  Sous total:{" "}
-                  <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
-                </h5>
-              </div>
-            </div>
-
-            <CouponsCode />
-            <p>ajouter code promo</p>
-            <p>
-              ajouter fonction if userbillig & shipping !== formulaire data
-              register new data dans user (lien avec formulaire mon compte)
-            </p>
-            <p>ajouter tva</p>
-            <p>ajouter prix total</p>
-            <button onClick={sendOrder}>send</button>
+                  );
+                })
+              ) : (
+                <li>
+                  <p>Vous n&apos; avez aucun produit dans votre panier</p>
+                </li>
+              )}
+            </ul>
+            <h5 className="sousTotalTxt">
+              Sous total: <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+            </h5>
           </div>
-        </StyledCheckout>
-      </LayoutAdmin>
-    </LightBackground>
-  );
-};
+        </div>
 
-export default CheckoutMagasin;
+        <CouponsCode />
+        <p>ajouter code promo</p>
+        <p>
+          ajouter fonction if userbillig & shipping !== formulaire data register
+          new data dans user (lien avec formulaire mon compte)
+        </p>
+        <p>ajouter tva</p>
+        <p>ajouter prix total</p>
+        <button onClick={sendOrder}>send</button>
+      </div>
+    </StyledCheckout>
+  );
+}
+
+CheckoutMagasin.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutAdmin>{page}</LayoutAdmin>;
+};

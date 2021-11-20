@@ -1,22 +1,18 @@
-import type {  NextPage } from "next";
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import { Container } from "../../../components/HomeMainComponent/styles";
 import { MainContent } from "../../../styles/HomeStyles";
 import LayoutAdmin from "../../../Layout/LayoutAdmin";
+import { ReactElement } from "react";
 
-const AdminListeCommandes: NextPage = () => {
- 
+export default function AdminListeCommandes() {
   return (
-    <LightBackground>
-      <LayoutAdmin>
-        <Container>
-          <MainContent>
-            <p>Commandes</p>
-          </MainContent>
-        </Container>
-      </LayoutAdmin>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>Commandes</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default AdminListeCommandes;
+AdminListeCommandes.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutAdmin>{page}</LayoutAdmin>;
+};

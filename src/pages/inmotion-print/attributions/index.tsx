@@ -1,23 +1,19 @@
-import type {  NextPage } from "next";
-import thankIcon from"../../../../public/images/icons/thank-you.svg"
-import { LightBackground } from "../../../styles/BackgroundStyle";
+import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import { Container } from "../../../components/HomeMainComponent/styles";
 import { MainContent } from "../../../styles/HomeStyles";
+import React, { ReactElement } from "react";
 import Layout3DPrinter from "../../../Layout/Layout3DPrinter";
 
-const Attributions: NextPage = () => {
- 
+export default function Attributions() {
   return (
-    <LightBackground>
-      <Layout3DPrinter icon={thankIcon}>
-        <Container>
-          <MainContent>
-            <p>Attribution</p>
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>Attribution</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default Attributions;
+Attributions.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
+};

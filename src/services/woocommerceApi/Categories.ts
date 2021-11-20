@@ -45,12 +45,12 @@ export const wc_getCategoriesBySlug = async (
 
 export const wc_getSub_categories = async (
   lang: string,
-  parentId: number
+  categoryId: number
 ): Promise<ICategories[]> => {
   const { data: subCat } = await wcApi.get("products/categories", {
     params: {
       lang: lang,
-      parent: parentId,
+      parent: categoryId,
     },
   });
 

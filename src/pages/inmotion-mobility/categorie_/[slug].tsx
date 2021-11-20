@@ -1,12 +1,10 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { ICategories } from "../../../interfaces/ICategories";
-import LayoutMobility from "../../../Layout/LayoutMobility";
 import {
   wc_getCategoriesBySlug,
   wc_getSub_categories,
 } from "../../../services/woocommerceApi/Categories";
-import { CurvedBackground } from "../../../styles/BackgroundStyle";
 import HomeIcon from "../../../../public/images/icons/house.svg";
 import ButtonSkew from "../../../components/ButtonSkew";
 import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
@@ -24,6 +22,9 @@ import {
 } from "../../../styles/EquipementPage";
 import useTranslation from "next-translate/useTranslation";
 import SliderCustom from "../../../components/SliderCustom";
+import HeaderPages from "../../../components/HeaderPages";
+import { useRouter } from "next/router";
+import LayoutMobility from "../../../Layout/LayoutMobility";
 
 interface Props {
   subCategories: ICategories[];
@@ -31,11 +32,12 @@ interface Props {
   _productsByCategory: IProduct[];
 }
 
-const Equipements: NextPage<Props> = ({
+export default function Equipements({
   subCategories,
   equipements,
   _productsByCategory,
-}) => {
+}: Props) {
+  const router = useRouter();
   const { t } = useTranslation();
   const allArticles = t("equipmentsPage:allArticles");
 
@@ -48,6 +50,8 @@ const Equipements: NextPage<Props> = ({
   const [subCategoryActived, setSubCategoryActived] = useState<ICategories>(
     {} as ICategories
   );
+
+  console.log("test-head", router.asPath);
 
   useEffect(() => {
     setSelectedProductsCategory(_productsByCategory);
@@ -85,100 +89,105 @@ const Equipements: NextPage<Props> = ({
   }, [_productsByCategory]);
 
   return (
-    <CurvedBackground>
-      <LayoutMobility icon={HomeIcon}>
-        <Container>
-          <Content>
-            <ProductArea>
-              <ProductInfo>
-                <AccessoriesDetail
-                  products={selectedProductsCategory}
-                  productIndex={productIndex}
-                  subCategoryActived={subCategoryActived}
-                />
-              </ProductInfo>
-              <ProductMenuResponsive className="responsive">
-                <ul className="prod_model_marque">
-                  <li
-                    className={
-                      activedAllProductMenu
-                        ? "prod_model_item menu_buttons active_menu"
-                        : "prod_model_item menu_buttons"
-                    }
-                    onClick={selectAllProducts}
-                  >
-                    {allArticles}
-                  </li>
-                  {subCategories.length > 0 &&
-                    subCategories.map((subCat, index) => {
-                      return (
-                        <li
-                          className={
-                            activedMenuIndex === index &&
-                            activedAllProductMenu === false
-                              ? "prod_model_item menu_buttons active_menu"
-                              : "prod_model_item menu_buttons"
-                          }
-                          key={subCat.id}
-                          onClick={() => selectCategory(subCat.slug, index)}
-                        >
-                          {subCat.name}
-                        </li>
-                      );
-                    })}
-                </ul>
-              </ProductMenuResponsive>
-              <MenuCategories>
-                <span className="skew">
-                  <ButtonSkew text={equipements?.name} />
-                </span>
+    /*    <HeaderPages
+      name="equipements"
+      description="Equipement pour les pilotes velos eletriques"
+    > */
 
-                <div className="prod_model_marque">
-                  <p
-                    className={
-                      activedAllProductMenu
-                        ? "prod_model_item active_menu"
-                        : "prod_model_item"
-                    }
-                    onClick={selectAllProducts}
-                  >
-                    {allArticles}
-                  </p>
-                  <ul>
-                    {subCategories.map((category, index) => {
-                      return (
-                        <li
-                          className={
-                            activedMenuIndex === index &&
-                            activedAllProductMenu === false
-                              ? "prod_model_item active_menu"
-                              : "prod_model_item"
-                          }
-                          key={category.id}
-                          onClick={() => selectCategory(category.slug, index)}
-                        >
-                          {category.name}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </MenuCategories>
-            </ProductArea>
-            <ProductsFooter>
-              <SliderCustom
-                products={selectedProductsCategory}
-                selectProduct={selectProduct}
-              />
-            </ProductsFooter>
-          </Content>
-        </Container>
-      </LayoutMobility>
-    </CurvedBackground>
+    <Container>
+      <Content>
+        <ProductArea>
+          <ProductInfo>
+            <AccessoriesDetail
+              products={selectedProductsCategory}
+              productIndex={productIndex}
+              subCategoryActived={subCategoryActived}
+            />
+          </ProductInfo>
+          <ProductMenuResponsive className="responsive">
+            <ul className="prod_model_marque">
+              <li
+                className={
+                  activedAllProductMenu
+                    ? "prod_model_item menu_buttons active_menu"
+                    : "prod_model_item menu_buttons"
+                }
+                onClick={selectAllProducts}
+              >
+                {allArticles}
+              </li>
+              {subCategories.length > 0 &&
+                subCategories.map((subCat, index) => {
+                  return (
+                    <li
+                      className={
+                        activedMenuIndex === index &&
+                        activedAllProductMenu === false
+                          ? "prod_model_item menu_buttons active_menu"
+                          : "prod_model_item menu_buttons"
+                      }
+                      key={subCat.id}
+                      onClick={() => selectCategory(subCat.slug, index)}
+                    >
+                      {subCat.name}
+                    </li>
+                  );
+                })}
+            </ul>
+          </ProductMenuResponsive>
+          <MenuCategories>
+            <span className="skew">
+              <ButtonSkew text={equipements?.name} />
+            </span>
+
+            <div className="prod_model_marque">
+              <p
+                className={
+                  activedAllProductMenu
+                    ? "prod_model_item active_menu"
+                    : "prod_model_item"
+                }
+                onClick={selectAllProducts}
+              >
+                {allArticles}
+              </p>
+              <ul>
+                {subCategories.map((category, index) => {
+                  return (
+                    <li
+                      className={
+                        activedMenuIndex === index &&
+                        activedAllProductMenu === false
+                          ? "prod_model_item active_menu"
+                          : "prod_model_item"
+                      }
+                      key={category.id}
+                      onClick={() => selectCategory(category.slug, index)}
+                    >
+                      {category.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </MenuCategories>
+        </ProductArea>
+        <ProductsFooter>
+          <SliderCustom
+            products={selectedProductsCategory}
+            selectProduct={selectProduct}
+          />
+        </ProductsFooter>
+      </Content>
+    </Container>
+
+    /*  </HeaderPages> */
   );
-};
+}
 
-export default Equipements;
+Equipements.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -225,5 +234,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       equipements: wc_equipements,
       _productsByCategory: productsByCategory,
     },
+    revalidate: 60 * 60, // 1h
   };
 };

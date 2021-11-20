@@ -1,29 +1,22 @@
 import HomeIcon from "../../../public/images/icons/house.svg";
-import type { NextPage } from "next";
 import { ICategories } from "../../interfaces/ICategories";
 import { Container, MainContent } from "../../styles/HomeStyles";
-import { CurvedBackground } from "../../styles/BackgroundStyle";
+import React, { ReactElement } from "react";
 import Layout3DPrinter from "../../Layout/Layout3DPrinter";
-
 
 export interface IProducts {
   categories: ICategories[];
   menu_order: ICategories[];
 }
 
-const HomePrint: NextPage<IProducts> = () => {
-
-
+export default function HomePrint() {
   return (
-    <CurvedBackground>
-      <Layout3DPrinter icon={HomeIcon}>
-        <Container>
-          <MainContent>
-          page accueil section print
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </CurvedBackground>
+    <Container>
+      <MainContent>page accueil section print</MainContent>
+    </Container>
   );
+}
+
+HomePrint.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter icon={HomeIcon}>{page}</Layout3DPrinter>;
 };
-export default HomePrint;

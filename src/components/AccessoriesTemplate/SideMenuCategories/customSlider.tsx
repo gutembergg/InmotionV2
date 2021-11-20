@@ -29,9 +29,6 @@ const CustomSlider = ({
         spaceBetween={0.5}
         breakpoints={{
           320: {
-            slidesPerView: 1,
-          },
-          370: {
             slidesPerView: 1.5,
             spaceBetween: 0,
           },

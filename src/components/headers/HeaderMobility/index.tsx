@@ -12,8 +12,13 @@ import Link from "next/link";
 import printer from "../../../../public/images/icons/printer.svg";
 import { LinkPrint } from "../HeaderAdmin/styles";
 import useTranslation from "next-translate/useTranslation";
+import { SVGProps } from "react";
 
-const HeaderComponent = (icon: any) => {
+interface Props {
+  icon: string;
+}
+
+const HeaderComponent = ({ icon }: Props) => {
   const currentPageIconColor: string = "Blue";
 
   const { t } = useTranslation();
@@ -33,7 +38,7 @@ const HeaderComponent = (icon: any) => {
             </LinkPrint>
           </a>
         </Link>
-        <Login />
+        {/*    <Login /> */}
         <LanguageSelector />
       </div>
 
@@ -50,7 +55,7 @@ const HeaderComponent = (icon: any) => {
       <div className="bottomBlock">
         <p>{menuLeftTopText}</p>
         <FilAriane />
-        <CurrentPageIcon icon={icon.icon} bgcolor={currentPageIconColor} />
+        <CurrentPageIcon icon={icon} bgcolor={currentPageIconColor} />
       </div>
     </StyledHeader>
   );

@@ -2,28 +2,22 @@ import HomeIcon from "../../../../public/images/icons/house.svg";
 import type { NextPage } from "next";
 import { ICategories } from "../../../interfaces/ICategories";
 import { Container, MainContent } from "../../../styles/HomeStyles";
-import { CurvedBackground } from "../../../styles/BackgroundStyle";
+import React, { ReactElement } from "react";
 import Layout3DPrinter from "../../../Layout/Layout3DPrinter";
 
-
-export interface IProducts {
+export interface Props {
   categories: ICategories[];
   menu_order: ICategories[];
 }
 
-const BoutiquePrint: NextPage<IProducts> = () => {
-
-
+export default function BoutiquePrint({ categories, menu_order }: Props) {
   return (
-    <CurvedBackground>
-      <Layout3DPrinter icon={HomeIcon}>
-        <Container>
-          <MainContent>
-          page BOUTIQUE section print
-          </MainContent>
-        </Container>
-      </Layout3DPrinter>
-    </CurvedBackground>
+    <Container>
+      <MainContent>page BOUTIQUE section print</MainContent>
+    </Container>
   );
+}
+
+BoutiquePrint.getLayout = function getLayout(page: ReactElement) {
+  return <Layout3DPrinter>{page}</Layout3DPrinter>;
 };
-export default BoutiquePrint;

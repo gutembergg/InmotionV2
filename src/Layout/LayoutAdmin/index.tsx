@@ -12,12 +12,16 @@ interface LayoutProps {
   yoast_head?: string;
 }
 
-export default function LayoutAdmin({ children, yoast_head }: LayoutProps) {
-  const fullHead = yoast_head && parse(yoast_head);
+interface Props {
+  children: ReactNode;
+}
+
+export default function LayoutAdmin({ children }: Props) {
+  /*  const fullHead = yoast_head && parse(yoast_head); */
 
   return (
     <GlobalContainer>
-      <Head>{fullHead}</Head>
+      {/*  <Head>{fullHead}</Head> */}
       <HeaderAdmin />
       <HeaderMobile />
       <main>{children}</main>

@@ -1,22 +1,19 @@
-import type { NextPage } from "next";
-import thankIcon from "../../../../public/images/icons/thank-you.svg";
-import { LightBackground } from "../../../styles/BackgroundStyle";
 import { Container } from "../../../components/HomeMainComponent/styles";
 import { MainContent } from "../../../styles/HomeStyles";
+import thankIcon from "../../../../public/images/icons/thank-you.svg";
+import React, { ReactElement } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 
-const Attributions: NextPage = () => {
+export default function Attributions() {
   return (
-    <LightBackground>
-      <LayoutMobility icon={thankIcon}>
-        <Container>
-          <MainContent>
-            <p>Attribution</p>
-          </MainContent>
-        </Container>
-      </LayoutMobility>
-    </LightBackground>
+    <Container>
+      <MainContent>
+        <p>Attribution</p>
+      </MainContent>
+    </Container>
   );
-};
+}
 
-export default Attributions;
+Attributions.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
+};
