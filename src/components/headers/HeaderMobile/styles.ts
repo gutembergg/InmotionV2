@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const StyledHeader = styled.header`
+interface Props{
+  test:string
+}
+export const StyledHeader = styled.header<Props>`
   display: none;
 
+  ${props=>props.test}
   @media screen and (max-width: 1024px) {
     display: block;
     .topHeader {
