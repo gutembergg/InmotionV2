@@ -11,7 +11,7 @@ export const GlobalContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  min-height: 100%;
   min-height: -webkit-fill-available;
 
   main {
