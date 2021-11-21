@@ -25,6 +25,8 @@ export const FormSession = styled.div`
   padding: 20px;
   width: 100%;
   max-width: 750px;
+
+
 `;
 
 export const OrderSession = styled.div`

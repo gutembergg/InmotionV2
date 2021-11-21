@@ -37,6 +37,7 @@ export default function CheckoutMobility() {
 
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
+  const orderPreview = t("checkout-mobility:orderPreview");
   const deliveryInfo = t("checkout-mobility:deliveryInfo");
   const wayDelivery = t("checkout-mobility:wayDelivery");
   const payment = t("checkout-mobility:payment");

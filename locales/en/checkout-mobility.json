@@ -1,5 +1,6 @@
 {
-  "haveAccount": "Do you have account?",
+  "haveAccount": "Do you have account or do you want to create one?",
+  "orderPreview": "Your order preview",
   "deliveryInfo": "Delivery informations",
   "wayDelivery": "Delivery way",
   "payment": "Payment",
