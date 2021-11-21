@@ -66,6 +66,8 @@ const AccessoriesDetail = ({
             width={300}
             height={300}
             alt={products[productIndex]?.images[0].name}
+            placeholder="blur"
+            blurDataURL={products[productIndex]?.images[0].src}
           />
         </MobileImageBox>
         <MobileInfos>
@@ -100,6 +102,8 @@ const AccessoriesDetail = ({
             width={300}
             height={300}
             alt={products[productIndex]?.images[0].name}
+            placeholder="blur"
+            blurDataURL={products[productIndex]?.images[0].src}
           />
         </AccessoryImage>
         <AccessoryInfos>

@@ -134,6 +134,12 @@ export default function Category({ category, productsByCategory }: Props) {
                 : placeholder.src
             }
             alt={productsByCategory[productIndex].name}
+            placeholder="blur"
+            blurDataURL={
+              productsByCategory[productIndex].images[0]
+                ? productsByCategory[productIndex].images[0].src
+                : placeholder.src
+            }
           />
         </ProductImage>
 

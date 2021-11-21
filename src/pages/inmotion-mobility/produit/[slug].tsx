@@ -103,6 +103,12 @@ export default function ProductDetail({ product }: Props) {
                           : placeholder.src
                       }
                       alt={product.name}
+                      placeholder="blur"
+                      blurDataURL={
+                        product.images[0]
+                          ? product.images[0].src
+                          : placeholder.src
+                      }
                     />
 
                     {product.on_sale && (

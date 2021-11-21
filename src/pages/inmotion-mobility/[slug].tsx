@@ -48,6 +48,8 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
                         alt={category.name}
                         width={300}
                         height={300}
+                        placeholder="blur"
+                        blurDataURL={category.image?.src}
                       />
                     )}
 

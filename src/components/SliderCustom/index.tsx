@@ -63,6 +63,8 @@ const SliderCustom = ({ products, selectProduct }: Props) => {
                   height={150}
                   src={product.images[0].src}
                   alt="product"
+                  placeholder="blur"
+                  blurDataURL={product.images[0].src}
                 />
                 <div>{product.name}</div>
               </div>

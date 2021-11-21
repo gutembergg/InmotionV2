@@ -2,7 +2,7 @@ import HomeIcon from "../../../public/images/icons/house.svg";
 import { ICategories } from "../../interfaces/ICategories";
 import { Container, MainContent } from "../../styles/HomeStyles";
 import useUser from "../../hooks/useUser";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 
 export interface Props {
@@ -12,7 +12,7 @@ export interface Props {
 
 export default function Home({ categories, menu_order }: Props) {
   const { user } = useUser();
-  const [loged, setloged] = useState(false);
+  const [loged] = useState(false);
 
   /* useEffect(() => {
     if (user.token) {
