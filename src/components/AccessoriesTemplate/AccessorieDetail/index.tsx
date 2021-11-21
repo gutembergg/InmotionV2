@@ -15,6 +15,10 @@ import {
   ButtonsBox,
   ButtonProduct,
   LinkProduct,
+  MobileTemplate,
+  MobileImageBox,
+  MobileInfos,
+  MobileButtons,
 } from "./styles";
 
 interface Props {
@@ -55,6 +59,40 @@ const AccessoriesDetail = ({
 
   return (
     <Container>
+      <MobileTemplate>
+        <MobileImageBox>
+          <Image
+            src={products[productIndex]?.images[0].src}
+            width={300}
+            height={300}
+            alt={products[productIndex]?.images[0].name}
+          />
+        </MobileImageBox>
+        <MobileInfos>
+          <div className="prod_category_name">
+            {!!subCategoryActived.name
+              ? subCategoryActived.name
+              : products[productIndex].categories[0].name}
+          </div>
+          <div className="prod_name">{products[productIndex].name}</div>
+
+          <div className="price_block">
+            <span
+              className={
+                products[productIndex].on_sale === true ? "regular_price" : ""
+              }
+            >
+              CHF {products[productIndex].regular_price}
+            </span>
+            {!!products[productIndex].sale_price && (
+              <span>CHF {products[productIndex].sale_price}</span>
+            )}
+          </div>
+        </MobileInfos>
+        <MobileButtons onClick={() => handleAddToCart(products[productIndex])}>
+          panier
+        </MobileButtons>
+      </MobileTemplate>
       <Content>
         <AccessoryImage>
           <Image
@@ -72,9 +110,9 @@ const AccessoriesDetail = ({
               : products[productIndex].categories[0].name}
           </div>
           <div className="prod_name">{products[productIndex].name}</div>
-          <div className="color">
+          {/*   <div className="color">
             <span>couleurs:</span> <ColorButtonSkew color="red" />
-          </div>
+          </div> */}
 
           <div className="price_block">
             <span

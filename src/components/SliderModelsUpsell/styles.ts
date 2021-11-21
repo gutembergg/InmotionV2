@@ -3,11 +3,15 @@ import styled from "styled-components";
 export const SliderContainer = styled.div`
   width: 100%;
   max-width: 1020px;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 
   .active {
     background: var(--Blue);
     color: var(--White);
+  }
+
+  @media (max-width: 570px) {
+    margin-bottom: 1rem;
   }
 `;
 

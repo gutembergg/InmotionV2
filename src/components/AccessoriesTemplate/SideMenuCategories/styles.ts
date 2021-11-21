@@ -52,10 +52,7 @@ export const MenuCategoriesResponsive = styled.div`
 `;
 
 export const MenuCategories = styled.div`
-  width: 100%;
-  max-width: 300px;
   color: var(--DarkGray);
-
   font-size: 1.2rem;
 
   .active_menu {

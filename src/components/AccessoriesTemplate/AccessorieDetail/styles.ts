@@ -1,7 +1,9 @@
 import { shade } from "polished";
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  width: 100%;
+`;
 
 export const Content = styled.div`
   display: flex;
@@ -14,18 +16,17 @@ export const Content = styled.div`
     justify-content: center;
   }
 
-  @media (max-width: 820px) {
-    flex-direction: column;
+  @media (max-width: 570px) {
+    display: none;
   }
 `;
 
 export const AccessoryImage = styled.div`
-  margin-right: 1rem;
+  display: block;
 
   @media (max-width: 820px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*    width: 100px;
+    height: 100px; */
   }
 `;
 
@@ -111,4 +112,34 @@ export const LinkProduct = styled.div`
       color: ${shade(0.2, "#0570A6")};
     }
   }
+`;
+
+export const MobileTemplate = styled.div`
+  display: none;
+
+  @media (max-width: 570px) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+`;
+
+export const MobileImageBox = styled.div`
+  width: 100px;
+  height: 100px;
+`;
+
+export const MobileInfos = styled.div`
+  padding-left: 1rem;
+  font-size: 0.8rem;
+`;
+
+export const MobileButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--Blue);
+  color: var(--White);
+
+  width: 90px;
 `;
