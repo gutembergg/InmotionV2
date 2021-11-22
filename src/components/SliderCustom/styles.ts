@@ -14,6 +14,11 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .swiper-slide {
+    width: 100%;
+    max-width: 200px;
   }
 `;

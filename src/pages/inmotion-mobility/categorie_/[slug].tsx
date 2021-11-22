@@ -25,6 +25,7 @@ import SliderCustom from "../../../components/SliderCustom";
 import HeaderPages from "../../../components/HeaderPages";
 import { useRouter } from "next/router";
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import EquipSliderCategory from "../../../components/AccessoriesTemplate/EquipmentPage/equipSliderCategory";
 
 interface Props {
   subCategories: ICategories[];
@@ -105,36 +106,14 @@ export default function Equipements({
             />
           </ProductInfo>
           <ProductMenuResponsive className="responsive">
-            <ul className="prod_model_marque">
-              <li
-                className={
-                  activedAllProductMenu
-                    ? "prod_model_item menu_buttons active_menu"
-                    : "prod_model_item menu_buttons"
-                }
-                onClick={selectAllProducts}
-              >
-                {allArticles}
-              </li>
-              {subCategories.length > 0 &&
-                subCategories.map((subCat, index) => {
-                  return (
-                    <li
-                      className={
-                        activedMenuIndex === index &&
-                        activedAllProductMenu === false
-                          ? "prod_model_item menu_buttons active_menu"
-                          : "prod_model_item menu_buttons"
-                      }
-                      key={subCat.id}
-                      onClick={() => selectCategory(subCat.slug, index)}
-                    >
-                      {subCat.name}
-                    </li>
-                  );
-                })}
-            </ul>
+            <EquipSliderCategory
+              activedAllProductMenu={activedAllProductMenu}
+              activedMenuIndex={activedMenuIndex}
+              subCategories={subCategories}
+              selectCategory={selectCategory}
+            />
           </ProductMenuResponsive>
+
           <MenuCategories>
             <span className="skew">
               <ButtonSkew text={equipements?.name} />

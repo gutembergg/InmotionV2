@@ -13,6 +13,10 @@ export const Content = styled.div`
   align-items: center;
 
   margin-top: 4rem;
+
+  @media (max-width: 1200px) {
+    margin-top: 1rem;
+  }
 `;
 
 export const ProductArea = styled.div`
@@ -27,6 +31,7 @@ export const ProductArea = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-top: 4rem;
+    gap: 1rem;
   }
 `;
 

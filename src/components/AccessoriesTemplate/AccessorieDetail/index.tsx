@@ -5,7 +5,7 @@ import useCart from "../../../hooks/useCart";
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
 import ButtonSkew from "../../ButtonSkew";
-import ColorButtonSkew from "../../ColorButttonSkew";
+import CartIcon from "../../../../public/images/icons/cartWhite.svg";
 
 import {
   Container,
@@ -57,18 +57,22 @@ const AccessoriesDetail = ({
     }
   };
 
+  console.log("products[productIndex]?", products);
+
   return (
     <Container>
       <MobileTemplate>
         <MobileImageBox>
-          <Image
-            src={products[productIndex]?.images[0].src}
-            width={300}
-            height={300}
-            alt={products[productIndex]?.images[0].name}
-            placeholder="blur"
-            blurDataURL={products[productIndex]?.images[0].src}
-          />
+          {products[productIndex]?.images[0].src && (
+            <Image
+              src={products[productIndex]?.images[0].src}
+              width={300}
+              height={300}
+              alt={products[productIndex]?.images[0].name}
+              placeholder="blur"
+              blurDataURL={products[productIndex]?.images[0].src}
+            />
+          )}
         </MobileImageBox>
         <MobileInfos>
           <div className="prod_category_name">
@@ -76,35 +80,44 @@ const AccessoriesDetail = ({
               ? subCategoryActived.name
               : products[productIndex].categories[0].name}
           </div>
-          <div className="prod_name">{products[productIndex].name}</div>
+          <div className="prod_name">{products[productIndex]?.name}</div>
 
           <div className="price_block">
             <span
               className={
-                products[productIndex].on_sale === true ? "regular_price" : ""
+                products[productIndex]?.on_sale === true ? "regular_price" : ""
               }
             >
-              CHF {products[productIndex].regular_price}
+              CHF {products[productIndex]?.regular_price}
             </span>
-            {!!products[productIndex].sale_price && (
-              <span>CHF {products[productIndex].sale_price}</span>
+            {!!products[productIndex]?.sale_price && (
+              <span>CHF {products[productIndex]?.sale_price}</span>
             )}
           </div>
         </MobileInfos>
-        <MobileButtons onClick={() => handleAddToCart(products[productIndex])}>
-          panier
+        <MobileButtons>
+          <button onClick={() => handleAddToCart(products[productIndex])}>
+            <Image src={CartIcon} alt="photo" width={27} height={27} />
+          </button>
+          <Link
+            href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+          >
+            <a>Detail</a>
+          </Link>
         </MobileButtons>
       </MobileTemplate>
       <Content>
         <AccessoryImage>
-          <Image
-            src={products[productIndex]?.images[0].src}
-            width={300}
-            height={300}
-            alt={products[productIndex]?.images[0].name}
-            placeholder="blur"
-            blurDataURL={products[productIndex]?.images[0].src}
-          />
+          {products[productIndex]?.images[0].src && (
+            <Image
+              src={products[productIndex]?.images[0].src}
+              width={300}
+              height={300}
+              alt={products[productIndex]?.images[0].name}
+              placeholder="blur"
+              blurDataURL={products[productIndex]?.images[0].src}
+            />
+          )}
         </AccessoryImage>
         <AccessoryInfos>
           {products[productIndex]?.on_sale && <ButtonSkew text="Promotion!" />}
@@ -113,7 +126,7 @@ const AccessoriesDetail = ({
               ? subCategoryActived.name
               : products[productIndex].categories[0].name}
           </div>
-          <div className="prod_name">{products[productIndex].name}</div>
+          <div className="prod_name">{products[productIndex]?.name}</div>
           {/*   <div className="color">
             <span>couleurs:</span> <ColorButtonSkew color="red" />
           </div> */}
@@ -121,13 +134,13 @@ const AccessoriesDetail = ({
           <div className="price_block">
             <span
               className={
-                products[productIndex].on_sale === true ? "regular_price" : ""
+                products[productIndex]?.on_sale === true ? "regular_price" : ""
               }
             >
-              CHF {products[productIndex].regular_price}
+              CHF {products[productIndex]?.regular_price}
             </span>
-            {!!products[productIndex].sale_price && (
-              <span>CHF {products[productIndex].sale_price}</span>
+            {!!products[productIndex]?.sale_price && (
+              <span>CHF {products[productIndex]?.sale_price}</span>
             )}
           </div>
 
@@ -139,7 +152,7 @@ const AccessoriesDetail = ({
             </ButtonProduct>
             <LinkProduct>
               <Link
-                href={`/inmotion-mobility/produit/${products[productIndex].slug}`}
+                href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
               >
                 <a className="link">{linkShowDetails}</a>
               </Link>

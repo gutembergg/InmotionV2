@@ -1,11 +1,14 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import HomeIcon from "../../../../public/images/icons/house.svg";
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
 import AccessoriesDetail from "../../../components/AccessoriesTemplate/AccessorieDetail";
-import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
+import {
+  getProduitsByCategoriesSlug,
+  wc_getProductsByCategory,
+} from "../../../services/woocommerceApi/Products";
 import {
   wc_getCategoriesBySlug,
   wc_getSub_categories,
@@ -61,8 +64,6 @@ export default function AccessoryPage({
     _productsUpSellModelsByDefault.length
   );
 
-  console.log("pieces-accessoires-page");
-
   useEffect(() => {
     setSelectedProductsCategory(productsByCategoryDefault);
     setProductsModelsUpSell(_productsUpSellModelsByDefault);
@@ -115,6 +116,7 @@ export default function AccessoryPage({
   const selectModelProducts = useCallback(
     (model: IProduct | { id: number; name: string }, modelIndex) => {
       setModelsActivated(modelIndex);
+      setProductIndex(0);
 
       const productsByModels = productsWithVariation.filter((product) =>
         product.upsell_ids.find((prodId) => prodId === model.id)
@@ -229,7 +231,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     product.categories.find((cat) => cat.slug === wc_subCategories[0].slug)
   );
 
-  const mobilityProducts = await getProduitsByCategoriesSlug("boutique", "fr");
+  const mobilityProducts = await wc_getProductsByCategory(80, "fr"); // Boutique ID: 80
 
   /// Get upSell_ids products ///////////////////////////////////////
   const productsUpSellResult = getProductsUpSells(

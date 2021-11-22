@@ -23,9 +23,9 @@ export const getCategoriesBySlug = async (slug: string) => {
 
 // Get category by ID /////////////////////////////////////////
 export const getCategoryById = async (id: string) => {
-  const response = await wooCommerce.get(`products/categories/${id}`);
+  const { data } = await wooCommerce.get(`products/categories/${id}`);
 
-  return response;
+  return data;
 };
 
 // Functions with woocommerce rest api without library ///////////////////////

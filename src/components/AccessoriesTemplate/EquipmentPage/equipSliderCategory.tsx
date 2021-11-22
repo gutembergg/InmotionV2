@@ -13,14 +13,16 @@ SwiperCore.use([Scrollbar]);
 interface Props {
   subCategories: ICategories[];
   activedMenuIndex: number;
+  activedAllProductMenu: boolean;
   selectCategory: (categorySlug: string, index: number) => void;
 }
 
-const CustomSlider = ({
+const EquipSliderCategory = ({
   subCategories,
   selectCategory,
   activedMenuIndex,
 }: Props) => {
+  console.log("equpSlider");
   return (
     <SliderContainer>
       <Swiper
@@ -28,23 +30,31 @@ const CustomSlider = ({
         slidesPerView={3}
         spaceBetween={0.5}
         breakpoints={{
-          320: {
-            slidesPerView: 1.5,
+          300: {
+            slidesPerView: 1.2,
             spaceBetween: 0,
           },
-          360: {
-            slidesPerView: 1.5,
+          388: {
+            slidesPerView: 1.2,
             spaceBetween: 0,
           },
-          473: {
+          479: {
+            slidesPerView: 1.8,
+            spaceBetween: 0,
+          },
+          520: {
             slidesPerView: 2,
             spaceBetween: 0,
           },
-          606: {
+          574: {
+            slidesPerView: 2.2,
+            spaceBetween: 0,
+          },
+          630: {
             slidesPerView: 2.5,
             spaceBetween: 0,
           },
-          730: {
+          746: {
             slidesPerView: 3,
             spaceBetween: 0,
           },
@@ -57,11 +67,7 @@ const CustomSlider = ({
           return (
             <SwiperSlide key={category.id}>
               <Button
-                className={
-                  activedMenuIndex === index
-                    ? "menu_buttons active_menu"
-                    : "menu_buttons"
-                }
+                className={activedMenuIndex === index ? "active" : ""}
                 onClick={() => selectCategory(category.slug, index)}
               >
                 {category.name}
@@ -74,4 +80,4 @@ const CustomSlider = ({
   );
 };
 
-export default CustomSlider;
+export default EquipSliderCategory;

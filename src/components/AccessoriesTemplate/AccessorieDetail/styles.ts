@@ -11,6 +11,7 @@ export const Content = styled.div`
   align-self: flex-start;
 
   width: 100%;
+  margin-top: 1rem;
 
   @media (max-width: 1200px) {
     justify-content: center;
@@ -24,10 +25,7 @@ export const Content = styled.div`
 export const AccessoryImage = styled.div`
   display: block;
 
-  @media (max-width: 820px) {
-    /*    width: 100px;
-    height: 100px; */
-  }
+  margin-right: 1.5rem;
 `;
 
 export const AccessoryInfos = styled.div`
@@ -119,7 +117,7 @@ export const MobileTemplate = styled.div`
 
   @media (max-width: 570px) {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
   }
 `;
@@ -136,10 +134,26 @@ export const MobileInfos = styled.div`
 
 export const MobileButtons = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background: var(--Blue);
-  color: var(--White);
 
-  width: 90px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+
+    background: var(--Blue);
+    color: var(--White);
+    border: none;
+    border-radius: 4px;
+
+    width: 90px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--Blue);
+  }
 `;
