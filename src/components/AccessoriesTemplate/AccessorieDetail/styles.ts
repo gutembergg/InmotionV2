@@ -119,23 +119,35 @@ export const MobileTemplate = styled.div`
     display: flex;
     justify-content: space-around;
     width: 100%;
+
+    padding: 6px;
+    border: 1px solid;
+    border-radius: 6px;
   }
 `;
 
 export const MobileImageBox = styled.div`
   width: 100px;
   height: 100px;
+
+  display: flex;
+  align-items: center;
 `;
 
 export const MobileInfos = styled.div`
-  padding-left: 1rem;
+  padding: 1rem;
   font-size: 0.8rem;
+
+  .prod_category_name {
+    color: var(--DarkGray);
+  }
 `;
 
 export const MobileButtons = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   button {
     display: flex;

@@ -27,4 +27,13 @@ export interface ICategories {
       }
     ];
   };
+  yoast_head_json: {
+    canonical: string;
+    og_locale: string;
+    og_site_name: string;
+    og_title: string;
+    og_type: string;
+    og_url: string;
+    twitter_card: string;
+  };
 }

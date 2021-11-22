@@ -54,6 +54,23 @@ export interface IProduct {
   stock_status?: string;
   meta_data: IProductMetaData[];
   yoast_head?: string;
+  yoast_head_json: {
+    canonical: string;
+    og_locale: string;
+    og_site_name: string;
+    og_title: string;
+    og_type: string;
+    og_url: string;
+    twitter_card: string;
+    og_image: [
+      {
+        width: number;
+        height: number;
+        url: string;
+        type: string;
+      }
+    ];
+  };
   upsell_ids: number[];
   attributes: IProductAttributes[];
   sku: string;

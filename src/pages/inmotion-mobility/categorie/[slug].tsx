@@ -27,6 +27,7 @@ import {
   ProductInfo,
 } from "../../../styles/PiecesAccessoires";
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import HeaderSeo from "../../../components/HeaderSeo";
 
 interface Props {
   productsWithVariation: IProduct[];
@@ -143,43 +144,51 @@ export default function AccessoryPage({
   );
 
   return (
-    <Container>
-      <Content>
-        <ProductArea>
-          <ProductInfo>
-            <AccessoriesDetail
-              products={selectedProductsCategory}
-              productIndex={productIndex}
-              subCategoryActived={subCategoryActived}
-            />
-          </ProductInfo>
+    <HeaderSeo
+      description="Pieces detachee, velos, trottinettes et gyrorous"
+      title={_categoryBySlug.yoast_head_json.og_title}
+      canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie/pieces-detachee`}
+      og_locale={_categoryBySlug.yoast_head_json.og_locale}
+      og_title={_categoryBySlug.yoast_head_json.og_title}
+    >
+      <Container>
+        <Content>
+          <ProductArea>
+            <ProductInfo>
+              <AccessoriesDetail
+                products={selectedProductsCategory}
+                productIndex={productIndex}
+                subCategoryActived={subCategoryActived}
+              />
+            </ProductInfo>
 
-          <div className="menu_block">
-            <SideMenuCategories
-              subCategories={subCategories}
-              activedMenuIndex={activedMenuIndex}
-              selectCategory={selectCategory}
-              _categoryBySlug={_categoryBySlug.name}
+            <div className="menu_block">
+              <SideMenuCategories
+                subCategories={subCategories}
+                activedMenuIndex={activedMenuIndex}
+                selectCategory={selectCategory}
+                _categoryBySlug={_categoryBySlug.name}
+              />
+            </div>
+          </ProductArea>
+          <ProductsFooter>
+            <SliderModelsUpsell
+              productsModelsUpSell={productsModelsUpSell}
+              modelsActivated={modelsActivated}
+              allArticlesTraduction={allArticlesTraduction}
+              selectModelProducts={selectModelProducts}
+              displayAllProducts={displayAllProducts}
             />
-          </div>
-        </ProductArea>
-        <ProductsFooter>
-          <SliderModelsUpsell
-            productsModelsUpSell={productsModelsUpSell}
-            modelsActivated={modelsActivated}
-            allArticlesTraduction={allArticlesTraduction}
-            selectModelProducts={selectModelProducts}
-            displayAllProducts={displayAllProducts}
-          />
-          <div>
-            <SliderCustom
-              products={selectedProductsCategory}
-              selectProduct={selectProduct}
-            />
-          </div>
-        </ProductsFooter>
-      </Content>
-    </Container>
+            <div>
+              <SliderCustom
+                products={selectedProductsCategory}
+                selectProduct={selectProduct}
+              />
+            </div>
+          </ProductsFooter>
+        </Content>
+      </Container>
+    </HeaderSeo>
   );
 }
 

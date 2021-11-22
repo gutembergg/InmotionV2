@@ -22,7 +22,6 @@ const EquipSliderCategory = ({
   selectCategory,
   activedMenuIndex,
 }: Props) => {
-  console.log("equpSlider");
   return (
     <SliderContainer>
       <Swiper

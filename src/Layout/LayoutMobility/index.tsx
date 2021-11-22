@@ -4,15 +4,14 @@ import Footer from "../../components/Footers/MobilityFooter";
 import HeaderComponent from "../../components/headers/HeaderMobility";
 import HeaderMobile from "../../components/headers/HeaderMobile";
 import { GlobalContainer } from "./styles";
-import parse from "html-react-parser";
-import mainBg from "../../../public/images/backgrounds/MainBackground.jpg";
+//import mainBg from "../../../public/images/backgrounds/MainBackground.jpg";
 
-interface LayoutProps {
+interface Props {
   children: ReactNode;
   icon?: any;
 }
 
-export default function LayoutMobility({ children, icon }: LayoutProps) {
+export default function LayoutMobility({ children, icon }: Props) {
   return (
     <GlobalContainer>
       {/* <div className="bg_image">

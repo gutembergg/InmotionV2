@@ -57,8 +57,6 @@ const AccessoriesDetail = ({
     }
   };
 
-  console.log("products[productIndex]?", products);
-
   return (
     <Container>
       <MobileTemplate>

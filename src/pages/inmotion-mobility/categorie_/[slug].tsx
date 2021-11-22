@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { ICategories } from "../../../interfaces/ICategories";
 import {
@@ -22,10 +22,9 @@ import {
 } from "../../../styles/EquipementPage";
 import useTranslation from "next-translate/useTranslation";
 import SliderCustom from "../../../components/SliderCustom";
-import HeaderPages from "../../../components/HeaderPages";
-import { useRouter } from "next/router";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import EquipSliderCategory from "../../../components/AccessoriesTemplate/EquipmentPage/equipSliderCategory";
+import HeaderSeo from "../../../components/HeaderSeo";
 
 interface Props {
   subCategories: ICategories[];
@@ -38,7 +37,6 @@ export default function Equipements({
   equipements,
   _productsByCategory,
 }: Props) {
-  const router = useRouter();
   const { t } = useTranslation();
   const allArticles = t("equipmentsPage:allArticles");
 
@@ -51,8 +49,6 @@ export default function Equipements({
   const [subCategoryActived, setSubCategoryActived] = useState<ICategories>(
     {} as ICategories
   );
-
-  console.log("test-head", router.asPath);
 
   useEffect(() => {
     setSelectedProductsCategory(_productsByCategory);
@@ -90,77 +86,78 @@ export default function Equipements({
   }, [_productsByCategory]);
 
   return (
-    /*    <HeaderPages
-      name="equipements"
+    <HeaderSeo
       description="Equipement pour les pilotes velos eletriques"
-    > */
+      title={equipements.yoast_head_json.og_title}
+      canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/equipements`}
+      og_locale={equipements.yoast_head_json.og_locale}
+      og_title={equipements.yoast_head_json.og_title}
+    >
+      <Container>
+        <Content>
+          <ProductArea>
+            <ProductInfo>
+              <AccessoriesDetail
+                products={selectedProductsCategory}
+                productIndex={productIndex}
+                subCategoryActived={subCategoryActived}
+              />
+            </ProductInfo>
+            <ProductMenuResponsive className="responsive">
+              <EquipSliderCategory
+                activedAllProductMenu={activedAllProductMenu}
+                activedMenuIndex={activedMenuIndex}
+                subCategories={subCategories}
+                selectCategory={selectCategory}
+              />
+            </ProductMenuResponsive>
 
-    <Container>
-      <Content>
-        <ProductArea>
-          <ProductInfo>
-            <AccessoriesDetail
+            <MenuCategories>
+              <span className="skew">
+                <ButtonSkew text={equipements?.name} />
+              </span>
+
+              <div className="prod_model_marque">
+                <p
+                  className={
+                    activedAllProductMenu
+                      ? "prod_model_item active_menu"
+                      : "prod_model_item"
+                  }
+                  onClick={selectAllProducts}
+                >
+                  {allArticles}
+                </p>
+                <ul>
+                  {subCategories.map((category, index) => {
+                    return (
+                      <li
+                        className={
+                          activedMenuIndex === index &&
+                          activedAllProductMenu === false
+                            ? "prod_model_item active_menu"
+                            : "prod_model_item"
+                        }
+                        key={category.id}
+                        onClick={() => selectCategory(category.slug, index)}
+                      >
+                        {category.name}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </MenuCategories>
+          </ProductArea>
+          <ProductsFooter>
+            <SliderCustom
               products={selectedProductsCategory}
-              productIndex={productIndex}
-              subCategoryActived={subCategoryActived}
+              selectProduct={selectProduct}
             />
-          </ProductInfo>
-          <ProductMenuResponsive className="responsive">
-            <EquipSliderCategory
-              activedAllProductMenu={activedAllProductMenu}
-              activedMenuIndex={activedMenuIndex}
-              subCategories={subCategories}
-              selectCategory={selectCategory}
-            />
-          </ProductMenuResponsive>
-
-          <MenuCategories>
-            <span className="skew">
-              <ButtonSkew text={equipements?.name} />
-            </span>
-
-            <div className="prod_model_marque">
-              <p
-                className={
-                  activedAllProductMenu
-                    ? "prod_model_item active_menu"
-                    : "prod_model_item"
-                }
-                onClick={selectAllProducts}
-              >
-                {allArticles}
-              </p>
-              <ul>
-                {subCategories.map((category, index) => {
-                  return (
-                    <li
-                      className={
-                        activedMenuIndex === index &&
-                        activedAllProductMenu === false
-                          ? "prod_model_item active_menu"
-                          : "prod_model_item"
-                      }
-                      key={category.id}
-                      onClick={() => selectCategory(category.slug, index)}
-                    >
-                      {category.name}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </MenuCategories>
-        </ProductArea>
-        <ProductsFooter>
-          <SliderCustom
-            products={selectedProductsCategory}
-            selectProduct={selectProduct}
-          />
-        </ProductsFooter>
-      </Content>
-    </Container>
-
-    /*  </HeaderPages> */
+          </ProductsFooter>
+        </Content>
+      </Container>
+    </HeaderSeo>
   );
 }
 

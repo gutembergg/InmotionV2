@@ -31,6 +31,7 @@ import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import HeaderSeo from "../../../components/HeaderSeo";
 
 interface Props {
   category: ICategories;
@@ -86,154 +87,162 @@ export default function Category({ category, productsByCategory }: Props) {
   };
 
   return (
-    <Container>
-      <Content>
-        <ProductInfos>
-          <div className="weight">
-            <span>
-              <Image src={WeigthIcon} alt="poids" />
-            </span>
-            <span>17 KM</span>
-          </div>
-          <div className="weight">
-            <span>
-              <Image src={SpeedIcon} alt="poids" />
-            </span>
-            <span>{vitesse?.options[0]}</span>
-          </div>
-          <div className="weight autonomie">
-            <span>
-              <Image src={AutonomieIcon} alt="poids" />
-            </span>
-            <span>{autonomie?.options[0]}</span>
-          </div>
-          <div className="politic_text autonomie">
-            <span>
-              <Image
-                width={52}
-                height={55}
-                src={CheckIcon}
-                alt="poids"
-                className="image"
-              />
-            </span>
-            <span>
-              {" "}
-              Autorisé en Suisse à circuler sur voie publique : piste cyclable
-              et route
-            </span>
-          </div>
-        </ProductInfos>
-        <ProductImage>
-          <Image
-            width={250}
-            height={260}
-            src={
-              productsByCategory[productIndex].images[0]
-                ? productsByCategory[productIndex].images[0].src
-                : placeholder.src
-            }
-            alt={productsByCategory[productIndex].name}
-            placeholder="blur"
-            blurDataURL={
-              productsByCategory[productIndex].images[0]
-                ? productsByCategory[productIndex].images[0].src
-                : placeholder.src
-            }
-          />
-        </ProductImage>
+    <HeaderSeo
+      description="Mobility eletrique produits"
+      title={category.yoast_head_json.og_title}
+      canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/${category.slug}`}
+      og_locale={category.yoast_head_json.og_locale}
+      og_title={category.yoast_head_json.og_title}
+    >
+      <Container>
+        <Content>
+          <ProductInfos>
+            <div className="weight">
+              <span>
+                <Image src={WeigthIcon} alt="poids" />
+              </span>
+              <span>17 KM</span>
+            </div>
+            <div className="weight">
+              <span>
+                <Image src={SpeedIcon} alt="poids" />
+              </span>
+              <span>{vitesse?.options[0]}</span>
+            </div>
+            <div className="weight autonomie">
+              <span>
+                <Image src={AutonomieIcon} alt="poids" />
+              </span>
+              <span>{autonomie?.options[0]}</span>
+            </div>
+            <div className="politic_text autonomie">
+              <span>
+                <Image
+                  width={52}
+                  height={55}
+                  src={CheckIcon}
+                  alt="poids"
+                  className="image"
+                />
+              </span>
+              <span>
+                {" "}
+                Autorisé en Suisse à circuler sur voie publique : piste cyclable
+                et route
+              </span>
+            </div>
+          </ProductInfos>
+          <ProductImage>
+            <Image
+              width={250}
+              height={260}
+              src={
+                productsByCategory[productIndex].images[0]
+                  ? productsByCategory[productIndex].images[0].src
+                  : placeholder.src
+              }
+              alt={productsByCategory[productIndex].name}
+              placeholder="blur"
+              blurDataURL={
+                productsByCategory[productIndex].images[0]
+                  ? productsByCategory[productIndex].images[0].src
+                  : placeholder.src
+              }
+            />
+          </ProductImage>
 
-        <ProductMenuResponsive className="responsive">
-          <ul className="prod_model-marque">
-            {productsByCategory.map((product, index) => {
-              return (
-                <li
-                  className={
-                    activedModelIndex === index
-                      ? "model_buttons model_actived"
-                      : "model_buttons"
-                  }
-                  key={product.id}
-                  onClick={() => handleModelMarque(product.id, index)}
-                >
-                  {getAcfContent(product, "marque_du_produit")}{" "}
-                  <span>{getAcfContent(product, "modele_du_produit")}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </ProductMenuResponsive>
-        <ProductMenuModel>
-          <span className="skew">
-            <ButtonSkew text={category.name} />
-          </span>
+          <ProductMenuResponsive className="responsive">
+            <ul className="prod_model-marque">
+              {productsByCategory.map((product, index) => {
+                return (
+                  <li
+                    className={
+                      activedModelIndex === index
+                        ? "model_buttons model_actived"
+                        : "model_buttons"
+                    }
+                    key={product.id}
+                    onClick={() => handleModelMarque(product.id, index)}
+                  >
+                    {getAcfContent(product, "marque_du_produit")}{" "}
+                    <span>{getAcfContent(product, "modele_du_produit")}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </ProductMenuResponsive>
+          <ProductMenuModel>
+            <span className="skew">
+              <ButtonSkew text={category.name} />
+            </span>
 
-          <ul className="prod_model-marque">
-            {productsByCategory.map((product, index) => {
-              return (
-                <li
-                  className="prod_model_item"
-                  key={product.id}
-                  onClick={() => handleModelMarque(product.id, index)}
-                >
-                  {getAcfContent(product, "marque_du_produit")}{" "}
-                  <span>{getAcfContent(product, "modele_du_produit")}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </ProductMenuModel>
-      </Content>
+            <ul className="prod_model-marque">
+              {productsByCategory.map((product, index) => {
+                return (
+                  <li
+                    className="prod_model_item"
+                    key={product.id}
+                    onClick={() => handleModelMarque(product.id, index)}
+                  >
+                    {getAcfContent(product, "marque_du_produit")}{" "}
+                    <span>{getAcfContent(product, "modele_du_produit")}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </ProductMenuModel>
+        </Content>
 
-      <LogoProduct>
-        <div>
-          {!!productsByCategory[productIndex].regular_price &&
-            "Promotion! produit category"}
-        </div>
-        <div className="logo_box">
-          <h2 className="first_title">
-            {getAcfContent(
-              productsByCategory[productIndex],
-              "marque_du_produit"
-            )}{" "}
-            <span>
+        <LogoProduct>
+          <div>
+            {!!productsByCategory[productIndex].regular_price &&
+              "Promotion! produit category"}
+          </div>
+          <div className="logo_box">
+            <h2 className="first_title">
               {getAcfContent(
                 productsByCategory[productIndex],
-                "modele_du_produit"
-              )}
-            </span>
-          </h2>
-          <div className="price">
-            <div className="regular_price">
-              {!!productsByCategory[productIndex].regular_price &&
-                productsByCategory[productIndex].regular_price}
-            </div>
-            <div>
-              {!!productsByCategory[productIndex].sale_price &&
-                productsByCategory[productIndex].sale_price}
+                "marque_du_produit"
+              )}{" "}
+              <span>
+                {getAcfContent(
+                  productsByCategory[productIndex],
+                  "modele_du_produit"
+                )}
+              </span>
+            </h2>
+            <div className="price">
+              <div className="regular_price">
+                {!!productsByCategory[productIndex].regular_price &&
+                  productsByCategory[productIndex].regular_price}
+              </div>
+              <div>
+                {!!productsByCategory[productIndex].sale_price &&
+                  productsByCategory[productIndex].sale_price}
+              </div>
             </div>
           </div>
+        </LogoProduct>
+        <AddToCartSession>
+          <button
+            className="addToCart_button"
+            onClick={() => handleAddToCart(productsByCategory[productIndex])}
+          >
+            {btnAddToCart}
+          </button>
+          <Link
+            href={`/inmotion-mobility/produit/${productsByCategory[productIndex].slug}`}
+          >
+            <a className="link">{linkShowDetails}</a>
+          </Link>
+        </AddToCartSession>
+        <div className="decouvrez_model">
+          Decovrez le{" "}
+          {getAcfContent(productsByCategory[productIndex], "modele_du_produit")}{" "}
+          en détail
         </div>
-      </LogoProduct>
-      <AddToCartSession>
-        <button
-          className="addToCart_button"
-          onClick={() => handleAddToCart(productsByCategory[productIndex])}
-        >
-          {btnAddToCart}
-        </button>
-        <Link
-          href={`/inmotion-mobility/produit/${productsByCategory[productIndex].slug}`}
-        >
-          <a className="link">{linkShowDetails}</a>
-        </Link>
-      </AddToCartSession>
-      <div className="decouvrez_model">
-        Decovrez le{" "}
-        {getAcfContent(productsByCategory[productIndex], "modele_du_produit")}{" "}
-        en détail
-      </div>
-    </Container>
+      </Container>
+    </HeaderSeo>
   );
 }
 
