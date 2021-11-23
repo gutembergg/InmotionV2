@@ -22,7 +22,7 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
       <MainContent>
         {subCategories.map((category) => {
           return (
-            <div key={category.id}>
+            <div key={category.id} className="catItem">
               <Link
                 href={
                   category.slug === "pieces-detachees-mobility" ||
@@ -43,6 +43,7 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
                   <div className="category_card">
                     <div className="care_blue_hover"></div>
                     {category.image?.src && (
+                      <div className="imgBox">
                       <Image
                         src={category.image?.src}
                         alt={category.name}
@@ -50,7 +51,8 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
                         height={300}
                         placeholder="blur"
                         blurDataURL={category.image?.src}
-                      />
+                        />
+                        </div>
                     )}
 
                     <div className="category_name">{category.name}</div>

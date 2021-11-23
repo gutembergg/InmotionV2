@@ -12,7 +12,6 @@ export const GlobalContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
 
   main {
     padding: 0 5%;

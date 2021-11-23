@@ -5,6 +5,9 @@ export const StyledHeader = styled.header`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    a{
+  text-decoration: none;
+}
   }
   .mainBlock {
     width: 100%;

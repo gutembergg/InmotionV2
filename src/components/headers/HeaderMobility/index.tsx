@@ -27,7 +27,7 @@ const HeaderComponent = ({ icon }: Props) => {
   return (
     <StyledHeader>
       <div className="topBlock">
-        <Link href="/inmotion-print">
+        {/* <Link href="/inmotion-print">
           <a>
             <LinkPrint>
               <div className="iconLink">
@@ -36,7 +36,7 @@ const HeaderComponent = ({ icon }: Props) => {
               <p>{inmotionPrint} Inmotion-print</p>
             </LinkPrint>
           </a>
-        </Link>
+        </Link> */}
         <Login />
         <LanguageSelector />
       </div>
