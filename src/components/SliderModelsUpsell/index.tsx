@@ -43,7 +43,7 @@ const SliderModelsUpsell = ({
           320: {
             slidesPerView: 1.5,
           },
-          480: {
+          518: {
             slidesPerView: 2,
           },
           605: {

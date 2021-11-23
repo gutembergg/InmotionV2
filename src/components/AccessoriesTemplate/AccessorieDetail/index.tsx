@@ -125,9 +125,6 @@ const AccessoriesDetail = ({
               : products[productIndex].categories[0].name}
           </div>
           <div className="prod_name">{products[productIndex]?.name}</div>
-          {/*   <div className="color">
-            <span>couleurs:</span> <ColorButtonSkew color="red" />
-          </div> */}
 
           <div className="price_block">
             <span

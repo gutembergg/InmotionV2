@@ -84,7 +84,7 @@ export default function ProductDetail({ product }: Props) {
       <HeaderSeo
         description="Mobilité eletrique produits"
         title={product.yoast_head_json.og_title}
-        canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/${product.slug}`}
+        canonical={product.yoast_head_json.canonical}
         og_locale={product.yoast_head_json.og_locale}
         og_title={product.yoast_head_json.og_title}
         og_image={product.yoast_head_json.og_image}

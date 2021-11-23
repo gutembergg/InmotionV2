@@ -12,7 +12,6 @@ import Link from "next/link";
 import printer from "../../../../public/images/icons/printer.svg";
 import { LinkPrint } from "../HeaderAdmin/styles";
 import useTranslation from "next-translate/useTranslation";
-import { SVGProps } from "react";
 
 interface Props {
   icon: string;

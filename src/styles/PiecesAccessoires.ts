@@ -62,7 +62,7 @@ export const ProductsFooter = styled.div`
   flex-direction: column;
 
   width: 100%;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 
   @media (max-width: 570px) {
     margin-top: 1.5rem;

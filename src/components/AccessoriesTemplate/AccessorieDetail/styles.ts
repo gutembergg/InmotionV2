@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: row;
-  align-self: flex-start;
+  justify-content: flex-end;
 
   width: 100%;
   margin-top: 1rem;

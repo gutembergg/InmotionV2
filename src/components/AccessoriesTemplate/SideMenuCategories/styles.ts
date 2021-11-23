@@ -87,6 +87,11 @@ export const SliderContainer = styled.div`
   max-width: 800px;
   margin-bottom: 3rem;
 
+  .swiper-slide {
+    width: 100%;
+    max-width: 240px;
+  }
+
   .active {
     background: var(--Blue);
     color: var(--White);

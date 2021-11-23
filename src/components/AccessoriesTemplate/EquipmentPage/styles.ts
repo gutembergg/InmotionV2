@@ -5,9 +5,13 @@ export const Container = styled.div``;
 export const SliderContainer = styled.div`
   margin: auto;
   width: 100%;
-  max-width: 800px;
+  max-width: 950px;
   margin-bottom: 3rem;
 
+  .swiper-slide {
+    width: 100%;
+    max-width: 240px;
+  }
   .active {
     background: var(--Blue);
     color: var(--White);

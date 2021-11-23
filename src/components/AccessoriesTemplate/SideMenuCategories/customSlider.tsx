@@ -25,11 +25,11 @@ const CustomSlider = ({
     <SliderContainer>
       <Swiper
         direction="horizontal"
-        slidesPerView={3}
+        slidesPerView={4}
         spaceBetween={0.5}
         breakpoints={{
           320: {
-            slidesPerView: 1.5,
+            slidesPerView: 1,
             spaceBetween: 0,
           },
           360: {

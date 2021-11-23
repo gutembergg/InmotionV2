@@ -1,7 +1,8 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
 import HomeIcon from "../../../../public/images/icons/house.svg";
@@ -12,7 +13,6 @@ import CheckIcon from "../../../../public/images/icons/draw-check-mark.svg";
 
 import { wc_getCategoriesBySlug } from "../../../services/woocommerceApi/Categories";
 import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
-import { CurvedBackground } from "../../../styles/BackgroundStyle";
 
 import getAcfContent from "../../../utils/getAcfContent";
 import placeholder from "../../../../public/images/placeholder_woocommerce.png";
@@ -39,6 +39,7 @@ interface Props {
 }
 
 export default function Category({ category, productsByCategory }: Props) {
+  const router = useRouter();
   const { cartItem, addToCart } = useCart();
 
   // Traductions texts ///////////////////////////////////
@@ -47,24 +48,31 @@ export default function Category({ category, productsByCategory }: Props) {
   const linkShowDetails = t("productDetail:showDetails");
 
   const [productIndex, setProductIndex] = useState(0);
-  const [_accessories, _setAccessories] = useState<IProduct[]>([]);
+  const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
   const [activedModelIndex, setActivedModelIndex] = useState(0);
 
+  useEffect(() => {
+    _setProducts(productsByCategory);
+  }, [productsByCategory]);
+
+  useEffect(() => {
+    setProductIndex(0);
+  }, [router.query.slug]);
+
   const handleModelMarque = (id: number, index: number) => {
-    _setAccessories([]);
     setActivedModelIndex(index);
-    productsByCategory.find((prod, index) => {
+    products.find((prod, index) => {
       setProductIndex(index);
 
       return prod.id === id;
     });
   };
 
-  const autonomie = productsByCategory[productIndex]?.attributes.find(
+  const autonomie = products[productIndex]?.attributes.find(
     (item) => item.name === "Autonomie"
   );
 
-  const vitesse = productsByCategory[productIndex]?.attributes.find(
+  const vitesse = products[productIndex]?.attributes.find(
     (item) => item.name === "Vitesse"
   );
 
@@ -91,7 +99,7 @@ export default function Category({ category, productsByCategory }: Props) {
       <HeaderSeo
         description="Mobility eletrique produits"
         title={category.yoast_head_json.og_title}
-        canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/${category.slug}`}
+        canonical={category.yoast_head_json.canonical}
         og_locale={category.yoast_head_json.og_locale}
         og_title={category.yoast_head_json.og_title}
       />
@@ -138,15 +146,15 @@ export default function Category({ category, productsByCategory }: Props) {
               width={250}
               height={260}
               src={
-                productsByCategory[productIndex].images[0]
-                  ? productsByCategory[productIndex].images[0].src
+                products[productIndex]?.images[0]
+                  ? products[productIndex]?.images[0].src
                   : placeholder.src
               }
-              alt={productsByCategory[productIndex].name}
+              alt={products[productIndex]?.name}
               placeholder="blur"
               blurDataURL={
-                productsByCategory[productIndex].images[0]
-                  ? productsByCategory[productIndex].images[0].src
+                products[productIndex]?.images[0]
+                  ? products[productIndex]?.images[0].src
                   : placeholder.src
               }
             />
@@ -154,7 +162,7 @@ export default function Category({ category, productsByCategory }: Props) {
 
           <ProductMenuResponsive className="responsive">
             <ul className="prod_model-marque">
-              {productsByCategory.map((product, index) => {
+              {products.map((product, index) => {
                 return (
                   <li
                     className={
@@ -178,7 +186,7 @@ export default function Category({ category, productsByCategory }: Props) {
             </span>
 
             <ul className="prod_model-marque">
-              {productsByCategory.map((product, index) => {
+              {products.map((product, index) => {
                 return (
                   <li
                     className="prod_model_item"
@@ -196,30 +204,31 @@ export default function Category({ category, productsByCategory }: Props) {
 
         <LogoProduct>
           <div>
-            {!!productsByCategory[productIndex].regular_price &&
-              "Promotion! produit category"}
+            {products[productIndex]?.on_sale && (
+              <ButtonSkew text="Promotion!" />
+            )}
           </div>
           <div className="logo_box">
             <h2 className="first_title">
-              {getAcfContent(
-                productsByCategory[productIndex],
-                "marque_du_produit"
-              )}{" "}
+              {products[productIndex] &&
+                getAcfContent(products[productIndex], "marque_du_produit")}{" "}
               <span>
-                {getAcfContent(
-                  productsByCategory[productIndex],
-                  "modele_du_produit"
-                )}
+                {products[productIndex] &&
+                  getAcfContent(products[productIndex], "modele_du_produit")}
               </span>
             </h2>
             <div className="price">
-              <div className="regular_price">
-                {!!productsByCategory[productIndex].regular_price &&
-                  productsByCategory[productIndex].regular_price}
+              <div
+                className={
+                  products[productIndex]?.on_sale ? "regular_price" : ""
+                }
+              >
+                {!!products[productIndex]?.regular_price &&
+                  products[productIndex]?.regular_price}
               </div>
-              <div>
-                {!!productsByCategory[productIndex].sale_price &&
-                  productsByCategory[productIndex].sale_price}
+              <div className="sale_price">
+                {!!products[productIndex]?.sale_price &&
+                  products[productIndex]?.sale_price}
               </div>
             </div>
           </div>
@@ -227,19 +236,20 @@ export default function Category({ category, productsByCategory }: Props) {
         <AddToCartSession>
           <button
             className="addToCart_button"
-            onClick={() => handleAddToCart(productsByCategory[productIndex])}
+            onClick={() => handleAddToCart(products[productIndex])}
           >
             {btnAddToCart}
           </button>
           <Link
-            href={`/inmotion-mobility/produit/${productsByCategory[productIndex].slug}`}
+            href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
           >
             <a className="link">{linkShowDetails}</a>
           </Link>
         </AddToCartSession>
         <div className="decouvrez_model">
           Decovrez le{" "}
-          {getAcfContent(productsByCategory[productIndex], "modele_du_produit")}{" "}
+          {products[productIndex] &&
+            getAcfContent(products[productIndex], "modele_du_produit")}{" "}
           en détail
         </div>
       </Container>

@@ -15,18 +15,25 @@ interface Props {
   activedMenuIndex: number;
   activedAllProductMenu: boolean;
   selectCategory: (categorySlug: string, index: number) => void;
+  displayAllProductsMenuResponsive: (index: number) => void;
 }
 
 const EquipSliderCategory = ({
   subCategories,
   selectCategory,
   activedMenuIndex,
+  displayAllProductsMenuResponsive,
 }: Props) => {
+  const categoriesWithAllArticles = [
+    ...subCategories,
+    { id: 9999999, name: "all articles", slug: "all_articles" },
+  ];
+
   return (
     <SliderContainer>
       <Swiper
         direction="horizontal"
-        slidesPerView={3}
+        slidesPerView={4}
         spaceBetween={0.5}
         breakpoints={{
           300: {
@@ -49,25 +56,30 @@ const EquipSliderCategory = ({
             slidesPerView: 2.2,
             spaceBetween: 0,
           },
-          630: {
+          637: {
             slidesPerView: 2.5,
             spaceBetween: 0,
           },
-          746: {
+          755: {
             slidesPerView: 3,
             spaceBetween: 0,
           },
-          860: {
-            slidesPerView: 3,
+
+          1020: {
+            slidesPerView: 3.5,
           },
         }}
       >
-        {subCategories.map((category, index) => {
+        {categoriesWithAllArticles.map((category, index) => {
           return (
             <SwiperSlide key={category.id}>
               <Button
                 className={activedMenuIndex === index ? "active" : ""}
-                onClick={() => selectCategory(category.slug, index)}
+                onClick={() =>
+                  category.id === 9999999
+                    ? displayAllProductsMenuResponsive(index)
+                    : selectCategory(category.slug, index)
+                }
               >
                 {category.name}
               </Button>

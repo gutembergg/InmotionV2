@@ -179,20 +179,25 @@ export const LogoProduct = styled.div`
   .logo_box {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-weight: 600;
+    margin-top: 1rem;
   }
 
   .price {
     display: flex;
     flex-direction: column;
 
-    margin-top: 2.5rem;
     margin-left: 0.8rem;
   }
 
   .regular_price {
     text-decoration: line-through;
     opacity: 0.4;
+  }
+
+  .sale_price {
+    color: red;
   }
 `;
 

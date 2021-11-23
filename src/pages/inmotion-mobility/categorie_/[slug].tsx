@@ -85,12 +85,20 @@ export default function Equipements({
     setSubCategoryActived({} as ICategories);
   }, [_productsByCategory]);
 
+  const displayAllProductsMenuResponsive = useCallback(
+    (index: number) => {
+      setActivedMenuIndex(index);
+      setSelectedProductsCategory(_productsByCategory);
+    },
+    [_productsByCategory]
+  );
+
   return (
     <>
       <HeaderSeo
         description="Equipement pour les pilotes velos eletriques"
         title={equipements.yoast_head_json.og_title}
-        canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/equipements`}
+        canonical={equipements.yoast_head_json.canonical}
         og_locale={equipements.yoast_head_json.og_locale}
         og_title={equipements.yoast_head_json.og_title}
       />
@@ -110,6 +118,9 @@ export default function Equipements({
                 activedMenuIndex={activedMenuIndex}
                 subCategories={subCategories}
                 selectCategory={selectCategory}
+                displayAllProductsMenuResponsive={
+                  displayAllProductsMenuResponsive
+                }
               />
             </ProductMenuResponsive>
 

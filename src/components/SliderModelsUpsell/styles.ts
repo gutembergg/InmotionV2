@@ -5,6 +5,11 @@ export const SliderContainer = styled.div`
   max-width: 1020px;
   margin-bottom: 2rem;
 
+  .swiper-slide {
+    width: 100%;
+    max-width: 240px;
+  }
+
   .active {
     background: var(--Blue);
     color: var(--White);

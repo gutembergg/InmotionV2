@@ -17,6 +17,10 @@ export const Container = styled.div`
     margin-bottom: 1.2rem;
   }
 
+  .product_name {
+    text-align: center;
+  }
+
   .swiper-slide {
     width: 100%;
     max-width: 200px;

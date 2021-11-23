@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import HouseIcon from "../../../../public/images/icons/house.svg";
 import SliderCustom from "../../../components/SliderCustom";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -14,7 +14,7 @@ import AccessoriesDetail from "../../../components/AccessoriesTemplate/Accessori
 import { wc_getCategoriesBySlug } from "../../../services/woocommerceApi/Categories";
 import { ICategories } from "../../../interfaces/ICategories";
 import useTranslation from "next-translate/useTranslation";
-import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
+import { wc_getProductsByCategory } from "../../../services/woocommerceApi/Products";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 
 interface Props {
@@ -28,6 +28,10 @@ export default function Occasions({ products, category }: Props) {
 
   const [_products, _setProducts] = useState<IProduct[]>(products);
   const [productIndex, setProductIndex] = useState(0);
+
+  useEffect(() => {
+    _setProducts(products);
+  }, [products]);
 
   const selectProduct = (index: number) => {
     setProductIndex(index);
@@ -69,16 +73,14 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const category = await wc_getCategoriesBySlug(slug as string, lang as string);
-  const products = await getProduitsByCategoriesSlug(
-    slug as string,
-    lang as string
-  );
+
+  const products = await wc_getProductsByCategory(category.id, lang as string);
 
   return {
     props: {
       products,
       category,
     },
-    revalidate: 60 * 10, // 10min
+    revalidate: 60,
   };
 };

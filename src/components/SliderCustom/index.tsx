@@ -29,8 +29,6 @@ const SliderCustom = ({ products, selectProduct }: Props) => {
         }}
         slidesPerView={5}
         spaceBetween={15}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
         breakpoints={{
           // when window width is >= 320px
           320: {
@@ -67,7 +65,7 @@ const SliderCustom = ({ products, selectProduct }: Props) => {
                   placeholder="blur"
                   blurDataURL={product.images[0].src}
                 />
-                <div>{product.name}</div>
+                <div className="product_name">{product.name}</div>
               </div>
             </SwiperSlide>
           );

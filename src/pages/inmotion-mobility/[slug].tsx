@@ -98,7 +98,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const subCategories = await wc_getSub_categories(lang as string, category.id);
 
   const mainCategories = subCategories.filter(
-    (category: ICategories) => category.slug !== "non-classe"
+    (category: ICategories) =>
+      category.slug !== "non-classe" && category.slug !== "occasions"
   );
 
   mainCategories.sort((a: any, b: any) => {

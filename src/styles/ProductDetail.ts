@@ -42,7 +42,7 @@ export const Container = styled.div`
 export const Main = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 2rem 3rem;
+  padding: 1rem 3rem;
 
   @media (max-width: 1072px) {
     flex-direction: column;

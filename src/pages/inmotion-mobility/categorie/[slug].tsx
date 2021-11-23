@@ -148,7 +148,7 @@ export default function AccessoryPage({
       <HeaderSeo
         description="Pieces detachee pour les velos, trottinettes et gyroroues eletriques"
         title={_categoryBySlug.yoast_head_json.og_title}
-        canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/${_categoryBySlug.slug}`}
+        canonical={_categoryBySlug.yoast_head_json.canonical}
         og_locale={_categoryBySlug.yoast_head_json.og_locale}
         og_title={_categoryBySlug.yoast_head_json.og_title}
       />
@@ -211,7 +211,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug = ctx.params?.slug;
   const lang = ctx.locale;
-  let _productsUpSellModelsByDefault: IProduct[] = [];
 
   const _categoryBySlug = await wc_getCategoriesBySlug(
     slug as string,
@@ -250,7 +249,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     wc_subCategories[0].slug,
     wc_subCategories[0].id
   );
-  _productsUpSellModelsByDefault = productsUpSellResult;
 
   return {
     props: {
@@ -258,7 +256,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       subCategories: wc_subCategories,
       productsByCategoryDefault: productsByDefault,
       mobilityProducts,
-      _productsUpSellModelsByDefault,
+      _productsUpSellModelsByDefault: productsUpSellResult,
       _categoryBySlug,
     },
     revalidate: 60,
