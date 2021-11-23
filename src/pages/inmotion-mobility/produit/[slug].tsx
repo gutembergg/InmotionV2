@@ -88,147 +88,141 @@ export default function ProductDetail({ product }: Props) {
         og_locale={product.yoast_head_json.og_locale}
         og_title={product.yoast_head_json.og_title}
         og_image={product.yoast_head_json.og_image}
-      >
-        <Container>
-          <Main>
-            <CardWrapper>
-              <ProductCard>
-                <Card>
-                  <h2 className="first_title">
-                    {getAcfContent(product, "marque_du_produit")}{" "}
-                    <span>{getAcfContent(product, "modele_du_produit")}</span>
-                  </h2>
-
-                  <ImageBlock>
-                    <span className="image">
-                      <Image
-                        width={250}
-                        height={250}
-                        src={
-                          product.images[0]
-                            ? product.images[0].src
-                            : placeholder.src
-                        }
-                        alt={product.name}
-                        placeholder="blur"
-                        blurDataURL={
-                          product.images[0]
-                            ? product.images[0].src
-                            : placeholder.src
-                        }
-                      />
-
-                      {product.on_sale && (
-                        <span>
-                          <ButtonSkew text="Promotion!" />
-                        </span>
-                      )}
-                    </span>
-                  </ImageBlock>
-
-                  <PriceQuantity>
-                    <div className="price">{product.price}</div>
-
-                    <input
-                      type="number"
-                      onChange={handleChangeQty}
-                      value={productQty}
-                      placeholder="1"
-                    />
-                  </PriceQuantity>
-
-                  <Button
-                    type="button"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    {btnAddToCart}
-                  </Button>
-
-                  {product.stock_quantity && (
-                    <StockProduct>
-                      <div>En stock: {product.stock_quantity} pièces</div>
-                    </StockProduct>
-                  )}
-                </Card>
-              </ProductCard>
-              <div style={{ width: "25vw" }}></div>
-            </CardWrapper>
-
-            <ProductInfos>
-              <ProductLogo>
-                <span>
-                  <div className="product_category">
-                    {product.categories[0].name}
-                  </div>
-                </span>
+      />
+      <Container>
+        <Main>
+          <CardWrapper>
+            <ProductCard>
+              <Card>
                 <h2 className="first_title">
-                  <span className="marque_product">
-                    {getAcfContent(product, "marque_du_produit")}
-                  </span>
-                  <span className="product_sku">
-                    {getAcfContent(product, "modele_du_produit")}
-                  </span>
+                  {getAcfContent(product, "marque_du_produit")}{" "}
+                  <span>{getAcfContent(product, "modele_du_produit")}</span>
                 </h2>
-              </ProductLogo>
-              <div className="first_description">
-                ----Description produit----- Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Dolores, esse. Rerum soluta vitae
-                qui? Earum deleniti sapiente, sint facilis architecto saepe fuga
-                quibusdam sunt eius, a sequi voluptas corrupti. Veniam?{" "}
-                {product.description}
-              </div>
 
-              {videoUrl.length > 0 && (
-                <Video className="video_product">
-                  <ReactPlayer
-                    width="100%"
-                    height="100%"
-                    url={videoUrl[0].value}
-                    controls
+                <ImageBlock>
+                  <span className="image">
+                    <Image
+                      width={250}
+                      height={250}
+                      src={
+                        product.images[0]
+                          ? product.images[0].src
+                          : placeholder.src
+                      }
+                      alt={product.name}
+                      placeholder="blur"
+                      blurDataURL={
+                        product.images[0]
+                          ? product.images[0].src
+                          : placeholder.src
+                      }
+                    />
+
+                    {product.on_sale && (
+                      <span>
+                        <ButtonSkew text="Promotion!" />
+                      </span>
+                    )}
+                  </span>
+                </ImageBlock>
+
+                <PriceQuantity>
+                  <div className="price">{product.price}</div>
+
+                  <input
+                    type="number"
+                    onChange={handleChangeQty}
+                    value={productQty}
+                    placeholder="1"
                   />
-                </Video>
-              )}
+                </PriceQuantity>
 
-              <DescriptionProduct>
-                <Sections>
-                  {product.acf.hasOwnProperty("description_du_produit") &&
-                    product.acf.description_du_produit.map((section, index) => {
-                      return (
-                        <Section key={index}>
-                          <div
-                            className={
-                              index % 2 === 1 ? "section2" : "section1"
-                            }
-                          >
-                            <div className="title_description">
-                              <div> {section.titre_section}</div>
+                <Button type="button" onClick={() => handleAddToCart(product)}>
+                  {btnAddToCart}
+                </Button>
 
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html: section.description_section,
-                                }}
-                              />
-                            </div>
+                {product.stock_quantity && (
+                  <StockProduct>
+                    <div>En stock: {product.stock_quantity} pièces</div>
+                  </StockProduct>
+                )}
+              </Card>
+            </ProductCard>
+            <div style={{ width: "25vw" }}></div>
+          </CardWrapper>
 
-                            <div className="image_section">
-                              <Image
-                                width={320}
-                                height={320}
-                                src={section.image_de_la_section}
-                                alt={section.titre_section}
-                                objectFit="cover"
-                              />
-                            </div>
+          <ProductInfos>
+            <ProductLogo>
+              <span>
+                <div className="product_category">
+                  {product.categories[0].name}
+                </div>
+              </span>
+              <h2 className="first_title">
+                <span className="marque_product">
+                  {getAcfContent(product, "marque_du_produit")}
+                </span>
+                <span className="product_sku">
+                  {getAcfContent(product, "modele_du_produit")}
+                </span>
+              </h2>
+            </ProductLogo>
+            <div className="first_description">
+              ----Description produit----- Lorem ipsum dolor sit amet
+              consectetur adipisicing elit. Dolores, esse. Rerum soluta vitae
+              qui? Earum deleniti sapiente, sint facilis architecto saepe fuga
+              quibusdam sunt eius, a sequi voluptas corrupti. Veniam?{" "}
+              {product.description}
+            </div>
+
+            {videoUrl.length > 0 && (
+              <Video className="video_product">
+                <ReactPlayer
+                  width="100%"
+                  height="100%"
+                  url={videoUrl[0].value}
+                  controls
+                />
+              </Video>
+            )}
+
+            <DescriptionProduct>
+              <Sections>
+                {product.acf.hasOwnProperty("description_du_produit") &&
+                  product.acf.description_du_produit.map((section, index) => {
+                    return (
+                      <Section key={index}>
+                        <div
+                          className={index % 2 === 1 ? "section2" : "section1"}
+                        >
+                          <div className="title_description">
+                            <div> {section.titre_section}</div>
+
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: section.description_section,
+                              }}
+                            />
                           </div>
-                        </Section>
-                      );
-                    })}
-                </Sections>
-              </DescriptionProduct>
-            </ProductInfos>
-          </Main>
-        </Container>
-      </HeaderSeo>
+
+                          <div className="image_section">
+                            <Image
+                              width={320}
+                              height={320}
+                              src={section.image_de_la_section}
+                              alt={section.titre_section}
+                              objectFit="cover"
+                            />
+                          </div>
+                        </div>
+                      </Section>
+                    );
+                  })}
+              </Sections>
+            </DescriptionProduct>
+          </ProductInfos>
+        </Main>
+      </Container>
     </>
   );
 }

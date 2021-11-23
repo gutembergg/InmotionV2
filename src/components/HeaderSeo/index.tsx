@@ -2,7 +2,6 @@ import { NextSeo } from "next-seo";
 import React, { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
   description: string;
   title: string;
   canonical: string;
@@ -19,7 +18,6 @@ interface Props {
 }
 
 const HeaderSeo = ({
-  children,
   description,
   title,
   canonical,
@@ -48,7 +46,6 @@ const HeaderSeo = ({
           cardType: "summary_large_image",
         }}
       />
-      {children}
     </div>
   );
 };

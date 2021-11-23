@@ -122,7 +122,6 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     }
     // eslint-disable-next-line
   }, [user]);
-  console.log("formValues===>", formValues);
 
   return (
     <Container>

@@ -161,8 +161,8 @@ export default function CheckoutMobility() {
           {!loged && (
             <div>
               <p>{haveAccount}</p>
-              {/*  <LoginForm />
-              <RegisterForm /> */}
+              <LoginForm />
+              <RegisterForm />
             </div>
           )}
           <section>

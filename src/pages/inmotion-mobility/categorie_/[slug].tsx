@@ -86,13 +86,14 @@ export default function Equipements({
   }, [_productsByCategory]);
 
   return (
-    <HeaderSeo
-      description="Equipement pour les pilotes velos eletriques"
-      title={equipements.yoast_head_json.og_title}
-      canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/equipements`}
-      og_locale={equipements.yoast_head_json.og_locale}
-      og_title={equipements.yoast_head_json.og_title}
-    >
+    <>
+      <HeaderSeo
+        description="Equipement pour les pilotes velos eletriques"
+        title={equipements.yoast_head_json.og_title}
+        canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/equipements`}
+        og_locale={equipements.yoast_head_json.og_locale}
+        og_title={equipements.yoast_head_json.og_title}
+      />
       <Container>
         <Content>
           <ProductArea>
@@ -157,7 +158,7 @@ export default function Equipements({
           </ProductsFooter>
         </Content>
       </Container>
-    </HeaderSeo>
+    </>
   );
 }
 

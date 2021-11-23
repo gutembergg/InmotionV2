@@ -92,7 +92,7 @@ const LoginForm = () => {
           <MyAccountLink>
             <Link href={`/user`}>
               <a>
-                <p>
+                <div>
                   <Image
                     src={myAcount}
                     width={30}
@@ -101,20 +101,20 @@ const LoginForm = () => {
                   />
                   {"  "}
                   <span>Mon compte</span>
-                </p>
+                </div>
               </a>
             </Link>
           </MyAccountLink>
         </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
-          <p>
+          <div>
             <Image src={loginIcon} width={30} height={30} alt="login icon" />
             {"  "}
             <span>
               {menuLogin} / {menuRegister}
             </span>
-          </p>
+          </div>
         </LoginLink>
       )}
     </>

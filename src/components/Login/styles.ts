@@ -22,7 +22,7 @@ export const LoginContainer = styled.div`
 `;
 export const LoginLink = styled.div`
   cursor: pointer;
-  margin-top: 10px ;
+  margin-top: 10px;
   color: var(--Blue);
   font-weight: bold;
   transition: all ease-in 0.1s;
@@ -34,15 +34,15 @@ export const LoginLink = styled.div`
     display: flex;
     align-items: center;
 
-    span{
+    span {
       margin-left: 12px;
       margin-right: 20px;
     }
-}
+  }
 `;
 export const LogoutLink = styled.div`
   cursor: pointer;
-  margin-top: 10px ;
+  margin-top: 10px;
   color: var(--Blue);
   font-weight: bold;
   transition: all ease-in 0.1s;
@@ -54,33 +54,33 @@ export const LogoutLink = styled.div`
     display: flex;
     align-items: center;
 
-    span{
+    span {
       margin-left: 12px;
       margin-right: 20px;
     }
-}
+  }
 `;
 export const MyAccountLink = styled.div`
   cursor: pointer;
-  margin-top: 10px ;
+  margin-top: 10px;
   color: var(--Blue);
   font-weight: bold;
   transition: all ease-in 0.1s;
   &:hover {
     transition: all ease-in 0.1s;
-   
-    a{
+
+    a {
       color: var(--Black);
     }
   }
-  a{
+  a {
     text-decoration: none;
     color: var(--Blue);
-    p {
+    div {
       display: flex;
       align-items: center;
-      
-      span{
+
+      span {
         margin-left: 12px;
         margin-right: 20px;
       }

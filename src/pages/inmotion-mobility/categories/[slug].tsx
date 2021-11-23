@@ -87,13 +87,14 @@ export default function Category({ category, productsByCategory }: Props) {
   };
 
   return (
-    <HeaderSeo
-      description="Mobility eletrique produits"
-      title={category.yoast_head_json.og_title}
-      canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/${category.slug}`}
-      og_locale={category.yoast_head_json.og_locale}
-      og_title={category.yoast_head_json.og_title}
-    >
+    <>
+      <HeaderSeo
+        description="Mobility eletrique produits"
+        title={category.yoast_head_json.og_title}
+        canonical={`https://dx7l6anesh.preview.infomaniak.website/inmotion-mobility/categorie_/${category.slug}`}
+        og_locale={category.yoast_head_json.og_locale}
+        og_title={category.yoast_head_json.og_title}
+      />
       <Container>
         <Content>
           <ProductInfos>
@@ -242,7 +243,7 @@ export default function Category({ category, productsByCategory }: Props) {
           en détail
         </div>
       </Container>
-    </HeaderSeo>
+    </>
   );
 }
 
