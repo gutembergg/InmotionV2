@@ -8,13 +8,16 @@ import mobilityImage from "../../public/images/grpmobility.png";
 import printImage from "../../public/images/grpprint.png";
 import logo from "../../public/images/logo-inmotion-black.png";
 import logoBlue from "../../public/images/logo-blue.png";
-import { MainHome, MainContent } from "../styles/mainHome";
 import LanguageSelector from "../components/LanguageSelector";
+import trotGif from "../../public/video/trottinette.gif";
+import printGif from "../../public/video/printer.gif";
 import {
-  VideoStyle,
-  Video2Style,
-  VideoBox1,
-  VideoBox2,
+  MainHome,
+  MainContent,
+  HomeContentBody,
+  GifBox1,
+  GifBox2,
+  ContentHeader,
 } from "../styles/mainHome";
 import { useState } from "react";
 
@@ -24,12 +27,6 @@ export interface Props {
 }
 
 const Home: NextPage<Props> = () => {
-  const [playTrot, setplayTrot] = useState(false);
-  const [playPrint, setplayPrint] = useState(false);
-
-  const playvideotrot = () => {
-    setplayTrot(true);
-  };
   // translation strings
   const { t } = useTranslation();
   const TXT_Welcome = t("home:welcomeTitle");
@@ -44,7 +41,7 @@ const Home: NextPage<Props> = () => {
           <LanguageSelector />
         </div>
         <MainContent>
-          <div className="contentHeader">
+          <ContentHeader>
             <div className="title">
               <h1>{TXT_Welcome}</h1>
               <div className="mainLogo">
@@ -52,20 +49,28 @@ const Home: NextPage<Props> = () => {
               </div>
             </div>
             <p>{TXT_ChooseShop}</p>
-          </div>
-          <div className="content">
-            <div className="left" onMouseEnter={(e) => playvideotrot}>
+          </ContentHeader>
+          <HomeContentBody>
+            <div className="left">
               <Link href="/inmotion-mobility">
                 <a>
                   <div className="topBlock">
-                    <VideoBox1>
-                      <VideoStyle autoPlay muted loop className="video">
-                        <source src="/video/trottinette.mp4" type="video/mp4" />
-                      </VideoStyle>
-                    </VideoBox1>
-                    <div className="imgBox">
-                      <Image src={mobilityImage} alt="mobility section image" />
-                    </div>
+                    <GifBox1>
+                      <div className="imgBox1">
+                        <Image
+                          src={trotGif}
+                          alt="gif trottinette"
+                          height={1067}
+                          width={600}
+                        />
+                      </div>
+                      {/* <div className="imgBox">
+                        <Image
+                          src={mobilityImage}
+                          alt="mobility section image"
+                        />
+                      </div> */}
+                    </GifBox1>
                   </div>
                   <div className="container">
                     <div className="logoMobilityBox">
@@ -81,17 +86,22 @@ const Home: NextPage<Props> = () => {
               <Link href="/inmotion-print">
                 <a>
                   <div className="topBlock">
-                    <VideoBox2>
-                      <Video2Style autoPlay muted loop className="video">
-                        <source src="/video/printer.mp4" type="video/mp4" />
-                      </Video2Style>
-                    </VideoBox2>
-                    <div className="imgBox">
-                      <Image src={printImage} alt="print section image" />
-                    </div>
+                    <GifBox2>
+                      <div className="imgBox2">
+                        <Image
+                          src={printGif}
+                          alt="gif printer"
+                          height={1067}
+                          width={600}
+                        />
+                      </div>
+                      {/* <div className="imgBox">
+                        <Image src={printImage} alt="print section image" />
+                      </div> */}
+                    </GifBox2>
                   </div>
                   <div className="container">
-                    <div className="logoMobilityBox">
+                    <div className="logoPrinterBox">
                       <Image src={logoBlue} alt="print section image" />
                     </div>
                     <p>Addicted to create, addicted to Print</p>
@@ -100,7 +110,7 @@ const Home: NextPage<Props> = () => {
                 </a>
               </Link>
             </div>
-          </div>
+          </HomeContentBody>
         </MainContent>
       </MainHome>
     </CurvedBackground>

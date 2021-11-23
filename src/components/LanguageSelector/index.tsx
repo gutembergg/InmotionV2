@@ -33,11 +33,6 @@ const LanguageSelector = () => {
             />
             </div>
           <p>
-            <strong>
-              {(router.locale === "fr" && "Français") ||
-                (router.locale === "de" && "Deutsch") ||
-                (router.locale === "en" && "English")}
-            </strong>
             <span>
               &#9662;
               </span>

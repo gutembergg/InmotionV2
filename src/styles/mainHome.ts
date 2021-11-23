@@ -4,307 +4,198 @@ export const MainHome = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  position: relative;
+  /* position: relative; */
   z-index: 20;
   flex: 1 1 auto;
   height: 100vh;
+  width: 100%;
+  min-height: 500px;
 
   .topBlock {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 5%;
+    padding-right: 20px;
+    padding-top: 10px;
+    width: 100%;
+    min-width: 210px;
+    @media (min-width: 580px) {
+      min-width: 320px;
+    }
   }
 `;
-export const VideoStyle = styled.video`
-  position: absolute;
-  opacity: 0.6;
-  width: 200%;
-  z-index: 10;
-  height: 101%;
-  top: -0.5%;
-  object-fit: cover;
-  object-position: 100%;
-  filter: grayscale(1);
-  transform: skew(15deg);
-  right: -39%;
-`;
-export const Video2Style = styled.video`
-  opacity: 0.6;
-  filter: grayscale(1);
-  width: 171%;
-  height: 101%;
-  top: -0.5%;
-  right: -39%;
-  transform: skew(15deg);
-  position: absolute;
-  object-fit: cover;
-  object-position: 0px 30%;
-`;
 
-export const VideoBox1 = styled.div`
-  background-color: #ac2c39;
-  width: 50%;
-  height: 100%;
-  transform: skew(-15deg);
-  position: absolute;
-  overflow: hidden;
-`;
-
-export const VideoBox2 = styled.div`
-  background-color: var(--Blue);
-  width: 50%;
-  height: 100%;
-  transform: skew(-15deg);
-  position: absolute;
-  overflow: hidden;
-`;
 export const MainContent = styled.div`
+  height: 100%;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-  position: relative;
-  z-index: 20;
-  flex: 1 1 auto;
-
-  .contentHeader {
+  padding: 2% 5%;
+  @media (min-width: 580px) {
+    margin-top: 2rem;
+  }
+`;
+export const ContentHeader = styled.div`
+  .title {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 
-    .title {
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: baseline;
-      font-style: italic;
-      flex-wrap: wrap;
-      @media (max-width: 769px) {
-        justify-content: center;
-        flex-direction: column;
-        align-items: center
+    h1 {
+      font-size: 1em;
+      margin-top: 5px;
+      @media (min-width: 580px) {
+        font-size: 2em;
       }
-      @media (max-width: 540px){
-        font-size: 0.7em;
-        margin-top: 1rem;
-      }
-      .mainLogo {
-        margin-left: 20px;
-        width: 300px;
-        height: auto;
+    }
+    .mainLogo {
+      width: 140px;
+      margin-left: 10px;
 
-        @media (max-width: 769px) {
-          margin-left: 0;
-        }
-        @media (max-width: 540px){
-          width: 270px
-;
-      }
-        image {
-          object-fit: contain;
-        }
+      @media (min-width: 580px) {
+        width: 250px;
       }
     }
   }
-
-  .content {
-    display: flex;
+  p {
+    text-align: center;
+    width: 100%;
+  }
+`;
+export const HomeContentBody = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  @media (orientation: landscape) {
     flex-direction: row;
-    justify-content: space-around;
-    align-content: space-between;
-    flex-wrap: nowrap;
-    align-items: center;
-    flex: 1 1 auto;
-    /* overflow: hidden; */
+    margin-top: 0;
+  }
+  @media (orientation: landscape) and (min-width: 580px) {
+    margin-top: 11%;
+  }
+  .right h2 {
+    color: var(--Orange);
+  }
+  .left h2 {
+    color: var(--Blue);
+  }
 
-    .left,
-    .right {
+  .left,
+  .right {
+    min-height: 200px;
+    height: 34vh;
+    max-width: 400px;
+    @media (orientation: landscape) {
       width: 45%;
-      /* background-color: aqua; */
-      height: 90%;
-      min-height: 460px;
-      @media (max-width: 1280px) {
-        width: 38%;
-        max-height: 680px;
-      }
-      @media (max-width: 960px) {
-        width: 38%;
-        max-height: 500px;
-      }
-
-      a {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transform: scale(0.96);
-        transition: all ease-in 0.2s;
-        text-decoration: none;
-        color: var(--Black);
-        align-content: center;
-        height: 100%;
-        justify-content: center;
-
-        .topBlock {
-          margin-left: 40px;
-          height: 65%;
-          position: relative;
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          padding: 0 5%;
-          max-width: 670px;
-          .imgBox {
-            transform: translateY(40px);
-            width: 90%;
-            height: auto;
-            z-index: 100;
-            position: absolute;
-            bottom: 0;
-
-            image {
-              margin: auto;
-              object-fit: contain;
-            }
-          }
-        }
-        .container {
-          p {
-            font-weight: bold;
-            font-size: 1.5em;
-            text-align: center;
-            @media (max-width: 1280px) {
-              font-size: 1.2em;
-            }
-            @media (max-width: 960px) {
-              font-size: 1em;
-              text-align: left ;
-            }
-          }
-          h2 {
-            font-size: 1em;
-            font-weight: normal;
-            font-style: italic;
-            text-align: center;
-            @media (max-width: 960px) {
-              font-size: 1em;
-              text-align: left ;
-            }
-          }
-        }
-
-        .logoMobilityBox {
-          max-width: 500px;
-        }
-
-        &:hover {
-          transform: scale(1);
-          transition: all ease-in 0.2s;
-        }
-      }
     }
-    .right a .topBlock .imgBox {
-      width: 70%;
+    @media (min-width: 580px) {
+      max-width: 70%;
     }
-    .left a .logoMobilityBox {
-      margin-top: 28px;
-    }
-    .right h2 {
-      color: var(--Orange);
-    }
-    .left h2 {
-      color: var(--Red);
-    }
-  }
-
-  @media (max-width: 769px) and (orientation: portrait) {
-    .content {
-      flex-direction: column;
-      .left,
-      .right {
-        width: 82%;
-    min-height: auto;
-    height: 50%;
-        a {
-          flex-direction: row;
-          flex-wrap: nowrap;
-
-          .topBlock {
-            margin-left: 0px;
-            height: 55%;
-            position: relative;
-            width: 93%;
-            display: flex;
-            justify-content: center;
-            padding: 0 0%;
-            min-width: 226px;
-            
-          }
-        }
-      }
-    }
-  }
-
-  @media (max-width: 769px) and (orientation: landscape) {
-    .content {
+    a {
+      display: flex;
       flex-direction: row;
-      min-height: 300px;
-      .left,
-      .right {
-        width: 90%;
-        a {
-          flex-direction: column;
-          flex-wrap: nowrap;
+      align-items: center;
+      height: 100%;
+      text-decoration: none;
 
-          .topBlock {
-            margin-left: 0px;
-            height: 55%;
-            position: relative;
-            width: 93%;
-            display: flex;
-            justify-content: center;
-            padding: 0 0%;
+      @media (min-width: 580px) {
+      max-width: 500px;
+    }
+      @media (min-width: 960px) {
+      max-width: 720px;
+    }
+
+      .topBlock {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+      .container {
+        margin-left: -120px;
+        z-index: 12;
+
+        @media (min-width: 580px) {
+          margin-left: -190px;
+        }
+
+        p {
+          font-weight: bold;
+          font-size: 0.9em;
+          text-align: left;
+          color: var(--Black);
+
+          @media (min-width: 580px) {
+            font-size: 1.1em;
           }
+        }
+        h2 {
+          font-size: 0.8em;
+          font-weight: bold;
+          font-style: italic;
+          text-align: left;
+
+          @media (min-width: 580px) {
+             font-size: 1em;
+          }
+        }
+        .logoMobilityBox {
+          width: 92%;
         }
       }
     }
   }
-
-  @media (max-width: 480px) and (orientation: portrait) {
-    .content {
-      flex-direction: column;
-      .left,
-      .right {
-        width: 82%;
-    min-height: auto;
-    height: 50%;
-        a {
-          flex-direction: column;
-          flex-wrap: nowrap;
-          .container{
-
-            p{
-              text-align:center;
-            }
-            h2{
-              text-align:center ;
-            }
-            .logoMobilityBox{
-              max-width: 280px;
-            }
-          } 
-
-          .topBlock {
-            margin-left: 0px;
-            height: 45%;
-            position: relative;
-            width: 93%;
-            display: flex;
-            justify-content: center;
-            padding: 0 0%;
-            min-width: 226px;
-            
-          }
-        }
-      }
-    }
+`;
+export const GifBox1 = styled.div`
+  background-color: #ac2c39;
+  width: 44%;
+  margin-left: 33px;
+  height: 80%;
+  transform: skew(-15deg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0.8;
+  @media (min-width: 580px) and (orientation: landscape) {
+    height: 100%;
+  }
+  .imgBox1 {
+    position: absolute;
+    opacity: 0.6;
+    width: 200%;
+    height: 101%;
+    bottom: 0%;
+    object-fit: cover;
+    filter: grayscale(1);
+    transform: skew(15deg);
+    right: -50%;
+  }
+`;
+export const GifBox2 = styled.div`
+  opacity: 0.8;
+  background-color: var(--Blue);
+  width: 44%;
+  min-width: 50px;
+  margin-left: 33px;
+  height: 80%;
+  transform: skew(-15deg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  @media (min-width: 580px) and (orientation: landscape) {
+    height: 100%;
+  }
+  .imgBox2 {
+    opacity: 0.6;
+    filter: grayscale(1);
+    width: 181%;
+    height: 101%;
+    top: -0.5%;
+    right: -39%;
+    transform: skew(15deg);
+    position: absolute;
+    object-fit: cover;
+    object-position: 0px 30%;
   }
 `;
