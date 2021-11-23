@@ -67,7 +67,7 @@ export const HomeContentBody = styled.div`
     flex-direction: row;
     margin-top: 0;
   }
-  @media (orientation: landscape) and (min-width: 580px) {
+  @media (orientation: landscape) and (min-height: 580px) {
     margin-top: 11%;
   }
   .right h2 {

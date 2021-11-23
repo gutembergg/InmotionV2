@@ -82,10 +82,11 @@ border-bottom-left-radius: 10px;
 border-bottom-right-radius: 10px;
 margin-right: 35px;
 padding: 5px 15px;
-color: var(--Blue);
+color: var(--White);
 font-weight: bold;
 text-decoration: none;
 align-items: center;
+background-color: var(--Blue);
 
 .iconLink{
   margin-right: 10px;

@@ -26,6 +26,8 @@ export const LoginLink = styled.div`
   color: var(--Blue);
   font-weight: bold;
   transition: all ease-in 0.1s;
+  display: flex;
+  align-items: center;
   &:hover {
     color: var(--Black);
     transition: all ease-in 0.1s;

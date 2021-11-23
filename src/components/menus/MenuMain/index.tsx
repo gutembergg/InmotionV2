@@ -41,10 +41,6 @@ const MenuMain = () => {
       name: detachedPieces,
       slug: "pieces-detachees-mobility",
     },
-    {
-      name: occasions,
-      slug: "occasions",
-    },
   ];
 
   return (
@@ -76,9 +72,7 @@ const MenuMain = () => {
                       category.slug === "pieces-detachees-mobility"
                         ? `/inmotion-mobility/categorie/${category.slug}`
                         : category.slug === "equipements"
-                        ? `/inmotion-mobility/categorie_/${category.slug}`
-                        : category.slug === "occasions"
-                        ? `/inmotion-mobility/produits/${category.slug}`
+                        ? `/inmotion-mobility/categorie_/${category.slug}` 
                         : `/inmotion-mobility/categories/${category.slug}`
                     }
                   >
@@ -94,6 +88,17 @@ const MenuMain = () => {
               );
             })}
           </ul>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/categories/occasions">
+            <a
+              className={
+                router.pathname === "/inmotion-mobility/categories/occasions" ? "active" : ""
+              }
+            >
+              {occasions}
+            </a>
+          </Link>
         </li>
         <li>
           <Link href="/inmotion-mobility/services">
