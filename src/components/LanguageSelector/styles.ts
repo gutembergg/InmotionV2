@@ -14,6 +14,9 @@ export const StyledLangSelector2 = styled.div`
     transform: scale(0.9);
     &:hover {
       transform: scale(1);
+      @media only screen and (min-width: 1200px) {
+        transform: scale(0.9);
+      }
     }
     
     .langSelectorListNameFlag {

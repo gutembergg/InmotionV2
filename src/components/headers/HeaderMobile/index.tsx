@@ -3,11 +3,11 @@ import { SVGProps, useState } from "react";
 import logo from "../../../../public/images/logo-inmotion-black.png";
 import SearchBar from "../../SearchBar";
 import Cart from "../../Cart";
-import { StyledHeader} from "./styles";
+import { StyledMobileHeader} from "./styles";
 import MenuMain from "../../menus/MenuMain";
 import FilAriane from "../../FilAriane/FilAriane";
 import LanguageSelector from "../../LanguageSelector";
-
+import Login from "../../Login";
 interface ILanguages {}
 
 interface ISvgProps {
@@ -24,12 +24,13 @@ const HeaderMobile = () => {
     menuOpen === false ? setmenuOpen(true) : setmenuOpen(false);
   };
   return (
-    <StyledHeader test="test">
+    <StyledMobileHeader>
       <div className="topHeader">
         <div className="logoBox">
           <Image src={logo} alt="logo Inmotion" />
         </div>
         <div className="rightContent">
+        <Login />
           <SearchBar />
           <Cart />
         </div>
@@ -37,6 +38,12 @@ const HeaderMobile = () => {
       <FilAriane />
       <div className="mobileButton" onClick={menuToggle}>
         <div id="nav-icon2" className={menuOpen === true ? "open" : ""}>
+       <span></span>
+       <span></span>
+       <span></span>
+       <span></span>
+       <span></span>
+       <span></span>
         </div>
       </div>
       <div className={menuOpen === true ? "mainBlock open" : "mainBlock"}>
@@ -52,13 +59,11 @@ const HeaderMobile = () => {
             </div>
             <MenuMain />
             <hr />
-            {loged ? <p>connecté</p> : <p>se connecter/sinscrire</p>}
-            <hr />
             <LanguageSelector/>
           </div>
         </div>
       </div>
-    </StyledHeader>
+    </StyledMobileHeader>
   );
 };
 export default HeaderMobile;
