@@ -7,6 +7,7 @@ import RegisterForm from "../../../components/Register";
 import { ValidationSchemaExample } from "../../../components/UserShippingForm";
 import useCart from "../../../hooks/useCart";
 import thankIcon from "../../../../public/images/icons/thank-you.svg";
+import { GetStaticProps } from "next";
 import {
   LineItemsDTO,
   OrderValidation,
@@ -15,11 +16,12 @@ import BillingShippingForm, {
   IFormValues,
 } from "../../../components/BillingShippingForm";
 import { wc_createOrder } from "../../../services/woocommerceApi/Orders";
-import { wc_paymentGateWays } from "../../../services/woocommerceApi/PaymentGateWays";
 import useTranslation from "next-translate/useTranslation";
-import { PaymentGateWays } from "../../../interfaces/PaymentGateWays";
 
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import useUser from "../../../hooks/useUser";
+import apiTest from "../../../services/postFinanceApi/apiTest";
+import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 
 import {
   Container,
@@ -28,7 +30,6 @@ import {
   OrderSession,
   Payment,
 } from "../../../styles/CheckoutMobility";
-import useUser from "../../../hooks/useUser";
 
 export default function CheckoutMobility() {
   const [loged, setloged] = useState(false);
@@ -50,9 +51,11 @@ export default function CheckoutMobility() {
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
-
   const [lineItems, setLineItems] = useState<LineItemsDTO[]>([]);
-  const [paymentMethods, setPaymentmethods] = useState<PaymentGateWays[]>([]);
+  const [transactionId, setTransactionId] = useState<number>();
+  const [paymentMethodes, setPaymentMethods] = useState<
+    PostFinancePaymentMethods[]
+  >([]);
 
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
@@ -73,6 +76,39 @@ export default function CheckoutMobility() {
       setloged(false);
     }
   }, [user]);
+
+  const checkout = useCallback(async () => {
+    let productsCheckout;
+    if (Object.keys(cart).length > 0) {
+      productsCheckout = cart.products.map((product) => {
+        const id = product.id;
+        const name = product.name;
+        const price = product.price;
+        const qty = product.qty;
+        const sku = product.sku;
+
+        return { id, name, price, qty, sku };
+      });
+    }
+
+    if (Object.keys(cart).length > 0) {
+      const { data } = await apiTest.post(
+        "post-finance/post-finance",
+        productsCheckout
+      );
+
+      setPaymentMethods(data.paymentMethods);
+      setTransactionId(data.transactionId);
+      console.log("response=====>", data);
+      if (typeof window !== "undefined") {
+        // window.location.href = data;
+      }
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    checkout();
+  }, [checkout]);
 
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {
@@ -145,14 +181,15 @@ export default function CheckoutMobility() {
     ///////////////////////////////////////////////////////////////
   }, [_billingShippingData.billing, _billingShippingData.shipping, lineItems]);
 
-  const getPayment = async () => {
-    const _paymentMethods = await wc_paymentGateWays();
-    setPaymentmethods(_paymentMethods);
-  };
+  const selectPaymentMethod = useCallback(async () => {
+    const query = { id: transactionId };
+    const { data } = await apiTest.post(
+      "post-finance/transaction-update",
+      query
+    );
 
-  useEffect(() => {
-    getPayment();
-  }, []);
+    console.log("payMeth", transactionId);
+  }, [transactionId]);
 
   return (
     <Container>
@@ -176,11 +213,11 @@ export default function CheckoutMobility() {
             <h2>{wayDelivery}</h2>
           </section>
           <Payment>
-            <h2>{payment}</h2>
+            <h2 onClick={selectPaymentMethod}>{payment}</h2>
 
             <div className="payment_list">
-              {paymentMethods.map((payment) => {
-                return <div key={payment.id}>{payment.title}</div>;
+              {paymentMethodes.map((method) => {
+                return <div key={method.id}>{method.name}</div>;
               })}
             </div>
           </Payment>
@@ -237,6 +274,13 @@ export default function CheckoutMobility() {
           <p>{addPtotalPrice}</p>
           <button onClick={sendOrder}>{btnSend}</button>
         </OrderSession>
+        <div>
+          <button onClick={checkout}>----Checkout----</button>
+        </div>
+
+        {/*   <div>
+          <button onClick={check222}>check2222</button>
+        </div> */}
       </StyledCheckout>
     </Container>
   );
@@ -244,4 +288,10 @@ export default function CheckoutMobility() {
 
 CheckoutMobility.getLayout = function getLayout(page: ReactElement) {
   return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
+};
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return {
+    props: {},
+  };
 };

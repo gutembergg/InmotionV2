@@ -19,7 +19,6 @@ import {
   GifBox2,
   ContentHeader,
 } from "../styles/mainHome";
-import { useState } from "react";
 
 export interface Props {
   categories: ICategories[];

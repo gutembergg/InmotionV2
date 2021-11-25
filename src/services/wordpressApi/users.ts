@@ -7,7 +7,6 @@ export const createInmotionUsers = async (user: UserDto) => {
   try {
     const response = await api.post("users", user);
 
-    console.log("respi", response);
     return response;
   } catch (error) {
     console.log("error:::", error);
@@ -24,7 +23,6 @@ export const userLogin = async (authUser: AuthUser) => {
       }
     );
 
-    console.log("userToken", response);
     return response;
   } catch (error) {
     console.log("error:::", error);

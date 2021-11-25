@@ -1,7 +1,6 @@
 import { wooCommerce } from "./woocommerceConfig";
-export const addCustomers:any = async() => {
-
-const data = {
+export const addCustomers: any = async () => {
+  const data = {
     email: "john.doe@example.com",
     first_name: "John",
     last_name: "Doe",
@@ -17,7 +16,7 @@ const data = {
       postcode: "94103",
       country: "US",
       email: "john.doe@example.com",
-      phone: "(555) 555-5555"
+      phone: "(555) 555-5555",
     },
     shipping: {
       first_name: "John",
@@ -28,10 +27,10 @@ const data = {
       city: "San Francisco",
       state: "CA",
       postcode: "94103",
-      country: "US"
-    }
+      country: "US",
+    },
   };
 
-    const response = await wooCommerce.post("customers", data);
-    return response;
-  };
+  const response = await wooCommerce.post("customers", data);
+  return response;
+};

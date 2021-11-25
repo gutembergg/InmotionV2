@@ -91,6 +91,7 @@ export default function AccessoryPage({
     (categorySlug: string, categoryIndex: number) => {
       setActivedMenuIndex(categoryIndex);
       setProductIndex(0);
+      setModelsActivated(_productsUpSellModelsByDefault.length);
 
       const selectedCategoryProducts = productsWithVariation.filter((product) =>
         product.categories.find((category) => category.slug === categorySlug)

@@ -7,10 +7,10 @@ import {
   wc_getSub_categories,
 } from "../../services/woocommerceApi/Categories";
 import { ICategories } from "../../interfaces/ICategories";
-
-import { Container, MainContent } from "../../styles/Boutique";
 import React, { ReactElement } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
+
+import { Container, MainContent } from "../../styles/Boutique";
 
 interface IProps {
   subCategories: ICategories[];
@@ -33,9 +33,6 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
                       category.slug === "equipments" ||
                       category.slug === "ausruestungen"
                     ? `/inmotion-mobility/categorie_/${category.slug}`
-                    : category.slug === "occasions" ||
-                      category.slug === "gelegenheiten"
-                    ? `/inmotion-mobility/produits/${category.slug}`
                     : `/inmotion-mobility/categories/${category.slug}`
                 }
               >
@@ -44,15 +41,15 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
                     <div className="care_blue_hover"></div>
                     {category.image?.src && (
                       <div className="imgBox">
-                      <Image
-                        src={category.image?.src}
-                        alt={category.name}
-                        width={300}
-                        height={300}
-                        placeholder="blur"
-                        blurDataURL={category.image?.src}
+                        <Image
+                          src={category.image?.src}
+                          alt={category.name}
+                          width={300}
+                          height={300}
+                          placeholder="blur"
+                          blurDataURL={category.image?.src}
                         />
-                        </div>
+                      </div>
                     )}
 
                     <div className="category_name">{category.name}</div>
@@ -101,7 +98,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const mainCategories = subCategories.filter(
     (category: ICategories) =>
-      category.slug !== "non-classe" && category.slug !== "occasions"
+      category.slug !== "non-classe" &&
+      category.slug !== "occasions" &&
+      category.slug !== "occasions-en" &&
+      category.slug !== "occasions-de"
   );
 
   mainCategories.sort((a: any, b: any) => {

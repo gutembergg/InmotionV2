@@ -4,7 +4,6 @@ export const Container = styled.div``;
 
 export const MainContent = styled.div`
   position: relative;
-  height: 59vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 
@@ -26,7 +25,7 @@ export const MainContent = styled.div`
     margin-top: 2rem;
     .imgBox {
       width: 20vh;
-}
+    }
     .care_blue_hover {
       display: none;
       background-color: var(--Blue);
@@ -70,9 +69,4 @@ export const MainContent = styled.div`
 
     margin-top: 3rem;
   }
-
-  /* @media (max-width: 791px) {
-    display: grid;
-    grid-template-columns: 1fr;
-  } */
 `;
