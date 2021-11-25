@@ -3,10 +3,8 @@ import styled from "styled-components";
 interface Props{
   test:string
 }
-export const StyledHeader = styled.header<Props>`
-  display: none;
-
-  ${props=>props.test}
+export const StyledMobileHeader = styled.header`
+display:none;
   @media screen and (max-width: 1024px) {
     display: block;
     .topHeader {
@@ -22,7 +20,7 @@ export const StyledHeader = styled.header<Props>`
     z-index: 8000;
 
       .logoBox {
-        width: 50%;
+        width: 250px;
         height: 56px;
         img{
           object-fit:cover;
@@ -35,8 +33,7 @@ export const StyledHeader = styled.header<Props>`
     }
     //closed menu container//
     .mainBlock {
-      /* visibility: hidden; */
-      display: none;
+      visibility: hidden;
       opacity: 0;
       transition: opacity ease-in 0.1s;
       position: fixed;
@@ -44,7 +41,7 @@ export const StyledHeader = styled.header<Props>`
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh;
+      height: 0vh;
       
       .logoBox{
         width:50%;
@@ -98,11 +95,12 @@ export const StyledHeader = styled.header<Props>`
     .mainBlock.open {
       display: inline-block;
       transition: opacity ease-in 0.2s;
-      /* visibility: visible; */
+      visibility: visible;
       opacity: 1;
       background-color:#000000ed;
       top: 0;
       left: 0;
+      height: 100vh;
       
       
       .contentBg{
@@ -141,12 +139,13 @@ export const StyledHeader = styled.header<Props>`
     //navigation icon
     .mobileButton {
       position: fixed;
-      z-index:8910;
+      z-index:9910;
       right: 25px;
       top: 0;
       transform: skew(-20deg);
       background-color: var(--Red);
       display: flex;
+
       #nav-icon2 {
         transform: skew(20deg) rotate(0deg);
         width: 36px;
@@ -175,7 +174,7 @@ export const StyledHeader = styled.header<Props>`
       }
 
       #nav-icon2 span:nth-child(even) {
-        left: 49%;
+        left: 48%;
         border-radius: 0 9px 9px 0;
       }
 
