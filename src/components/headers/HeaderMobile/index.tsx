@@ -18,7 +18,6 @@ const HeaderMobile = () => {
   const [loged, setLoged] = useState<boolean>(false);
   const [menuOpen, setmenuOpen] = useState<boolean>(false);
 
-
   //menu button click//
   const menuToggle = () => {
     menuOpen === false ? setmenuOpen(true) : setmenuOpen(false);
