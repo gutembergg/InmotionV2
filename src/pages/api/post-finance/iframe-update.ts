@@ -1,6 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
+import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
 import { TransactionPending } from "postfinancecheckout/src/models/TransactionPending";
+
+interface ProductsLineItems {
+  id: number;
+  name: string;
+  price: number;
+  qty: number;
+  sku: string;
+}
 
 let spaceId: number = 23340;
 let userId: number = 48078;
@@ -16,7 +25,17 @@ export default async function handlerUpdate(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+
   const { method } = req;
+
+  if (method === "GET") {
+    res.status(200).json({ Message: "get request" });
+  }
 
   if (method === "POST") {
     const transaction = req.body;
@@ -29,15 +48,15 @@ export default async function handlerUpdate(
         allowedPaymentMethodConfigurations: [transaction.methodId],
         id: response.body.id as number,
         version: response.body.version as number,
-        successUrl: `http://localhost:3000/inmotion-mobility/completed-order/${transaction.orderId}`,
       };
 
       transactionService
         .update(spaceId, updatedTransaction)
         .then((response) => {
-          res.status(200).json(response.body.id);
-          console.log("update==>", response.body.id);
+          console.log("update==>", response.body);
         });
     });
+
+    // res.status(200).json({ Message: "get request" });
   }
 }

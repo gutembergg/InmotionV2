@@ -11,10 +11,10 @@ export const StyledCheckout = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 
-  h1{
-    margin-top:30px;
+  h1 {
+    margin-top: 30px;
     width: 100%;
-    text-align:center;
+    text-align: center;
     background-color: var(--DarkGray);
     color: var(--White);
     padding: 10px 0;
@@ -25,8 +25,6 @@ export const FormSession = styled.div`
   padding: 20px;
   width: 100%;
   max-width: 750px;
-
-
 `;
 
 export const OrderSession = styled.div`
@@ -39,4 +37,12 @@ export const OrderSession = styled.div`
   }
 `;
 
-export const Payment = styled.div``;
+export const Payment = styled.div`
+  .payment_list {
+  }
+
+  .desactive {
+    pointer-events: none;
+    color: var(--DarkGray);
+  }
+`;

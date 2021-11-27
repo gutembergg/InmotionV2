@@ -81,10 +81,6 @@ export default async function handler(
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
 
-    // TransactionPaymentPage Service
-    let transactionPaymentPageService: PostFinanceCheckout.api.TransactionPaymentPageService =
-      new PostFinanceCheckout.api.TransactionPaymentPageService(config);
-
     // LineItem of type PRODUCT
     let lineItem: PostFinanceCheckout.model.LineItemCreate =
       new PostFinanceCheckout.model.LineItemCreate();
@@ -113,7 +109,6 @@ export default async function handler(
       let transactionCreate: PostFinanceCheckout.model.Transaction =
         response.body;
 
-      console.log("transactionCreate.id", transactionCreate.id);
       //// Fecth payment methods
       transactionService
         .fetchPaymentMethods(
@@ -123,21 +118,11 @@ export default async function handler(
         )
         .then(function (response) {
           const responseQuery = {
-            transactionId: 34682331,
+            transactionId: transactionCreate.id,
             paymentMethods: response.body,
           };
           res.status(200).json(responseQuery);
-          // console.log("fetchPaymentMethods", response.body);
         });
-
-      /*  console.log("transactionCreate: ", productsLineItems);
-      transactionPaymentPageService
-        .paymentPageUrl(spaceId, <number>transactionCreate.id)
-        .then(function (response) {
-          let pageUrl: string = response.body;
-
-          res.status(200).json(pageUrl);
-        }); */
     });
   }
 }

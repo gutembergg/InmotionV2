@@ -8,7 +8,7 @@ import useTranslation from "next-translate/useTranslation";
 
 const RegisterForm = () => {
   const { t } = useTranslation();
-  const createAccount = t("checkout-mobility:createAccount");
+  const createAccount = t("checkout-mobility:createAccounts");
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [b2bFields, setB2bFields] = useState<boolean>(false);
@@ -102,7 +102,7 @@ const RegisterForm = () => {
         </RegisterContainer>
       </Modal>
       <RegisterLink onClick={() => setShowModal(true)}>
-        <p className="registerButton">{createAccount}</p>
+        <p className="registerButton">aaaaaaaa{createAccount}</p>
       </RegisterLink>
     </>
   );

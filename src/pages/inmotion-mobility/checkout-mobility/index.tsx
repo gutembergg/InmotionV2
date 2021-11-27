@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { GetStaticProps } from "next";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import CouponsCode from "../../../components/CouponsCode";
@@ -7,7 +8,6 @@ import RegisterForm from "../../../components/Register";
 import { ValidationSchemaExample } from "../../../components/UserShippingForm";
 import useCart from "../../../hooks/useCart";
 import thankIcon from "../../../../public/images/icons/thank-you.svg";
-import { GetStaticProps } from "next";
 import {
   LineItemsDTO,
   OrderValidation,
@@ -15,12 +15,15 @@ import {
 import BillingShippingForm, {
   IFormValues,
 } from "../../../components/BillingShippingForm";
-import { wc_createOrder } from "../../../services/woocommerceApi/Orders";
+import {
+  wc_createOrder,
+  _updateOrder,
+} from "../../../services/woocommerceApi/Orders";
 import useTranslation from "next-translate/useTranslation";
 
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import useUser from "../../../hooks/useUser";
-import apiTest from "../../../services/postFinanceApi/apiTest";
+import apiPFinance from "../../../services/postFinanceApi/apiPFinance";
 import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 
 import {
@@ -57,6 +60,39 @@ export default function CheckoutMobility() {
     PostFinancePaymentMethods[]
   >([]);
 
+  const [userShippingBilling, setUserShippingBilling] = useState({
+    billing_info: {
+      billing_address_1: user ? user.billing_info?.billing_address_1 : "",
+      billing_address_2: user ? user.billing_info?.billing_address_2 : "",
+      billing_city: user ? user.billing_info?.billing_city : "",
+      billing_country: user ? user.billing_info?.billing_country : "",
+      billing_email: user ? user.billing_info?.billing_email : "",
+      billing_first_name: user ? user.billing_info?.billing_first_name : "",
+      billing_last_name: user ? user.billing_info?.billing_last_name : "",
+      billing_phone: user ? user.billing_info?.billing_phone : "",
+      billing_postcode: user ? user.billing_info?.billing_postcode : "",
+      billing_state: user ? user.billing_info?.billing_state : "",
+    },
+    shipping_info: {
+      shipping_address_1: user ? user.shipping_info?.shipping_address_1 : "",
+      shipping_address_2: user ? user.shipping_info?.shipping_address_2 : "",
+      shipping_city: user ? user.shipping_info?.shipping_city : "",
+      shipping_company: user ? user.shipping_info?.shipping_company : "",
+      shipping_country: user ? user.shipping_info?.shipping_country : "",
+      shipping_first_name: user ? user.shipping_info?.shipping_first_name : "",
+      shipping_last_name: user ? user.shipping_info?.shipping_last_name : "",
+      shipping_phone: user ? user.shipping_info?.shipping_phone : "",
+      shipping_postcode: user ? user.shipping_info?.shipping_postcode : "",
+      shipping_state: user ? user.shipping_info?.shipping_state : "",
+    },
+    line_items: lineItems,
+  });
+
+  const [orderId, setOrderId] = useState<number>();
+  const [isOrder, setIsOrder] = useState(false);
+
+  console.log("userShippingBilling", userShippingBilling);
+
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
       const _lineItems = cart.products.map((product) => {
@@ -66,7 +102,12 @@ export default function CheckoutMobility() {
         return { product_id, quantity };
       });
       setLineItems(_lineItems);
+      setUserShippingBilling({
+        ...userShippingBilling,
+        line_items: _lineItems,
+      });
     }
+    // eslint-disable-next-line
   }, [cart]);
 
   useEffect(() => {
@@ -76,39 +117,6 @@ export default function CheckoutMobility() {
       setloged(false);
     }
   }, [user]);
-
-  const checkout = useCallback(async () => {
-    let productsCheckout;
-    if (Object.keys(cart).length > 0) {
-      productsCheckout = cart.products.map((product) => {
-        const id = product.id;
-        const name = product.name;
-        const price = product.price;
-        const qty = product.qty;
-        const sku = product.sku;
-
-        return { id, name, price, qty, sku };
-      });
-    }
-
-    if (Object.keys(cart).length > 0) {
-      const { data } = await apiTest.post(
-        "post-finance/post-finance",
-        productsCheckout
-      );
-
-      setPaymentMethods(data.paymentMethods);
-      setTransactionId(data.transactionId);
-      console.log("response=====>", data);
-      if (typeof window !== "undefined") {
-        // window.location.href = data;
-      }
-    }
-  }, [cart]);
-
-  useEffect(() => {
-    checkout();
-  }, [checkout]);
 
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {
@@ -138,33 +146,53 @@ export default function CheckoutMobility() {
     _setBillingShippingData({ billing, shipping });
   };
 
-  const sendOrder = useCallback(async () => {
+  const _sendOrder = useCallback(async () => {
     const order = {
-      payment_method: "bacs",
-      payment_method_title: "Direct Bank Transfer",
+      payment_method: "Pedding",
+      payment_method_title: "Pedding",
       set_paid: true,
       billing: {
-        first_name: _billingShippingData.billing.first_name,
-        last_name: _billingShippingData.billing.last_name,
-        address_1: _billingShippingData.billing.address_1,
-        address_2: _billingShippingData.billing.address_2,
-        city: _billingShippingData.billing.city,
-        state: _billingShippingData.billing.state,
-        postcode: _billingShippingData.billing.postcode,
-        country: _billingShippingData.billing.country,
-        email: _billingShippingData.billing.email,
-        phone: _billingShippingData.billing.phone,
+        first_name:
+          userShippingBilling.billing_info.billing_first_name ||
+          _billingShippingData.billing?.first_name,
+        last_name:
+          userShippingBilling.billing_info.billing_last_name ||
+          _billingShippingData.billing?.last_name,
+        address_1:
+          userShippingBilling.billing_info.billing_address_1 ||
+          _billingShippingData.billing?.address_1,
+        address_2:
+          userShippingBilling.billing_info.billing_address_2 ||
+          _billingShippingData.billing?.address_2,
+        city:
+          userShippingBilling.billing_info.billing_city ||
+          _billingShippingData.billing?.city,
+        state:
+          userShippingBilling.billing_info.billing_state ||
+          _billingShippingData.billing?.state,
+        postcode:
+          userShippingBilling.billing_info.billing_postcode ||
+          _billingShippingData.billing?.postcode,
+        country:
+          userShippingBilling.billing_info.billing_country ||
+          _billingShippingData.billing?.country,
+        email:
+          userShippingBilling.billing_info.billing_email ||
+          _billingShippingData.billing?.email,
+        phone:
+          userShippingBilling.billing_info.billing_phone ||
+          _billingShippingData.billing?.phone,
       },
       shipping: {
-        first_name: _billingShippingData.shipping.first_name,
-        last_name: _billingShippingData.shipping.last_name,
-        address_1: _billingShippingData.shipping.address_1,
-        address_2: _billingShippingData.shipping.address_2,
-        phone: _billingShippingData.shipping.phone,
-        city: _billingShippingData.shipping.city,
-        state: _billingShippingData.shipping.state,
-        postcode: _billingShippingData.shipping.postcode,
-        country: _billingShippingData.shipping.country,
+        first_name: userShippingBilling.shipping_info.shipping_first_name,
+        last_name: userShippingBilling.shipping_info.shipping_last_name,
+        address_1: userShippingBilling.shipping_info.shipping_address_1,
+        address_2: userShippingBilling.shipping_info.shipping_address_2,
+        phone: userShippingBilling.shipping_info.shipping_phone,
+        city: userShippingBilling.shipping_info.shipping_city,
+        state: userShippingBilling.shipping_info.shipping_state,
+        postcode: userShippingBilling.shipping_info.shipping_postcode,
+        country: userShippingBilling.shipping_info.shipping_country,
       },
       line_items: lineItems,
       shipping_lines: [
@@ -178,111 +206,181 @@ export default function CheckoutMobility() {
 
     //Recuperer ici la reponse de la commande crée//////////////////
     const response = await wc_createOrder(order);
+    setOrderId(response.id);
+
+    if (response) {
+      setIsOrder(true);
+    } else {
+      setIsOrder(false);
+    }
+    console.log("responseOrder", response);
     ///////////////////////////////////////////////////////////////
-  }, [_billingShippingData.billing, _billingShippingData.shipping, lineItems]);
+  }, [lineItems, userShippingBilling, _billingShippingData]);
 
-  const selectPaymentMethod = useCallback(async () => {
+  const checkout = useCallback(async () => {
+    let productsCheckout;
+    if (Object.keys(cart).length > 0) {
+      productsCheckout = cart.products.map((product) => {
+        const id = product.id;
+        const name = product.name;
+        const price = product.price;
+        const qty = product.qty;
+        const sku = product.sku;
+
+        return { id, name, price, qty, sku };
+      });
+    }
+
+    _sendOrder();
+
+    if (Object.keys(cart).length > 0) {
+      const { data } = await apiPFinance.post(
+        "transaction-create",
+        productsCheckout
+      );
+
+      setPaymentMethods(data.paymentMethods);
+      setTransactionId(data.transactionId);
+      console.log("response=====>", data.transactionId);
+    }
+  }, [cart, _sendOrder]);
+
+  const validateCheckout = useCallback(async () => {
     const query = { id: transactionId };
-    const { data } = await apiTest.post(
-      "post-finance/transaction-update",
-      query
-    );
+    const { data } = await apiPFinance.post("transaction-validate", query);
 
-    console.log("payMeth", transactionId);
+    if (typeof window !== "undefined") {
+      window.location.href = data;
+    }
   }, [transactionId]);
 
+  const updateTransaction = useCallback(
+    async (method: PostFinancePaymentMethods) => {
+      setIsOrder(false);
+      const { data } = await apiPFinance.post("transaction-update", {
+        id: transactionId,
+        orderId: orderId,
+        methodId: method.id,
+      });
+
+      setTransactionId(data);
+
+      const orderUpdated = await _updateOrder(orderId as number, method.name);
+
+      if (orderUpdated) {
+        setIsOrder(true);
+      }
+
+      console.log("orderUpdated: ", orderUpdated);
+    },
+    [orderId, transactionId]
+  );
+
   return (
-    <Container>
-      <StyledCheckout>
-        <FormSession>
-          {!loged && (
-            <div>
-              <p>{haveAccount}</p>
-              <LoginForm />
-              <RegisterForm />
-            </div>
-          )}
-          <section>
-            <h2>{deliveryInfo}</h2>
-            <BillingShippingForm
-              handleBillingShippingData={_handleBillingShippingData}
-            />
-            <ValidationSchemaExample />
-          </section>
-          <section>
-            <h2>{wayDelivery}</h2>
-          </section>
-          <Payment>
-            <h2 onClick={selectPaymentMethod}>{payment}</h2>
+    <>
+      <Container>
+        <StyledCheckout>
+          <FormSession>
+            {!loged && (
+              <div>
+                <p>{haveAccount}</p>
+                <LoginForm />
+                <RegisterForm />
+              </div>
+            )}
+            <section>
+              <h2>{deliveryInfo}</h2>
+              <BillingShippingForm
+                handleBillingShippingData={_handleBillingShippingData}
+              />
+              <ValidationSchemaExample />
+            </section>
+            <section>
+              <h2>{wayDelivery}</h2>
+            </section>
+            <Payment>
+              <button onClick={checkout}>{payment}</button>
 
-            <div className="payment_list">
-              {paymentMethodes.map((method) => {
-                return <div key={method.id}>{method.name}</div>;
-              })}
-            </div>
-          </Payment>
-        </FormSession>
-        <OrderSession>
-          <div>
-            <div>
-              <ul>
-                {cart.totalProductsCount > 0 ? (
-                  cart.products.map((product) => {
+              <div className="payment_list">
+                {paymentMethodes.length > 0 &&
+                  paymentMethodes.map((method) => {
                     return (
-                      <li className="products_list" key={product.id}>
-                        <button
-                          className="closeButton"
-                          onClick={() => removeCartItem(product.id)}
-                        ></button>
-                        <div className="cartProductInfos">
-                          <h5>{product.name}</h5>
-                          <p>
-                            {product.qty}x CHF {product.price}
-                          </p>
-                        </div>
-                        <div className="cartProductThmbnail">
-                          <Image
-                            src={product.images[0].src}
-                            alt={product.name}
-                            height={50}
-                            width={50}
-                          />
-                        </div>
-                      </li>
+                      <div
+                        key={method.id}
+                        onClick={() => updateTransaction(method)}
+                        className={!isOrder ? "desactive" : ""}
+                      >
+                        {method.name}
+                      </div>
                     );
-                  })
-                ) : (
-                  <li>
-                    <p>{emptyCartMessage}</p>
-                  </li>
+                  })}
+
+                {paymentMethodes.length > 0 && (
+                  <button
+                    disabled={!isOrder}
+                    onClick={() => validateCheckout()}
+                  >
+                    Valider commande
+                  </button>
                 )}
-              </ul>
-              <h5 className="sousTotalTxt">
-                {subTotal}:{" "}
-                <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
-              </h5>
+              </div>
+            </Payment>
+          </FormSession>
+          <OrderSession>
+            <div>
+              <div>
+                <ul>
+                  {cart.totalProductsCount > 0 ? (
+                    cart.products.map((product) => {
+                      return (
+                        <li className="products_list" key={product.id}>
+                          <button
+                            className="closeButton"
+                            onClick={() => removeCartItem(product.id)}
+                          ></button>
+                          <div className="cartProductInfos">
+                            <h5>{product.name}</h5>
+                            <p>
+                              {product.qty}x CHF {product.price}
+                            </p>
+                          </div>
+                          <div className="cartProductThmbnail">
+                            <Image
+                              src={product.images[0].src}
+                              alt={product.name}
+                              height={50}
+                              width={50}
+                            />
+                          </div>
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li>
+                      <p>{emptyCartMessage}</p>
+                    </li>
+                  )}
+                </ul>
+                <h5 className="sousTotalTxt">
+                  {subTotal}:{" "}
+                  <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+                </h5>
+              </div>
             </div>
-          </div>
 
-          <CouponsCode />
-          <p>{addPromoDode}</p>
-          <p>
-            ajouter fonction if userbillig & shipping !== formulaire data
-            register new data dans user (lien avec formulaire mon compte)
-          </p>
-          <p>{addTVA}</p>
-          <p>{addPtotalPrice}</p>
-          <button onClick={sendOrder}>{btnSend}</button>
-        </OrderSession>
-        <div>
-          <button onClick={checkout}>----Checkout----</button>
-        </div>
-
-        {/*   <div>
-          <button onClick={check222}>check2222</button>
-        </div> */}
-      </StyledCheckout>
-    </Container>
+            <CouponsCode />
+            <p>{addPromoDode}</p>
+            <p>
+              ajouter fonction if userbillig & shipping !== formulaire data
+              register new data dans user (lien avec formulaire mon compte)
+            </p>
+            <p>{addTVA}</p>
+            <p>{addPtotalPrice}</p>
+            <button onClick={_sendOrder}>{btnSend}</button>
+          </OrderSession>
+        </StyledCheckout>
+      </Container>
+    </>
   );
 }
 
