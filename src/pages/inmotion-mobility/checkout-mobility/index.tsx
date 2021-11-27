@@ -271,7 +271,7 @@ export default function CheckoutMobility() {
         setIsOrder(true);
       }
 
-      console.log("orderUpdated: ", orderUpdated);
+      console.log("orderUpdated:", orderUpdated);
     },
     [orderId, transactionId]
   );
