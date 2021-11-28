@@ -33,6 +33,7 @@ import {
   OrderSession,
   Payment,
 } from "../../../styles/CheckoutMobility";
+import { createTransactions } from "../../../services/postFinanceApi/apiPostFinance/create_transaction";
 
 export default function CheckoutMobility() {
   const [loged, setloged] = useState(false);
@@ -275,6 +276,10 @@ export default function CheckoutMobility() {
     },
     [orderId, transactionId]
   );
+
+  /*  useEffect(() => {
+    createTransactions();
+  }, []); */
 
   return (
     <>

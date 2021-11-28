@@ -1,56 +1,21 @@
-var FtpDeploy = require("ftp-deploy");
-var ftpDeploy = new FtpDeploy();
-require("dotenv").config({ path: ".env.local" });
 
-var config = {
-  user: process.env.FTP_USER,
-  // Password optional, prompted if none given
-  password: process.env.FTP_PASS,
-  host: process.env.FTP_HOST,
-  port: process.env.FTP_PORT || 21,
-  localRoot: __dirname,
-  remoteRoot: process.env.FTP_REMOTE_ROOT,
-  // this would upload everything
-  include: ["*"],
-  // e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
-  exclude: [
-    ".git/**",
-    ".env.local",
-    "node_modules/**",
-    "node_modules/**/.*",
-    "node_modules/**/.*/**",
-    "node_modules/**/*",
-    "node_modules/@types/*",
-  ],
-  // delete ALL existing files at destination before uploading, if true
-  deleteRemote: process.env.FTP_DELETE,
-  // Passive mode is forced (EPSV command is not sent)
-  forcePasv: true,
-};
 
-ftpDeploy
-  .deploy(config)
-  .then((res) => console.log("finished ;)"))
-  .catch((err) => console.log(err));
+Pas effacer!!!!!
 
-ftpDeploy.on("uploading", (d) => {
-  console.log(
-    `${d.transferredFileCount} / ${d.totalFilesCount} => ${d.filename}`
-  );
-});
+./node_modules/postfinancecheckout/src/api/ApplicationUserService.ts:3:1
+Type error: Import assignment cannot be used when targeting ECMAScript modules. Consider using 'import * as ns from "mod"', 'im
+port {a} from "mod"', 'import d from "mod"', or another module format instead.
 
-ftpDeploy.on("upload-error", function (data) {
-  console.log("upload-error =>", data.err); 
-});
+  1 | 'use strict';
+  2 |
+> 3 | import localVarRequest = require("request");
+    | ^
+  4 | import http = require("http");
+  5 | import Promise = require("bluebird");
+  6 |
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 
-// data will also include filename, relativePath, and other goodies
 
-/**
- * FTP_USER=fate
-FTP_PASS=9kwxjosg8z4d
-FTP_HOST=ftp.fat-e.ch
-
-FTP_PORT=21
-FTP_REMOTE_ROOT =/inmotion.fat-e.ch
-
- */
+  "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],

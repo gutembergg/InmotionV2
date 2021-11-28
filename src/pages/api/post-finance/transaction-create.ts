@@ -1,3 +1,5 @@
+"use strict";
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
