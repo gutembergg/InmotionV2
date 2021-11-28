@@ -15,10 +15,10 @@ export default function CompletedOrder() {
     await completOrder(parseInt(id as string, 10));
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     completedOrder();
     // eslint-disable-next-line
-  }, []);
+  }, []); */
   return <p>CompletedOrder</p>;
 }
 
