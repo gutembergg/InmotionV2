@@ -1,8 +1,8 @@
-"use strict";
-
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
+import Cors from "cors";
+import initMiddleware from "../../../utils/init-middleware";
 
 interface ProductsLineItems {
   id: number;
@@ -22,59 +22,25 @@ let config = {
   api_secret: apiSecret,
 };
 
+const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors({
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ["GET", "POST", "OPTIONS"],
+  })
+);
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  await cors(req, res);
 
   const { method } = req;
 
   if (method === "GET") {
     // Transaction Service
-    let transactionService: PostFinanceCheckout.api.TransactionService =
-      new PostFinanceCheckout.api.TransactionService(config);
-
-    // TransactionPaymentPage Service
-    let transactionPaymentPageService: PostFinanceCheckout.api.TransactionPaymentPageService =
-      new PostFinanceCheckout.api.TransactionPaymentPageService(config);
-
-    // LineItem of type PRODUCT
-    let lineItem: PostFinanceCheckout.model.LineItemCreate =
-      new PostFinanceCheckout.model.LineItemCreate();
-    lineItem.name = "Red T-Shirt";
-    lineItem.uniqueId = "5412";
-    lineItem.sku = "red-t-shirt-123";
-    lineItem.quantity = 1;
-    lineItem.amountIncludingTax = 3.5;
-    lineItem.type = PostFinanceCheckout.model.LineItemType.PRODUCT;
-
-    // Transaction
-    let transaction: PostFinanceCheckout.model.TransactionCreate =
-      new PostFinanceCheckout.model.TransactionCreate();
-    transaction.lineItems = [lineItem];
-    transaction.autoConfirmationEnabled = true;
-    transaction.currency = "EUR";
-    /* transactionService.fetchPaymentMethods */
-
-    transactionService.create(spaceId, transaction).then((response) => {
-      let transactionCreate: PostFinanceCheckout.model.Transaction =
-        response.body;
-
-      console.log("transactionCreate===>", transactionCreate);
-
-      transactionPaymentPageService
-        .paymentPageUrl(spaceId, <number>transactionCreate.id)
-        .then(function (response) {
-          let pageUrl: string = response.body;
-
-          res.status(200).json({ URL: pageUrl });
-        });
-    });
+    res.status(200).json({ Message: "method GET" });
   }
 
   if (method === "POST") {
