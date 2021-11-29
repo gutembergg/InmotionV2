@@ -66,7 +66,7 @@ display:none;
         transition: all ease-in 0.01s;
         padding: 10px 40px;
         position: relative;
-        overflow: hidden;
+        overflow: hidden; 
       }
       .bgLeft{
         position: absolute;
