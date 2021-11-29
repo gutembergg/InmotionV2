@@ -6,7 +6,10 @@ export const StyledFilAriane = styled.div`
   margin-top:20px;
   display: flex;
   justify-content: flex-end;
-  
+  @media (max-width: 1024px){
+    margin-right: 0px;
+    margin-top: 78px;
+  }
   nav {
     ol {
       display: flex;

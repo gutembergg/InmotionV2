@@ -32,14 +32,14 @@ export const LoginLink = styled.div`
     color: var(--Black);
     transition: all ease-in 0.1s;
   }
-  p {
-    display: flex;
-    align-items: center;
-
-    span {
-      margin-left: 12px;
-      margin-right: 20px;
-    }
+  span {
+    margin-left: 12px;
+    margin-right: 20px;
+    
+    @media (max-width: 1024px) {
+          display: none;
+        }
+    
   }
 `;
 export const LogoutLink = styled.div`
