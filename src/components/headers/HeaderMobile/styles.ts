@@ -10,18 +10,22 @@ display:none;
     .topHeader {
       display: flex;
       align-items: flex-end;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     height: 56px;
     position: fixed;
-    background-color: #d5d5d5;
+    background-color: var(--White);
     left: 0;
-    padding: 64px 139px 0px 10px;
+    padding: 57px 139px 0px 2%;
     z-index: 8000;
+    box-shadow: 1px 1px 10px #0000002e;
+
+
+
 
       .logoBox {
         width: 250px;
-        height: 56px;
+        height: 53px;
         img{
           object-fit:cover;
           position: relative;
@@ -54,14 +58,15 @@ display:none;
         top: 0;
         left: 0;
         width: 90vw;
-        height: 100vh;
+        height: 0vh;
         transform:skew(-10deg);
         margin-left:5vw;
-        visibility: hidden;
+        /* visibility: hidden; */
+        display: none;
         transition: all ease-in 0.01s;
         padding: 10px 40px;
         position: relative;
-        overflow: hidden;
+        overflow: hidden; 
       }
       .bgLeft{
         position: absolute;
@@ -104,7 +109,8 @@ display:none;
       
       
       .contentBg{
-        visibility: visible;
+        /* visibility: visible; */
+        display: inline-block;
         opacity: 1;
         transition: all ease-in 0.3s;
         top: 0;

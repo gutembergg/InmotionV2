@@ -55,6 +55,7 @@ const HeaderMobile = () => {
             </div>
             <div className="slogan">
               <p>Votre spécialiste de la mobilité électrique</p>
+            <hr />
             </div>
             <MenuMain />
             <hr />
