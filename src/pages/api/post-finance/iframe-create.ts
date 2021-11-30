@@ -2,7 +2,6 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
-import { createTransactions } from "../../../services/postFinanceApi/apiPostFinance/create_transaction";
 
 interface ProductsLineItems {
   id: number;
@@ -35,7 +34,6 @@ export default async function handlerCreate(
   const { method } = req;
 
   if (method === "GET") {
-    createTransactions();
   }
 
   if (method === "POST") {
