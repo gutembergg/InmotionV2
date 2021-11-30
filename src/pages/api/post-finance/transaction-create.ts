@@ -81,6 +81,8 @@ export default async function handler(
       let transactionCreate: PostFinanceCheckout.model.Transaction =
         response.body;
 
+      //console.log("transaction: ", response.body);
+
       //// Fecth payment methods
       transactionService
         .fetchPaymentMethods(

@@ -34,6 +34,7 @@ export const completOrder = async (orderId: number) => {
       status: "completed",
     };
     const { data } = await wcApi.put(`orders/${orderId}`, query);
+    console.log("order=====>", data);
 
     return data;
   } catch (error) {

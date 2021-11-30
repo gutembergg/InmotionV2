@@ -5,7 +5,6 @@ import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
 import RegisterForm from "../../../components/Register";
-import { ValidationSchemaExample } from "../../../components/UserShippingForm";
 import useCart from "../../../hooks/useCart";
 import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import {
@@ -33,7 +32,6 @@ import {
   OrderSession,
   Payment,
 } from "../../../styles/CheckoutMobility";
-import { createTransactions } from "../../../services/postFinanceApi/apiPostFinance/create_transaction";
 
 export default function CheckoutMobility() {
   const [loged, setloged] = useState(false);
@@ -92,8 +90,6 @@ export default function CheckoutMobility() {
   const [orderId, setOrderId] = useState<number>();
   const [isOrder, setIsOrder] = useState(false);
 
-  console.log("userShippingBilling", userShippingBilling);
-
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
       const _lineItems = cart.products.map((product) => {
@@ -113,11 +109,40 @@ export default function CheckoutMobility() {
 
   useEffect(() => {
     if (user.token) {
+      console.log("userSh-----2", userShippingBilling);
+      setUserShippingBilling({
+        billing_info: {
+          billing_address_1: user.billing_info.billing_address_1,
+          billing_address_2: user.billing_info.billing_address_2,
+          billing_first_name: user.billing_info.billing_first_name,
+          billing_last_name: user.billing_info.billing_last_name,
+          billing_email: user.billing_info.billing_email,
+          billing_city: user.billing_info.billing_city,
+          billing_country: user.billing_info.billing_country,
+          billing_postcode: user.billing_info.billing_postcode,
+          billing_state: user.billing_info.billing_state,
+          billing_phone: user.billing_info.billing_phone,
+        },
+        shipping_info: {
+          shipping_address_1: user.shipping_info.shipping_address_1,
+          shipping_address_2: user.shipping_info.shipping_address_2,
+          shipping_first_name: user.shipping_info.shipping_first_name,
+          shipping_last_name: user.shipping_info.shipping_last_name,
+          shipping_city: user.shipping_info.shipping_city,
+          shipping_country: user.shipping_info.shipping_country,
+          shipping_postcode: user.shipping_info.shipping_postcode,
+          shipping_state: user.shipping_info.shipping_state,
+          shipping_company: user.shipping_info.shipping_company,
+          shipping_phone: user.shipping_info.shipping_phone,
+        },
+        line_items: lineItems,
+      });
       setloged(true);
     } else {
       setloged(false);
     }
-  }, [user]);
+    // eslint-disable-next-line
+  }, [user, lineItems]);
 
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {
@@ -146,6 +171,8 @@ export default function CheckoutMobility() {
     };
     _setBillingShippingData({ billing, shipping });
   };
+
+  console.log("userShippingBilling", userShippingBilling);
 
   const _sendOrder = useCallback(async () => {
     const order = {
@@ -247,13 +274,13 @@ export default function CheckoutMobility() {
   }, [cart, _sendOrder]);
 
   const validateCheckout = useCallback(async () => {
-    const query = { id: transactionId };
+    const query = { id: transactionId, orderId: orderId };
     const { data } = await apiPFinance.post("transaction-validate", query);
 
     if (typeof window !== "undefined") {
       window.location.href = data;
     }
-  }, [transactionId]);
+  }, [transactionId, orderId]);
 
   const updateTransaction = useCallback(
     async (method: PostFinancePaymentMethods) => {
@@ -277,10 +304,6 @@ export default function CheckoutMobility() {
     [orderId, transactionId]
   );
 
-  /*  useEffect(() => {
-    createTransactions();
-  }, []); */
-
   return (
     <>
       <Container>
@@ -298,7 +321,6 @@ export default function CheckoutMobility() {
               <BillingShippingForm
                 handleBillingShippingData={_handleBillingShippingData}
               />
-              <ValidationSchemaExample />
             </section>
             <section>
               <h2>{wayDelivery}</h2>

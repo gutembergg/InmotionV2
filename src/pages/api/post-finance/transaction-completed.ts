@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
-import { TransactionPending } from "postfinancecheckout/src/models/TransactionPending";
+import { WebhookUrlUpdate } from "postfinancecheckout/src/models/WebhookUrlUpdate";
 
 let spaceId: number = 23340;
 let userId: number = 48078;
@@ -18,9 +18,25 @@ export default async function handlerCompleted(
 ) {
   const { method } = req;
 
-  if (method === "POST") {
-    const transaction = req.body;
+  if (method === "GET") {
+    const webHookResponse = req.query;
+    console.log("webHookResponse::::", webHookResponse);
 
-    console.log("webhook===>", req.body);
+    let transactionService: PostFinanceCheckout.api.TransactionService =
+      new PostFinanceCheckout.api.TransactionService(config);
+
+    if (webHookResponse) {
+      transactionService
+        .read(spaceId, parseInt(webHookResponse.pf_ts as string))
+        .then((response) => {
+          console.log("TransactionState: ", response.body.state);
+          res.status(200).json({
+            transactionState: response.body.state,
+            response: webHookResponse,
+          });
+        });
+    } else {
+      res.status(404).json({ Message: "Not found" });
+    }
   }
 }

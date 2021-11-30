@@ -31,14 +31,14 @@ export default async function handlerUpdate(
         allowedPaymentMethodConfigurations: [transaction.methodId],
         id: response.body.id as number,
         version: response.body.version as number,
-        successUrl: `http://localhost:3000/inmotion-mobility/completed-order/${transaction.orderId}`,
+        successUrl: `http://localhost:3000/inmotion-mobility/completed-order?order=${transaction.orderId}&pf_ts=${transaction.id}`,
       };
 
       transactionService
         .update(spaceId, updatedTransaction)
         .then((response) => {
           res.status(200).json(response.body.id);
-          console.log("update==>", response.body.id);
+          //console.log("update==>", response.body);
         });
     });
   }
