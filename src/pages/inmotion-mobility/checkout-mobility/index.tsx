@@ -109,7 +109,6 @@ export default function CheckoutMobility() {
 
   useEffect(() => {
     if (user.token) {
-      console.log("userSh-----2", userShippingBilling);
       setUserShippingBilling({
         billing_info: {
           billing_address_1: user.billing_info.billing_address_1,
@@ -171,8 +170,6 @@ export default function CheckoutMobility() {
     };
     _setBillingShippingData({ billing, shipping });
   };
-
-  console.log("userShippingBilling", userShippingBilling);
 
   const _sendOrder = useCallback(async () => {
     const order = {

@@ -18,7 +18,28 @@ export default async function handlerCompleted(
 ) {
   const { method } = req;
 
-  if (method === "GET") {
+  if (method === "POST") {
+    const webHookResponse = req.query;
+    console.log("webHookResponse::::", webHookResponse);
+
+    let transactionService: PostFinanceCheckout.api.TransactionService =
+      new PostFinanceCheckout.api.TransactionService(config);
+
+    if (webHookResponse) {
+      transactionService
+        .read(spaceId, parseInt(webHookResponse.pf_ts as string))
+        .then((response) => {
+          console.log("TransactionState: ", response.body.state);
+          res.status(200).json({
+            transactionState: response.body.state,
+            response: webHookResponse,
+          });
+        });
+    } else {
+      res.status(404).json({ Message: "Not found" });
+    }
+  }
+  if (method === "PUT") {
     const webHookResponse = req.query;
     console.log("webHookResponse::::", webHookResponse);
 
