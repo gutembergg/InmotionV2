@@ -12,8 +12,10 @@ export const getProducts = async () => {
 };
 
 // Get Products by categories //////////////////////////////
-export const getProductByCategory = async (id: number) => {
-  const { data } = await wooCommerce.get(`products?category=${id}`, {
+export const getProductByCategory = async (id: number, lang: string) => {
+  const { data } = await wooCommerce.get(`products`, {
+    id,
+    lang: lang,
     per_page: 100,
   });
 
@@ -21,7 +23,7 @@ export const getProductByCategory = async (id: number) => {
 };
 
 // Get Products by Category slug /////////////////////////////////////
-export const getProductsByCategorySlug = async (slug: string) => {
+/* export const getProductsByCategorySlug = async (slug: string) => {
   const response = await wooCommerce.get("products/categories", {
     slug: slug,
     per_page: 100,
@@ -38,7 +40,7 @@ export const getProductsByCategorySlug = async (slug: string) => {
   );
 
   return productsCatalogVisibility;
-};
+}; */
 
 // Get Product by slug //////////////////////////////////////////////
 export const getProductBySlug = async (slug: string) => {

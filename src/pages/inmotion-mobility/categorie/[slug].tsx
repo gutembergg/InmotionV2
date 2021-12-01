@@ -6,6 +6,7 @@ import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
 import AccessoriesDetail from "../../../components/AccessoriesTemplate/AccessorieDetail";
 import {
+  getProductByCategory,
   getProduitsByCategoriesSlug,
   wc_getProductsByCategory,
 } from "../../../services/woocommerceApi/Products";
@@ -52,7 +53,7 @@ export default function AccessoryPage({
   const [activedMenuIndex, setActivedMenuIndex] = useState(0);
   const [selectedProductsCategory, setSelectedProductsCategory] = useState<
     IProduct[]
-  >(productsByCategoryDefault);
+  >([]);
 
   const [productIndex, setProductIndex] = useState(0);
   const [subCategoryActived, setSubCategoryActived] = useState<ICategories>(
@@ -241,7 +242,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     product.categories.find((cat) => cat.slug === wc_subCategories[0].slug)
   );
 
-  const mobilityProducts = await wc_getProductsByCategory(80, "fr"); // Boutique ID: 80
+  /* const mobilityProducts = await wc_getProductsByCategory(80, "fr");  */ // Boutique ID: 80
+  const mobilityProducts = await getProductByCategory(80, "fr");
 
   /// Get upSell_ids products ///////////////////////////////////////
   const productsUpSellResult = getProductsUpSells(
@@ -260,6 +262,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       _productsUpSellModelsByDefault: productsUpSellResult,
       _categoryBySlug,
     },
-    revalidate: 60 * 5,
+    revalidate: 60 * 2,
   };
 };
