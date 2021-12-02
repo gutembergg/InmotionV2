@@ -28,7 +28,7 @@ export default function CompletedOrder() {
   };
 
   useEffect(() => {
-    getTransactionState();
+    // getTransactionState();
     // eslint-disable-next-line
   }, [router]);
 

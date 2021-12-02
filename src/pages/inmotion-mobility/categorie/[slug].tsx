@@ -8,7 +8,6 @@ import AccessoriesDetail from "../../../components/AccessoriesTemplate/Accessori
 import {
   getProductByCategory,
   getProduitsByCategoriesSlug,
-  wc_getProductsByCategory,
 } from "../../../services/woocommerceApi/Products";
 import {
   wc_getCategoriesBySlug,
@@ -53,7 +52,7 @@ export default function AccessoryPage({
   const [activedMenuIndex, setActivedMenuIndex] = useState(0);
   const [selectedProductsCategory, setSelectedProductsCategory] = useState<
     IProduct[]
-  >([]);
+  >(productsByCategoryDefault);
 
   const [productIndex, setProductIndex] = useState(0);
   const [subCategoryActived, setSubCategoryActived] = useState<ICategories>(

@@ -2,16 +2,14 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
-import { CreationEntityState } from "postfinancecheckout/src/models/CreationEntityState";
-import { TransactionPending } from "postfinancecheckout/src/models/TransactionPending";
-import { WebhookListenerCreate } from "postfinancecheckout/src/models/WebhookListenerCreate";
-import { WebhookUrl } from "postfinancecheckout/src/models/WebhookUrl";
-import { WebhookUrlCreate } from "postfinancecheckout/src/models/WebhookUrlCreate";
-import { WebhookUrlUpdate } from "postfinancecheckout/src/models/WebhookUrlUpdate";
+
+/* let spaceId: number = 23340;
+let userId: number = 48078;
+let apiSecret: string = "q8qtyI5maaCTfZ1aUWXY6Y3G/A/CjABNynZZkxLPjhw="; */
 
 let spaceId: number = 23340;
-let userId: number = 48078;
-let apiSecret: string = "q8qtyI5maaCTfZ1aUWXY6Y3G/A/CjABNynZZkxLPjhw=";
+let userId: number = 48407;
+let apiSecret: string = "8AHR3Enly7vmpBwrtXplvccVK4Tvrq9WoDWwn/nmiRQ=";
 
 let config = {
   space_id: spaceId,
