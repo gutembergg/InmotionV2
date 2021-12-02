@@ -1,26 +1,43 @@
 import Image from "next/image";
-import Link from "next/link";
 import cartIcon from "../../../public/images/icons/cart.svg";
 import useCart from "../../hooks/useCart";
 import { StyledCart } from "./styles";
 import placeholder from "../../../public/images/placeholder_woocommerce.png";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 const Cart = () => {
   const { cart, removeCartItem } = useCart();
-  const [opencart, setopencart] = useState(false)
+  const [opencart, setopencart] = useState(false);
+  const cartModalRef = useRef<HTMLDivElement>(null);
 
-  const setCartVisibility =()=>{
-    setopencart(!opencart)
-  }
+  const setCartVisibility = () => {
+    setopencart(!opencart);
+  };
   const router = useRouter();
 
   const goToLink = (linkUrl: string) => {
-    router.push(linkUrl);
     setopencart(false);
+    router.push(linkUrl);
   };
 
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        opencart &&
+        cartModalRef.current &&
+        !cartModalRef.current.contains(e.target)
+      ) {
+        setopencart(false);
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [opencart]);
 
   return (
     <StyledCart>
@@ -34,8 +51,8 @@ const Cart = () => {
         ) : (
           <div id="cartItemsNumber">0</div>
         )}
-        <div className={opencart === true ? "cartPreview open":"cartPreview"}>
-          <div className="cartContainer">
+        <div className={opencart === true ? "cartPreview open" : "cartPreview"}>
+          <div ref={cartModalRef} className="cartContainer">
             <ul>
               {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
                 cart.products.map((product) => {
@@ -77,7 +94,15 @@ const Cart = () => {
             </h5>
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
               <div className="btnVoirPanier">
-                <p onClick={()=>{goToLink("/inmotion-mobility/panier")}} className="btnVoirPanierText">Voir le panier</p>0
+                <p
+                  onClick={() => {
+                    goToLink("/inmotion-mobility/panier");
+                  }}
+                  className="btnVoirPanierText"
+                >
+                  Voir le panier
+                </p>
+                0
               </div>
             ) : (
               <div className="btnVoirPanier disabled">
@@ -86,14 +111,23 @@ const Cart = () => {
             )}
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
               <div className="btnCommander">
-                <p onClick={()=>{goToLink("/inmotion-mobility/checkout-mobility")}} className="btnVoirCheckoutText">Checkout</p>
+                <p
+                  onClick={() => {
+                    goToLink("/inmotion-mobility/checkout-mobility");
+                  }}
+                  className="btnVoirCheckoutText"
+                >
+                  Checkout
+                </p>
               </div>
             ) : (
               <div className="btnCommander disabled">
                 <p>checkout non disponible</p>
               </div>
             )}
-            <p className="closeCartButton" onClick={setCartVisibility}>Fermer</p>
+            <p className="closeCartButton" onClick={setCartVisibility}>
+              Fermer
+            </p>
           </div>
         </div>
       </div>

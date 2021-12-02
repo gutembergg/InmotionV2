@@ -97,7 +97,7 @@ export default async function handler(
             transactionId: transactionCreate.id,
             paymentMethods: response.body,
           };
-          res.status(200).json(responseQuery);
+          return res.status(200).json(responseQuery);
         });
     });
   }
