@@ -11,8 +11,8 @@ let userId: number = 48078;
 let apiSecret: string = "q8qtyI5maaCTfZ1aUWXY6Y3G/A/CjABNynZZkxLPjhw="; */
 
 let spaceId: number = 23340;
-let userId: number = 48407;
-let apiSecret: string = "8AHR3Enly7vmpBwrtXplvccVK4Tvrq9WoDWwn/nmiRQ=";
+let userId: number = 48411;
+let apiSecret: string = "YQUOgXtny9XW8L0m7jxx47rTd9ilnKiMqEoFSDOh/9U=";
 
 let config = {
   space_id: spaceId,
