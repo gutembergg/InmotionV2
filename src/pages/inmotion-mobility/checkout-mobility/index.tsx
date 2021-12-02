@@ -288,6 +288,8 @@ export default function CheckoutMobility() {
         methodId: method.id,
       });
 
+      console.log("dataUpdate::", data);
+
       setTransactionId(data);
 
       const orderUpdated = await _updateOrder(orderId as number, method.name);
