@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { MainMenu } from "./styles";
 import useTranslation from "next-translate/useTranslation";
+import { MouseEventHandler } from "react";
 
 const MenuMain = () => {
   const router = useRouter();
@@ -43,106 +44,126 @@ const MenuMain = () => {
     },
   ];
 
+  const goToLink = (linkUrl: string) => {
+    router.push(linkUrl);
+  };
   return (
-    <>
       <MainMenu>
         <li>
-          <Link href="/inmotion-mobility">
-            <a
+            <p
+              onClick={() => {
+                goToLink("/inmotion-mobility");
+              }}
               className={
                 router.pathname === "/inmotion-mobility" ? "active" : ""
               }
             >
               {menuHome}
-            </a>
-          </Link>
+            </p>
         </li>
         <li>
-          <Link href={`/inmotion-mobility/boutique`}>
-            <a className={router.pathname === "/boutique" ? "active" : ""}>
-              {menuShop}
-            </a>
-          </Link>
+          <p
+            onClick={() => {
+              goToLink("/inmotion-mobility/boutique");
+            }}
+            className={router.pathname === "/boutique" ? "active" : ""}
+          >
+            {menuShop}
+          </p>
           <ul>
             {menu.map((category) => {
               return (
                 <li key={category.slug}>
-                  <Link
-                    href={
+                  <p
+                    onClick={() => {
                       category.slug === "pieces-detachees-mobility"
-                        ? `/inmotion-mobility/categorie/${category.slug}`
+                        ? goToLink(
+                            `/inmotion-mobility/categorie/${category.slug}`
+                          )
                         : category.slug === "equipements"
-                        ? `/inmotion-mobility/categorie_/${category.slug}`
-                        : `/inmotion-mobility/categories/${category.slug}`
-                    }
+                        ? goToLink(
+                            `/inmotion-mobility/categorie_/${category.slug}`
+                          )
+                        : goToLink(
+                            `/inmotion-mobility/categories/${category.slug}`
+                          );
+                    }}
+                    className={router.pathname === "/boutique" ? "active" : ""}
                   >
-                    <a
-                      className={
-                        router.pathname === "/boutique" ? "active" : ""
-                      }
-                    >
-                      {category.name}
-                    </a>
-                  </Link>
+                    {category.name}
+                  </p>
                 </li>
               );
             })}
           </ul>
         </li>
         <li>
-          <Link href="/inmotion-mobility/produits/occasions">
-            <a
-              className={
-                router.pathname === "/inmotion-mobility/contact" ? "active" : ""
-              }
-            >
-              {occasions}
-            </a>
-          </Link>
+          <p
+            onClick={() => {
+              goToLink("/inmotion-mobility/produits/occasions");
+            }}
+            className={
+              router.pathname === "/inmotion-mobility/produits/occasions" ? "active" : ""
+            }
+          >
+            {occasions}
+          </p>
         </li>
         <li>
-          <Link href="/inmotion-mobility/services">
-            <a
-              className={
-                router.pathname === "/inmotion-mobility/services"
-                  ? "active"
-                  : ""
-              }
-            >
-              {menuServices}
-            </a>
-          </Link>
+          <p
+            onClick={() => {
+              goToLink("/inmotion-mobility/services");
+            }}
+            className={
+              router.pathname === "/inmotion-mobility/services" ? "active" : ""
+            }
+          >
+            {menuServices}
+          </p>
           <ul>
             <li>
-              <Link href="/inmotion-mobility/services/location">
-                <a>Locations</a>
-              </Link>
+              <p
+                onClick={() => {
+                  goToLink("/inmotion-mobility/services/location");
+                }}
+              >
+                Locations
+              </p>
             </li>
             <li>
-              <Link href="/inmotion-mobility/services/guides-utilisateur">
-                <a>Guides utilisateurs</a>
-              </Link>
+              <p
+                onClick={() => {
+                  goToLink("/inmotion-mobility/services/guides-utilisateur");
+                }}
+              >
+                Guides utilisateurs
+              </p>
             </li>
             <li>
-              <Link href="/inmotion-mobility/services/autorisation-retour">
-                <a>Autorisation retour marchandise</a>
-              </Link>
+              <p
+                onClick={() => {
+                  goToLink("/inmotion-mobility/services/autorisation-retour");
+                }}
+              >
+                Autorisation retour marchandise
+              </p>
             </li>
           </ul>
         </li>
         <li>
-          <Link href="/inmotion-mobility/contact">
-            <a
-              className={
-                router.pathname === "/inmotion-mobility/contact" ? "active" : ""
-              }
-            >
-              {menuContact}
-            </a>
-          </Link>
+          <p
+            onClick={() => {
+              goToLink("/inmotion-mobility/contact");
+            }}
+            className={
+              router.pathname === "/inmotion-mobility/contact" ? "active" : ""
+            }
+          >
+            {menuContact}
+          </p>
         </li>
       </MainMenu>
-    </>
+
   );
 };
 export default MenuMain;
