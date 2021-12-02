@@ -9,7 +9,7 @@ export const MainMenu = styled.ul`
   margin: 0 30px;
   cursor: pointer;
 
-  a {
+  p {
     text-decoration: none;
     color: var(--Blue);
 
@@ -26,7 +26,7 @@ export const MainMenu = styled.ul`
     list-style: none;
 
     &:hover {
-      a {
+      p {
         color: var(--DarkGray);
         transition: color ease-in-out 0.1s;
       }
@@ -54,14 +54,14 @@ export const MainMenu = styled.ul`
         background-color: var(--White);
         padding: 10px 20px;
 
-        a {
+        p {
           color: var(--Blue);
         }
 
         &:hover {
           background-color: var(--Blue);
 
-          a {
+          p {
             color: var(--White);
           }
         }
@@ -98,10 +98,10 @@ export const MainMenu = styled.ul`
           padding: 0;
           background-color: transparent;
           font-weight: 600;
-          a {
+          p {
             color: var(--DarkGray);
           }
-          a::before {
+          p::before {
             content: "- ";
           }
         }

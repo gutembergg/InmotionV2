@@ -9,6 +9,9 @@ export const StyledCart = styled.div`
     .cartIcon {
       margin-right: 10px;
       transition: all ease-in 0.2s;
+      @media (max-width: 1024px) {
+        width: 20px;
+      }
     }
 
     #cartItemsNumber {
@@ -24,20 +27,27 @@ export const StyledCart = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      @media (max-width: 1024px) {
+        width: 15px;
+        height: 15px;
+        top: -4px;
+        right: 20px;
+      }
     }
-
+    
     &:hover {
       .cartIcon {
         transform: scale(1.1);
         transition: all ease-in 0.2s;
       }
-      .cartPreview {
+    }
+      .cartPreview.open{
         visibility: visible;
         opacity: 1;
         transform: scaleY(1);
         transition: all ease-in-out 0.2s;
       }
-    }
+    
     .cartPreview {
       position: absolute;
       visibility: hidden;
@@ -49,14 +59,23 @@ export const StyledCart = styled.div`
       transform: scaleY(0);
       transform-origin: right 12px;
       transition: all ease-in-out 0.1s;
-
+      @media (max-width: 1024px) {
+        position: fixed;   
+        padding-top: 7px;
+        left: 0px;
+        right: initial;
+      }
+      
       .cartContainer {
         background-color: white;
         width: 300px;
         border-top: none;
         box-shadow: 0px 7px 8px 0px #2121211c;
         padding-bottom: 2px;
-
+        @media (max-width: 1024px) {
+          width: 100vw;
+        }
+        
         li {
           list-style: none;
           display: flex;
@@ -116,6 +135,12 @@ export const StyledCart = styled.div`
           padding: 10px 0px;
           margin: 4px 16px;
         }
+        .closeCartButton{
+          text-align: center;
+          margin-bottom: 7px;
+          text-decoration: underline;
+          cursor: pointer;
+        }
         .btnVoirPanier {
           font-size: 0.8em;
           width: calc(100% - 24px);
@@ -132,19 +157,18 @@ export const StyledCart = styled.div`
             transition: all ease-in 0.1s;
             background-color: var(--DarkGray);
           }
-          &.disabled{
+          &.disabled {
             background-color: var(--LightGray);
             cursor: not-allowed;
-          
           }
           p {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100%;
-          text-decoration: none;
-          color: var(--White);
-        }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+            color: var(--White);
+          }
           a.btnVoirPanierText {
             display: flex;
             justify-content: center;
@@ -171,27 +195,27 @@ export const StyledCart = styled.div`
             transition: all ease-in 0.1s;
             background-color: #1186c0;
           }
-          &.disabled{
+          &.disabled {
             cursor: not-allowed;
             background-color: var(--LightGray);
           }
 
           p {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100%;
-          text-decoration: none;
-          color: var(--White);
-        }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+            color: var(--White);
+          }
           a.btnVoirCheckoutText {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100%;
-          text-decoration: none;
-          color: var(--White);
-        }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+            color: var(--White);
+          }
         }
       }
     }

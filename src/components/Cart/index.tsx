@@ -4,14 +4,28 @@ import cartIcon from "../../../public/images/icons/cart.svg";
 import useCart from "../../hooks/useCart";
 import { StyledCart } from "./styles";
 import placeholder from "../../../public/images/placeholder_woocommerce.png";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Cart = () => {
   const { cart, removeCartItem } = useCart();
+  const [opencart, setopencart] = useState(false)
+
+  const setCartVisibility =()=>{
+    setopencart(!opencart)
+  }
+  const router = useRouter();
+
+  const goToLink = (linkUrl: string) => {
+    router.push(linkUrl);
+    setopencart(false);
+  };
+
 
   return (
     <StyledCart>
       <div className="cartIconElement">
-        <div className="cartIcon">
+        <div className="cartIcon" onClick={setCartVisibility}>
           <Image src={cartIcon} width={30} height={30} alt="search icon" />
         </div>
 
@@ -20,7 +34,7 @@ const Cart = () => {
         ) : (
           <div id="cartItemsNumber">0</div>
         )}
-        <div className="cartPreview">
+        <div className={opencart === true ? "cartPreview open":"cartPreview"}>
           <div className="cartContainer">
             <ul>
               {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
@@ -63,9 +77,7 @@ const Cart = () => {
             </h5>
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
               <div className="btnVoirPanier">
-                <Link href="/inmotion-mobility/panier">
-                  <a className="btnVoirPanierText">Voir le panier</a>
-                </Link>
+                <p onClick={()=>{goToLink("/inmotion-mobility/panier")}} className="btnVoirPanierText">Voir le panier</p>0
               </div>
             ) : (
               <div className="btnVoirPanier disabled">
@@ -74,15 +86,14 @@ const Cart = () => {
             )}
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
               <div className="btnCommander">
-                <Link href="/inmotion-mobility/checkout-mobility">
-                  <a className="btnVoirCheckoutText">Checkout</a>
-                </Link>
+                <p onClick={()=>{goToLink("/inmotion-mobility/checkout-mobility")}} className="btnVoirCheckoutText">Checkout</p>
               </div>
             ) : (
               <div className="btnCommander disabled">
                 <p>checkout non disponible</p>
               </div>
             )}
+            <p className="closeCartButton" onClick={setCartVisibility}>Fermer</p>
           </div>
         </div>
       </div>

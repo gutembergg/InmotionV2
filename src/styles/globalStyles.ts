@@ -6,6 +6,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
     -webkit-tap-highlight-color: transparent;
+    font-size: 14px;
   }
   :root {
     --Blue: #0570A6;
@@ -41,4 +42,9 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
+
+  a , p{
+    font-size:1em
+  }
+
 `;

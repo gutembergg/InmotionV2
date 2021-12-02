@@ -51,7 +51,6 @@ export const StyledModalHeader = styled.div`
 `;
 
 export const StyledModal = styled.div`
-
   background: rgb(242, 20, 43);
   background: linear-gradient(
     90deg,
@@ -59,7 +58,7 @@ export const StyledModal = styled.div`
     rgba(242, 20, 43, 0) 72%,
     rgba(242, 20, 43, 0) 100%
   );
-  width: 96vh;
+  width: 96vw;
   max-width: 410px;
   padding: 15px;
   transform: skew(-15deg);
@@ -67,6 +66,20 @@ export const StyledModal = styled.div`
   align-content: flex-start;
   justify-content: flex-start;
   align-items: flex-start;
+  @media (max-width: 540px) {
+    flex-direction: column;
+    background: rgb(242, 20, 43);
+    background: linear-gradient(
+      90deg,
+      rgba(242, 20, 43, 1) 100%,
+      rgba(242, 20, 43, 0) 100%,
+      rgba(242, 20, 43, 0) 100%
+    );
+    width: 96vw;
+    max-width: none;
+    transform: none;
+    padding: 5px;
+  }
   h3 {
     writing-mode: vertical-rl;
     transform: skew(15deg) rotate(195deg);
@@ -76,6 +89,11 @@ export const StyledModal = styled.div`
     text-transform: uppercase;
     letter-spacing: 0.09rem;
     font-size: 1.2em;
+    @media (max-width: 540px) {
+      writing-mode: inherit;
+      transform: none;
+      margin-top: 0px;
+    }
   }
   .modalContainer {
     background-color: var(--White);
@@ -84,6 +102,12 @@ export const StyledModal = styled.div`
     padding: 20px;
     flex-direction: column;
     margin-bottom: 5%;
+    @media (max-width: 540px) {
+    margin-top: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    }
   }
 `;
 export const StyledModalOverlay = styled.div`

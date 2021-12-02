@@ -1,33 +1,47 @@
 import styled from "styled-components";
 
-interface Props{
-  test:string
+interface Props {
+  test: string;
 }
 export const StyledMobileHeader = styled.header`
-display:none;
-  @media screen and (max-width: 1024px) {
+display: none;
+
+.mainBlock.open {
+      transition: all ease-in 0.3s;
+      background-color: #000000ed;
+      top: 0;
+      left: 0;
+
+      .contentBg {
+        transition: all ease-in 0.3s;
+        top: 0;
+        left: 0;
+      }
+    }
+
+  @media screen and (max-width: 1024px){
     display: block;
     .topHeader {
       display: flex;
-      align-items: flex-end;
-    justify-content: space-between;
-    width: 100%;
-    height: 56px;
-    position: fixed;
-    background-color: var(--White);
-    left: 0;
-    padding: 57px 139px 0px 2%;
-    z-index: 8000;
-    box-shadow: 1px 1px 10px #0000002e;
-
-
-
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 40px;
+      position: fixed;
+      background-color: var(--White);
+      left: 0;
+      padding: 2px 65px 0px 2%;
+      z-index: 8000;
+      box-shadow: 1px 1px 10px #0000002e;
+      top: 0;
 
       .logoBox {
-        width: 250px;
-        height: 53px;
-        img{
-          object-fit:cover;
+        width: 150px;
+    height: 22px;
+    margin-right: 25px;
+
+        img {
+          object-fit: cover;
           position: relative;
         }
       }
@@ -37,116 +51,60 @@ display:none;
     }
     //closed menu container//
     .mainBlock {
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity ease-in 0.1s;
+      transition: all ease-in 0.1s;
       position: fixed;
       z-index: 8900;
       top: 0;
       left: 0;
       width: 100vw;
-      height: 0vh;
-      
-      .logoBox{
-        width:50%;
-        
+      height: 100vh;
+      left: -100vh;
+      overflow-y: scroll;
+
+
+      .logoBox {
+        width: 50%;
       }
-      .slogan{
-        margin-bottom: 40px;
+      .slogan {
       }
-      .contentBg{
+      .contentBg {
         top: 0;
         left: 0;
-        width: 90vw;
-        height: 0vh;
-        transform:skew(-10deg);
-        margin-left:5vw;
-        /* visibility: hidden; */
-        display: none;
-        transition: all ease-in 0.01s;
-        padding: 10px 40px;
+        width: 100vw;
+        padding: 10px 10px;
         position: relative;
-        overflow: hidden; 
-      }
-      .bgLeft{
-        position: absolute;
-        width: 50%;
-        height: 100vh;
-        left: 0;
-        top: -100%;
+        overflow: hidden;
         background-color: var(--White);
-        transition: all ease-in 0.01s;
+        min-height:100vh;
       }
-      .bgRight{
-        transition: all ease-in 0.01s;
-        position: absolute;
-        width: 50.1%;
-        height: 100vh;
-        bottom: -100%;
-        right: 0;
-        background-color: var(--White);
+      .content {
+        position: relative;
+        z-index: 100;
+        hr {
+          margin: 5px 0px;
+        }
       }
-      .content{
-          position: relative;
-          z-index: 100;
-        hr{
-          margin: 20px 0px;
-        }
-        }
     }
-
 
     //opened menu container//
     .mainBlock.open {
-      display: inline-block;
-      transition: opacity ease-in 0.2s;
-      visibility: visible;
-      opacity: 1;
-      background-color:#000000ed;
+      transition: all ease-in 0.3s;
+      background-color: #000000ed;
       top: 0;
       left: 0;
-      height: 100vh;
-      
-      
-      .contentBg{
-        /* visibility: visible; */
-        display: inline-block;
-        opacity: 1;
+
+      .contentBg {
         transition: all ease-in 0.3s;
         top: 0;
         left: 0;
-        width: 90vw;
-        height: 100vh;
-        
-        .bgLeft{
-          transition: all ease-in 0.4s;
-          position: absolute;
-          width: 50.1%;
-          height: 100vh;
-          left: 0;
-          top: 0;
-          background-color: var(--White);
-          z-index: 1;
-        }
-        .bgRight{
-          transition: all ease-in 0.4s;
-          position: absolute;
-          width: 50.1%;
-          height: 100vh;
-          bottom: 0;
-          right: 0;
-          background-color: var(--White);
-          z-index: 1;
-        }
-
       }
     }
-    
+
     //navigation icon
     .mobileButton {
       position: fixed;
-      z-index:9910;
-      right: 25px;
+      z-index: 9910;
+      right: 15px;
       top: 0;
       transform: skew(-20deg);
       background-color: var(--Red);
@@ -154,10 +112,10 @@ display:none;
 
       #nav-icon2 {
         transform: skew(20deg) rotate(0deg);
-        width: 36px;
-        height: 24px;
+        width: 20px;
+        height: 13px;
         position: relative;
-        margin: 19px 18px;
+        margin: 15px 14px;
         transition: 0.5s ease-in-out;
         cursor: pointer;
       }
@@ -165,7 +123,7 @@ display:none;
       #nav-icon2 span {
         display: block;
         position: absolute;
-        height: 3px;
+        height: 2px;
         width: 50%;
         background: var(--White);
         opacity: 1;
@@ -196,12 +154,12 @@ display:none;
 
       #nav-icon2 span:nth-child(3),
       #nav-icon2 span:nth-child(4) {
-        top: 10px;
+        top: 5px;
       }
 
       #nav-icon2 span:nth-child(5),
       #nav-icon2 span:nth-child(6) {
-        top: 20px;
+        top: 10px;
       }
 
       #nav-icon2.open span:nth-child(1),
@@ -243,11 +201,59 @@ display:none;
       #nav-icon2.open span:nth-child(5) {
         left: 5px;
         top: 15px;
+        opacity: 0;
       }
-
+      
       #nav-icon2.open span:nth-child(6) {
         left: calc(50% - 5px);
         top: 15px;
+        opacity: 0;
+      }
+    }
+  }
+`;
+
+export const MobileMobilityHeader = styled.header`
+  align-items: flex-start;
+  margin: 0 0px;
+  flex-direction: column;
+  display: flex;
+  position: relative;
+  list-style: none;
+  font-weight: bold;
+  cursor: pointer;
+  > li {
+    margin: 10px 0;
+    flex: 0 1 auto;
+    list-style: none;
+
+    > ul {
+      list-style: none;
+      border-top: none;
+      z-index: 9999;
+      transition: all ease-in-out 0.1s;
+      width: max-content;
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      position: relative;
+      box-shadow: none;
+      margin: 0 0 0 10px;
+      transform-origin: 0;
+      padding: 0;
+
+      > li {
+        margin: 10px 0 10px 0;
+        padding: 0;
+        background-color: transparent;
+        font-weight: 600;
+        p {
+          text-decoration: none;
+          color: var(--Blue);
+        }
+        p::before {
+          content: "- ";
+        }
       }
     }
   }
