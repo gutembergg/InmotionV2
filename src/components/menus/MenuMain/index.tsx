@@ -20,7 +20,9 @@ const MenuMain = () => {
   const equipments = t("headerMobility:equipments");
   const detachedPieces = t("headerMobility:detached-pieces");
   const occasions = t("headerMobility:occasions");
-
+  const rent = t("headerMobility:rent");
+  const userManuals = t("headerMobility:userManuals");
+  const returnForm = t("headerMobility:returnForm");
   const menu = [
     {
       name: eScooter,
@@ -127,7 +129,7 @@ const MenuMain = () => {
                   goToLink("/inmotion-mobility/services/location");
                 }}
               >
-                Locations
+                {rent}
               </p>
             </li>
             <li>
@@ -136,7 +138,7 @@ const MenuMain = () => {
                   goToLink("/inmotion-mobility/services/guides-utilisateur");
                 }}
               >
-                Guides utilisateurs
+                {userManuals}
               </p>
             </li>
             <li>
@@ -145,7 +147,7 @@ const MenuMain = () => {
                   goToLink("/inmotion-mobility/services/autorisation-retour");
                 }}
               >
-                Autorisation retour marchandise
+                {returnForm}
               </p>
             </li>
           </ul>

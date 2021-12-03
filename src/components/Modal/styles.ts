@@ -20,7 +20,9 @@ export const StyledModalHeader = styled.div`
     background-color: transparent;
     transform: skew(15deg);
     margin-bottom: 5px;
-
+    @media (max-width: 540px) {
+transform: none;
+    }
     &:before,
     &:after {
       transform: rotate(-45deg);

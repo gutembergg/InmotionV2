@@ -3,26 +3,28 @@ import InstaIcon from "../../../../public/images/icons/instagram.svg";
 import FbIcon from "../../../../public/images/icons/facebook.svg";
 import Image from "next/image";
 import Link from "next/link";
+import useTranslation from "next-translate/useTranslation";
 
 const MobilityFooter = () => {
   const facebookLink = "https://www.facebook.com/";
   const InstaLink = "https://www.instagram.com/";
-
+  const { t } = useTranslation();
+  const condGenerales = t("headerMobility:condGenerales");
+  const confidentiality = t("headerMobility:confidentiality");
   return (
     <StyledFooter>
+      <div>
+
       <p>© Inmotion-suisse.ch</p>
       <div className="footerLinks">
         <Link href="/inmotion-mobility/conditions-generales">
-          <a>Conditions Générales</a>
+          <a>{condGenerales}</a>
         </Link>{" "}
         |{" "}
         <Link href="/inmotion-mobility/politique-confidentialite">
-          <a>Politique de confidentialité</a>
+          <a>{confidentiality}</a>
         </Link>{" "}
-        |{" "}
-        <Link href="/inmotion-mobility/attributions">
-          <a>Attributions</a>
-        </Link>
+      </div>
       </div>
       <div className="socialLinks">
         <Link href={facebookLink}>
