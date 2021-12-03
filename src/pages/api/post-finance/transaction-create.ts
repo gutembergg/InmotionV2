@@ -95,7 +95,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             transactionId: transactionCreate.id,
             paymentMethods: response.body,
           };
-          return res.status(200).json(responseQuery);
+          res.status(200).json(responseQuery);
         });
     });
   }
