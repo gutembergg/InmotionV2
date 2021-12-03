@@ -43,9 +43,17 @@ export default async function handlerCompleted(
     });
   }
   if (method === "PUT") {
-    const dataWebHooks222 = req.body;
+    const dataWebhook = req.body;
+    console.log("PUT:::PUT:", dataWebhook);
 
-    return res.status(200).json(dataWebHooks222);
+    let transactionService: PostFinanceCheckout.api.TransactionService =
+      new PostFinanceCheckout.api.TransactionService(config);
+
+    transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
+      console.log("transaction", response.body);
+
+      return res.status(200).json(dataWebhook);
+    });
   }
 }
 
