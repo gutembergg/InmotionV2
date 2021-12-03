@@ -250,7 +250,7 @@ export default function CheckoutMobility() {
         const name = product.name;
         const price = product.price;
         const qty = product.qty;
-        const sku = product.sku;
+        const sku = product.slug;
 
         return { id, name, price, qty, sku };
       });
