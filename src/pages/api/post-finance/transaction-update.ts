@@ -6,10 +6,6 @@ import { TransactionPending } from "postfinancecheckout/src/models/TransactionPe
 import initMiddleware from "../../../utils/init-middleware";
 import Cors from "cors";
 
-/* let spaceId: number = 23340;
-let userId: number = 48078;
-let apiSecret: string = "q8qtyI5maaCTfZ1aUWXY6Y3G/A/CjABNynZZkxLPjhw="; */
-
 let spaceId: number = 23340;
 let userId: number = 48411;
 let apiSecret: string = "YQUOgXtny9XW8L0m7jxx47rTd9ilnKiMqEoFSDOh/9U=";

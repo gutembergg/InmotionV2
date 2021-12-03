@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import CouponsCode from "../../../components/CouponsCode";

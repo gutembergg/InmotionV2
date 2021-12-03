@@ -12,10 +12,6 @@ interface ProductsLineItems {
   sku: string;
 }
 
-/* let spaceId: number = 23340;
-let userId: number = 48078;
-let apiSecret: string = "q8qtyI5maaCTfZ1aUWXY6Y3G/A/CjABNynZZkxLPjhw="; */
-
 let spaceId: number = 23340;
 let userId: number = 48411;
 let apiSecret: string = "YQUOgXtny9XW8L0m7jxx47rTd9ilnKiMqEoFSDOh/9U=";
@@ -48,11 +44,6 @@ export default async function handler(
 
   console.log("method: ", method);
 
-  if (method === "GET") {
-    // Transaction Service
-    res.status(200).json({ Message: "method GET" });
-  }
-
   if (method === "POST") {
     const productsLineItems: ProductsLineItems[] = req.body;
     // Transaction Service
@@ -76,8 +67,6 @@ export default async function handler(
       return lineItem;
     });
 
-    console.log("lineItemsArray", lineItemsArray);
-
     // Transaction ////////////////////////////////////////
     let transaction: PostFinanceCheckout.model.TransactionCreate =
       new PostFinanceCheckout.model.TransactionCreate();
@@ -85,13 +74,9 @@ export default async function handler(
     transaction.autoConfirmationEnabled = true;
     transaction.currency = "EUR";
 
-    console.log("transaction: ", transaction);
-
     transactionService.create(spaceId, transaction).then((response) => {
       let transactionCreate: PostFinanceCheckout.model.Transaction =
         response.body;
-
-      console.log("req.body", response);
 
       //// Fecth payment methods
       transactionService

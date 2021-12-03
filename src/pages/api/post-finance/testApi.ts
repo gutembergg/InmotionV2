@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { VercelRequest, VercelResponse } from "@vercel/node";
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req;
 
   console.log("method: ", method);
