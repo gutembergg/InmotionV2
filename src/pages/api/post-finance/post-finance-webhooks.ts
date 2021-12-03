@@ -36,57 +36,13 @@ export default async function handlerCompleted(
     console.log("webHookResponse::::", webHookResponse);
     console.log("dataWebhook::::", dataWebhook);
 
-    const order = {
-      payment_method: "bacs",
-      payment_method_title: "Direct Bank Transfer",
-      billing: {
-        first_name: "WebHook-test",
-        last_name: "WebHook-test",
-        address_1: "969 WebHook-test",
-        address_2: "",
-        city: "WebHook",
-        state: "CA",
-        postcode: "94103",
-        country: "US",
-        email: "john.doe@example.com",
-        phone: "(555) 555-5555",
-      },
-      shipping: {
-        first_name: "WebHook-test",
-        last_name: "WebHook",
-        address_1: "969 Market",
-        address_2: "",
-        city: "San Francisco",
-        state: "CA",
-        postcode: "94103",
-        country: "US",
-      },
-      line_items: [
-        {
-          product_id: 93,
-          quantity: 2,
-        },
-        {
-          product_id: 22,
-          variation_id: 23,
-          quantity: 1,
-        },
-      ],
-      shipping_lines: [
-        {
-          method_id: "flat_rate",
-          method_title: "Flat Rate",
-          total: "10.00",
-        },
-      ],
-    };
-
-    await wc_createOrder(order);
+    return res.status(200).json(dataWebhook);
   }
   if (method === "PUT") {
-    const webHookResponse = req.query;
-    const dataWebHooks = req.body;
-    console.log("webHookResponse::::", webHookResponse);
-    console.log("dataWebHooks::::", dataWebHooks);
+    const webHookResponse2222 = req.query;
+    const dataWebHooks222 = req.body;
+    console.log("webHookResponse::::", webHookResponse2222);
+    console.log("dataWebHooks::::", dataWebHooks222);
+    return res.status(200).json(dataWebHooks222);
   }
 }
