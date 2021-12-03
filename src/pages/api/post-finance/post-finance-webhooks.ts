@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import initMiddleware from "../../../utils/init-middleware";
 import Cors from "cors";
-import { wc_createOrder } from "../../../services/woocommerceApi/Orders";
 
 let spaceId: number = 23340;
 let userId: number = 48407;
@@ -31,18 +30,29 @@ export default async function handlerCompleted(
   const { method } = req;
 
   if (method === "POST") {
-    const webHookResponse = req.query;
     const dataWebhook = req.body;
-    console.log("webHookResponse::::", webHookResponse);
     console.log("dataWebhook::::", dataWebhook);
 
-    return res.status(200).json(dataWebhook);
+    let transactionService: PostFinanceCheckout.api.TransactionService =
+      new PostFinanceCheckout.api.TransactionService(config);
+
+    transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
+      console.log("transaction", response.body);
+
+      return res.status(200).json(dataWebhook);
+    });
   }
   if (method === "PUT") {
-    const webHookResponse2222 = req.query;
     const dataWebHooks222 = req.body;
-    console.log("webHookResponse::::", webHookResponse2222);
-    console.log("dataWebHooks::::", dataWebHooks222);
+
     return res.status(200).json(dataWebHooks222);
   }
 }
+
+/* eventId: 84124104,
+  entityId: 35752581,
+  listenerEntityId: 1472041829003,
+  listenerEntityTechnicalName: 'Transaction',
+  spaceId: 23340,
+  webhookListenerId: 258340,
+  timestamp: '2021-12-03T22:15:20+0000' */
