@@ -1,3 +1,4 @@
+import { VercelRequest, VercelResponse } from "@vercel/node";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
@@ -32,17 +33,14 @@ const cors = initMiddleware(
   })
 );
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
 
-  await cors(req, res);
+  //await cors(req, res);
 
   const { method } = req;
 
