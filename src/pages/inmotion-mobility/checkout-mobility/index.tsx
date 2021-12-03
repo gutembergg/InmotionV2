@@ -303,6 +303,15 @@ export default function CheckoutMobility() {
     [orderId, transactionId]
   );
 
+  const apitest = async () => {
+    const data = await apiPFinance.post("testApi", {
+      id: 123,
+      name: "test",
+    });
+
+    console.log("data:::Test:::", data);
+  };
+
   return (
     <>
       <Container>
@@ -322,7 +331,7 @@ export default function CheckoutMobility() {
               />
             </section>
             <section>
-              <h2>{wayDelivery}</h2>
+              <h2 onClick={apitest}>{wayDelivery}</h2>
             </section>
             <Payment>
               <button onClick={checkout}>{payment}</button>

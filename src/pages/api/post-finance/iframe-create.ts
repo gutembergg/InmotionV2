@@ -21,7 +21,7 @@ let config = {
   api_secret: apiSecret,
 };
 
-export default async function handlerCreate(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
