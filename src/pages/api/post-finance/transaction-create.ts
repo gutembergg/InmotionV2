@@ -44,6 +44,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { method } = req;
 
+  console.log("method: ", method);
+
   if (method === "GET") {
     // Transaction Service
     res.status(200).json({ Message: "method GET" });
@@ -79,9 +81,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     transaction.autoConfirmationEnabled = true;
     transaction.currency = "EUR";
 
+    console.log("transaction: ", transaction);
+
     transactionService.create(spaceId, transaction).then((response) => {
       let transactionCreate: PostFinanceCheckout.model.Transaction =
         response.body;
+
+      console.log("req.body", response);
 
       //// Fecth payment methods
       transactionService
