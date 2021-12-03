@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import CouponsCode from "../../../components/CouponsCode";
@@ -423,8 +423,8 @@ CheckoutMobility.getLayout = function getLayout(page: ReactElement) {
   return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
 };
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
-    props: {},
+    props: {}, // will be passed to the page component as props
   };
 };

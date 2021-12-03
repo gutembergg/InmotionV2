@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "deploy": "next build && node deploy"
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/react-dom": "^17.0.9",
