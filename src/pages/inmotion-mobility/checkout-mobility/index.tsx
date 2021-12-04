@@ -258,15 +258,15 @@ export default function CheckoutMobility() {
       });
     }
 
-    const orderID = await _sendOrder();
+    await _sendOrder();
 
-    console.log("orderId: ", orderID);
+    console.log("orderId: ", orderId);
 
     if (Object.keys(cart).length > 0) {
-      const { data } = await apiPFinance.post(
-        "transaction-create",
-        productsCheckout
-      );
+      const { data } = await apiPFinance.post("transaction-create", {
+        productsCheckout,
+        orderID: orderId,
+      });
 
       setPaymentMethods(data.paymentMethods);
       setTransactionId(data.transactionId);
