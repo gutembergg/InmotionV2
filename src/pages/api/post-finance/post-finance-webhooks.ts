@@ -42,9 +42,11 @@ export default async function handlerCompleted(
       const stateTrasaction = response.body.state;
 
       if (response.body.state === "FULFILL") {
-        console.log("teste7777777777777777777");
-        return completOrder(8536);
+        console.log("FULLFILL state");
+        completOrder(8537);
+        return res.status(200).json(response.body);
       } else {
+        console.log("else state transaction");
         return res.status(200).json(response.body);
       }
     });
