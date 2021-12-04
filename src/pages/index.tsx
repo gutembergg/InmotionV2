@@ -54,7 +54,7 @@ const Home: NextPage<Props> = () => {
               <Link href="/inmotion-mobility">
                 <a>
                   <div className="topBlock">
-                    <GifBox1>
+                    {/*   <GifBox1>
                       <div className="imgBox1">
                         <Image
                           src={trotGif}
@@ -63,13 +63,13 @@ const Home: NextPage<Props> = () => {
                           width={600}
                         />
                       </div>
-                      {/* <div className="imgBox">
+                       <div className="imgBox">
                         <Image
                           src={mobilityImage}
                           alt="mobility section image"
                         />
-                      </div> */}
-                    </GifBox1>
+                      </div> 
+                    </GifBox1> */}
                   </div>
                   <div className="container">
                     <div className="logoMobilityBox">
@@ -85,7 +85,7 @@ const Home: NextPage<Props> = () => {
               <Link href="/inmotion-print">
                 <a>
                   <div className="topBlock">
-                    <GifBox2>
+                    {/*   <GifBox2>
                       <div className="imgBox2">
                         <Image
                           src={printGif}
@@ -94,10 +94,8 @@ const Home: NextPage<Props> = () => {
                           width={600}
                         />
                       </div>
-                      {/* <div className="imgBox">
-                        <Image src={printImage} alt="print section image" />
-                      </div> */}
-                    </GifBox2>
+                   
+                    </GifBox2> */}
                   </div>
                   <div className="container">
                     <div className="logoPrinterBox">
