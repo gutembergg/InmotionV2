@@ -2,9 +2,12 @@ import { MenuSearchBar } from "./styles";
 import Image from "next/image";
 import searchIcon from "../../../public/images/icons/search.svg";
 import { useState } from "react";
+import useTranslation from "next-translate/useTranslation";
 
 const SearchBar = () => {
 const [mobileSearchStatus, setMobileSearchStatus] = useState(false)
+const { t } = useTranslation();
+const search = t("headerMobility:search");
 
   const openMobileSearch = ()=>{
 setMobileSearchStatus(!mobileSearchStatus);
@@ -12,7 +15,7 @@ setMobileSearchStatus(!mobileSearchStatus);
   return (
     <>
     <MenuSearchBar>
-      <input type="search" />
+      <input type="search" placeholder={search}/>
       <div className="searchICon">
         <Image src={searchIcon} width={30} height={30} alt="search icon" layout="fixed" />
       </div>

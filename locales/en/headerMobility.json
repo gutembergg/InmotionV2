@@ -1,7 +1,7 @@
 {
   "home": "Home",
   "shop": "Shop",
-  "services": "Servives",
+  "services": "Services",
   "contact": "Contact",
   "leftTopText": "Your specialist in electric mobility",
   "inmotion-print": "Shop",
@@ -13,5 +13,12 @@
   "e-scooter": "E-scooters",
   "equipments": "Equipments",
   "detached-pieces": "Detached pieces",
-  "occasions": "Occasions"
+  "occasions": "Bargain",
+  "createAccounts": "Create your account",
+  "confidentiality": "privacy policy",
+  "condGenerales": "terms and conditions",
+  "rent": "Rentals",
+  "userManuals": "User Guides",
+  "returnForm": "Return merchandise",
+  "search": "Search"
 }

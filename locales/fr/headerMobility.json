@@ -8,10 +8,17 @@
   "login": "Se connecter",
   "register": "s'inscrire",
   "logout": "Se déconnecter",
+  "createAccounts": "Créer un compte",
   "e-bike": "Vélos électriques",
   "e-wheel": "Gyroroues",
   "e-scooter": "Trotinettes",
   "equipments": "Equipements",
   "detached-pieces": "Pièces détachées",
-  "occasions": "Occasions"
+  "occasions": "Occasions",
+  "confidentiality": "Politique de confidentialité",
+  "condGenerales": "Conditions générales",
+  "rent": "Locations",
+  "userManuals": "Guides Utilisateurs",
+  "returnForm": "Retour marchandise",
+  "search": "Rechercher"
 }

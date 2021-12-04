@@ -13,8 +13,6 @@ export const Container = styled.div<IProps>`
   border: 2px solid var(--DarkGray);
   border-radius: 4px;
   width: 100%;
-  max-width: 350px;
-  min-width: 280px;
   height: 42px;
   padding: 10px 15px;
   margin-bottom: 10px;

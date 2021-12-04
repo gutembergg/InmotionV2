@@ -11,7 +11,9 @@ export const StyledFooter = styled.div`
   justify-content: space-between;
   align-items: center;
 .footerLinks{
-
+@media (max-width:540px){
+  display: none;
+}
     a {
         color: var(--White);
         text-decoration: none;
