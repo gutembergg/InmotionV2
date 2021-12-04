@@ -175,7 +175,6 @@ export default function CheckoutMobility() {
     const order = {
       payment_method: "Pedding",
       payment_method_title: "Pedding",
-      set_paid: true,
       billing: {
         first_name:
           userShippingBilling.billing_info.billing_first_name ||
@@ -257,6 +256,8 @@ export default function CheckoutMobility() {
     }
 
     _sendOrder();
+
+    console.log("orderId: ", orderId);
 
     if (Object.keys(cart).length > 0) {
       const { data } = await apiPFinance.post(

@@ -73,6 +73,7 @@ export default async function handler(
     transaction.lineItems = [...lineItemsArray];
     transaction.autoConfirmationEnabled = true;
     transaction.currency = "EUR";
+    transaction.metaData = { orderId: "22222" };
 
     transactionService.create(spaceId, transaction).then((response) => {
       let transactionCreate: PostFinanceCheckout.model.Transaction =
