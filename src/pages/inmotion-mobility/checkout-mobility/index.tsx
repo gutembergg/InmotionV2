@@ -237,7 +237,10 @@ export default function CheckoutMobility() {
     } else {
       setIsOrder(false);
     }
+
     console.log("responseOrder", response);
+
+    return response.id;
     ///////////////////////////////////////////////////////////////
   }, [lineItems, userShippingBilling, _billingShippingData]);
 
@@ -255,9 +258,9 @@ export default function CheckoutMobility() {
       });
     }
 
-    _sendOrder();
+    const orderID = await _sendOrder();
 
-    console.log("orderId: ", orderId);
+    console.log("orderId: ", orderID);
 
     if (Object.keys(cart).length > 0) {
       const { data } = await apiPFinance.post(
