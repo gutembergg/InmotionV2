@@ -20,7 +20,6 @@ const LanguageSelector = () => {
     console.log(event);
     setopenObject(!openObject);
   };
-  console.log("openobj", openObject);
 
   return (
     <StyledLangSelector2>
