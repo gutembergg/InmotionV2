@@ -41,9 +41,12 @@ export default async function handlerCompleted(
       const stateTrasaction = req.body.state;
       if (stateTrasaction === "FULFILL") {
         completOrder(8530).then((resp) => {
+          console.log("fullfill==================");
           return res.status(200).json(response.body);
         });
       }
+      completOrder(8530);
+
       return res.status(200).json(response.body);
     });
   }
