@@ -32,20 +32,19 @@ export default async function handlerCompleted(
 
   if (method === "POST") {
     const dataWebhook = req.body;
-    console.log("dataWebhook::::", dataWebhook);
+    // console.log("dataWebhook::::", dataWebhook);
 
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const stateTrasaction = req.body.state;
+
+      console.log("transaction: ", stateTrasaction, req.body);
       if (stateTrasaction === "FULFILL") {
-        completOrder(8533).then((resp) => {
-          console.log("fullfill==================");
-          return res.status(200).json(response.body);
-        });
+        completOrder(8533);
       }
-      completOrder(8531);
+      // completOrder(8534);
 
       return res.status(200).json(response.body);
     });
