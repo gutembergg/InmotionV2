@@ -45,7 +45,7 @@ export default async function handlerCompleted(
       // console.log("tran>=>===: ", req.query);
       if (response.body.state === "FULFILL") {
         console.log("teste7777777777777777777");
-        return completOrder(8535);
+        completOrder(8535);
       }
       //completOrder(8534);
 
