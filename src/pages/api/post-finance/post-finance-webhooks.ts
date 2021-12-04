@@ -38,9 +38,9 @@ export default async function handlerCompleted(
       new PostFinanceCheckout.api.TransactionService(config);
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
-      const stateTrasaction = req.body.state;
+      const stateTrasaction = response.body.state;
 
-      console.log("transaction: ", stateTrasaction, req.body);
+      console.log("transaction: ", stateTrasaction, response);
       if (stateTrasaction === "FULFILL") {
         completOrder(8533);
       }

@@ -47,7 +47,6 @@ export default async function handlerUpdate(
       transactionService
         .update(spaceId, updatedTransaction)
         .then((response) => {
-          console.log("update==>", response.body);
           return res.status(200).json(response.body.id);
         });
     });
