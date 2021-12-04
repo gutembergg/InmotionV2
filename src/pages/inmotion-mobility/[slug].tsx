@@ -112,6 +112,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     props: {
       subCategories: mainCategories,
     },
-    revalidate: 60 * 10, // 10min
+    revalidate: 60,
   };
 };
