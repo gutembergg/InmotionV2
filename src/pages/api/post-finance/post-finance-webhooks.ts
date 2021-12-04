@@ -45,11 +45,12 @@ export default async function handlerCompleted(
       // console.log("tran>=>===: ", req.query);
       if (response.body.state === "FULFILL") {
         console.log("teste7777777777777777777");
-        completOrder(8535);
+        completOrder(8536);
+        return res.status(200).json(response.body);
+      } else {
+        return res.status(200).json(response.body);
       }
       //completOrder(8534);
-
-      return res.status(200).json(response.body);
     });
   }
   if (method === "PUT") {
