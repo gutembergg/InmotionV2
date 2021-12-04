@@ -125,9 +125,6 @@ const Cart = () => {
                 <p>checkout non disponible</p>
               </div>
             )}
-            <p className="closeCartButton" onClick={setCartVisibility}>
-              Fermer
-            </p>
           </div>
         </div>
       </div>

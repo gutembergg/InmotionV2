@@ -2,7 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import initMiddleware from "../../../utils/init-middleware";
 import Cors from "cors";
-import { completOrder } from "../../../services/woocommerceApi/Orders";
+import {
+  authorizedOrder,
+  completOrder,
+} from "../../../services/woocommerceApi/Orders";
 import { TransactionState } from "postfinancecheckout/src/models/TransactionState";
 
 let spaceId: number = 23340;
@@ -40,14 +43,14 @@ export default async function handlerCompleted(
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       if (response.body.state === "FULFILL") {
-        console.log("response.FULFILL: ", response.body.state);
-        completOrder(8552);
+        console.log("response.FULFILL8553: ", response.body.state);
+        completOrder(8553);
 
         return res.status(200).json(response.body);
       } else if (response.body.state === "AUTHORIZED") {
         console.log("response.AUTHORIZED: ", response.body.state);
 
-        completOrder(8552);
+        authorizedOrder(8553);
 
         return res.status(200).json(response.body);
       } else {

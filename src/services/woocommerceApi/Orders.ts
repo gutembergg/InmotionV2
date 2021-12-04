@@ -41,3 +41,16 @@ export const completOrder = async (orderId: number) => {
     console.log("Error: ", error);
   }
 };
+
+export const authorizedOrder = async (orderId: number) => {
+  try {
+    const query = {
+      status: "on-hold",
+    };
+    const { data } = await wcApi.put(`orders/${orderId}`, query);
+
+    return data;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
