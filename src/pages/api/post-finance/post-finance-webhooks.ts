@@ -3,6 +3,7 @@ import { PostFinanceCheckout } from "postfinancecheckout";
 import initMiddleware from "../../../utils/init-middleware";
 import Cors from "cors";
 import { completOrder } from "../../../services/woocommerceApi/Orders";
+import { TransactionState } from "postfinancecheckout/src/models/TransactionState";
 
 let spaceId: number = 23340;
 let userId: number = 48407;
@@ -40,11 +41,11 @@ export default async function handlerCompleted(
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const stateTrasaction = response.body.state;
 
-      console.log("transaction: ", stateTrasaction);
+      console.log("transaction: ", TransactionState.FULFILL);
       // console.log("tran>=>===: ", req.query);
       if (response.body.state === "FULFILL") {
         console.log("teste7777777777777777777");
-        completOrder(8535);
+        return completOrder(8535);
       }
       //completOrder(8534);
 
