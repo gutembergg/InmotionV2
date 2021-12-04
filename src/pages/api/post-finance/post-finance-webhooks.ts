@@ -41,8 +41,8 @@ export default async function handlerCompleted(
       const stateTrasaction = response.body.state;
 
       console.log("transaction: ", response.body.state);
-      console.log("tran>=>===: ", response.response);
-      if (response.body.state === "FULFILL") {
+      console.log("tran>=>===: ", response);
+      if (response.body.state == "FULFILL") {
         completOrder(8534);
       }
       // completOrder(8534);
