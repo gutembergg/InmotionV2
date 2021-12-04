@@ -41,13 +41,13 @@ export default async function handlerCompleted(
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       if (response.body.state === "FULFILL") {
         console.log("response.FULFILL: ", response.body.state);
-        completOrder(8552, "completed");
+        completOrder(8552);
 
         return res.status(200).json(response.body);
       } else if (response.body.state === "AUTHORIZED") {
         console.log("response.AUTHORIZED: ", response.body.state);
 
-        completOrder(8552, "on-hold");
+        completOrder(8552);
 
         return res.status(200).json(response.body);
       } else {
