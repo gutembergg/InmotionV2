@@ -45,9 +45,8 @@ export default async function handler(
   console.log("method: ", method);
 
   if (method === "POST") {
-    const productsLineItems: ProductsLineItems[] = req.body.productsCheckout;
-    const orderId = req.body.orderID;
-    console.log("orderId: ", orderId);
+    const productsLineItems: ProductsLineItems[] = req.body;
+
     // Transaction Service
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
@@ -75,7 +74,7 @@ export default async function handler(
     transaction.lineItems = [...lineItemsArray];
     transaction.autoConfirmationEnabled = true;
     transaction.currency = "EUR";
-    transaction.metaData = { orderId: orderId.toString() };
+    transaction.metaData = { orderId: "2222" };
 
     transactionService.create(spaceId, transaction).then((response) => {
       let transactionCreate: PostFinanceCheckout.model.Transaction =

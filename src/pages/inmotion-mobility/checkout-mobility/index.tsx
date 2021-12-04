@@ -263,10 +263,10 @@ export default function CheckoutMobility() {
     console.log("orderId: ", orderId);
 
     if (Object.keys(cart).length > 0) {
-      const { data } = await apiPFinance.post("transaction-create", {
-        productsCheckout,
-        orderID: orderId,
-      });
+      const { data } = await apiPFinance.post(
+        "transaction-create",
+        productsCheckout
+      );
 
       setPaymentMethods(data.paymentMethods);
       setTransactionId(data.transactionId);
