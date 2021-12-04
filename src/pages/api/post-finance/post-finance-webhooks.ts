@@ -43,7 +43,8 @@ export default async function handlerCompleted(
 
       if (response.body.state === "FULFILL") {
         console.log("teste7777777777777777777");
-        return completOrder(8536);
+        completOrder(8536);
+        return res.status(200).json(response.body);
       } else {
         return res.status(200).json(response.body);
       }
