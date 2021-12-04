@@ -41,7 +41,7 @@ export default async function handlerUpdate(
         allowedPaymentMethodConfigurations: [transaction.methodId],
         id: response.body.id as number,
         version: response.body.version as number,
-        successUrl: `http://localhost:3000/inmotion-mobility/completed-order?order=${transaction.orderId}&pf_ts=${transaction.id}`,
+        successUrl: `https://inmotion-v2.vercel.app/inmotion-mobility/completed-order?order=${transaction.orderId}&pf_ts=${transaction.id}`,
       };
 
       transactionService
