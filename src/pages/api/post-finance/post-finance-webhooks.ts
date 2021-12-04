@@ -39,37 +39,17 @@ export default async function handlerCompleted(
       new PostFinanceCheckout.api.TransactionService(config);
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
-      const stateTrasaction = response.body.state;
-
       if (response.body.state === "FULFILL") {
-        console.log("FULLFILL state");
-        completOrder(8537);
+        completOrder(8538, "completed");
+
+        return res.status(200).json(response.body);
+      } else if (response.body.state === "AUTHORIZED") {
+        completOrder(8538, "on-hold");
+
         return res.status(200).json(response.body);
       } else {
-        console.log("else state transaction");
         return res.status(200).json(response.body);
       }
     });
   }
-  if (method === "PUT") {
-    const dataWebhook = req.body;
-    console.log("PUT:::PUT:", dataWebhook);
-
-    let transactionService: PostFinanceCheckout.api.TransactionService =
-      new PostFinanceCheckout.api.TransactionService(config);
-
-    transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
-      console.log("transaction", response.body);
-
-      return res.status(200).json(response.body);
-    });
-  }
 }
-
-/* eventId: 84124104,
-  entityId: 35752581,
-  listenerEntityId: 1472041829003,
-  listenerEntityTechnicalName: 'Transaction',
-  spaceId: 23340,
-  webhookListenerId: 258340,
-  timestamp: '2021-12-03T22:15:20+0000' */

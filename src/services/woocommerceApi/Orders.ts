@@ -29,10 +29,10 @@ export const _updateOrder = async (orderId: number, methodName: string) => {
   }
 };
 
-export const completOrder = async (orderId: number) => {
+export const completOrder = async (orderId: number, status: string) => {
   try {
     const query = {
-      status: "completed",
+      status,
     };
     const { data } = await wcApi.put(`orders/${orderId}`, query);
 
