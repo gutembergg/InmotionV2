@@ -47,7 +47,6 @@ export default async function handlerCompleted(
       if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
         authorizedOrder(parseInt(orderID as string, 10)).then((resp) => {
-          console.log("order:::", resp);
           return res.status(200).json(response.body);
         });
 
@@ -57,7 +56,6 @@ export default async function handlerCompleted(
       if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
         completOrder(parseInt(orderID as string, 10)).then((resp) => {
-          console.log("order:::", resp);
           return res.status(200).json(response.body);
         });
       } else {
