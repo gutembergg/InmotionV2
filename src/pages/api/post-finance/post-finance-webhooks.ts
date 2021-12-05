@@ -49,7 +49,7 @@ export default async function handlerCompleted(
         authorizedOrder(parseInt(orderID as string, 10)).then((resp) => {
           console.log("resp: ", resp.state);
 
-          return res.status(200).json({ Message: "Order Authorized" });
+          return res.status(200).json({ Message: "Order Authorized!" });
         });
 
         return res.status(200).json(response.body);
@@ -59,7 +59,7 @@ export default async function handlerCompleted(
         console.log(`response.FULFILL:${orderID}`, response.body.state);
         completOrder(parseInt(orderID as string, 10)).then((resp) => {
           console.log("resp: ", resp.state);
-          return res.status(200).json({ Message: "Order Fulfill" });
+          return res.status(200).json({ Message: "Order Fulfill!" });
         });
       } else {
         return res.status(200).json(response.body);
