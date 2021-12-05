@@ -52,7 +52,7 @@ export default async function handlerCompleted(
           return res.status(200).json({ Message: "Order Authorized!" });
         });
 
-        return res.status(200).json(response.body);
+        //return res.status(200).json(response.body);
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
         completOrder(parseInt(orderID as string, 10)).then((resp) => {
