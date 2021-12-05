@@ -42,7 +42,7 @@ export default async function handlerCompleted(
       new PostFinanceCheckout.api.TransactionService(config);
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
-      console.log("orderId: ", response.body.metaData);
+      console.log("orderId: ", response.body.metaData?.orderId);
       if (response.body.state === "AUTHORIZED") {
         console.log("response.AUTHORIZED:8559 ", response.body.state);
         authorizedOrder(8559);
