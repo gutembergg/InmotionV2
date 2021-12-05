@@ -43,6 +43,7 @@ export default async function handlerCompleted(
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const orderID = response.body.metaData?.orderId;
+      console.log("state: ", response.body.state);
       /*  if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
         authorizedOrder(parseInt(orderID as string, 10));
@@ -52,9 +53,10 @@ export default async function handlerCompleted(
 
       if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
-        completOrder(parseInt(orderID as string, 10));
-
-        return res.status(200).json(response.body);
+        completOrder(parseInt(orderID as string, 10)).then((resp) => {
+          console.log("order:::", resp);
+          return res.status(200).json(response.body);
+        });
       } else {
         return res.status(200).json(response.body);
       }
