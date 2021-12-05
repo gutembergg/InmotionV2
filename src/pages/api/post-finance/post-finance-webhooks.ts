@@ -5,6 +5,7 @@ import Cors from "cors";
 import {
   authorizedOrder,
   completOrder,
+  updateOrder,
 } from "../../../services/woocommerceApi/Orders";
 import { TransactionState } from "postfinancecheckout/src/models/TransactionState";
 
@@ -47,17 +48,21 @@ export default async function handlerCompleted(
       if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
         authorizedOrder(parseInt(orderID as string, 10)).then((resp) => {
-          console.log("resp: ", resp);
-
           return res.status(200).json({ Message: "Order Authorized!" });
         });
-
-        //return res.status(200).json(response.body);
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
         completOrder(parseInt(orderID as string, 10)).then((resp) => {
           return res.status(200).json({ Message: "Order Fulfill!" });
         });
+      } else if (response.body.state === "FAILED") {
+        console.log(`response.FAILED:${orderID}`, response.body.state);
+
+        updateOrder(parseInt(orderID as string, 10), "failed").then(
+          (response) => {
+            return res.status(200).json({ Message: "Order Failed!" });
+          }
+        );
       } else {
         return res.status(200).json(response.body);
       }
