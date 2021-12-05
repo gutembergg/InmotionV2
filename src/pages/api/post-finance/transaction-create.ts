@@ -45,7 +45,11 @@ export default async function handler(
   console.log("method: ", method);
 
   if (method === "POST") {
-    const productsLineItems: ProductsLineItems[] = req.body;
+    const productsLineItems: ProductsLineItems[] = req.body.productsCheckout;
+    const orderId: number = req.body.orderId;
+    const currencyResp = req.body.currency;
+
+    console.log("currencyResp: ", currencyResp);
 
     // Transaction Service
     let transactionService: PostFinanceCheckout.api.TransactionService =
@@ -73,12 +77,14 @@ export default async function handler(
       new PostFinanceCheckout.model.TransactionCreate();
     transaction.lineItems = [...lineItemsArray];
     transaction.autoConfirmationEnabled = true;
-    transaction.currency = "EUR";
-    transaction.metaData = { orderId: "2222" };
+    transaction.currency = currencyResp;
+    transaction.metaData = { orderId: orderId.toString() };
 
     transactionService.create(spaceId, transaction).then((response) => {
       let transactionCreate: PostFinanceCheckout.model.Transaction =
         response.body;
+
+      console.log("transactionCurrenty: ", response.body);
 
       //// Fecth payment methods
       transactionService

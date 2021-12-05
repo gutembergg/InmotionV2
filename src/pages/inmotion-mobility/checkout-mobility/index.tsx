@@ -1,6 +1,12 @@
 import Image from "next/image";
 import { GetServerSideProps } from "next";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
@@ -34,6 +40,8 @@ import {
 } from "../../../styles/CheckoutMobility";
 
 export default function CheckoutMobility() {
+  const orderIdRef = useRef(0);
+
   const [loged, setloged] = useState(false);
   const { cart, removeCartItem } = useCart();
   const { user } = useUser();
@@ -171,6 +179,12 @@ export default function CheckoutMobility() {
     _setBillingShippingData({ billing, shipping });
   };
 
+  console.log("_billingShippingData: ", _billingShippingData.billing?.country);
+  console.log(
+    "userShippingBilling:",
+    userShippingBilling.billing_info?.billing_country
+  );
+
   const _sendOrder = useCallback(async () => {
     const order = {
       payment_method: "Pedding",
@@ -208,15 +222,33 @@ export default function CheckoutMobility() {
           _billingShippingData.billing?.phone,
       },
       shipping: {
-        first_name: userShippingBilling.shipping_info.shipping_first_name,
-        last_name: userShippingBilling.shipping_info.shipping_last_name,
-        address_1: userShippingBilling.shipping_info.shipping_address_1,
-        address_2: userShippingBilling.shipping_info.shipping_address_2,
-        phone: userShippingBilling.shipping_info.shipping_phone,
-        city: userShippingBilling.shipping_info.shipping_city,
-        state: userShippingBilling.shipping_info.shipping_state,
-        postcode: userShippingBilling.shipping_info.shipping_postcode,
-        country: userShippingBilling.shipping_info.shipping_country,
+        first_name:
+          userShippingBilling.shipping_info.shipping_first_name ||
+          _billingShippingData.shipping?.first_name,
+        last_name:
+          userShippingBilling.shipping_info.shipping_last_name ||
+          _billingShippingData.shipping?.last_name,
+        address_1:
+          userShippingBilling.shipping_info.shipping_address_1 ||
+          _billingShippingData.shipping?.address_1,
+        address_2:
+          userShippingBilling.shipping_info.shipping_address_2 ||
+          _billingShippingData.shipping?.address_2,
+        phone:
+          userShippingBilling.shipping_info.shipping_phone ||
+          _billingShippingData.shipping?.phone,
+        city:
+          userShippingBilling.shipping_info.shipping_city ||
+          _billingShippingData.shipping?.city,
+        state:
+          userShippingBilling.shipping_info.shipping_state ||
+          _billingShippingData.shipping?.state,
+        postcode:
+          userShippingBilling.shipping_info.shipping_postcode ||
+          _billingShippingData.shipping?.postcode,
+        country:
+          userShippingBilling.shipping_info.shipping_country ||
+          _billingShippingData.shipping?.country,
       },
       line_items: lineItems,
       shipping_lines: [
@@ -230,6 +262,8 @@ export default function CheckoutMobility() {
 
     //Recuperer ici la reponse de la commande crée//////////////////
     const response = await wc_createOrder(order);
+
+    orderIdRef.current = response.id;
     setOrderId(response.id);
 
     if (response) {
@@ -260,19 +294,32 @@ export default function CheckoutMobility() {
 
     await _sendOrder();
 
-    console.log("orderId: ", orderId);
+    console.log("otherOrder: ", orderIdRef.current);
 
     if (Object.keys(cart).length > 0) {
-      const { data } = await apiPFinance.post(
-        "transaction-create",
-        productsCheckout
-      );
+      const { data } = await apiPFinance.post("transaction-create", {
+        productsCheckout,
+        orderId: orderIdRef.current,
+        currency:
+          userShippingBilling.billing_info.billing_country === "CH"
+            ? "CHF"
+            : ("EUR" && _billingShippingData.billing?.country === "Suisse") ||
+              _billingShippingData.billing?.country === "Swiss" ||
+              _billingShippingData.billing?.country === "schweizerisch"
+            ? "CHF"
+            : "EUR",
+      });
 
       setPaymentMethods(data.paymentMethods);
       setTransactionId(data.transactionId);
       console.log("response=====>", data.transactionId);
     }
-  }, [cart, _sendOrder]);
+  }, [
+    cart,
+    _sendOrder,
+    _billingShippingData.billing?.country,
+    userShippingBilling.billing_info.billing_country,
+  ]);
 
   const validateCheckout = useCallback(async () => {
     const query = { id: transactionId, orderId: orderId };
