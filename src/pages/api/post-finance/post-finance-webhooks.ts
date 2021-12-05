@@ -2,18 +2,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { PostFinanceCheckout } from "postfinancecheckout";
 import initMiddleware from "../../../utils/init-middleware";
 import Cors from "cors";
-import {
-  authorizedOrder,
-  completOrder,
-  updateOrder,
-} from "../../../services/woocommerceApi/Orders";
-import { TransactionState } from "postfinancecheckout/src/models/TransactionState";
+import { updateOrder } from "../../../services/woocommerceApi/Orders";
 
 let spaceId: number = 23340;
 let userId: number = 48407;
 let apiSecret: string = "8AHR3Enly7vmpBwrtXplvccVK4Tvrq9WoDWwn/nmiRQ=";
-
-//https://inmotion-v2.vercel.app/api/post-finance/post-finance-webhooks?inm-wc=inm_checkout
 
 let config = {
   space_id: spaceId,
@@ -47,20 +40,30 @@ export default async function handlerCompleted(
       console.log("state: ", response.body.state);
       if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
-        authorizedOrder(parseInt(orderID as string, 10)).then((resp) => {
+        updateOrder(parseInt(orderID as string, 10), "on-hold").then((resp) => {
           return res.status(200).json({ Message: "Order Authorized!" });
         });
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
-        completOrder(parseInt(orderID as string, 10)).then((resp) => {
-          return res.status(200).json({ Message: "Order Fulfill!" });
-        });
+        updateOrder(parseInt(orderID as string, 10), "completed").then(
+          (resp) => {
+            return res.status(200).json({ Message: "Order Fulfill!" });
+          }
+        );
       } else if (response.body.state === "FAILED") {
         console.log(`response.FAILED:${orderID}`, response.body.state);
 
         updateOrder(parseInt(orderID as string, 10), "failed").then(
           (response) => {
             return res.status(200).json({ Message: "Order Failed!" });
+          }
+        );
+      } else if (response.body.state === "DECLINE") {
+        console.log(`response.DECLINE:${orderID}`, response.body.state);
+
+        updateOrder(parseInt(orderID as string, 10), "cancelled").then(
+          (response) => {
+            return res.status(200).json({ Message: "Order Cancelled!" });
           }
         );
       } else {
