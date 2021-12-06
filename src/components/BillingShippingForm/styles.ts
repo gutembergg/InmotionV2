@@ -22,11 +22,12 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 0.7rem 0;
     width: 100%;
-    max-width: 300px;
+    padding: 2rem;
 
     .input_block {
       display: flex;
       flex-direction: column;
+      width: 100%;
 
       .erros {
         border: 2px solid red;
@@ -48,6 +49,7 @@ export const Container = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 0.7rem 0;
+    padding: 1.5rem;
 
     .input_block {
       display: flex;
@@ -60,18 +62,18 @@ export const Container = styled.div`
         width: 100%;
         padding: 7px;
       }
-      
+
       .input_erros {
         font-size: 0.7rem;
         color: red;
       }
     }
-    select{
-      width:100%;
+    select {
+      width: 100%;
       padding: 7px;
       color: var(--DarkGray);
-      
-      option{
+
+      option {
         color: var(--DarkGray);
       }
     }

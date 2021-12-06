@@ -78,7 +78,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     billing_city: user.billing_info?.billing_city || "",
     billing_state: user.billing_info?.billing_state || "",
     billing_country: _user.billing_info?.billing_country || authorizedCounty[0],
-    isShippingForm: true,
+    isShippingForm: false,
     shipping_last_name: user.shipping_info?.shipping_last_name || "",
     shipping_first_name: user.shipping_info?.shipping_first_name || "",
     shipping_phone: user.shipping_info?.shipping_phone || "",
@@ -105,7 +105,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
         billing_state: user.billing_info?.billing_state,
         billing_country:
           user.billing_info?.billing_country || authorizedCounty[0],
-        isShippingForm: true,
+        isShippingForm: false,
         shipping_last_name: user.shipping_info?.shipping_last_name,
         shipping_first_name: user.shipping_info?.shipping_first_name,
         shipping_phone: user.shipping_info?.shipping_phone,

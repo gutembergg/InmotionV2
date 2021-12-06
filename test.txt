@@ -24,3 +24,24 @@ info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this comm
     
     ignoreBuildErrors: true,
   },
+
+    {/* <li className="products_list" key={product.id}>
+                          <button
+                            className="closeButton"
+                            onClick={() => removeCartItem(product.id)}
+                          ></button>
+                          <div className="cartProductInfos">
+                            <h5>{product.name}</h5>
+                            <p>
+                              {product.qty}x CHF {product.price}
+                            </p>
+                          </div>
+                          <div className="cartProductThmbnail">
+                            <Image
+                              src={product.images[0].src}
+                              alt={product.name}
+                              height={50}
+                              width={50}
+                            />
+                          </div>
+                        </li> */}

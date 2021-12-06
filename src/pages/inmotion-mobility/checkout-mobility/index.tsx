@@ -33,11 +33,14 @@ import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 
 import {
   Container,
-  StyledCheckout,
-  FormSession,
+  Content,
   OrderSession,
   Payment,
   PaymentMethods,
+  FormSection,
+  ProductCart,
+  IoMdRadioButtonOk,
+  IoMdRadioButtonNot,
 } from "../../../styles/CheckoutMobility";
 
 export default function CheckoutMobility() {
@@ -362,79 +365,30 @@ export default function CheckoutMobility() {
   return (
     <>
       <Container>
-        <StyledCheckout>
-          <FormSession>
-            {!loged && (
-              <div>
-                <p>{haveAccount}</p>
-                <LoginForm />
-                <RegisterForm />
-              </div>
-            )}
-            <section>
-              <h2>{deliveryInfo}</h2>
-              <BillingShippingForm
-                handleBillingShippingData={_handleBillingShippingData}
-              />
-            </section>
-            <section>
-              <h2>{wayDelivery}</h2>
-            </section>
-            <CouponsCode />
-            <p>{addPromoDode}</p>
-            <p>
-              ajouter fonction if userbillig & shipping !== formulaire data
-              register new data dans user (lien avec formulaire mon compte)
-            </p>
-            <p>{addTVA}</p>
-            <p>{addPtotalPrice}</p>
-            <button onClick={_sendOrder}>{btnSend}</button>
-            <OrderSession>
-              <div>
-                <div className="cart_products">
-                  <ul>
-                    {cart.totalProductsCount > 0 ? (
-                      cart.products.map((product) => {
-                        return (
-                          <li className="products_list" key={product.id}>
-                            <button
-                              className="closeButton"
-                              onClick={() => removeCartItem(product.id)}
-                            ></button>
-                            <div className="cartProductInfos">
-                              <h5>{product.name}</h5>
-                              <p>
-                                {product.qty}x CHF {product.price}
-                              </p>
-                            </div>
-                            <div className="cartProductThmbnail">
-                              <Image
-                                src={product.images[0].src}
-                                alt={product.name}
-                                height={50}
-                                width={50}
-                              />
-                            </div>
-                          </li>
-                        );
-                      })
-                    ) : (
-                      <li>
-                        <p>{emptyCartMessage}</p>
-                      </li>
-                    )}
-                  </ul>
-                  <h5 className="sousTotalTxt">
-                    {subTotal}:{" "}
-                    <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
-                  </h5>
-                </div>
-              </div>
+        <Content>
+          {!loged && (
+            <div>
+              <p>{haveAccount}</p>
+              <LoginForm />
+              <RegisterForm />
+            </div>
+          )}
+          <div className="content">
+            <FormSection>
+              <section>
+                <h2>{deliveryInfo}</h2>
+                <BillingShippingForm
+                  handleBillingShippingData={_handleBillingShippingData}
+                />
+              </section>
+              <section>
+                <h2>{wayDelivery}</h2>
+              </section>
               <Payment>
                 <div className="payment_container">
                   <div className="button_block">
                     <button onClick={checkout} disabled={isPayment}>
-                      Valider commande
+                      Méthodes de payments
                     </button>
                   </div>
 
@@ -443,17 +397,19 @@ export default function CheckoutMobility() {
                       {paymentMethodes.length > 0 &&
                         paymentMethodes.map((method, index) => {
                           return (
-                            <PaymentMethods
-                              key={method.id}
-                              onClick={() => updateTransaction(method, index)}
-                            >
-                              <div
-                                className={
-                                  selectedPaymentMethod === index
-                                    ? "selected methods"
-                                    : "methods"
-                                }
-                              >
+                            <PaymentMethods key={method.id}>
+                              <div className="methods">
+                                <div
+                                  onClick={() =>
+                                    updateTransaction(method, index)
+                                  }
+                                >
+                                  {selectedPaymentMethod === index ? (
+                                    <IoMdRadioButtonOk />
+                                  ) : (
+                                    <IoMdRadioButtonNot />
+                                  )}
+                                </div>
                                 <div className="logo_box">
                                   <Image
                                     src={method.resolvedImageUrl}
@@ -462,7 +418,7 @@ export default function CheckoutMobility() {
                                     alt="logo-payment-methods"
                                   />
                                 </div>
-                                <div>{method.name}</div>
+                                <div className="method_name">{method.name}</div>
                               </div>
                             </PaymentMethods>
                           );
@@ -482,9 +438,82 @@ export default function CheckoutMobility() {
                   </div>
                 </div>
               </Payment>
+              <section>
+                <CouponsCode />
+                <p>{addPromoDode}</p>
+                <p>
+                  ajouter fonction if userbillig & shipping !== formulaire data
+                  register new data dans user (lien avec formulaire mon compte)
+                </p>
+                <p>{addTVA}</p>
+                <p>{addPtotalPrice}</p>
+                <button onClick={_sendOrder}>{btnSend}</button>
+              </section>
+            </FormSection>
+
+            <OrderSession>
+              <div className="cart_products">
+                <h2>Résumé de votre commande</h2>
+                <div className="prod_block">
+                  {cart.totalProductsCount > 0 ? (
+                    cart.products.map((product) => {
+                      return (
+                        <ProductCart key={product.id}>
+                          <div className="product_image">
+                            <Image
+                              src={product.images[0].src}
+                              alt={product.name}
+                              height={50}
+                              width={50}
+                            />
+
+                            <span>{product.name}</span>
+                          </div>
+                          <span className="product_price">
+                            {product.qty}x CHF {product.price}
+                          </span>
+                        </ProductCart>
+                      );
+                    })
+                  ) : (
+                    <div>
+                      <p>{emptyCartMessage}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="taxe_block">
+                  <div className="taxes">
+                    <div className="taxes_item">
+                      <div>Valeur de marchandise(T.T.C)</div>
+                      <div>-200 chf</div>
+                    </div>
+                    <div className="taxes_item">
+                      <div>Frais denvoi: (T.T.C)</div>
+                      <div>-200 chf</div>
+                    </div>
+                    <div className="taxes_item">
+                      <div>Frais de payment: (T.T.C)</div>
+                      <div>-200 chf</div>
+                    </div>
+                    <div className="taxes_item">
+                      <div>Code Promo</div>
+                      <div>-200 chf</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="total_block">
+                  <h5 className="sousTotalTxt">
+                    <span>Total (T.T.C): </span>
+                    <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+                  </h5>
+                </div>
+              </div>
+              <div className="btn_valider_commande">
+                <button>Valider commande</button>
+              </div>
             </OrderSession>
-          </FormSession>
-        </StyledCheckout>
+          </div>
+        </Content>
       </Container>
     </>
   );
