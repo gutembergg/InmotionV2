@@ -30,7 +30,6 @@ export default async function handlerCompleted(
 
   if (method === "POST") {
     const dataWebhook = req.body;
-    // console.log("dataWebhook::::", dataWebhook);
 
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
@@ -47,7 +46,7 @@ export default async function handlerCompleted(
         console.log(`response.FULFILL:${orderID}`, response.body.state);
         updateOrder(parseInt(orderID as string, 10), "completed").then(
           (resp) => {
-            return res.status(200).json({ Message: "Order Fulfill!" });
+            return res.status(200).json({ Message: "Order Completed!" });
           }
         );
       } else if (response.body.state === "FAILED") {

@@ -190,7 +190,7 @@ const CouponsCode = () => {
       const cartAvailableContent = cartContent.filter(
         (product) => product.id === availableProduct
       );
-      console.log(cartAvailableContent);
+      console.log("cartAvailableContent", cartAvailableContent);
     });
 
     //EXCLUDED PRODUCT
