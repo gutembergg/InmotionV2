@@ -59,8 +59,8 @@ const Home: NextPage<Props> = () => {
                         <Image
                           src={trotGif}
                           alt="gif trottinette"
-                          height={1067}
-                          width={600}
+                          height={711}
+                          width={400}
                         />
                       </div>
                     </GifBox1> }
@@ -84,8 +84,8 @@ const Home: NextPage<Props> = () => {
                         <Image
                           src={printGif}
                           alt="gif printer"
-                          height={1067}
-                          width={600}
+                          height={711}
+                          width={400}
                         />
                       </div>
                    

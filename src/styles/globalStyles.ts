@@ -6,10 +6,11 @@ export default createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
     -webkit-tap-highlight-color: transparent;
-    font-size: 14px;
+    font-size: 16px;
   }
   :root {
     --Blue: #0570A6;
+    --BlueHover: #03486b;
     --Red: #F2142B;
     --Orange:#F2571F;
     --Green:#027011;
@@ -17,6 +18,9 @@ export default createGlobalStyle`
     --White: #FCFCFC;
     --DarkGray: #707070;
     --LightGray:#a0a0a0;
+    --BgGrayGradient: linear-gradient(69deg, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
+    --TxtRed: #c70520;
+
 
   }
 
@@ -42,6 +46,50 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Bitter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--Black)
+}
+h1{
+        font-size:2.2em;
+        color: var(--Black);
+        margin-bottom: 10px;
+        z-index:3;
+        position: relative;
+        font-weight: 600;
+    }
+    h1::before {
+        content: " ";
+        width:35px;
+        height:100%;
+        background-color: var(--Red);
+        position: absolute;
+        z-index:-1;
+        transform: skew(-20deg) translateX(-15px);
+    }
+
+h2{
+        font-size:1.5em;
+        color: var(--Black);
+        margin-bottom: 10px;
+        z-index:3;
+        position: relative;
+    }
+    h2.squared{ 
+      margin-left: 16px;
+      &::before {
+        content: " ";
+        width:22px;
+        height:100%;
+        background-color: var(--Red);
+        position: absolute;
+        z-index:-1;
+        transform: skew(-20deg) translateX(-14px);
+        bottom: 2px;
+      }
+    }
 
   a , p{
     font-size:1em
