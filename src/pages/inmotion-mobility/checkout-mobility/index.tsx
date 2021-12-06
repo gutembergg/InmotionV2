@@ -37,6 +37,7 @@ import {
   FormSession,
   OrderSession,
   Payment,
+  PaymentMethods,
 } from "../../../styles/CheckoutMobility";
 
 export default function CheckoutMobility() {
@@ -97,6 +98,12 @@ export default function CheckoutMobility() {
 
   const [orderId, setOrderId] = useState<number>();
   const [isOrder, setIsOrder] = useState(false);
+  const [isPayment, setIsPayment] = useState(false);
+  const [isSelectedPaymentMethods, setIsSelectedPaymentMethods] =
+    useState(true);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    number | undefined
+  >();
 
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
@@ -178,12 +185,6 @@ export default function CheckoutMobility() {
     };
     _setBillingShippingData({ billing, shipping });
   };
-
-  console.log("_billingShippingData: ", _billingShippingData.billing?.country);
-  console.log(
-    "userShippingBilling:",
-    userShippingBilling.billing_info?.billing_country
-  );
 
   const _sendOrder = useCallback(async () => {
     const order = {
@@ -279,6 +280,7 @@ export default function CheckoutMobility() {
   }, [lineItems, userShippingBilling, _billingShippingData]);
 
   const checkout = useCallback(async () => {
+    setIsPayment(true);
     let productsCheckout;
     if (Object.keys(cart).length > 0) {
       productsCheckout = cart.products.map((product) => {
@@ -293,8 +295,6 @@ export default function CheckoutMobility() {
     }
 
     await _sendOrder();
-
-    console.log("otherOrder: ", orderIdRef.current);
 
     if (Object.keys(cart).length > 0) {
       const { data } = await apiPFinance.post("transaction-create", {
@@ -312,7 +312,7 @@ export default function CheckoutMobility() {
 
       setPaymentMethods(data.paymentMethods);
       setTransactionId(data.transactionId);
-      console.log("response=====>", data.transactionId);
+      console.log("response=====>", data.paymentMethods);
     }
   }, [
     cart,
@@ -331,15 +331,17 @@ export default function CheckoutMobility() {
   }, [transactionId, orderId]);
 
   const updateTransaction = useCallback(
-    async (method: PostFinancePaymentMethods) => {
+    async (method: PostFinancePaymentMethods, index: number) => {
       setIsOrder(false);
+      setSelectedPaymentMethod(index);
+
       const { data } = await apiPFinance.post("transaction-update", {
         id: transactionId,
         orderId: orderId,
         methodId: method.id,
       });
 
-      console.log("dataUpdate::", data);
+      console.log("dataUpdated::", data);
 
       setTransactionId(data);
 
@@ -347,6 +349,7 @@ export default function CheckoutMobility() {
 
       if (orderUpdated) {
         setIsOrder(true);
+        setIsSelectedPaymentMethods(false);
       }
 
       console.log("orderUpdated:", orderUpdated);
@@ -354,14 +357,7 @@ export default function CheckoutMobility() {
     [orderId, transactionId]
   );
 
-  const apitest = async () => {
-    const data = await apiPFinance.post("testApi", {
-      id: 123,
-      name: "test",
-    });
-
-    console.log("data:::Test:::", data);
-  };
+  console.log("selectedPaymentMethod: ", selectedPaymentMethod);
 
   return (
     <>
@@ -382,78 +378,8 @@ export default function CheckoutMobility() {
               />
             </section>
             <section>
-              <h2 onClick={apitest}>{wayDelivery}</h2>
+              <h2>{wayDelivery}</h2>
             </section>
-            <Payment>
-              <button onClick={checkout}>{payment}</button>
-
-              <div className="payment_list">
-                {paymentMethodes.length > 0 &&
-                  paymentMethodes.map((method) => {
-                    return (
-                      <div
-                        key={method.id}
-                        onClick={() => updateTransaction(method)}
-                        className={!isOrder ? "desactive" : ""}
-                      >
-                        {method.name}
-                      </div>
-                    );
-                  })}
-
-                {paymentMethodes.length > 0 && (
-                  <button
-                    disabled={!isOrder}
-                    onClick={() => validateCheckout()}
-                  >
-                    Valider commande
-                  </button>
-                )}
-              </div>
-            </Payment>
-          </FormSession>
-          <OrderSession>
-            <div>
-              <div>
-                <ul>
-                  {cart.totalProductsCount > 0 ? (
-                    cart.products.map((product) => {
-                      return (
-                        <li className="products_list" key={product.id}>
-                          <button
-                            className="closeButton"
-                            onClick={() => removeCartItem(product.id)}
-                          ></button>
-                          <div className="cartProductInfos">
-                            <h5>{product.name}</h5>
-                            <p>
-                              {product.qty}x CHF {product.price}
-                            </p>
-                          </div>
-                          <div className="cartProductThmbnail">
-                            <Image
-                              src={product.images[0].src}
-                              alt={product.name}
-                              height={50}
-                              width={50}
-                            />
-                          </div>
-                        </li>
-                      );
-                    })
-                  ) : (
-                    <li>
-                      <p>{emptyCartMessage}</p>
-                    </li>
-                  )}
-                </ul>
-                <h5 className="sousTotalTxt">
-                  {subTotal}:{" "}
-                  <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
-                </h5>
-              </div>
-            </div>
-
             <CouponsCode />
             <p>{addPromoDode}</p>
             <p>
@@ -463,7 +389,101 @@ export default function CheckoutMobility() {
             <p>{addTVA}</p>
             <p>{addPtotalPrice}</p>
             <button onClick={_sendOrder}>{btnSend}</button>
-          </OrderSession>
+            <OrderSession>
+              <div>
+                <div className="cart_products">
+                  <ul>
+                    {cart.totalProductsCount > 0 ? (
+                      cart.products.map((product) => {
+                        return (
+                          <li className="products_list" key={product.id}>
+                            <button
+                              className="closeButton"
+                              onClick={() => removeCartItem(product.id)}
+                            ></button>
+                            <div className="cartProductInfos">
+                              <h5>{product.name}</h5>
+                              <p>
+                                {product.qty}x CHF {product.price}
+                              </p>
+                            </div>
+                            <div className="cartProductThmbnail">
+                              <Image
+                                src={product.images[0].src}
+                                alt={product.name}
+                                height={50}
+                                width={50}
+                              />
+                            </div>
+                          </li>
+                        );
+                      })
+                    ) : (
+                      <li>
+                        <p>{emptyCartMessage}</p>
+                      </li>
+                    )}
+                  </ul>
+                  <h5 className="sousTotalTxt">
+                    {subTotal}:{" "}
+                    <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+                  </h5>
+                </div>
+              </div>
+              <Payment>
+                <div className="payment_container">
+                  <div className="button_block">
+                    <button onClick={checkout} disabled={isPayment}>
+                      Valider commande
+                    </button>
+                  </div>
+
+                  <div className="payment_list">
+                    <div className="payments_block">
+                      {paymentMethodes.length > 0 &&
+                        paymentMethodes.map((method, index) => {
+                          return (
+                            <PaymentMethods
+                              key={method.id}
+                              onClick={() => updateTransaction(method, index)}
+                            >
+                              <div
+                                className={
+                                  selectedPaymentMethod === index
+                                    ? "selected methods"
+                                    : "methods"
+                                }
+                              >
+                                <div className="logo_box">
+                                  <Image
+                                    src={method.resolvedImageUrl}
+                                    width={50}
+                                    height={50}
+                                    alt="logo-payment-methods"
+                                  />
+                                </div>
+                                <div>{method.name}</div>
+                              </div>
+                            </PaymentMethods>
+                          );
+                        })}
+                    </div>
+
+                    {paymentMethodes.length > 0 && (
+                      <div className="button_block btn_payment">
+                        <button
+                          disabled={isSelectedPaymentMethods}
+                          onClick={() => validateCheckout()}
+                        >
+                          {payment}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Payment>
+            </OrderSession>
+          </FormSession>
         </StyledCheckout>
       </Container>
     </>
