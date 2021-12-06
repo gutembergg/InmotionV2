@@ -12,12 +12,7 @@ export const StyledLangSelector2 = styled.div`
     transition: all ease-in 0.15s;
     color: var(--Blue);
     transform: scale(0.9);
-    &:hover {
-      transform: scale(1);
-      @media only screen and (min-width: 1200px) {
-        transform: scale(0.9);
-      }
-    }
+
     
     .langSelectorListNameFlag {
       display: flex;
@@ -59,6 +54,10 @@ export const StyledLangSelector2 = styled.div`
         width: 0;
         opacity: 0;
         transition: all ease-in 0.1s;
+        >div:hover{
+          transition: all ease-in 0.1s;
+          transform:scale(1.1);
+        }
       }
     }
 

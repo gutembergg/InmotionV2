@@ -34,16 +34,18 @@ export const LoginLink = styled.div`
   transition: all ease-in 0.1s;
   display: flex;
   align-items: center;
+  width: 231px;
+    margin-top: 10px;
+  @media (max-width: 1024px) {
+  width: 50px;
+  margin-top: 0px;
+  margin-right: 15px;
+  }
   @media (max-width: 640px) {
     width: 40px;
     margin-top: 0px;
     margin-right: 15px;
   }
- 
-    width: 50px;
-    margin-top: 0px;
-    margin-right: 15px;
-  
   &:hover {
     color: var(--Black);
     transition: all ease-in 0.1s;

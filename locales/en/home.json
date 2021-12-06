@@ -1,7 +1,20 @@
 {
     "welcomeTitle": "Welcome to",
+    "mobilityWelcomeTitle": "Welcome to Inmotion",
     "chooseYourShop":"Please choose your store",
     "3DSpecialist":"your 3D printing specialist",
-    "MobilitySpecialist":" your specialist in Electric mobility"
-   
+    "MobilitySpecialist":" your specialist in Electric mobility",
+    "slogan":"Your specialist in electric scooters, electric bikes and gyroroue. Flexible vehicle rental. And advice from experts.",
+    "PromotedProductTitle":"Our best Products",
+    "NewProductTitle":"New Products",
+    "TitlePromotedSection":"Ride safe with our protections!",
+    "TextPromotedSection":"-en-Le P2 est un vélo électrique léger, compact et pliable doté d’une grande autonomie et de trois modes de conduite : vélo classique, avec assistance électrique au pédalage ou tout électrique. La prise en main est facile et le démarrage avec clé sécurisé. Ludique et élégant, rapide et écologique, ce moyen de déplacement saura vous ravir.",
+    "LinkTxtPromotedSection":"discover our products",
+    "locationTitle":"EN-Louez un véhicule à la journée!",
+    "locationTxt":"EN-Le P2 est un vélo électrique léger, compact et pliable doté d’une grande autonomie et de trois modes de conduite : vélo classique, avec assistance électrique au pédalage ou tout électrique. La prise en main est facile et le démarrage avec clé sécurisé. Ludique et élégant, rapide et écologique, ce moyen de déplacement saura vous ravir.",
+    "locationLink":"EN-découvrez nos Tarifs",
+    "contactTitle":"Have you questions",
+    "contactTxt":"Le P2 est un vélo électrique léger, compact et pliable doté d’une grande autonomie et de trois modes de conduite : vélo classique, avec assistance électrique au pédalage ou tout électrique. La prise en main est facile et le démarrage avec clé sécurisé. Ludique et élégant, rapide et écologique, ce moyen de déplacement saura vous ravir.",
+    "contactLink":"contact-us",
+    "shopHours":"Open Hours"
 }

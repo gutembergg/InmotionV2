@@ -4,7 +4,7 @@
   "pages": {
     "*": ["common", "headerMobility"],
     "/": ["home"],
-    "/inmotion-mobility": ["headerMobility"],
+    "/inmotion-mobility": ["headerMobility","home"],
     "/inmotion-mobility/[slug]": ["headerMobility"],
     "/inmotion-mobility/categorie_/[slug]": [
       "headerMobility",

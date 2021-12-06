@@ -1,6 +1,20 @@
 {
     "welcomeTitle": "Bienvenue chez",
+    "mobilityWelcomeTitle": "Bienvenue chez Inmotion",
     "chooseYourShop":"choisissez votre boutique",
     "3DSpecialist":"votre spécialiste en impression 3D",
-    "MobilitySpecialist":"votre spécialiste en Mobilité électrique"
+    "MobilitySpecialist":"votre spécialiste en Mobilité électrique",
+    "slogan":"Votre spécialiste en Trottinettes électrique, vélos électriques et gyroroue. Location de véhicules flexible. Et des conseils fournis par des experts.",
+    "PromotedProductTitle":"Nos produits phares",
+    "NewProductTitle":"Nouveautés",
+    "TitlePromotedSection":"Pensez à votre sécurité avant tout!",
+    "TextPromotedSection":"Le P2 est un vélo électrique léger, compact et pliable doté d’une grande autonomie et de trois modes de conduite : vélo classique, avec assistance électrique au pédalage ou tout électrique. La prise en main est facile et le démarrage avec clé sécurisé. Ludique et élégant, rapide et écologique, ce moyen de déplacement saura vous ravir.",
+    "LinkTxtPromotedSection":"découvrez nos accessoires",
+    "locationTitle":"Louez un véhicule à la journée!",
+    "locationTxt":"Le P2 est un vélo électrique léger, compact et pliable doté d’une grande autonomie et de trois modes de conduite : vélo classique, avec assistance électrique au pédalage ou tout électrique. La prise en main est facile et le démarrage avec clé sécurisé. Ludique et élégant, rapide et écologique, ce moyen de déplacement saura vous ravir.",
+    "locationLink":"découvrez nos Tarifs",
+    "contactTitle":"Vous avez besoin d'un conseil",
+    "contactTxt":"Le P2 est un vélo électrique léger, compact et pliable doté d’une grande autonomie et de trois modes de conduite : vélo classique, avec assistance électrique au pédalage ou tout électrique. La prise en main est facile et le démarrage avec clé sécurisé. Ludique et élégant, rapide et écologique, ce moyen de déplacement saura vous ravir.",
+    "contactLink":"contactez-nous",
+    "shopHours":"Nos heures d'ouvertures"
 }
