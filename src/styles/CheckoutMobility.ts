@@ -129,6 +129,21 @@ export const Payment = styled.div`
   .payment_container {
     .button_block {
       display: flex;
+
+      .disabled {
+        cursor: not-allowed;
+      }
+
+      .btn_payment_method {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        span + span {
+          margin-left: 1rem;
+        }
+      }
     }
 
     .payment_list {
@@ -141,6 +156,13 @@ export const Payment = styled.div`
     }
 
     .btn_payment {
+      margin-top: 1rem;
+    }
+
+    .spiner {
+      width: 300px;
+      display: flex;
+      justify-content: center;
       margin-top: 1rem;
     }
 
@@ -218,7 +240,10 @@ export const ProductCart = styled.div`
   }
 
   .product_price {
-    width: 100px;
+    display: flex;
+    justify-content: end;
+    padding-right: 0.7rem;
+    width: 170px;
     font-weight: 600;
   }
 `;
