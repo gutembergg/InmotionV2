@@ -261,6 +261,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       _productsUpSellModelsByDefault: productsUpSellResult,
       _categoryBySlug,
     },
-    revalidate: 60 * 2,
+    revalidate: 60 * 3,
   };
 };
