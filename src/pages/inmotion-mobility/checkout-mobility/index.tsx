@@ -104,6 +104,7 @@ export default function CheckoutMobility() {
   const [isOrder, setIsOrder] = useState<boolean | null>(null);
   const [isPayment, setIsPayment] = useState(false);
   const [isCheckMethod, setIsCheckMethod] = useState(false);
+  const [paymentValidate, setPaymentValidate] = useState(false);
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     number | undefined
@@ -280,6 +281,7 @@ export default function CheckoutMobility() {
   const checkout = useCallback(async () => {
     setIsPayment(true);
     setIsOrder(false);
+    setPaymentValidate(true);
 
     let productsCheckout;
     if (Object.keys(cart).length > 0) {
@@ -337,6 +339,7 @@ export default function CheckoutMobility() {
   const updateTransaction = useCallback(
     async (method: PostFinancePaymentMethods, index: number) => {
       setSelectedPaymentMethod(index);
+      setIsCheckMethod(true);
 
       const { data } = await apiPFinance.post("transaction-update", {
         id: transactionId,
@@ -351,7 +354,8 @@ export default function CheckoutMobility() {
       await _updateOrder(orderId as number, method.name);
 
       if (data) {
-        setIsCheckMethod(true);
+        setIsCheckMethod(false);
+        setPaymentValidate(false);
       }
     },
     [orderId, transactionId]
@@ -431,11 +435,13 @@ export default function CheckoutMobility() {
                       <div className="button_block btn_payment">
                         <button
                           onClick={validateCheckout}
-                          className={isCheckMethod ? "disabled" : ""}
-                          disabled={isCheckMethod}
+                          className={
+                            isCheckMethod || paymentValidate ? "disabled" : ""
+                          }
+                          disabled={isCheckMethod || paymentValidate}
                         >
                           <div className="btn_payment_method">
-                            <span> {payment}</span>
+                            <span>{payment}</span>
                             <span>{isCheckMethod && <Spiner />}</span>
                           </div>
                         </button>
