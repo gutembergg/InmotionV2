@@ -71,7 +71,10 @@ export default function CheckoutMobility() {
   const [paymentMethodes, setPaymentMethods] = useState<
     PostFinancePaymentMethods[]
   >([]);
+
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([])
+
+
 
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
@@ -265,6 +268,7 @@ export default function CheckoutMobility() {
           total: "10.00",
         },
       ],
+      coupon_lines:226
     };
 
     //Recuperer ici la reponse de la commande crée//////////////////

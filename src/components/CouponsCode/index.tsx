@@ -147,17 +147,18 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
 
     if (usageLimitPerUser) {
       const visitor = usedByVisitor.filter((key) => key === userMail);
+      console.log("visitor list", usedByVisitor);
+      console.log("used by (all list)", usedBy);
+      console.log("registred client list", usedByClient);
+      console.log("userlimitperuser", usageLimitPerUser);
+      console.log("visitor in used coupon", visitor);
+      console.log("visitor in used coupon length", visitor.length);
 
       if (visitor && visitor.length >= usageLimitPerUser) {
         Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
         return;
       }
-      // console.log("used by (all list)", usedBy);
-      // console.log("visitor list", usedByVisitor);
-      // console.log("registred client list", usedByClient);
-      // console.log("userlimitperuser", usageLimitPerUser);
-      // console.log("visitor in used coupon", visitor);
-      // console.log("visitor in used coupon length", visitor.length);
+
     }
 
     //CHECK GROUP RESTRICTION ----TODO!!!!!
