@@ -30,6 +30,7 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import useUser from "../../../hooks/useUser";
 import apiPFinance from "../../../services/postFinanceApi/apiPFinance";
 import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
+import Spiner from "../../../components/Spiner";
 
 import {
   Container,
@@ -101,10 +102,11 @@ export default function CheckoutMobility() {
   });
 
   const [orderId, setOrderId] = useState<number>();
-  const [isOrder, setIsOrder] = useState(false);
+  const [isOrder, setIsOrder] = useState<boolean | null>(null);
   const [isPayment, setIsPayment] = useState(false);
-  const [isSelectedPaymentMethods, setIsSelectedPaymentMethods] =
-    useState(true);
+  const [isCheckMethod, setIsCheckMethod] = useState(false);
+  const [paymentValidate, setPaymentValidate] = useState(false);
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     number | undefined
   >();
@@ -271,12 +273,6 @@ export default function CheckoutMobility() {
     orderIdRef.current = response.id;
     setOrderId(response.id);
 
-    if (response) {
-      setIsOrder(true);
-    } else {
-      setIsOrder(false);
-    }
-
     console.log("responseOrder", response);
 
     return response.id;
@@ -285,6 +281,9 @@ export default function CheckoutMobility() {
 
   const checkout = useCallback(async () => {
     setIsPayment(true);
+    setIsOrder(false);
+    setPaymentValidate(true);
+
     let productsCheckout;
     if (Object.keys(cart).length > 0) {
       productsCheckout = cart.products.map((product) => {
@@ -316,6 +315,10 @@ export default function CheckoutMobility() {
 
       setPaymentMethods(data.paymentMethods);
       setTransactionId(data.transactionId);
+
+      if (data) {
+        setIsOrder(true);
+      }
       console.log("response=====>", data.paymentMethods);
     }
   }, [
@@ -336,8 +339,8 @@ export default function CheckoutMobility() {
 
   const updateTransaction = useCallback(
     async (method: PostFinancePaymentMethods, index: number) => {
-      setIsOrder(false);
       setSelectedPaymentMethod(index);
+      setIsCheckMethod(true);
 
       const { data } = await apiPFinance.post("transaction-update", {
         id: transactionId,
@@ -349,19 +352,15 @@ export default function CheckoutMobility() {
 
       setTransactionId(data);
 
-      const orderUpdated = await _updateOrder(orderId as number, method.name);
+      await _updateOrder(orderId as number, method.name);
 
-      if (orderUpdated) {
-        setIsOrder(true);
-        setIsSelectedPaymentMethods(false);
+      if (data) {
+        setIsCheckMethod(false);
+        setPaymentValidate(false);
       }
-
-      console.log("orderUpdated:", orderUpdated);
     },
     [orderId, transactionId]
   );
-
-  console.log("selectedPaymentMethod: ", selectedPaymentMethod);
 
   return (
     <>
@@ -389,8 +388,15 @@ export default function CheckoutMobility() {
               <Payment>
                 <div className="payment_container">
                   <div className="button_block">
-                    <button onClick={checkout} disabled={isPayment}>
-                      Méthodes de payments
+                    <button
+                      onClick={checkout}
+                      className={isPayment ? "disabled" : ""}
+                      disabled={isPayment}
+                    >
+                      <div className="btn_payment_method">
+                        <span>Méthodes de payments</span>
+                        <span>{isOrder === false && <Spiner />}</span>
+                      </div>
                     </button>
                   </div>
 
@@ -430,10 +436,16 @@ export default function CheckoutMobility() {
                     {paymentMethodes.length > 0 && (
                       <div className="button_block btn_payment">
                         <button
-                          disabled={isSelectedPaymentMethods}
-                          onClick={() => validateCheckout()}
+                          onClick={validateCheckout}
+                          className={
+                            isCheckMethod || paymentValidate ? "disabled" : ""
+                          }
+                          disabled={isCheckMethod || paymentValidate}
                         >
-                          {payment}
+                          <div className="btn_payment_method">
+                            <span>{payment}</span>
+                            <span>{isCheckMethod && <Spiner />}</span>
+                          </div>
                         </button>
                       </div>
                     )}
