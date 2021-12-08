@@ -22,7 +22,8 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 0.7rem 0;
     width: 100%;
-    padding: 2rem;
+    padding-top: 1rem;
+    padding-right: 3rem;
 
     .input_block {
       display: flex;
@@ -49,7 +50,8 @@ export const Container = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 0.7rem 0;
-    padding: 1.5rem;
+    padding-top: 1rem;
+    padding-right: 3rem;
 
     .input_block {
       display: flex;

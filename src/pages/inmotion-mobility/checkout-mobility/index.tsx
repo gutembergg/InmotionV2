@@ -361,21 +361,29 @@ export default function CheckoutMobility() {
     [orderId, transactionId]
   );
 
+  console.log("userShippingBilling: ", userShippingBilling);
+
   return (
     <>
       <Container>
+        <h1>Votre Commande</h1>
         <Content>
-          {!loged && (
-            <div>
-              <p>{haveAccount}</p>
-              <LoginForm />
-              <RegisterForm />
-            </div>
-          )}
           <div className="content">
             <FormSection>
-              <section>
-                <h2>{deliveryInfo}</h2>
+              <section className="form_users">
+                {" "}
+                {!loged && (
+                  <div>
+                    <p>{haveAccount}</p>
+                    <LoginForm />
+                    <RegisterForm />
+                  </div>
+                )}
+              </section>
+              <section className="sections_title">
+                <div className="title">
+                  <h2>1. Vos coordonnées</h2>
+                </div>
                 <BillingShippingForm
                   handleBillingShippingData={_handleBillingShippingData}
                 />
@@ -462,7 +470,6 @@ export default function CheckoutMobility() {
                 <button onClick={_sendOrder}>{btnSend}</button>
               </section>
             </FormSection>
-
             <OrderSession>
               <div className="cart_products">
                 <h2>Résumé de votre commande</h2>

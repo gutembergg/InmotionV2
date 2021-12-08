@@ -108,11 +108,13 @@ const LoginForm = () => {
         </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
-            <Image src={loginIcon} width={30} height={30} alt="login icon" />
-            {"  "}
-            <span>
-              {menuLogin} / {menuRegister}
-            </span>
+          <Image src={loginIcon} width={30} height={30} alt="login icon" />
+          {"  "}
+          {/*   <span>{menuLogin} /</span>
+          <span>{menuRegister}</span> */}
+          <span>
+            {menuLogin} / {menuRegister}
+          </span>
         </LoginLink>
       )}
     </>

@@ -4,7 +4,13 @@ import { IoMdRadioButtonOn, IoMdRadioButtonOff } from "react-icons/io";
 export const Container = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
+
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -12,19 +18,32 @@ export const Content = styled.div`
   flex-direction: column;
   width: 100%;
 
-  padding: 1rem 2rem;
-
   .content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
     width: 100%;
+    margin-top: 2.5rem;
   }
 `;
 
 export const FormSection = styled.div`
   width: 100%;
+
+  section.sections_title {
+    div.title {
+      padding-top: 1rem;
+      padding-right: 3rem;
+    }
+    h2 {
+      background-color: var(--Blue);
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      padding: 1rem;
+    }
+  }
 `;
 
 export const OrderSession = styled.div`

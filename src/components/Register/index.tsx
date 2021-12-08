@@ -100,9 +100,9 @@ const RegisterForm = () => {
           </form>
         </RegisterContainer>
       </Modal>
-      <RegisterLink onClick={() => setShowModal(true)}>
+      {/*  <RegisterLink onClick={() => setShowModal(true)}>
         <p className="registerButton">{createAccount}</p>
-      </RegisterLink>
+      </RegisterLink> */}
     </>
   );
 };

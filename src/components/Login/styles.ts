@@ -35,25 +35,29 @@ export const LoginLink = styled.div`
   display: flex;
   align-items: center;
   width: 231px;
-    margin-top: 10px;
+  margin-top: 10px;
+
   @media (max-width: 1024px) {
-  width: 50px;
-  margin-top: 0px;
-  margin-right: 15px;
+    width: 50px;
+    margin-top: 0px;
+    margin-right: 15px;
   }
+
   @media (max-width: 640px) {
     width: 40px;
     margin-top: 0px;
     margin-right: 15px;
   }
+
   &:hover {
     color: var(--Black);
     transition: all ease-in 0.1s;
   }
-  span {
-    margin-left: 12px;
-    margin-right: 20px;
 
+  span {
+    display: flex;
+    flex-direction: row;
+    padding: 0.3rem;
     @media (max-width: 1024px) {
       display: none;
     }

@@ -53,19 +53,52 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
   const austria = t("forms:austria");
   const holland = t("forms:holland");
 
-  const authorizedCounty = [
-    swiss,
-    france,
-    germany,
-    italy,
-    belgium,
-    spain,
-    austria,
-    holland,
+  interface country {
+    name: string;
+    code: string;
+  }
+
+  const authorizedCounty: country[] = [
+    {
+      name: swiss,
+      code: "CH",
+    },
+    {
+      name: france,
+      code: "FR",
+    },
+    {
+      name: germany,
+      code: "GE",
+    },
+    {
+      name: italy,
+      code: "IT",
+    },
+    {
+      name: belgium,
+      code: "BE",
+    },
+    {
+      name: spain,
+      code: "SP",
+    },
+    {
+      name: austria,
+      code: "AU",
+    },
+    {
+      name: holland,
+      code: "HL",
+    },
   ];
 
   const { user } = useUser();
   const [_user, _setUser] = useState<IUserState>(user);
+
+  const [_formValues, _setFormValues] = useState<IFormValues>(
+    {} as IFormValues
+  );
 
   const [formValues, setFormValues] = useState<IFormValues>({
     billing_last_name: user.billing_info?.billing_last_name || "",
@@ -77,7 +110,8 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     billing_postcode: user.billing_info?.billing_postcode || "",
     billing_city: user.billing_info?.billing_city || "",
     billing_state: user.billing_info?.billing_state || "",
-    billing_country: _user.billing_info?.billing_country || authorizedCounty[0],
+    billing_country:
+      user.billing_info?.billing_country || authorizedCounty[0].name,
     isShippingForm: false,
     shipping_last_name: user.shipping_info?.shipping_last_name || "",
     shipping_first_name: user.shipping_info?.shipping_first_name || "",
@@ -88,11 +122,15 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     shipping_city: user.shipping_info?.shipping_city || "",
     shipping_state: user.shipping_info?.shipping_state || "",
     shipping_country:
-      user.shipping_info?.shipping_country || authorizedCounty[0],
+      user.shipping_info?.shipping_country || authorizedCounty[0].name,
   });
 
   useEffect(() => {
     if (user.token) {
+      console.log(
+        "user.billing_info?",
+        user.billing_info?.billing_country || authorizedCounty[2]
+      );
       const initialValues = {
         billing_last_name: user.billing_info?.billing_last_name,
         billing_first_name: user.billing_info?.billing_first_name,
@@ -104,7 +142,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
         billing_city: user.billing_info?.billing_city,
         billing_state: user.billing_info?.billing_state,
         billing_country:
-          user.billing_info?.billing_country || authorizedCounty[0],
+          user.billing_info?.billing_country || authorizedCounty[0].name,
         isShippingForm: false,
         shipping_last_name: user.shipping_info?.shipping_last_name,
         shipping_first_name: user.shipping_info?.shipping_first_name,
@@ -115,10 +153,12 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
         shipping_city: user.shipping_info?.shipping_city,
         shipping_state: user.shipping_info?.shipping_state,
         shipping_country:
-          user.shipping_info?.shipping_country || authorizedCounty[0],
+          user.shipping_info?.shipping_country || authorizedCounty[0].name,
       };
 
       setFormValues(initialValues);
+      console.log("user===>", user);
+      console.log("initialValues===>", initialValues);
     }
     // eslint-disable-next-line
   }, [user]);
@@ -309,8 +349,17 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
 
                   <Field as="select" name="billing_country">
                     {authorizedCounty.map((country) => (
-                      <option key={country} value={country}>
-                        {country}
+                      <option
+                        key={country.code}
+                        value={country.code}
+                        defaultChecked={true}
+                        defaultValue={
+                          props.initialValues.billing_country.length > 0
+                            ? props.initialValues.billing_country
+                            : country.name
+                        }
+                      >
+                        {country.name}
                       </option>
                     ))}
                   </Field>
@@ -477,8 +526,8 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
 
                     <Field as="select" name="shipping_country">
                       {authorizedCounty.map((country) => (
-                        <option key={country} value={country}>
-                          {country}
+                        <option key={country.code} value={country.code}>
+                          {country.name}
                         </option>
                       ))}
                     </Field>
