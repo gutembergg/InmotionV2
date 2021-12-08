@@ -1,7 +1,9 @@
 import {
   ChangeEvent,
+  Dispatch,
   FormEvent,
   FormEventHandler,
+  SetStateAction,
   useEffect,
   useState,
 } from "react";
@@ -13,16 +15,25 @@ import useCart from "../../hooks/useCart";
 import { IProduct } from "../../interfaces/IProducts";
 import useTranslation from "next-translate/useTranslation";
 
-const CouponsCode = () => {
+interface IProps {
+  userMail: string;
+  userID: number | null;
+  userGrp: string;
+  setusedCoupons: Dispatch<SetStateAction<ICoupons[]>>;
+  usedCoupons: ICoupons[]
+}
+
+const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProps) => {
+  const { cart, removeCartItem } = useCart();
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputDisabledStatus, setInputDisabledStatus] =
+    useState<boolean>(false);
+
   const { t } = useTranslation();
   const doYouHaveCodePromo = t("checkout-mobility:doYouHaveCodePromo");
   const btnSend = t("checkout-mobility:btnSend");
 
-  const [inputValue, setInputValue] = useState<string>("");
-  const [inputDisabledStatus, setInputDisabledStatus] =
-    useState<boolean>(false);
-  const [usedCouponsList, setUsedCouponsList] = useState<ICoupons[]>([]);
-  const { cart, removeCartItem } = useCart();
+
   const cartContent = cart.products;
   const cartValue = cart.totalProductsPrice;
 
@@ -49,13 +60,11 @@ const CouponsCode = () => {
     checkCoupons();
   };
 
-  //--------FUNCTION CHECK COUPONS--------//
   const checkCoupons = async () => {
     console.log("you entered code---->", inputValue);
-    //Get coupon data
+
     const { data } = await searchCoupons(inputValue);
     const coupon: ICoupons = data[0];
-    //GENERAL CHECK ------------------------------//
 
     //CHECK CODE AVAILABILITY
     if (!coupon) {
@@ -64,18 +73,16 @@ const CouponsCode = () => {
     }
 
     // CHECK CODE DUPLICATION
-    console.log("dans la fonction", usedCouponsList);
     const couponID = coupon.id;
-    const checkUsedCoupon = usedCouponsList.find(
+    const checkUsedCoupon = usedCoupons.find(
       (item) => item.id === couponID
     );
-    console.log("checkUsedCoupon", checkUsedCoupon);
     if (checkUsedCoupon) {
       Notiflix.Notify.failure(`${couponID} à déja été utilisé`);
       return;
     }
 
-    //COUPONS RESTRICTIONS ----------------------//
+    //--------------COUPONS RESTRICTIONS ----------------------//
 
     //CHECK DATE EXPIRATION
     const couponExpDate = coupon.date_expires;
@@ -103,10 +110,10 @@ const CouponsCode = () => {
     if (coupon.individual_use) {
       console.log("individual");
 
-      if (usedCouponsList.length === 0) {
+      if (usedCoupons.length === 0) {
         setInputDisabledStatus(true);
         console.log("no coupon in liste");
-        Notiflix.Notify.warning(CouponsMessages.warningNoMoreAvailableCoupon);
+        Notiflix.Notify.info(CouponsMessages.warningNoMoreAvailableCoupon);
       } else {
         Notiflix.Notify.failure(CouponsMessages.singleCouponOnly);
         console.log("coupon in liste");
@@ -114,9 +121,7 @@ const CouponsCode = () => {
       }
     }
 
-    //USERS RESTRICTIONS----------------------//
-    const userEmail = "fatih@fat-e.ch";
-    //get user email
+    //----------------------USERS RESTRICTIONS----------------------//
 
     //CHECK EMAIL RESTRICTION
     const AuthorizedEmails = coupon.email_restrictions;
@@ -125,7 +130,7 @@ const CouponsCode = () => {
 
     if (AuthorizedEmails.length !== 0) {
       const searchAuthorizedEmail = AuthorizedEmails.filter(
-        (key) => key === userEmail
+        (key) => key === userMail
       );
 
       if (searchAuthorizedEmail.length === 0) {
@@ -141,7 +146,7 @@ const CouponsCode = () => {
     const usedByClient = usedBy.filter((key) => !key.includes("@"));
 
     if (usageLimitPerUser) {
-      const visitor = usedByVisitor.filter((key) => key === userEmail);
+      const visitor = usedByVisitor.filter((key) => key === userMail);
 
       if (visitor && visitor.length >= usageLimitPerUser) {
         Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
@@ -230,9 +235,10 @@ const CouponsCode = () => {
 
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
 
-    setUsedCouponsList((usedCouponsList) => [...usedCouponsList, coupon]);
     Notiflix.Notify.success(CouponsMessages.validCoupon);
-    console.log("list of all coupons", usedCouponsList);
+    setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
+
+    // to do function calculate coupon;
   };
 
   return (
@@ -247,7 +253,9 @@ const CouponsCode = () => {
           value={inputValue}
           disabled={inputDisabledStatus}
         />
-        <button type="submit">{btnSend}</button>
+        <button type="submit" disabled={inputDisabledStatus === true && true}>
+          {btnSend}{" "}
+        </button>
       </form>
     </div>
   );
