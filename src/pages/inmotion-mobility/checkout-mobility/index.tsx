@@ -43,6 +43,7 @@ import {
   IoMdRadioButtonOk,
   IoMdRadioButtonNot,
 } from "../../../styles/CheckoutMobility";
+import { ICoupons } from "../../../interfaces/ICoupons";
 
 export default function CheckoutMobility() {
   const orderIdRef = useRef(0);
@@ -59,7 +60,6 @@ export default function CheckoutMobility() {
   const payment = t("checkout-mobility:payment");
   const emptyCartMessage = t("checkout-mobility:emptyCartMessage");
   const subTotal = t("checkout-mobility:subTotal");
-  const addPromoDode = t("checkout-mobility:addPromoDode");
   const addTVA = t("checkout-mobility:addTVA");
   const addPtotalPrice = t("checkout-mobility:addPtotalPrice");
   const btnSend = t("checkout-mobility:btnSend");
@@ -71,6 +71,8 @@ export default function CheckoutMobility() {
   const [paymentMethodes, setPaymentMethods] = useState<
     PostFinancePaymentMethods[]
   >([]);
+
+  const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
 
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
@@ -264,6 +266,7 @@ export default function CheckoutMobility() {
           total: "10.00",
         },
       ],
+      coupon_lines: 226,
     };
 
     //Recuperer ici la reponse de la commande crée//////////////////
@@ -459,14 +462,17 @@ export default function CheckoutMobility() {
                 </div>
               </Payment>
               <section>
-                <CouponsCode />
-                <p>{addPromoDode}</p>
-                <p>
-                  ajouter fonction if userbillig & shipping !== formulaire data
-                  register new data dans user (lien avec formulaire mon compte)
-                </p>
-                <p>{addTVA}</p>
-                <p>{addPtotalPrice}</p>
+                <CouponsCode
+                  userMail={
+                    userShippingBilling.billing_info.billing_email ||
+                    _billingShippingData.billing?.email
+                  }
+                  userID={user.profile?.id}
+                  userGrp={user.profile?.wcb2b_group}
+                  setusedCoupons={setusedCoupons}
+                  usedCoupons={usedCoupons}
+                />
+
                 <button onClick={_sendOrder}>{btnSend}</button>
               </section>
             </FormSection>
@@ -515,7 +521,13 @@ export default function CheckoutMobility() {
                       <div>-200 chf</div>
                     </div>
                     <div className="taxes_item">
-                      <div>Code Promo</div>
+                      <div>
+                        {usedCoupons.map((coupon) => {
+                          return (
+                            <div key={coupon.id}>Code Promo {coupon.code}</div>
+                          );
+                        })}
+                      </div>
                       <div>-200 chf</div>
                     </div>
                   </div>
