@@ -266,11 +266,11 @@ export default function CheckoutMobility() {
           total: "10.00",
         },
       ],
-      coupon_lines: [{
-        id:197,
-         code:"dual",
-         discount:5
-      }],
+      // coupon_lines: [{
+      //   id:197,
+      //    code:"dual",
+      //    discount:5
+      // }],
     };
 
     //Recuperer ici la reponse de la commande crée//////////////////
