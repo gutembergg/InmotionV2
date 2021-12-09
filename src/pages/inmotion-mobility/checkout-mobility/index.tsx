@@ -63,17 +63,24 @@ export default function CheckoutMobility() {
   const addTVA = t("checkout-mobility:addTVA");
   const addPtotalPrice = t("checkout-mobility:addPtotalPrice");
   const btnSend = t("checkout-mobility:btnSend");
-  
+
   const [_billingShippingData, _setBillingShippingData] =
-  useState<OrderValidation>({} as OrderValidation);
+    useState<OrderValidation>({} as OrderValidation);
   const [lineItems, setLineItems] = useState<LineItemsDTO[]>([]);
   const [transactionId, setTransactionId] = useState<number>();
   const [paymentMethodes, setPaymentMethods] = useState<
-  PostFinancePaymentMethods[]
+    PostFinancePaymentMethods[]
   >([]);
-  
+
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
   console.log(usedCoupons);
+  
+ const couponsCodeArray = usedCoupons.map( coupon =>{
+   return {code: coupon.code};
+ });
+
+
+ console.log(couponsCodeArray)
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
       billing_address_1: user ? user.billing_info?.billing_address_1 : "",
@@ -266,11 +273,14 @@ export default function CheckoutMobility() {
           total: "10.00",
         },
       ],
-      // coupon_lines: [{
-      //   id:197,
-      //    code:"dual",
-      //    discount:5
-      // }],
+      coupon_lines:[
+        {
+          code: 'veste',
+        },
+        {
+          code: 'dual',
+        },
+      ],
     };
 
     //Recuperer ici la reponse de la commande crée//////////////////

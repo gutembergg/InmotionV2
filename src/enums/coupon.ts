@@ -13,5 +13,8 @@ export enum CouponsMessages {
     singleCouponOnly = "Ce code n'est pas cumulable, retirez le / les autres codes promo ",
     singleCouponUsed = "Vous avez déja rentrer un code promo non cumulable ",
     warningNoMoreAvailableCoupon = "vous ne pourez pas utiliser d'autre coupon, champ desactivé",
-    alreadyUsedCoupon =` à déja été utilisé`
+    alreadyUsedCoupon =` à déja été utilisé`,
+    groupNotValid =` votre compte n'a pas les privilèges requis pour ce bon`,
+    noAvaillableProduct =`Vous n'avez pas commander le produit qui correspond à ce coupon`,
+    unhautorizedProduct =`Vous avez un produit non éligible dans votre panier`
 }

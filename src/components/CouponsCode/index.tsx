@@ -20,10 +20,16 @@ interface IProps {
   userID: number | null;
   userGrp: string;
   setusedCoupons: Dispatch<SetStateAction<ICoupons[]>>;
-  usedCoupons: ICoupons[]
+  usedCoupons: ICoupons[];
 }
 
-const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProps) => {
+const CouponsCode = ({
+  userMail,
+  userID,
+  userGrp,
+  setusedCoupons,
+  usedCoupons,
+}: IProps) => {
   const { cart, removeCartItem } = useCart();
   const [inputValue, setInputValue] = useState<string>("");
   const [inputDisabledStatus, setInputDisabledStatus] =
@@ -33,9 +39,9 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
   const doYouHaveCodePromo = t("checkout-mobility:doYouHaveCodePromo");
   const btnSend = t("checkout-mobility:btnSend");
 
-
   const cartContent = cart.products;
   const cartValue = cart.totalProductsPrice;
+  const cartProducts = cart.products;
 
   //HANDLE INPUT CHANGES
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +52,12 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
   //HANDLE INPUT SUBMIT
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    //if disabled because single use code
+    //if disabled because single use code   tested
     if (inputDisabledStatus === true) {
       Notiflix.Notify.failure(CouponsMessages.singleCouponUsed);
       return;
     }
-    //if no code in value
+    //if no code in value   tested
     if (inputValue.length === 0) {
       Notiflix.Notify.failure(CouponsMessages.InputHasntValue);
       return;
@@ -61,22 +67,18 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
   };
 
   const checkCoupons = async () => {
-    console.log("you entered code---->", inputValue);
-
     const { data } = await searchCoupons(inputValue);
     const coupon: ICoupons = data[0];
 
-    //CHECK CODE AVAILABILITY
+    //CHECK CODE AVAILABILITY  tested
     if (!coupon) {
       Notiflix.Notify.failure(CouponsMessages.couponNotValable);
       return;
     }
 
-    // CHECK CODE DUPLICATION
+    // CHECK CODE DUPLICATION tested
     const couponID = coupon.id;
-    const checkUsedCoupon = usedCoupons.find(
-      (item) => item.id === couponID
-    );
+    const checkUsedCoupon = usedCoupons.find((item) => item.id === couponID);
     if (checkUsedCoupon) {
       Notiflix.Notify.failure(`${couponID} à déja été utilisé`);
       return;
@@ -84,12 +86,11 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
 
     //--------------COUPONS RESTRICTIONS ----------------------//
 
-    //CHECK DATE EXPIRATION
+    //CHECK DATE EXPIRATION tested
     const couponExpDate = coupon.date_expires;
     const date = Date.now();
     if (couponExpDate) {
       const ExpDateMs = Date.parse(couponExpDate);
-      console.log("date in ms", ExpDateMs);
 
       if (ExpDateMs < date) {
         Notiflix.Notify.failure(CouponsMessages.couponDateExpired);
@@ -97,7 +98,7 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
       }
     }
 
-    //CHECK COUPON USAGE LIMIT
+    //CHECK COUPON USAGE LIMIT tested
     const usageLimit = coupon.usage_limit;
     const usageCount = coupon.usage_count;
 
@@ -106,27 +107,22 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
       return;
     }
 
-    //CHECK INDIVIDUAL USE ----TODO!!!!!
+    //CHECK INDIVIDUAL USE ----tested
     if (coupon.individual_use) {
-      console.log("individual");
-
       if (usedCoupons.length === 0) {
         setInputDisabledStatus(true);
-        console.log("no coupon in liste");
         Notiflix.Notify.info(CouponsMessages.warningNoMoreAvailableCoupon);
       } else {
         Notiflix.Notify.failure(CouponsMessages.singleCouponOnly);
-        console.log("coupon in liste");
         return;
       }
     }
 
     //----------------------USERS RESTRICTIONS----------------------//
 
-    //CHECK EMAIL RESTRICTION
+    //CHECK EMAIL RESTRICTION tested
     const AuthorizedEmails = coupon.email_restrictions;
     const AuthorizedEmailsLenght = coupon.email_restrictions.length;
-    console.log("authorized email lenght", AuthorizedEmailsLenght);
 
     if (AuthorizedEmails.length !== 0) {
       const searchAuthorizedEmail = AuthorizedEmails.filter(
@@ -139,7 +135,7 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
       }
     }
 
-    //CHECK  USAGE LIMIT PER USER | EMAIL----------  ---> a revoir avec les clients id!!!!!!!!!!//
+    //CHECK  USAGE LIMIT PER USER | EMAIL  tested
     const usageLimitPerUser = coupon.usage_limit_per_user;
     const usedBy = coupon.used_by;
     const usedByVisitor = usedBy.filter((key) => key.includes("@"));
@@ -147,33 +143,38 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
 
     if (usageLimitPerUser) {
       const visitor = usedByVisitor.filter((key) => key === userMail);
-      console.log("visitor list", usedByVisitor);
-      console.log("used by (all list)", usedBy);
-      console.log("registred client list", usedByClient);
-      console.log("userlimitperuser", usageLimitPerUser);
-      console.log("visitor in used coupon", visitor);
-      console.log("visitor in used coupon length", visitor.length);
 
+      // with email
       if (visitor && visitor.length >= usageLimitPerUser) {
         Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
         return;
       }
-
+      // with userID
+      const client = usedByClient.filter((key) => key === userID?.toString());
+      if (client && client.length >= usageLimitPerUser) {
+        Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
+        return;
+      }
     }
 
     //CHECK GROUP RESTRICTION ----TODO!!!!!
-
+    const groupRestriction = coupon.meta_data[0].value.toString();
+    if (groupRestriction) {
+      if (groupRestriction !== userGrp) {
+        Notiflix.Notify.failure(CouponsMessages.groupNotValid);
+        return;
+      }
+    }
     //CART RESTRICTIONS ----------------------//
 
-    //CHECK CART LENGTH
-    // console.log("cartcontent", cartContent);
-    // if (!cartContent) {
-    //   Notiflix.Notify.failure(CouponsMessages.CartIsEmpty);
-    //   return;
-    // }
+    // CHECK CART LENGTH
+    if (!cartContent) {
+      Notiflix.Notify.failure(CouponsMessages.CartIsEmpty);
+      return;
+    }
 
     //CHECK CART MIN / MAX VALUE
-    console.log("cartvalue", cartValue);
+    // console.log("cartvalue", cartValue);
     const minCartAmount = parseFloat(coupon.minimum_amount);
     const maxCartAmount = parseFloat(coupon.maximum_amount);
 
@@ -188,34 +189,77 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
     }
 
     //PRODUCT RESTRICTION----------------------------//
-    //AVAILABLE PRODUCT
-    const availableProducts = coupon.product_ids;
+    //check matching element between 2 array
+    const findCommonElements = (arr1: number[], arr2: number[]) => {
+      return arr1.some((item) => arr2.includes(item));
+    };
 
-    availableProducts.map((availableProduct) => {
-      console.log(availableProduct);
-      const cartAvailableContent = cartContent.filter(
-        (product) => product.id === availableProduct
-      );
-      console.log("cartAvailableContent", cartAvailableContent);
-    });
+    //AVAILABLE PRODUCT  tested
+    const availableProducts = coupon.product_ids;
+    if (availableProducts.length > 0) {
+      const cartProductIDS = cartProducts.map((cartProduct) => {
+        return cartProduct.id;
+      });
+      console.log("availableProducts", availableProducts);
+
+      console.log(cartProductIDS);
+
+      if (findCommonElements(availableProducts, cartProductIDS) === false) {
+        Notiflix.Notify.failure(CouponsMessages.noAvaillableProduct);
+        return;
+      }
+    }
 
     //EXCLUDED PRODUCT
-    //AVAILABLE CATEGORY
-    //EXCLUDED CATEGORY
+    const excludedProducts = coupon.excluded_product_ids;
+    if (excludedProducts.length > 0) {
+      const cartProductIDS = cartProducts.map((cartProduct) => {
+        return cartProduct.id;
+      });
+      console.log("excludedProducts", excludedProducts);
+      if (findCommonElements(excludedProducts, cartProductIDS) === true) {
+        Notiflix.Notify.failure(CouponsMessages.unhautorizedProduct);
+        return;
+      }
+    }
 
+    //AVAILABLE CATEGORY
+    const availableCategory = coupon.product_categories;
+    console.log( "available cat",availableCategory);
+
+    if (availableCategory.length > 0) {
+      const cartProductCategory = cartProducts.map((cartProduct) => {
+        return cartProduct.categories;
+      })
+      .map((cartProductCat) => {
+        return cartProductCat.map((cartProductcatid)=>{
+          return cartProductcatid.id
+        });
+      
+      });
+      const flatCatList = cartProductCategory.flat()
+      if (findCommonElements(availableCategory, flatCatList) === false) {
+        Notiflix.Notify.failure(CouponsMessages.unhautorizedProduct);
+        return;
+      }
+    }
+    //EXCLUDED CATEGORY
+    const excludedCategory = coupon.excluded_product_categories;
+    if (excludedCategory.length > 0) {
+    }
     //----------- SOLDED PRODUCTS RESTRICTIONS ----------------------//
     const discountType = coupon.discount_type;
     const couponSaleStatut = coupon.exclude_sale_items;
-    console.log("discouttype", discountType);
+    // console.log("discouttype", discountType);
 
     if (couponSaleStatut && cartContent) {
-      console.log("[info]satut on sale and cart content ok ");
+      // console.log("[info]satut on sale and cart content ok ");
       //when fixed product coupon
       if (discountType === "fixed_product") {
         const onsaleProductsIDs = coupon.product_ids;
-        console.log("ID of items on sale ", onsaleProductsIDs);
+        // console.log("ID of items on sale ", onsaleProductsIDs);
         onsaleProductsIDs.map((product) => {
-          console.log(product);
+          // console.log(product);
         });
       }
 
@@ -226,7 +270,7 @@ const CouponsCode = ({userMail,userID,userGrp,setusedCoupons,usedCoupons}: IProp
         );
 
         if (listCartOnSaleStatut.length > 0) {
-          console.log("test");
+          // console.log("test");
           Notiflix.Notify.failure(CouponsMessages.soldedItemInCart);
           return;
         }
