@@ -72,8 +72,27 @@ export default function CheckoutMobility() {
     PostFinancePaymentMethods[]
   >([]);
 
-  const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
 
+  //------------------------------------------USE STATE COUPONS VALIDES ( COUPON ENTIER AVEC DATA)  ------------------------------------------------!!
+
+  const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
+  console.log("usedcoupons in checkout",usedCoupons);
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  
+ const couponsCodeArray = usedCoupons.map( coupon =>{
+   return {code: coupon.code};
+ });
+
+ //------------------------------------------tvaResult------------------------------------------------!!
+ const tva = 8.8;
+ const tvaResult = (cart.totalProductsPrice / 100) * tva;
+ console.log("tva resultat",tvaResult)
+
+ console.log("array of coupon code",couponsCodeArray)
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
       billing_address_1: user ? user.billing_info?.billing_address_1 : "",
@@ -231,6 +250,7 @@ export default function CheckoutMobility() {
             userShippingBilling.billing_info.billing_phone ||
             _billingShippingData.billing?.phone,
         },
+<<<<<<< HEAD
         shipping: {
           first_name:
             userShippingBilling.shipping_info.shipping_first_name ||
@@ -284,6 +304,30 @@ export default function CheckoutMobility() {
     },
     [lineItems, userShippingBilling, _billingShippingData]
   );
+=======
+      ],
+      coupon_lines:[
+        {
+          code: 'veste',
+        },
+        {
+          code: 'dual',
+        },
+      ],
+    };
+
+    //Recuperer ici la reponse de la commande crée//////////////////
+    const response = await wc_createOrder(order);
+
+    orderIdRef.current = response.id;
+    setOrderId(response.id);
+
+    console.log("responseOrder", response);
+
+    return response.id;
+    ///////////////////////////////////////////////////////////////
+  }, [lineItems, userShippingBilling, _billingShippingData]);
+>>>>>>> 6a2683aa450365636a206fff5433489e9b115035
 
   const checkout = useCallback(async () => {
     setIsPayment(true);
@@ -450,7 +494,11 @@ export default function CheckoutMobility() {
                   <div className="taxes">
                     <div className="taxes_item">
                       <div>Valeur de marchandise(T.T.C)</div>
-                      <div>-200 chf</div>
+                      <div>{cart.totalProductsPrice} CHF</div>
+                    </div>
+                    <div className="taxes_item">
+                      <div>dont TVA ({tva}%): </div>
+                      <div>{tvaResult} CHF</div>
                     </div>
                     <div className="taxes_item">
                       <div>Frais denvoi: (T.T.C)</div>
