@@ -75,7 +75,7 @@ export interface IProduct {
   attributes: IProductAttributes[];
   sku: string;
   acf: Acf;
-  variations?: IVariation[];
+  variations: IVariation[];
 }
 
 export interface ProductWithVariations {

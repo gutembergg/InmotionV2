@@ -1,40 +1,37 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import imageProvisoire from "../../../public/images/homeMobility/trott1.jpg";
-import imageProvisoire2 from "../../../public/images/homeMobility/trott2.jpg";
+import imageProvisoire from "../../../../public/images/homeMobility/trott1.jpg";
+import imageProvisoire2 from "../../../../public/images/homeMobility/trott2.jpg";
 import Link from "next/dist/client/link";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
-import SwiperCore, {
-  Pagination,Navigation,Autoplay
-} from 'swiper';
+import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
 
 import { Container } from "./styles";
 
-SwiperCore.use([Autoplay,Pagination,Navigation]);
-
+SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 const SliderMobility = () => {
   return (
     <Container>
       <Swiper
         direction="horizontal"
-        slidesPerView={1} 
-        spaceBetween={30} 
-        loop={true} 
+        slidesPerView={1}
+        spaceBetween={30}
+        loop={true}
         pagination={{
-          "clickable": true
-        }} 
-        navigation={true} 
+          clickable: true,
+        }}
+        navigation={true}
         autoplay={{
-          "delay": 3000,
-          "disableOnInteraction": true
+          delay: 3000,
+          disableOnInteraction: true,
         }}
         className="mySwiper"
-        >
-            <SwiperSlide>
-            <div className="sliderImage">
+      >
+        <SwiperSlide>
+          <div className="sliderImage">
             <Image
               src={imageProvisoire}
               alt="corporate"
@@ -56,9 +53,9 @@ const SliderMobility = () => {
               <a>lien slider</a>
             </Link>
           </div>
-            </SwiperSlide>   
-            <SwiperSlide>
-            <div className="sliderImage">
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className="sliderImage">
             <Image
               src={imageProvisoire2}
               alt="corporate"
@@ -80,7 +77,7 @@ const SliderMobility = () => {
               <a>lien slider</a>
             </Link>
           </div>
-            </SwiperSlide>   
+        </SwiperSlide>
       </Swiper>
     </Container>
   );

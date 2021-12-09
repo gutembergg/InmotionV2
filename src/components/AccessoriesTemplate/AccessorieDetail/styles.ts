@@ -92,6 +92,24 @@ export const ButtonsBox = styled.div`
   }
 `;
 
+export const BtnProductWhitVariation = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  height: 40px;
+  width: 250px;
+  background-color: var(--Blue);
+
+  border: none;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+  }
+`;
+
 export const ButtonProduct = styled.button`
   height: 40px;
   width: 250px;

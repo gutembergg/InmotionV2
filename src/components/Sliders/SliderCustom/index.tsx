@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import { IProduct } from "../../interfaces/IProducts";
+import { IProduct } from "../../../interfaces/IProducts";
 
 // Import Swiper styles
 import "swiper/css";

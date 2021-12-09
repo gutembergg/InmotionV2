@@ -1,7 +1,7 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import React, { ReactElement, useEffect, useState } from "react";
 import HouseIcon from "../../../../public/images/icons/house.svg";
-import SliderCustom from "../../../components/SliderCustom";
+import SliderCustom from "../../../components/Sliders/SliderCustom";
 import { IProduct } from "../../../interfaces/IProducts";
 
 import {

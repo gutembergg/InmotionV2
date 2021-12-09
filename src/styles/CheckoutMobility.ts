@@ -32,10 +32,8 @@ export const FormSection = styled.div`
   width: 100%;
 
   section.sections_title {
-    div.title {
-      padding-top: 1rem;
-      padding-right: 3rem;
-    }
+    padding-right: 3rem;
+
     h2 {
       background-color: var(--Blue);
       color: var(--White);
@@ -140,14 +138,29 @@ export const OrderSession = styled.div`
       font-weight: 600;
     }
   }
+
+  div.payment_block {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+  }
 `;
 
 export const Payment = styled.div`
   width: 100%;
+  max-width: 340px;
+  display: flex;
+  margin-top: 1.4rem;
 
   .payment_container {
+    width: 100%;
     .button_block {
       display: flex;
+
+      button {
+        width: 100%;
+        max-width: 340px;
+      }
 
       .disabled {
         cursor: not-allowed;
@@ -188,7 +201,7 @@ export const Payment = styled.div`
     button {
       width: 100%;
       max-width: 300px;
-      height: 40px;
+      height: 45px;
       background-color: var(--Blue);
       color: var(--White);
       border: none;

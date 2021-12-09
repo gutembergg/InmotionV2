@@ -19,7 +19,7 @@ import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
 import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
 import imageHelp from "../../../public/images/homeMobility/contactUs.png";
 import Link from "next/dist/client/link";
-import SliderMobility from "../../components/SliderMobility";
+import SliderMobility from "../../components/Sliders/SliderMobility";
 export default function Home() {
   const { user } = useUser();
   const [loged] = useState(false);
@@ -49,7 +49,7 @@ export default function Home() {
           <p>{slogan}</p>
         </div>
         <MobilitySlider>
-         <SliderMobility />
+          <SliderMobility />
         </MobilitySlider>
         <PromotedProducts>
           <h1 className="squared">{PromotedProductTitle}</h1>
@@ -57,16 +57,15 @@ export default function Home() {
         </PromotedProducts>
         <PromotedSection>
           <div className="clipPathShadow">
-
-          <div className="promotedSectionImage">
-            <Image
-              src={imageSecurity}
-              alt="protection rour trottinette,vélo et gyroroues "
-              layout="fill"
-              objectFit="cover"
+            <div className="promotedSectionImage">
+              <Image
+                src={imageSecurity}
+                alt="protection rour trottinette,vélo et gyroroues "
+                layout="fill"
+                objectFit="cover"
               />
+            </div>
           </div>
-              </div>
           <div className="content">
             <h2>{TitlePromotedSection}</h2>
             <p>{TextPromotedSection}</p>
@@ -76,9 +75,9 @@ export default function Home() {
           </div>
         </PromotedSection>
         <NewProducts>
-        <h1 className="squared">{NewProductTitle}</h1>
+          <h1 className="squared">{NewProductTitle}</h1>
           placer les last products ici max 4
-          </NewProducts>
+        </NewProducts>
         <RentalSection>
           <div className="content">
             <h2>{locationTitle}</h2>

@@ -157,8 +157,6 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
       };
 
       setFormValues(initialValues);
-      console.log("user===>", user);
-      console.log("initialValues===>", initialValues);
     }
     // eslint-disable-next-line
   }, [user]);

@@ -21,7 +21,7 @@ import {
   ProductMenuResponsive,
 } from "../../../styles/EquipementPage";
 import useTranslation from "next-translate/useTranslation";
-import SliderCustom from "../../../components/SliderCustom";
+import SliderCustom from "../../../components/Sliders/SliderCustom";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import EquipSliderCategory from "../../../components/AccessoriesTemplate/EquipmentPage/equipSliderCategory";
 import HeaderSeo from "../../../components/HeaderSeo";
@@ -49,6 +49,8 @@ export default function Equipements({
   const [subCategoryActived, setSubCategoryActived] = useState<ICategories>(
     {} as ICategories
   );
+
+  console.log("_productsByCategory: ", _productsByCategory);
 
   useEffect(() => {
     setSelectedProductsCategory(_productsByCategory);

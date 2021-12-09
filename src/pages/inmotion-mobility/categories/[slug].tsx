@@ -32,6 +32,7 @@ import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
+import SliderModels from "../../../components/Sliders/SliderModels";
 
 interface Props {
   category: ICategories;
@@ -161,24 +162,11 @@ export default function Category({ category, productsByCategory }: Props) {
           </ProductImage>
 
           <ProductMenuResponsive className="responsive">
-            <ul className="prod_model-marque">
-              {products.map((product, index) => {
-                return (
-                  <li
-                    className={
-                      activedModelIndex === index
-                        ? "model_buttons model_actived"
-                        : "model_buttons"
-                    }
-                    key={product.id}
-                    onClick={() => handleModelMarque(product.id, index)}
-                  >
-                    {getAcfContent(product, "marque_du_produit")}{" "}
-                    <span>{getAcfContent(product, "modele_du_produit")}</span>
-                  </li>
-                );
-              })}
-            </ul>
+            <SliderModels
+              products={products}
+              handleModelMarque={handleModelMarque}
+              activedModelIndex={activedModelIndex}
+            />
           </ProductMenuResponsive>
           <ProductMenuModel>
             <span className="skew">

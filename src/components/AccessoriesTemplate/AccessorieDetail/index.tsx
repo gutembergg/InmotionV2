@@ -19,6 +19,7 @@ import {
   MobileImageBox,
   MobileInfos,
   MobileButtons,
+  BtnProductWhitVariation,
 } from "./styles";
 
 interface Props {
@@ -140,18 +141,30 @@ const AccessoriesDetail = ({
           </div>
 
           <ButtonsBox>
-            <ButtonProduct
-              onClick={() => handleAddToCart(products[productIndex])}
-            >
-              {btnAddToCart}
-            </ButtonProduct>
-            <LinkProduct>
-              <Link
-                href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
-              >
-                <a className="link">{linkShowDetails}</a>
-              </Link>
-            </LinkProduct>
+            {products[productIndex].variations.length > 0 ? (
+              <BtnProductWhitVariation>
+                <Link
+                  href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+                >
+                  <a className="link">{linkShowDetails}</a>
+                </Link>
+              </BtnProductWhitVariation>
+            ) : (
+              <>
+                <ButtonProduct
+                  onClick={() => handleAddToCart(products[productIndex])}
+                >
+                  {btnAddToCart}
+                </ButtonProduct>
+                <LinkProduct>
+                  <Link
+                    href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+                  >
+                    <a className="link">{linkShowDetails}</a>
+                  </Link>
+                </LinkProduct>
+              </>
+            )}
           </ButtonsBox>
         </AccessoryInfos>
       </Content>

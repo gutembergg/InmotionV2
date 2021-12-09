@@ -49,8 +49,6 @@ export default async function handler(
     const orderId: number = req.body.orderId;
     const currencyResp = req.body.currency;
 
-    console.log("currencyResp: ", currencyResp);
-
     // Transaction Service
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);

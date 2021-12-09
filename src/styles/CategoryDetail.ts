@@ -22,7 +22,7 @@ export const Content = styled.div`
   justify-content: center;
   gap: 80px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1015px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@ export const ProductInfos = styled.div`
     align-items: center;
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1015px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -66,7 +66,7 @@ export const ProductInfos = styled.div`
 `;
 
 export const ProductImage = styled.div`
-  @media (max-width: 1000px) {
+  @media (max-width: 1015px) {
     order: -1;
   }
 `;
@@ -116,7 +116,7 @@ export const ProductMenuModel = styled.div`
     }
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1015px) {
     order: -2;
     display: none;
   }
@@ -125,51 +125,11 @@ export const ProductMenuModel = styled.div`
 export const ProductMenuResponsive = styled.div`
   display: none;
 
-  li.model_buttons {
+  @media (max-width: 1015px) {
     display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 1rem;
-    height: 40px;
-    background: transparent;
-    border: 2px solid var(--Blue);
-    border-radius: 30px;
-    color: var(--Blue);
-
-    span {
-      color: var(--Red);
-    }
-  }
-
-  li.model_actived {
-    background: var(--Blue);
-    color: #fff;
-  }
-
-  @media (max-width: 1000px) {
-    display: flex;
+    width: 100%;
     order: -2;
-
-    ul {
-      display: grid;
-      /*    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
-      grid-template-columns: repeat(4, 230px);
-      grid-gap: 10px;
-
-      @media (max-width: 975px) {
-        grid-template-columns: repeat(3, 230px);
-      }
-
-      @media (max-width: 728px) {
-        grid-template-columns: repeat(2, 230px);
-      }
-
-      @media (max-width: 550px) {
-        grid-template-columns: repeat(1, 230px);
-      }
-    }
+    margin-top: 1.4rem;
   }
 `;
 

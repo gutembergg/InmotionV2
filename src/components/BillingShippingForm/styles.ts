@@ -15,6 +15,10 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     gap: 1rem;
+
+    @media (max-width: 1200px) {
+      flex-direction: column;
+    }
   }
 
   .form_1 {
@@ -23,7 +27,6 @@ export const Container = styled.div`
     gap: 0.7rem 0;
     width: 100%;
     padding-top: 1rem;
-    padding-right: 3rem;
 
     .input_block {
       display: flex;
@@ -51,7 +54,6 @@ export const Container = styled.div`
     width: 100%;
     gap: 0.7rem 0;
     padding-top: 1rem;
-    padding-right: 3rem;
 
     .input_block {
       display: flex;

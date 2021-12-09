@@ -15,9 +15,9 @@ import {
 } from "../../../services/woocommerceApi/Categories";
 import { getProductsUpSells } from "../../../utils/getProductsUpsells";
 import useTranslation from "next-translate/useTranslation";
-import SliderCustom from "../../../components/SliderCustom";
+import SliderCustom from "../../../components/Sliders/SliderCustom";
 import SideMenuCategories from "../../../components/AccessoriesTemplate/SideMenuCategories";
-import SliderModelsUpsell from "../../../components/SliderModelsUpsell";
+import SliderModelsUpsell from "../../../components/Sliders/SliderModelsUpsell";
 
 import {
   Container,

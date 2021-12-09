@@ -61,7 +61,7 @@ export const CardWrapper = styled.div`
 
 export const ProductCard = styled.div`
   position: fixed;
-  top: 20;
+  top: 10;
   left: 10;
 
   width: 100%;
@@ -110,7 +110,7 @@ export const PriceQuantity = styled.div`
 `;
 
 export const Button = styled.button`
-  height: 2rem;
+  height: 3rem;
   width: 100%;
   background: var(--Blue);
   text-align: center;
@@ -119,7 +119,6 @@ export const Button = styled.button`
 
   color: #fff;
   border: none;
-  padding: 0.5rem 0.5rem;
 `;
 
 export const StockProduct = styled.div`

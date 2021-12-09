@@ -34,20 +34,20 @@ export const StyledCart = styled.div`
         right: 20px;
       }
     }
-    
+
     &:hover {
       .cartIcon {
         transform: scale(1.1);
         transition: all ease-in 0.2s;
       }
     }
-      .cartPreview.open{
-        visibility: visible;
-        opacity: 1;
-        transform: scaleY(1);
-        transition: all ease-in-out 0.2s;
-      }
-    
+    .cartPreview.open {
+      visibility: visible;
+      opacity: 1;
+      transform: scaleY(1);
+      transition: all ease-in-out 0.2s;
+    }
+
     .cartPreview {
       position: absolute;
       visibility: hidden;
@@ -60,12 +60,12 @@ export const StyledCart = styled.div`
       transform-origin: right 12px;
       transition: all ease-in-out 0.1s;
       @media (max-width: 1024px) {
-        position: fixed;   
+        position: fixed;
         padding-top: 7px;
         left: 0px;
         right: initial;
       }
-      
+
       .cartContainer {
         background-color: white;
         width: 300px;
@@ -75,7 +75,7 @@ export const StyledCart = styled.div`
         @media (max-width: 1024px) {
           width: 100vw;
         }
-        
+
         li {
           list-style: none;
           display: flex;
@@ -135,7 +135,7 @@ export const StyledCart = styled.div`
           padding: 10px 0px;
           margin: 4px 16px;
         }
-        .closeCartButton{
+        .closeCartButton {
           text-align: center;
           margin-bottom: 7px;
           text-decoration: underline;
@@ -180,6 +180,7 @@ export const StyledCart = styled.div`
         }
 
         .btnCommander {
+          cursor: pointer;
           font-size: 0.8em;
           width: calc(100% - 24px);
           margin-left: 12px;

@@ -193,93 +193,97 @@ export default function CheckoutMobility() {
     _setBillingShippingData({ billing, shipping });
   };
 
-  const _sendOrder = useCallback(async () => {
-    const order = {
-      payment_method: "Pedding",
-      payment_method_title: "Pedding",
-      billing: {
-        first_name:
-          userShippingBilling.billing_info.billing_first_name ||
-          _billingShippingData.billing?.first_name,
-        last_name:
-          userShippingBilling.billing_info.billing_last_name ||
-          _billingShippingData.billing?.last_name,
-        address_1:
-          userShippingBilling.billing_info.billing_address_1 ||
-          _billingShippingData.billing?.address_1,
-        address_2:
-          userShippingBilling.billing_info.billing_address_2 ||
-          _billingShippingData.billing?.address_2,
-        city:
-          userShippingBilling.billing_info.billing_city ||
-          _billingShippingData.billing?.city,
-        state:
-          userShippingBilling.billing_info.billing_state ||
-          _billingShippingData.billing?.state,
-        postcode:
-          userShippingBilling.billing_info.billing_postcode ||
-          _billingShippingData.billing?.postcode,
-        country:
-          userShippingBilling.billing_info.billing_country ||
-          _billingShippingData.billing?.country,
-        email:
-          userShippingBilling.billing_info.billing_email ||
-          _billingShippingData.billing?.email,
-        phone:
-          userShippingBilling.billing_info.billing_phone ||
-          _billingShippingData.billing?.phone,
-      },
-      shipping: {
-        first_name:
-          userShippingBilling.shipping_info.shipping_first_name ||
-          _billingShippingData.shipping?.first_name,
-        last_name:
-          userShippingBilling.shipping_info.shipping_last_name ||
-          _billingShippingData.shipping?.last_name,
-        address_1:
-          userShippingBilling.shipping_info.shipping_address_1 ||
-          _billingShippingData.shipping?.address_1,
-        address_2:
-          userShippingBilling.shipping_info.shipping_address_2 ||
-          _billingShippingData.shipping?.address_2,
-        phone:
-          userShippingBilling.shipping_info.shipping_phone ||
-          _billingShippingData.shipping?.phone,
-        city:
-          userShippingBilling.shipping_info.shipping_city ||
-          _billingShippingData.shipping?.city,
-        state:
-          userShippingBilling.shipping_info.shipping_state ||
-          _billingShippingData.shipping?.state,
-        postcode:
-          userShippingBilling.shipping_info.shipping_postcode ||
-          _billingShippingData.shipping?.postcode,
-        country:
-          userShippingBilling.shipping_info.shipping_country ||
-          _billingShippingData.shipping?.country,
-      },
-      line_items: lineItems,
-      shipping_lines: [
-        {
-          method_id: "flat_rate",
-          method_title: "Flat Rate",
-          total: "10.00",
+  const _sendOrder = useCallback(
+    async (currency: string) => {
+      const order = {
+        payment_method: "Pedding",
+        payment_method_title: "Pedding",
+        currency,
+        billing: {
+          first_name:
+            userShippingBilling.billing_info.billing_first_name ||
+            _billingShippingData.billing?.first_name,
+          last_name:
+            userShippingBilling.billing_info.billing_last_name ||
+            _billingShippingData.billing?.last_name,
+          address_1:
+            userShippingBilling.billing_info.billing_address_1 ||
+            _billingShippingData.billing?.address_1,
+          address_2:
+            userShippingBilling.billing_info.billing_address_2 ||
+            _billingShippingData.billing?.address_2,
+          city:
+            userShippingBilling.billing_info.billing_city ||
+            _billingShippingData.billing?.city,
+          state:
+            userShippingBilling.billing_info.billing_state ||
+            _billingShippingData.billing?.state,
+          postcode:
+            userShippingBilling.billing_info.billing_postcode ||
+            _billingShippingData.billing?.postcode,
+          country:
+            userShippingBilling.billing_info.billing_country ||
+            _billingShippingData.billing?.country,
+          email:
+            userShippingBilling.billing_info.billing_email ||
+            _billingShippingData.billing?.email,
+          phone:
+            userShippingBilling.billing_info.billing_phone ||
+            _billingShippingData.billing?.phone,
         },
-      ],
-      coupon_lines: 226,
-    };
+        shipping: {
+          first_name:
+            userShippingBilling.shipping_info.shipping_first_name ||
+            _billingShippingData.shipping?.first_name,
+          last_name:
+            userShippingBilling.shipping_info.shipping_last_name ||
+            _billingShippingData.shipping?.last_name,
+          address_1:
+            userShippingBilling.shipping_info.shipping_address_1 ||
+            _billingShippingData.shipping?.address_1,
+          address_2:
+            userShippingBilling.shipping_info.shipping_address_2 ||
+            _billingShippingData.shipping?.address_2,
+          phone:
+            userShippingBilling.shipping_info.shipping_phone ||
+            _billingShippingData.shipping?.phone,
+          city:
+            userShippingBilling.shipping_info.shipping_city ||
+            _billingShippingData.shipping?.city,
+          state:
+            userShippingBilling.shipping_info.shipping_state ||
+            _billingShippingData.shipping?.state,
+          postcode:
+            userShippingBilling.shipping_info.shipping_postcode ||
+            _billingShippingData.shipping?.postcode,
+          country:
+            userShippingBilling.shipping_info.shipping_country ||
+            _billingShippingData.shipping?.country,
+        },
+        line_items: lineItems,
+        shipping_lines: [
+          {
+            method_id: "flat_rate",
+            method_title: "Flat Rate",
+            total: "10.00",
+          },
+        ],
+        /*  coupon_lines: 226, */
+      };
 
-    //Recuperer ici la reponse de la commande crée//////////////////
-    const response = await wc_createOrder(order);
+      //Recuperer ici la reponse de la commande crée//////////////////
+      const response = await wc_createOrder(order);
 
-    orderIdRef.current = response.id;
-    setOrderId(response.id);
+      orderIdRef.current = response.id;
+      setOrderId(response.id);
 
-    console.log("responseOrder", response);
+      console.log("responseOrder", response);
 
-    return response.id;
-    ///////////////////////////////////////////////////////////////
-  }, [lineItems, userShippingBilling, _billingShippingData]);
+      return response.id;
+      ///////////////////////////////////////////////////////////////
+    },
+    [lineItems, userShippingBilling, _billingShippingData]
+  );
 
   const checkout = useCallback(async () => {
     setIsPayment(true);
@@ -299,20 +303,22 @@ export default function CheckoutMobility() {
       });
     }
 
-    await _sendOrder();
+    const currencySelected =
+      userShippingBilling.billing_info.billing_country === "CH"
+        ? "CHF"
+        : ("EUR" && _billingShippingData.billing?.country === "Suisse") ||
+          _billingShippingData.billing?.country === "Swiss" ||
+          _billingShippingData.billing?.country === "schweizerisch"
+        ? "CHF"
+        : "EUR";
+
+    await _sendOrder(currencySelected);
 
     if (Object.keys(cart).length > 0) {
       const { data } = await apiPFinance.post("transaction-create", {
         productsCheckout,
         orderId: orderIdRef.current,
-        currency:
-          userShippingBilling.billing_info.billing_country === "CH"
-            ? "CHF"
-            : ("EUR" && _billingShippingData.billing?.country === "Suisse") ||
-              _billingShippingData.billing?.country === "Swiss" ||
-              _billingShippingData.billing?.country === "schweizerisch"
-            ? "CHF"
-            : "EUR",
+        currency: currencySelected,
       });
 
       setPaymentMethods(data.paymentMethods);
@@ -394,73 +400,7 @@ export default function CheckoutMobility() {
               <section>
                 <h2>{wayDelivery}</h2>
               </section>
-              <Payment>
-                <div className="payment_container">
-                  <div className="button_block">
-                    <button
-                      onClick={checkout}
-                      className={isPayment ? "disabled" : ""}
-                      disabled={isPayment}
-                    >
-                      <div className="btn_payment_method">
-                        <span>Méthodes de payments</span>
-                        <span>{isOrder === false && <Spiner />}</span>
-                      </div>
-                    </button>
-                  </div>
 
-                  <div className="payment_list">
-                    <div className="payments_block">
-                      {paymentMethodes.length > 0 &&
-                        paymentMethodes.map((method, index) => {
-                          return (
-                            <PaymentMethods key={method.id}>
-                              <div className="methods">
-                                <div
-                                  onClick={() =>
-                                    updateTransaction(method, index)
-                                  }
-                                >
-                                  {selectedPaymentMethod === index ? (
-                                    <IoMdRadioButtonOk />
-                                  ) : (
-                                    <IoMdRadioButtonNot />
-                                  )}
-                                </div>
-                                <div className="logo_box">
-                                  <Image
-                                    src={method.resolvedImageUrl}
-                                    width={50}
-                                    height={50}
-                                    alt="logo-payment-methods"
-                                  />
-                                </div>
-                                <div className="method_name">{method.name}</div>
-                              </div>
-                            </PaymentMethods>
-                          );
-                        })}
-                    </div>
-
-                    {paymentMethodes.length > 0 && (
-                      <div className="button_block btn_payment">
-                        <button
-                          onClick={validateCheckout}
-                          className={
-                            isCheckMethod || paymentValidate ? "disabled" : ""
-                          }
-                          disabled={isCheckMethod || paymentValidate}
-                        >
-                          <div className="btn_payment_method">
-                            <span>{payment}</span>
-                            <span>{isCheckMethod && <Spiner />}</span>
-                          </div>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Payment>
               <section>
                 <CouponsCode
                   userMail={
@@ -473,7 +413,7 @@ export default function CheckoutMobility() {
                   usedCoupons={usedCoupons}
                 />
 
-                <button onClick={_sendOrder}>{btnSend}</button>
+                {/* <button onClick={_sendOrder}>{btnSend}</button> */}
               </section>
             </FormSection>
             <OrderSession>
@@ -539,8 +479,77 @@ export default function CheckoutMobility() {
                   </h5>
                 </div>
               </div>
-              <div className="btn_valider_commande">
-                <button>Valider commande</button>
+
+              <div className="payment_block">
+                <Payment>
+                  <div className="payment_container">
+                    <div className="button_block">
+                      <button
+                        onClick={checkout}
+                        className={isPayment ? "disabled" : ""}
+                        disabled={isPayment}
+                      >
+                        <div className="btn_payment_method">
+                          <span>Méthodes de payments</span>
+                          <span>{isOrder === false && <Spiner />}</span>
+                        </div>
+                      </button>
+                    </div>
+
+                    <div className="payment_list">
+                      <div className="payments_block">
+                        {paymentMethodes.length > 0 &&
+                          paymentMethodes.map((method, index) => {
+                            return (
+                              <PaymentMethods key={method.id}>
+                                <div className="methods">
+                                  <div
+                                    onClick={() =>
+                                      updateTransaction(method, index)
+                                    }
+                                  >
+                                    {selectedPaymentMethod === index ? (
+                                      <IoMdRadioButtonOk />
+                                    ) : (
+                                      <IoMdRadioButtonNot />
+                                    )}
+                                  </div>
+                                  <div className="logo_box">
+                                    <Image
+                                      src={method.resolvedImageUrl}
+                                      width={50}
+                                      height={50}
+                                      alt="logo-payment-methods"
+                                    />
+                                  </div>
+                                  <div className="method_name">
+                                    {method.name}
+                                  </div>
+                                </div>
+                              </PaymentMethods>
+                            );
+                          })}
+                      </div>
+
+                      {paymentMethodes.length > 0 && (
+                        <div className="button_block btn_payment">
+                          <button
+                            onClick={validateCheckout}
+                            className={
+                              isCheckMethod || paymentValidate ? "disabled" : ""
+                            }
+                            disabled={isCheckMethod || paymentValidate}
+                          >
+                            <div className="btn_payment_method">
+                              <span>{payment}</span>
+                              <span>{isCheckMethod && <Spiner />}</span>
+                            </div>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Payment>
               </div>
             </OrderSession>
           </div>
