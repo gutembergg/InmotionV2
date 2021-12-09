@@ -49,20 +49,14 @@ export default function CheckoutMobility() {
   const orderIdRef = useRef(0);
 
   const [loged, setloged] = useState(false);
-  const { cart, removeCartItem } = useCart();
+  const { cart, updateTotal } = useCart();
   const { user } = useUser();
 
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
-  const orderPreview = t("checkout-mobility:orderPreview");
-  const deliveryInfo = t("checkout-mobility:deliveryInfo");
   const wayDelivery = t("checkout-mobility:wayDelivery");
   const payment = t("checkout-mobility:payment");
   const emptyCartMessage = t("checkout-mobility:emptyCartMessage");
-  const subTotal = t("checkout-mobility:subTotal");
-  const addTVA = t("checkout-mobility:addTVA");
-  const addPtotalPrice = t("checkout-mobility:addPtotalPrice");
-  const btnSend = t("checkout-mobility:btnSend");
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
@@ -72,27 +66,16 @@ export default function CheckoutMobility() {
     PostFinancePaymentMethods[]
   >([]);
 
-
   //------------------------------------------USE STATE COUPONS VALIDES ( COUPON ENTIER AVEC DATA)  ------------------------------------------------!!
 
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
-  console.log("usedcoupons in checkout",usedCoupons);
-  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
-  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
-  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
-  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
-  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
-  
- const couponsCodeArray = usedCoupons.map( coupon =>{
-   return {code: coupon.code};
- });
+  console.log("usedcoupons in checkout", usedCoupons);
 
- //------------------------------------------tvaResult------------------------------------------------!!
- const tva = 8.8;
- const tvaResult = (cart.totalProductsPrice / 100) * tva;
- console.log("tva resultat",tvaResult)
+  //------------------------------------------tvaResult------------------------------------------------!!
+  const tva = 8.8;
+  const tvaResult = (cart.totalProductsPrice / 100) * tva;
+  console.log("tva resultat", tvaResult);
 
- console.log("array of coupon code",couponsCodeArray)
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
       billing_address_1: user ? user.billing_info?.billing_address_1 : "",
@@ -214,6 +197,9 @@ export default function CheckoutMobility() {
 
   const _sendOrder = useCallback(
     async (currency: string) => {
+      const couponsCodeArray = usedCoupons.map((coupon) => {
+        return { code: coupon.code };
+      });
       const order = {
         payment_method: "Pedding",
         payment_method_title: "Pedding",
@@ -250,7 +236,6 @@ export default function CheckoutMobility() {
             userShippingBilling.billing_info.billing_phone ||
             _billingShippingData.billing?.phone,
         },
-<<<<<<< HEAD
         shipping: {
           first_name:
             userShippingBilling.shipping_info.shipping_first_name ||
@@ -288,7 +273,7 @@ export default function CheckoutMobility() {
             total: "10.00",
           },
         ],
-        /*  coupon_lines: 226, */
+        coupon_lines: couponsCodeArray,
       };
 
       //Recuperer ici la reponse de la commande crée//////////////////
@@ -299,35 +284,27 @@ export default function CheckoutMobility() {
 
       console.log("responseOrder", response);
 
+      const tota_ = parseFloat(response.total);
+      const tvabb = tvaResult;
+      console.log("taxes: ", tota_);
+      console.log("taxes22: ", tvabb);
+      const totalWithTVA = parseFloat(response.total) + tvaResult;
+
+      console.log("totalWithTVA", totalWithTVA);
+      updateTotal(totalWithTVA.toFixed(2));
+
       return response.id;
       ///////////////////////////////////////////////////////////////
     },
-    [lineItems, userShippingBilling, _billingShippingData]
+    [
+      lineItems,
+      userShippingBilling,
+      _billingShippingData,
+      usedCoupons,
+      updateTotal,
+      tvaResult,
+    ]
   );
-=======
-      ],
-      coupon_lines:[
-        {
-          code: 'veste',
-        },
-        {
-          code: 'dual',
-        },
-      ],
-    };
-
-    //Recuperer ici la reponse de la commande crée//////////////////
-    const response = await wc_createOrder(order);
-
-    orderIdRef.current = response.id;
-    setOrderId(response.id);
-
-    console.log("responseOrder", response);
-
-    return response.id;
-    ///////////////////////////////////////////////////////////////
-  }, [lineItems, userShippingBilling, _billingShippingData]);
->>>>>>> 6a2683aa450365636a206fff5433489e9b115035
 
   const checkout = useCallback(async () => {
     setIsPayment(true);
@@ -414,8 +391,6 @@ export default function CheckoutMobility() {
     [orderId, transactionId]
   );
 
-  console.log("userShippingBilling: ", userShippingBilling);
-
   return (
     <>
       <Container>
@@ -494,11 +469,11 @@ export default function CheckoutMobility() {
                   <div className="taxes">
                     <div className="taxes_item">
                       <div>Valeur de marchandise(T.T.C)</div>
-                      <div>{cart.totalProductsPrice} CHF</div>
+                      <div>{cart.totalProductsPrice?.toFixed(2)} CHF</div>
                     </div>
                     <div className="taxes_item">
                       <div>dont TVA ({tva}%): </div>
-                      <div>{tvaResult} CHF</div>
+                      <div>{tvaResult.toFixed(2)} CHF</div>
                     </div>
                     <div className="taxes_item">
                       <div>Frais denvoi: (T.T.C)</div>
@@ -523,7 +498,12 @@ export default function CheckoutMobility() {
                 <div className="total_block">
                   <h5 className="sousTotalTxt">
                     <span>Total (T.T.C): </span>
-                    <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+                    <span>
+                      CHF{" "}
+                      {cart.totalWithCoupon
+                        ? cart.totalWithCoupon?.toFixed(2)
+                        : cart.totalProductsPrice?.toFixed(2)}
+                    </span>
                   </h5>
                 </div>
               </div>

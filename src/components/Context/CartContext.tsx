@@ -17,12 +17,14 @@ interface ICartContext {
   cart: ICartState;
   addToCart: (products: IProduct[]) => void;
   removeCartItem: (id: number) => void;
+  updateTotal: (total: string) => void;
 }
 
 export interface ICartState {
   products: IProduct[];
   totalProductsCount: number;
   totalProductsPrice: number;
+  totalWithCoupon?: number;
 }
 
 export const CartContext = createContext<ICartContext>({} as ICartContext);
@@ -124,8 +126,22 @@ const CartProvider = ({ children }: Children) => {
     setCartItem(newProductsCart);
   };
 
+  const updateTotal = useCallback(
+    (total: string) => {
+      const _cart = {
+        ...cart,
+        totalWithCoupon: parseFloat(parseFloat(total).toFixed(2)),
+      };
+
+      setCart(_cart);
+    },
+    [cart]
+  );
+
   return (
-    <CartContext.Provider value={{ cartItem, cart, addToCart, removeCartItem }}>
+    <CartContext.Provider
+      value={{ cartItem, cart, addToCart, removeCartItem, updateTotal }}
+    >
       {children}
     </CartContext.Provider>
   );
