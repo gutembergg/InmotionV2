@@ -72,15 +72,27 @@ export default function CheckoutMobility() {
     PostFinancePaymentMethods[]
   >([]);
 
+
+  //------------------------------------------USE STATE COUPONS VALIDES ( COUPON ENTIER AVEC DATA)  ------------------------------------------------!!
+
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
-  console.log(usedCoupons);
+  console.log("usedcoupons in checkout",usedCoupons);
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
+  //------------------------------------------COUUUUUUPOOOOOONNSSSSSS------------------------------------------------!!
   
  const couponsCodeArray = usedCoupons.map( coupon =>{
    return {code: coupon.code};
  });
 
+ //------------------------------------------tvaResult------------------------------------------------!!
+ const tva = 8.8;
+ const tvaResult = (cart.totalProductsPrice / 100) * tva;
+ console.log("tva resultat",tvaResult)
 
- console.log(couponsCodeArray)
+ console.log("array of coupon code",couponsCodeArray)
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
       billing_address_1: user ? user.billing_info?.billing_address_1 : "",
@@ -524,7 +536,11 @@ export default function CheckoutMobility() {
                   <div className="taxes">
                     <div className="taxes_item">
                       <div>Valeur de marchandise(T.T.C)</div>
-                      <div>-200 chf</div>
+                      <div>{cart.totalProductsPrice} CHF</div>
+                    </div>
+                    <div className="taxes_item">
+                      <div>dont TVA ({tva}%): </div>
+                      <div>{tvaResult} CHF</div>
                     </div>
                     <div className="taxes_item">
                       <div>Frais denvoi: (T.T.C)</div>

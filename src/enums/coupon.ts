@@ -16,5 +16,8 @@ export enum CouponsMessages {
     alreadyUsedCoupon =` à déja été utilisé`,
     groupNotValid =` votre compte n'a pas les privilèges requis pour ce bon`,
     noAvaillableProduct =`Vous n'avez pas commander le produit qui correspond à ce coupon`,
-    unhautorizedProduct =`Vous avez un produit non éligible dans votre panier`
+    unhautorizedProduct =`Vous avez un produit non éligible dans votre panier`,
+    availableCatInCart =`Vous n'avez pas un produit de la categorie dans votre panier`,
+    excludedCatInCart =`Vous avez une catégorie non éligible dans le panier`,
+    soldedProduct =`Le produit est actuellement soldé, coupon non valable`
 }

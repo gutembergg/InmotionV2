@@ -174,7 +174,6 @@ const CouponsCode = ({
     }
 
     //CHECK CART MIN / MAX VALUE
-    // console.log("cartvalue", cartValue);
     const minCartAmount = parseFloat(coupon.minimum_amount);
     const maxCartAmount = parseFloat(coupon.maximum_amount);
 
@@ -200,9 +199,7 @@ const CouponsCode = ({
       const cartProductIDS = cartProducts.map((cartProduct) => {
         return cartProduct.id;
       });
-      console.log("availableProducts", availableProducts);
 
-      console.log(cartProductIDS);
 
       if (findCommonElements(availableProducts, cartProductIDS) === false) {
         Notiflix.Notify.failure(CouponsMessages.noAvaillableProduct);
@@ -210,13 +207,12 @@ const CouponsCode = ({
       }
     }
 
-    //EXCLUDED PRODUCT
+    //EXCLUDED PRODUCT tested
     const excludedProducts = coupon.excluded_product_ids;
     if (excludedProducts.length > 0) {
       const cartProductIDS = cartProducts.map((cartProduct) => {
         return cartProduct.id;
       });
-      console.log("excludedProducts", excludedProducts);
       if (findCommonElements(excludedProducts, cartProductIDS) === true) {
         Notiflix.Notify.failure(CouponsMessages.unhautorizedProduct);
         return;
@@ -225,52 +221,76 @@ const CouponsCode = ({
 
     //AVAILABLE CATEGORY
     const availableCategory = coupon.product_categories;
-    console.log( "available cat",availableCategory);
 
     if (availableCategory.length > 0) {
-      const cartProductCategory = cartProducts.map((cartProduct) => {
-        return cartProduct.categories;
-      })
-      .map((cartProductCat) => {
-        return cartProductCat.map((cartProductcatid)=>{
-          return cartProductcatid.id
+      const cartProductCategory = cartProducts
+        .map((cartProduct) => {
+          return cartProduct.categories;
+        })
+        .map((cartProductCat) => {
+          return cartProductCat.map((cartProductcatid) => {
+            return cartProductcatid.id;
+          });
         });
-      
-      });
-      const flatCatList = cartProductCategory.flat()
+      const flatCatList = cartProductCategory.flat();
       if (findCommonElements(availableCategory, flatCatList) === false) {
-        Notiflix.Notify.failure(CouponsMessages.unhautorizedProduct);
+        Notiflix.Notify.failure(CouponsMessages.availableCatInCart);
         return;
       }
     }
-    //EXCLUDED CATEGORY
+
+    //EXCLUDED CATEGORY tested
     const excludedCategory = coupon.excluded_product_categories;
     if (excludedCategory.length > 0) {
-    }
+      const cartProductCategory = cartProducts
+        .map((cartProduct) => {
+          return cartProduct.categories;
+        })
+        .map((cartProductCat) => {
+          return cartProductCat.map((cartProductcatid) => {
+            return cartProductcatid.id;
+          });
+        });
+        const flatCatList = cartProductCategory.flat();
+        if (findCommonElements(excludedCategory, flatCatList) === true) {
+          Notiflix.Notify.failure(CouponsMessages.excludedCatInCart);
+          return;
+        }
+      
+      }
+
     //----------- SOLDED PRODUCTS RESTRICTIONS ----------------------//
     const discountType = coupon.discount_type;
     const couponSaleStatut = coupon.exclude_sale_items;
-    // console.log("discouttype", discountType);
 
     if (couponSaleStatut && cartContent) {
-      // console.log("[info]satut on sale and cart content ok ");
+
       //when fixed product coupon
       if (discountType === "fixed_product") {
-        const onsaleProductsIDs = coupon.product_ids;
-        // console.log("ID of items on sale ", onsaleProductsIDs);
-        onsaleProductsIDs.map((product) => {
-          // console.log(product);
-        });
-      }
 
-      //when fixed cart
-      if (discountType === "fixed_cart") {
-        const listCartOnSaleStatut = cartContent.filter(
+        const onsaleProductsIDs = coupon.product_ids;
+
+        const soldedProductInCart = cartContent.filter(
           (product) => product.on_sale === true
         );
 
+        const cartsoldedProductIDS = soldedProductInCart.map((cartProduct) => {
+          return cartProduct.id;
+        });
+
+
+        if (findCommonElements(cartsoldedProductIDS, onsaleProductsIDs) === true) {
+          Notiflix.Notify.failure(CouponsMessages.soldedProduct);
+          return;
+        }
+      }
+
+      //when fixed cart and percent
+      if (discountType === "fixed_cart" || discountType === "percent") {
+        const listCartOnSaleStatut = cartContent.filter(
+          (product) => product.on_sale === true
+        );
         if (listCartOnSaleStatut.length > 0) {
-          // console.log("test");
           Notiflix.Notify.failure(CouponsMessages.soldedItemInCart);
           return;
         }
@@ -280,11 +300,11 @@ const CouponsCode = ({
 
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
 
+
     Notiflix.Notify.success(CouponsMessages.validCoupon);
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
 
-    // to do function calculate coupon;
-  };
+   }
 
   return (
     <div>
