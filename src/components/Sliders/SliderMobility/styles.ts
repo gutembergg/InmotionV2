@@ -18,7 +18,19 @@ export const Container = styled.div`
     align-items: flex-start;
     justify-content: center;
     top:0;
-    a{
+    @media screen and (max-width: 1024px) {
+      clip-path: polygon(0% 0,100% 0,100% 100%,0% 100%);
+      width: 100%; 
+      position: relative;
+      height: auto;
+      margin-top: 0px;
+      color: var(--Black);
+      background: var(--White);
+      z-index: 3;
+      justify-content: flex-start;     
+    }
+   
+      a{
         color: var(--White);
         background-color: var(--Blue);
         padding:  10px 20px;
@@ -36,6 +48,13 @@ export const Container = styled.div`
     width: 54vw;
     position: relative;
     height: 500px;
+    @media screen and (max-width: 1024px) {
+      height: 400px;
+      width: 100%;
+    }
+    @media screen and (max-width: 640px) {
+    height: 300px;
+  }
 }
 
   .swiper-slide {

@@ -112,6 +112,28 @@ export const getProduitsByCategoriesSlug = async (
   return products;
 };
 
+// Get FEATURED Products //////////////////////////////////////////////
+export const getFeaturedProduct = async (lang: string): Promise<IProduct[]> => {
+  const { data } = await wooCommerce.get("products", {
+    featured: true,
+    per_page: 8,
+    lang:lang
+  });
+  const product = data;
+  return product;
+};
+
+// Get OnSale Products //////////////////////////////////////////////
+export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
+  const { data } = await wooCommerce.get("products", {
+    on_sale	: true,
+    per_page: 8,
+    lang:lang
+  });
+  const product = data;
+  return product;
+};
+
 //Get products by category SLUG ////////////////////////////////////
 /* export const wc_getProductsByCategorySlug = async (
   slug: string,
