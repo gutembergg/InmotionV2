@@ -1,4 +1,12 @@
+import { ICoupons } from "./ICoupons";
 import { BillingValues, LineItemsDTO, ShippingValues } from "./OrderValidation";
+
+export interface CouponLines {
+  code: string;
+  discount: string;
+  discount_tax: string;
+  id: number;
+}
 
 export interface Order {
   id: number;
@@ -25,6 +33,7 @@ export interface Order {
   customer_ip_address: string;
   customer_user_agent: string;
   customer_note: string;
+  coupon_lines: CouponLines[];
   billing: BillingValues;
   shipping: ShippingValues;
   payment_method: string;

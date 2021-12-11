@@ -10,6 +10,7 @@ interface ProductsLineItems {
   price: number;
   qty: number;
   sku: string;
+  taxes: number;
 }
 
 let spaceId: number = 23340;
@@ -58,12 +59,17 @@ export default async function handler(
       new PostFinanceCheckout.model.LineItemCreate();
 
     const lineItemsArray: any = productsLineItems.map((item) => {
+      const priceWithTaxes = item.price + item.taxes;
+      const _price = priceWithTaxes.toFixed(2);
+      const newPrice = Number(_price);
+      console.log("newPrice: ", newPrice);
+
       lineItem = {
         name: item.name,
         uniqueId: item.sku,
         sku: item.sku,
         quantity: item.qty,
-        amountIncludingTax: item.qty * item.price,
+        amountIncludingTax: newPrice,
         type: "PRODUCT" as LineItemType,
       };
 

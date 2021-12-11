@@ -108,6 +108,17 @@ export const OrderSession = styled.div`
     }
   }
 
+  .coupons_block {
+    display: flex;
+    flex-direction: column;
+
+    .coupons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
   h5.sousTotalTxt {
     display: flex;
     flex-direction: row;
@@ -294,4 +305,24 @@ export const IoMdRadioButtonNot = styled(IoMdRadioButtonOff)`
   color: var(--Blue);
 
   margin-right: 1rem;
+`;
+
+export const BtnCouponsBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+
+  button + button {
+    margin-left: 0.5rem;
+  }
+
+  button {
+    background: var(--Blue);
+    color: var(--White);
+    height: 40px;
+    width: 200px;
+    padding: 0.7rem;
+
+    border: none;
+  }
 `;
