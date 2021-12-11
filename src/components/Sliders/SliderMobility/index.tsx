@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import imagetrot from "../../../../public/images/homeMobility/l9-8.jpg";
+import imagetrot from "../../../../public/images/homeMobility/trottl9.jpg";
 import imageP2 from "../../../../public/images/homeMobility/p2fslide.jpg";
 import imagenoel from "../../../../public/images/homeMobility/offrenoel.jpg";
 import Link from "next/dist/client/link";
@@ -17,24 +17,23 @@ import useTranslation from "next-translate/useTranslation";
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
-
 const SliderMobility = () => {
   const { t } = useTranslation();
-const titleSlider1 = t("home:titleSlider1");
-const txtSlider1 = t("home:txtSlider1");
-const txtSlider1_2 = t("home:txtSlider1_2");
-const txtSlider1_3 = t("home:txtSlider1_3");
-const txtSlider1_4 = t("home:txtSlider1_4");
+  const titleSlider1 = t("home:titleSlider1");
+  const txtSlider1 = t("home:txtSlider1");
+  const txtSlider1_2 = t("home:txtSlider1_2");
+  const txtSlider1_3 = t("home:txtSlider1_3");
+  const txtSlider1_4 = t("home:txtSlider1_4");
 
-const titleSlider2 = t("home:titleSlider2");
-const txtSlider2 = t("home:txtSlider2");
-const linkSlider2 = t("home:linkSlider2");
+  const titleSlider2 = t("home:titleSlider2");
+  const txtSlider2 = t("home:txtSlider2");
+  const linkSlider2 = t("home:linkSlider2");
 
-const titleSlider3 = t("home:titleSlider3");
-const txtSlider3 = t("home:txtSlider3");
-const linkSlider3 = t("home:linkSlider3");
+  const titleSlider3 = t("home:titleSlider3");
+  const txtSlider3 = t("home:txtSlider3");
+  const linkSlider3 = t("home:linkSlider3");
 
-return (
+  return (
     <Container>
       <Swiper
         direction="horizontal"
@@ -63,9 +62,12 @@ return (
           </div>
           <div className="content">
             <h2>{titleSlider1}</h2>
-            <p>{txtSlider1}</p><br/>
+            <p>{txtSlider1}</p>
+            <br />
             <p>{txtSlider1_2}</p>
-            <h2><b>{txtSlider1_3}</b></h2>
+            <h2>
+              <b>{txtSlider1_3}</b>
+            </h2>
             <p>{txtSlider1_4}</p>
           </div>
         </SwiperSlide>
@@ -80,9 +82,7 @@ return (
           </div>
           <div className="content">
             <h2>{titleSlider2}</h2>
-            <p>
-            {txtSlider2}
-            </p>
+            <p>{txtSlider2}</p>
             <Link href="/inmotion-mobility/produit/inmotion-l9-lemotion-s1">
               <a>{linkSlider2}</a>
             </Link>
@@ -99,9 +99,7 @@ return (
           </div>
           <div className="content">
             <h2>{titleSlider3}</h2>
-            <p>
-              {txtSlider3}
-            </p>
+            <p>{txtSlider3}</p>
             <Link href="/inmotion-mobility/produit/inmotion-p2-velo-electrique-2">
               <a>{linkSlider3}</a>
             </Link>
@@ -110,6 +108,6 @@ return (
       </Swiper>
     </Container>
   );
-};  
+};
 
 export default SliderMobility;
