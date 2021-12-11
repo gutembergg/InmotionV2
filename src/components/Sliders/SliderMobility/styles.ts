@@ -17,7 +17,8 @@ export const Container = styled.div`
     flex-direction:column;
     align-items: flex-start;
     justify-content: center;
-    top:0;
+    top:0; 
+    margin-bottom: 50px;
     @media screen and (max-width: 1024px) {
       clip-path: polygon(0% 0,100% 0,100% 100%,0% 100%);
       width: 100%; 
@@ -29,7 +30,9 @@ export const Container = styled.div`
       z-index: 3;
       justify-content: flex-start;     
     }
-   
+    @media screen and (max-width: 960px) {
+     
+    }
       a{
         color: var(--White);
         background-color: var(--Blue);
@@ -54,6 +57,9 @@ export const Container = styled.div`
     }
     @media screen and (max-width: 640px) {
     height: 300px;
+  }
+    @media screen and (max-width: 480px) {
+      height: 270px;
   }
 }
 
