@@ -6,6 +6,9 @@ import Link from "next/dist/client/link";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
 
 import { Container } from "./styles";
@@ -18,6 +21,7 @@ const SliderMobility = () => {
       <Swiper
         direction="horizontal"
         slidesPerView={1}
+        autoHeight={true}
         spaceBetween={30}
         loop={true}
         pagination={{
@@ -25,7 +29,7 @@ const SliderMobility = () => {
         }}
         navigation={true}
         autoplay={{
-          delay: 3000,
+          delay: 4000,
           disableOnInteraction: true,
         }}
         className="mySwiper"
@@ -40,7 +44,7 @@ const SliderMobility = () => {
             />
           </div>
           <div className="content">
-            <h2>Découvrez le nouveau P2F</h2>
+            <h2>Découvrez un nouveau moyen de vous déplacer avec l'Inmotion <span className="red">P2F</span></h2>
             <p>
               Le P2 est un vélo électrique léger, compact et pliable doté d’une
               grande autonomie et de trois modes de conduite : vélo classique,
