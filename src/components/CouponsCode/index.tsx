@@ -2,9 +2,7 @@ import {
   ChangeEvent,
   Dispatch,
   FormEvent,
-  FormEventHandler,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
 import { searchCoupons } from "../../services/woocommerceApi/Coupons";
@@ -12,15 +10,14 @@ import { CouponsMessages } from "../../enums/coupon";
 import { ICoupons } from "../../interfaces/ICoupons";
 import Notiflix from "notiflix";
 import useCart from "../../hooks/useCart";
-import { IProduct } from "../../interfaces/IProducts";
 import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   userMail: string;
   userID: number | null;
   userGrp: string;
-  setusedCoupons: Dispatch<SetStateAction<ICoupons[]>>;
   usedCoupons: ICoupons[];
+  setusedCoupons: Dispatch<SetStateAction<ICoupons[]>>;
 }
 
 const CouponsCode = ({
@@ -30,7 +27,7 @@ const CouponsCode = ({
   setusedCoupons,
   usedCoupons,
 }: IProps) => {
-  const { cart, removeCartItem } = useCart();
+  const { cart } = useCart();
   const [inputValue, setInputValue] = useState<string>("");
   const [inputDisabledStatus, setInputDisabledStatus] =
     useState<boolean>(false);
@@ -122,7 +119,6 @@ const CouponsCode = ({
 
     //CHECK EMAIL RESTRICTION tested
     const AuthorizedEmails = coupon.email_restrictions;
-    const AuthorizedEmailsLenght = coupon.email_restrictions.length;
 
     if (AuthorizedEmails.length !== 0) {
       const searchAuthorizedEmail = AuthorizedEmails.filter(
@@ -200,7 +196,6 @@ const CouponsCode = ({
         return cartProduct.id;
       });
 
-
       if (findCommonElements(availableProducts, cartProductIDS) === false) {
         Notiflix.Notify.failure(CouponsMessages.noAvaillableProduct);
         return;
@@ -251,23 +246,20 @@ const CouponsCode = ({
             return cartProductcatid.id;
           });
         });
-        const flatCatList = cartProductCategory.flat();
-        if (findCommonElements(excludedCategory, flatCatList) === true) {
-          Notiflix.Notify.failure(CouponsMessages.excludedCatInCart);
-          return;
-        }
-      
+      const flatCatList = cartProductCategory.flat();
+      if (findCommonElements(excludedCategory, flatCatList) === true) {
+        Notiflix.Notify.failure(CouponsMessages.excludedCatInCart);
+        return;
       }
+    }
 
     //----------- SOLDED PRODUCTS RESTRICTIONS ----------------------//
     const discountType = coupon.discount_type;
     const couponSaleStatut = coupon.exclude_sale_items;
 
     if (couponSaleStatut && cartContent) {
-
       //when fixed product coupon
       if (discountType === "fixed_product") {
-
         const onsaleProductsIDs = coupon.product_ids;
 
         const soldedProductInCart = cartContent.filter(
@@ -278,8 +270,9 @@ const CouponsCode = ({
           return cartProduct.id;
         });
 
-
-        if (findCommonElements(cartsoldedProductIDS, onsaleProductsIDs) === true) {
+        if (
+          findCommonElements(cartsoldedProductIDS, onsaleProductsIDs) === true
+        ) {
           Notiflix.Notify.failure(CouponsMessages.soldedProduct);
           return;
         }
@@ -300,11 +293,9 @@ const CouponsCode = ({
 
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
 
-
     Notiflix.Notify.success(CouponsMessages.validCoupon);
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
-
-   }
+  };
 
   return (
     <div>

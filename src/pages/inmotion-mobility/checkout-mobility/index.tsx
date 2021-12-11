@@ -42,11 +42,26 @@ import {
   ProductCart,
   IoMdRadioButtonOk,
   IoMdRadioButtonNot,
+  BtnCouponsBlock,
 } from "../../../styles/CheckoutMobility";
 import { ICoupons } from "../../../interfaces/ICoupons";
+import { CouponLines } from "../../../interfaces/Order";
+
+interface ILineItems {
+  id: number;
+  name: string;
+  price: number;
+  product_id: number;
+  quantity: number;
+  sku: string;
+  subtotal: string;
+  subtotal_tax: string;
+  slug: string;
+}
 
 export default function CheckoutMobility() {
   const orderIdRef = useRef(0);
+  const lineItemsRef = useRef<ILineItems[]>({} as ILineItems[]);
 
   const [loged, setloged] = useState(false);
   const { cart, updateTotal } = useCart();
@@ -69,12 +84,7 @@ export default function CheckoutMobility() {
   //------------------------------------------USE STATE COUPONS VALIDES ( COUPON ENTIER AVEC DATA)  ------------------------------------------------!!
 
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
-  console.log("usedcoupons in checkout", usedCoupons);
-
-  //------------------------------------------tvaResult------------------------------------------------!!
-  const tva = 8.8;
-  const tvaResult = (cart.totalProductsPrice / 100) * tva;
-  console.log("tva resultat", tvaResult);
+  const [discountCupons, setDiscountCupons] = useState<CouponLines[]>([]);
 
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
@@ -113,6 +123,30 @@ export default function CheckoutMobility() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     number | undefined
   >();
+
+  const [currency, setCurrency] = useState("");
+  const [isCoupon, setIsCoupon] = useState(false);
+
+  //------------------------------------------tvaResult------------------------------------------------!!
+  const tva = 8.8;
+  const tvaResult = (cart.totalProductsPrice / 100) * tva;
+  const cartNewTotal = tvaResult + 10.22;
+  const totalValue = cart.totalProductsPrice + cartNewTotal;
+
+  useEffect(() => {
+    setCurrency(
+      userShippingBilling.billing_info.billing_country === "CH"
+        ? "CHF"
+        : ("EUR" && _billingShippingData.billing?.country === "Suisse") ||
+          _billingShippingData.billing?.country === "Swiss" ||
+          _billingShippingData.billing?.country === "schweizerisch"
+        ? "CHF"
+        : "EUR"
+    );
+  }, [
+    userShippingBilling.billing_info.billing_country,
+    _billingShippingData.billing?.country,
+  ]);
 
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
@@ -195,134 +229,130 @@ export default function CheckoutMobility() {
     _setBillingShippingData({ billing, shipping });
   };
 
-  const _sendOrder = useCallback(
-    async (currency: string) => {
-      const couponsCodeArray = usedCoupons.map((coupon) => {
-        return { code: coupon.code };
-      });
-      const order = {
-        payment_method: "Pedding",
-        payment_method_title: "Pedding",
-        currency,
-        billing: {
-          first_name:
-            userShippingBilling.billing_info.billing_first_name ||
-            _billingShippingData.billing?.first_name,
-          last_name:
-            userShippingBilling.billing_info.billing_last_name ||
-            _billingShippingData.billing?.last_name,
-          address_1:
-            userShippingBilling.billing_info.billing_address_1 ||
-            _billingShippingData.billing?.address_1,
-          address_2:
-            userShippingBilling.billing_info.billing_address_2 ||
-            _billingShippingData.billing?.address_2,
-          city:
-            userShippingBilling.billing_info.billing_city ||
-            _billingShippingData.billing?.city,
-          state:
-            userShippingBilling.billing_info.billing_state ||
-            _billingShippingData.billing?.state,
-          postcode:
-            userShippingBilling.billing_info.billing_postcode ||
-            _billingShippingData.billing?.postcode,
-          country:
-            userShippingBilling.billing_info.billing_country ||
-            _billingShippingData.billing?.country,
-          email:
-            userShippingBilling.billing_info.billing_email ||
-            _billingShippingData.billing?.email,
-          phone:
-            userShippingBilling.billing_info.billing_phone ||
-            _billingShippingData.billing?.phone,
+  const _sendOrder = useCallback(async () => {
+    const couponsCodeArray = usedCoupons.map((coupon) => {
+      return { code: coupon.code };
+    });
+    const order = {
+      payment_method: "Pedding",
+      payment_method_title: "Pedding",
+      currency,
+      billing: {
+        first_name:
+          userShippingBilling.billing_info.billing_first_name ||
+          _billingShippingData.billing?.first_name,
+        last_name:
+          userShippingBilling.billing_info.billing_last_name ||
+          _billingShippingData.billing?.last_name,
+        address_1:
+          userShippingBilling.billing_info.billing_address_1 ||
+          _billingShippingData.billing?.address_1,
+        address_2:
+          userShippingBilling.billing_info.billing_address_2 ||
+          _billingShippingData.billing?.address_2,
+        city:
+          userShippingBilling.billing_info.billing_city ||
+          _billingShippingData.billing?.city,
+        state:
+          userShippingBilling.billing_info.billing_state ||
+          _billingShippingData.billing?.state,
+        postcode:
+          userShippingBilling.billing_info.billing_postcode ||
+          _billingShippingData.billing?.postcode,
+        country:
+          userShippingBilling.billing_info.billing_country ||
+          _billingShippingData.billing?.country,
+        email:
+          userShippingBilling.billing_info.billing_email ||
+          _billingShippingData.billing?.email,
+        phone:
+          userShippingBilling.billing_info.billing_phone ||
+          _billingShippingData.billing?.phone,
+      },
+      shipping: {
+        first_name:
+          userShippingBilling.shipping_info.shipping_first_name ||
+          _billingShippingData.shipping?.first_name,
+        last_name:
+          userShippingBilling.shipping_info.shipping_last_name ||
+          _billingShippingData.shipping?.last_name,
+        address_1:
+          userShippingBilling.shipping_info.shipping_address_1 ||
+          _billingShippingData.shipping?.address_1,
+        address_2:
+          userShippingBilling.shipping_info.shipping_address_2 ||
+          _billingShippingData.shipping?.address_2,
+        phone:
+          userShippingBilling.shipping_info.shipping_phone ||
+          _billingShippingData.shipping?.phone,
+        city:
+          userShippingBilling.shipping_info.shipping_city ||
+          _billingShippingData.shipping?.city,
+        state:
+          userShippingBilling.shipping_info.shipping_state ||
+          _billingShippingData.shipping?.state,
+        postcode:
+          userShippingBilling.shipping_info.shipping_postcode ||
+          _billingShippingData.shipping?.postcode,
+        country:
+          userShippingBilling.shipping_info.shipping_country ||
+          _billingShippingData.shipping?.country,
+      },
+      line_items: lineItems,
+      /*  shipping_lines: [
+        {
+          method_id: "flat_rate",
+          method_title: "Flat Rate",
+          total: "184.00",
         },
-        shipping: {
-          first_name:
-            userShippingBilling.shipping_info.shipping_first_name ||
-            _billingShippingData.shipping?.first_name,
-          last_name:
-            userShippingBilling.shipping_info.shipping_last_name ||
-            _billingShippingData.shipping?.last_name,
-          address_1:
-            userShippingBilling.shipping_info.shipping_address_1 ||
-            _billingShippingData.shipping?.address_1,
-          address_2:
-            userShippingBilling.shipping_info.shipping_address_2 ||
-            _billingShippingData.shipping?.address_2,
-          phone:
-            userShippingBilling.shipping_info.shipping_phone ||
-            _billingShippingData.shipping?.phone,
-          city:
-            userShippingBilling.shipping_info.shipping_city ||
-            _billingShippingData.shipping?.city,
-          state:
-            userShippingBilling.shipping_info.shipping_state ||
-            _billingShippingData.shipping?.state,
-          postcode:
-            userShippingBilling.shipping_info.shipping_postcode ||
-            _billingShippingData.shipping?.postcode,
-          country:
-            userShippingBilling.shipping_info.shipping_country ||
-            _billingShippingData.shipping?.country,
-        },
-        line_items: lineItems,
-        shipping_lines: [
-          {
-            method_id: "flat_rate",
-            method_title: "Flat Rate",
-            total: "10.00",
-          },
-        ],
-        coupon_lines: couponsCodeArray,
-      };
+      ], */
 
-      //Recuperer ici la reponse de la commande crée//////////////////
+      coupon_lines: couponsCodeArray,
+    };
+
+    //Recuperer ici la reponse de la commande crée//////////////////
+    if (couponsCodeArray.length > 0) {
+      setIsCoupon(true);
+    }
+
+    if (isCoupon === false) {
       const response = await wc_createOrder(order);
-
       orderIdRef.current = response.id;
       setOrderId(response.id);
 
+      lineItemsRef.current = response.line_items as ILineItems[];
+      setDiscountCupons(response.coupon_lines);
+
       console.log("responseOrder", response);
 
-      const tota_ = parseFloat(response.total);
-      const tvabb = tvaResult;
-      console.log("taxes: ", tota_);
-      console.log("taxes22: ", tvabb);
-      const totalWithTVA = parseFloat(response.total) + tvaResult;
+      const tvaShipping = tvaResult + 10.22;
+      const taxTvaShp = tvaShipping.toFixed(2);
+      const _taxe = parseFloat(taxTvaShp);
+
+      const totalWithTVA = parseFloat(response.total) + _taxe;
 
       console.log("totalWithTVA", totalWithTVA);
       updateTotal(totalWithTVA.toFixed(2));
+    } else {
+      return;
+    }
 
-      return response.id;
-      ///////////////////////////////////////////////////////////////
-    },
-    [
-      lineItems,
-      userShippingBilling,
-      _billingShippingData,
-      usedCoupons,
-      updateTotal,
-      tvaResult,
-    ]
-  );
+    ///////////////////////////////////////////////////////////////
+  }, [
+    lineItems,
+    userShippingBilling,
+    _billingShippingData,
+    updateTotal,
+    usedCoupons,
+    currency,
+    isCoupon,
+    tvaResult,
+  ]);
 
   const checkout = useCallback(async () => {
     setIsPayment(true);
     setIsOrder(false);
     setPaymentValidate(true);
-
-    let productsCheckout;
-    if (Object.keys(cart).length > 0) {
-      productsCheckout = cart.products.map((product) => {
-        const id = product.id;
-        const name = product.name;
-        const price = product.price;
-        const qty = product.qty;
-        const sku = product.slug;
-
-        return { id, name, price, qty, sku };
-      });
-    }
 
     const currencySelected =
       userShippingBilling.billing_info.billing_country === "CH"
@@ -333,7 +363,26 @@ export default function CheckoutMobility() {
         ? "CHF"
         : "EUR";
 
-    await _sendOrder(currencySelected);
+    await _sendOrder();
+
+    const tvaShipping = tvaResult + 10.22;
+    const taxTvaShp = tvaShipping.toFixed(2);
+    const _taxe = parseFloat(taxTvaShp);
+
+    const tax = _taxe / lineItemsRef.current.length;
+    const resultTaxes = tax.toFixed(2);
+    let _taxes = parseFloat(resultTaxes);
+
+    const productsCheckout = lineItemsRef.current?.map((product) => {
+      const id = product.id;
+      const name = product.name;
+      const price = product.price * product.quantity;
+      const qty = product.quantity;
+      const sku = product.sku ? product.sku : "no-sku";
+      const taxes = _taxes;
+
+      return { id, name, price, qty, sku, taxes };
+    });
 
     if (Object.keys(cart).length > 0) {
       const { data } = await apiPFinance.post("transaction-create", {
@@ -346,15 +395,16 @@ export default function CheckoutMobility() {
       setTransactionId(data.transactionId);
 
       if (data) {
+        console.log("transaction: ", data);
         setIsOrder(true);
       }
-      console.log("response=====>", data.paymentMethods);
     }
   }, [
     cart,
-    _sendOrder,
     _billingShippingData.billing?.country,
     userShippingBilling.billing_info.billing_country,
+    _sendOrder,
+    tvaResult,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -431,8 +481,12 @@ export default function CheckoutMobility() {
                   setusedCoupons={setusedCoupons}
                   usedCoupons={usedCoupons}
                 />
-
-                {/* <button onClick={_sendOrder}>{btnSend}</button> */}
+                <BtnCouponsBlock>
+                  <button type="button">Annuler</button>
+                  <button type="button" onClick={_sendOrder}>
+                    Valider mes coupons
+                  </button>
+                </BtnCouponsBlock>
               </section>
             </FormSection>
             <OrderSession>
@@ -477,21 +531,23 @@ export default function CheckoutMobility() {
                     </div>
                     <div className="taxes_item">
                       <div>Frais denvoi: (T.T.C)</div>
-                      <div>-200 chf</div>
+                      <div>10 CHF</div>
                     </div>
                     <div className="taxes_item">
                       <div>Frais de payment: (T.T.C)</div>
-                      <div>-200 chf</div>
+                      <div> CHF</div>
                     </div>
-                    <div className="taxes_item">
-                      <div>
-                        {usedCoupons.map((coupon) => {
-                          return (
-                            <div key={coupon.id}>Code Promo {coupon.code}</div>
-                          );
-                        })}
-                      </div>
-                      <div>-200 chf</div>
+                    <div>
+                      {discountCupons.map((coupon) => {
+                        return (
+                          <div key={coupon.id} className="coupons_block">
+                            <div className="coupons">
+                              <div>Code Promo {coupon.code}</div>
+                              <div>- {coupon.discount} CHF</div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -502,7 +558,7 @@ export default function CheckoutMobility() {
                       CHF{" "}
                       {cart.totalWithCoupon
                         ? cart.totalWithCoupon?.toFixed(2)
-                        : cart.totalProductsPrice?.toFixed(2)}
+                        : totalValue.toFixed(2)}
                     </span>
                   </h5>
                 </div>
