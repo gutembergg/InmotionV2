@@ -16,6 +16,10 @@
       "productDetail",
       "equipmentsPage"
     ],
+    "/inmotion-mobility/services": [
+      "headerMobility",
+      "services"
+    ],
     "/inmotion-mobility/categories/[slug]": ["headerMobility", "productDetail"],
     "/inmotion-mobility/produit/[slug]": ["headerMobility", "productDetail"],
     "/inmotion-mobility/produits/[slug]": [
