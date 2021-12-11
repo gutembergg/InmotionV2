@@ -131,7 +131,7 @@ const horaireDimanche = t("home:horaireDimanche")
           <div className="content">
             <h2 className="squared">{contactTitle}</h2>
             <p>{contactTxt}</p>
-            <Link href="/">
+            <Link href="/inmotion-mobility/contact">
               <a>{contactLink}</a>
             </Link>
           </div>
