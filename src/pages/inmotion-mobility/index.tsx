@@ -15,13 +15,13 @@ import {
   InfoSection,
 } from "../../styles/MobilityIndex";
 import Image from "next/dist/client/image";
-// import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
-// import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
-// import imageHelp from "../../../public/images/homeMobility/contactUs.png";
-// import horairesBG from "../../../public/images/homeMobility/horaireBg.jpg";
+import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
+import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
+import imageHelp from "../../../public/images/homeMobility/contactUs.png";
+import horairesBG from "../../../public/images/homeMobility/horaireBg.jpg";
 
 import Link from "next/dist/client/link";
-// import SliderMobility from "../../components/Sliders/SliderMobility";
+import SliderMobility from "../../components/Sliders/SliderMobility";
 import { getFeaturedProduct, getOnSaleProducts } from "../../services/woocommerceApi/Products";
 import { GetStaticProps } from "next";
 import { IProduct } from "../../interfaces/IProducts";
@@ -81,21 +81,21 @@ const horaireDimanche = t("home:horaireDimanche")
           <p>{slogan}</p>
         </div>
         <MobilitySlider>
-          {/* <SliderMobility /> */}
+          <SliderMobility />
         </MobilitySlider>
         <PromotedProducts>
           <h1 className="squared">{PromotedProductTitle}</h1>
-          {/* <CarouselSwiper products={featuredproducts} /> */}
+          <CarouselSwiper products={featuredproducts} />
         </PromotedProducts>
         <PromotedSection>
           <div className="clipPathShadow">
             <div className="promotedSectionImage">
-              {/* <Image
+              <Image
                 src={imageSecurity}
                 alt="protection rour trottinette,vélo et gyroroues "
                 layout="fill"
                 objectFit="cover"
-              /> */}
+              />
             </div>
           </div>
           <div className="content">
@@ -108,7 +108,7 @@ const horaireDimanche = t("home:horaireDimanche")
         </PromotedSection>
         <NewProducts>
           <h1 className="squared">{NewProductTitle}</h1>
-          {/* <CarouselSwiper products={onSaleProduct} /> */}
+          <CarouselSwiper products={onSaleProduct} />
         </NewProducts>
         <RentalSection>
           <div className="content">
@@ -119,12 +119,12 @@ const horaireDimanche = t("home:horaireDimanche")
             </Link>
           </div>
           <div className="rentalImg">
-            {/* <Image
+            <Image
               src={imageLocation}
               alt="location de trottinettes,vélos et gyroroues "
               layout="fill"
               objectFit="cover"
-            /> */}
+            />
           </div>
         </RentalSection>
         <HelpSection>
@@ -136,24 +136,24 @@ const horaireDimanche = t("home:horaireDimanche")
             </Link>
           </div>
           <div className="helpImg">
-            {/* <Image
+            <Image
               src={imageHelp}
               alt="contact inmotion, service et conseils de professionels "
               height={408}
               width={612}
-            /> */}
+            />
           </div>
         </HelpSection>
         <InfoSection>
         <div className="clipPathShadow">
             <div className="promotedSectionImage">
-              {/* <Image
+              <Image
                 src={horairesBG}
                 alt="protection rour trottinette,vélo et gyroroues "
                 layout="fill"
                 objectFit="cover"
                 objectPosition="left bottom"
-              /> */}
+              />
             </div>
           </div>
           <div className="content">

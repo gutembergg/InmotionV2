@@ -6,9 +6,8 @@ import imagenoel from "../../../../public/images/homeMobility/offrenoel.jpg";
 import Link from "next/dist/client/link";
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/scrollbar";
+
 import "swiper/css/pagination";
-import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
 
