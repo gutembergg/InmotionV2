@@ -14,5 +14,12 @@
   "belgium": "Belgium",
   "spain": "Spain",
   "austria": "Austria",
-  "holland": "Holland"
+  "holland": "Holland",
+  "date_achat": "date of purchase",
+  "revendeur": "Reseller",
+  "nom_produit": "Product Name",
+  "serial": "Serial Number",
+  "message": "What is the problem?",
+  "productInfoTxt": "Your information",
+  "CustomerInfoTxt": "Product Information"
 }

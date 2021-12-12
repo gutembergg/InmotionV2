@@ -144,8 +144,8 @@ export default function Category({ category, productsByCategory }: Props) {
           </ProductInfos>
           <ProductImage>
             <Image
-              width={250}
-              height={260}
+              objectFit="contain"
+              layout="fill"
               src={
                 products[productIndex]?.images[0]
                   ? products[productIndex]?.images[0].src
