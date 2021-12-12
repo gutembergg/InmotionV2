@@ -11,6 +11,10 @@ export const Container = styled.div`
     text-align: center;
     margin-top: 2rem;
   }
+
+  @media (max-width: 400px) {
+    margin-top: 40px;
+  }
 `;
 
 export const Content = styled.div`
@@ -25,6 +29,10 @@ export const Content = styled.div`
 
     width: 100%;
     margin-top: 2.5rem;
+
+    @media (max-width: 877px) {
+      flex-direction: column;
+    }
   }
 `;
 
@@ -40,6 +48,47 @@ export const FormSection = styled.div`
       font-weight: 600;
       font-size: 1.7rem;
       padding: 1rem;
+    }
+  }
+
+  section.shipping {
+    margin-top: 3rem;
+    padding-right: 3rem;
+    h2 {
+      background-color: var(--DarkGray);
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      padding: 0.7rem;
+    }
+  }
+
+  section.code_promo {
+    margin-top: 3rem;
+    padding-right: 3rem;
+    h2 {
+      background-color: var(--DarkGray);
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      padding: 0.7rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    section.sections_title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 0;
+    }
+
+    section.shipping {
+      padding-right: 0;
+    }
+
+    section.code_promo {
+      padding-right: 0;
     }
   }
 `;
@@ -105,6 +154,14 @@ export const OrderSession = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+
+      @media (max-width: 400px) {
+        font-size: 0.8rem;
+      }
+
+      div {
+        font-size: 0.8rem;
+      }
     }
   }
 
@@ -154,6 +211,16 @@ export const OrderSession = styled.div`
     display: flex;
     justify-content: end;
     width: 100%;
+  }
+
+  @media (max-width: 877px) {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+  }
+
+  @media (max-width: 400px) {
+    margin-top: 1.4rem;
   }
 `;
 

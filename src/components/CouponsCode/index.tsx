@@ -12,6 +12,8 @@ import Notiflix from "notiflix";
 import useCart from "../../hooks/useCart";
 import useTranslation from "next-translate/useTranslation";
 
+import { Container } from "./styles";
+
 interface IProps {
   userMail: string;
   userID: number | null;
@@ -298,7 +300,7 @@ const CouponsCode = ({
   };
 
   return (
-    <div>
+    <Container>
       <form onSubmit={handleSubmit}>
         <label>{doYouHaveCodePromo}</label>
         <input
@@ -310,10 +312,10 @@ const CouponsCode = ({
           disabled={inputDisabledStatus}
         />
         <button type="submit" disabled={inputDisabledStatus === true && true}>
-          {btnSend}{" "}
+          Vérifier{" "}
         </button>
       </form>
-    </div>
+    </Container>
   );
 };
 export default CouponsCode;

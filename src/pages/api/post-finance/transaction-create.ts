@@ -3,6 +3,7 @@ import { PostFinanceCheckout } from "postfinancecheckout";
 import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
 import Cors from "cors";
 import initMiddleware from "../../../utils/init-middleware";
+import { LineItemCreate } from "postfinancecheckout/src/models/LineItemCreate";
 
 interface ProductsLineItems {
   id: number;
@@ -10,7 +11,6 @@ interface ProductsLineItems {
   price: number;
   qty: number;
   sku: string;
-  taxes: number;
 }
 
 let spaceId: number = 23340;
@@ -49,6 +49,7 @@ export default async function handler(
     const productsLineItems: ProductsLineItems[] = req.body.productsCheckout;
     const orderId: number = req.body.orderId;
     const currencyResp = req.body.currency;
+    const shippingTx = req.body.shippingTaxe;
 
     // Transaction Service
     let transactionService: PostFinanceCheckout.api.TransactionService =
@@ -59,27 +60,34 @@ export default async function handler(
       new PostFinanceCheckout.model.LineItemCreate();
 
     const lineItemsArray: any = productsLineItems.map((item) => {
-      const priceWithTaxes = item.price + item.taxes;
-      const _price = priceWithTaxes.toFixed(2);
-      const newPrice = Number(_price);
-      console.log("newPrice: ", newPrice);
-
       lineItem = {
         name: item.name,
         uniqueId: item.sku,
         sku: item.sku,
         quantity: item.qty,
-        amountIncludingTax: newPrice,
+        amountIncludingTax: item.price,
         type: "PRODUCT" as LineItemType,
       };
 
       return lineItem;
     });
 
+    const shipping: any = (lineItem = {
+      name: "Shipping",
+      uniqueId: "shipping_1",
+      sku: "shipping",
+      quantity: 1,
+      amountIncludingTax: shippingTx,
+      type: "PRODUCT" as LineItemType,
+    });
+
+    const itemsWithShipping: any =
+      shippingTx > 0 ? [...lineItemsArray, shipping] : lineItemsArray;
+
     // Transaction ////////////////////////////////////////
     let transaction: PostFinanceCheckout.model.TransactionCreate =
       new PostFinanceCheckout.model.TransactionCreate();
-    transaction.lineItems = [...lineItemsArray];
+    transaction.lineItems = [...itemsWithShipping];
     transaction.autoConfirmationEnabled = true;
     transaction.currency = currencyResp;
     transaction.metaData = { orderId: orderId.toString() };

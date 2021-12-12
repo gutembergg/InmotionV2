@@ -22,26 +22,6 @@ export const getProductByCategory = async (id: number, lang: string) => {
   return data;
 };
 
-// Get Products by Category slug /////////////////////////////////////
-/* export const getProductsByCategorySlug = async (slug: string) => {
-  const response = await wooCommerce.get("products/categories", {
-    slug: slug,
-    per_page: 100,
-  });
-
-  if (response.data.length === 0) {
-    return;
-  }
-
-  const data = await getProductByCategory(response.data[0].id);
-
-  const productsCatalogVisibility = data.filter(
-    (product: IProduct) => product.catalog_visibility !== "hidden"
-  );
-
-  return productsCatalogVisibility;
-}; */
-
 // Get Product by slug //////////////////////////////////////////////
 export const getProductBySlug = async (slug: string) => {
   const { data } = await wooCommerce.get("products", {
@@ -55,11 +35,10 @@ export const getProductBySlug = async (slug: string) => {
 
 // Get variations products //////////////////////////////////////////
 export const getVariations = async (id: number) => {
-  const { data: variations } = await wooCommerce.get(
-    `products/${id}/variations`
-  );
-
-  return variations;
+  console.log("id", id);
+  const { data } = await wooCommerce.get(`products/${id}/variations`);
+  console.log("data==>", data);
+  return data;
 };
 
 //  Get Product by slug /////////////////////////////////////////
@@ -117,7 +96,7 @@ export const getFeaturedProduct = async (lang: string): Promise<IProduct[]> => {
   const { data } = await wooCommerce.get("products", {
     featured: true,
     per_page: 8,
-    lang:lang
+    lang: lang,
   });
   const product = data;
   return product;
@@ -126,49 +105,10 @@ export const getFeaturedProduct = async (lang: string): Promise<IProduct[]> => {
 // Get OnSale Products //////////////////////////////////////////////
 export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
   const { data } = await wooCommerce.get("products", {
-    on_sale	: true,
+    on_sale: true,
     per_page: 8,
-    lang:lang
+    lang: lang,
   });
   const product = data;
   return product;
 };
-
-//Get products by category SLUG ////////////////////////////////////
-/* export const wc_getProductsByCategorySlug = async (
-  slug: string,
-  lang: string
-): Promise<IProduct[]> => {
-  const { data } = await wcApi.get("products/categories", {
-    params: {
-      slug,
-      lang: lang,
-      per_page: 100,
-    },
-  });
-
-  const products = await wc_getProductsByCategory(data[0].id, lang);
-
-  const productsCatalogVisibility = products.filter(
-    (product: IProduct) => product.catalog_visibility !== "hidden"
-  );
-
-  if (productsCatalogVisibility.length > 0) {
-    let productWithVariations: IProduct[] = [];
-
-    await Promise.all(
-      productsCatalogVisibility.map(async (product: IProduct) => {
-        try {
-          const variations: IVariation[] = await getVariations(product.id);
-          productWithVariations.push({ ...product, variations: variations });
-        } catch (error) {
-          productWithVariations.push({ ...product });
-        }
-      })
-    );
-
-    return productWithVariations;
-  } else {
-    return [];
-  }
-}; */

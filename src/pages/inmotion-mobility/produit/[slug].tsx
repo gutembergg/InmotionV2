@@ -7,7 +7,10 @@ import HouseIcon from "../../../../public/images/icons/house.svg";
 import getAcfContent from "../../../utils/getAcfContent";
 import useCart from "../../../hooks/useCart";
 import { IProduct } from "../../../interfaces/IProducts";
-import { wc_getProductBySlug } from "../../../services/woocommerceApi/Products";
+import {
+  getVariations,
+  wc_getProductBySlug,
+} from "../../../services/woocommerceApi/Products";
 import placeholder from "../../../../public/images/placeholder_woocommerce.png";
 import ButtonSkew from "../../../components/ButtonSkew";
 
@@ -31,12 +34,14 @@ import {
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
+import { IVariation } from "../../../interfaces/IVariation";
 
 interface Props {
   product: IProduct;
+  variations: IVariation[];
 }
 
-export default function ProductDetail({ product }: Props) {
+export default function ProductDetail({ product, variations }: Props) {
   const { cartItem, addToCart } = useCart();
 
   // Traductions texts ///////////////////////////////////
@@ -244,11 +249,15 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const _product = await wc_getProductBySlug(slug as string, lang as string);
 
+  const variations: IVariation[] = await getVariations(_product.id);
+  console.log("variations: ", variations);
+
   if (!_product) {
     return {
       redirect: {
         destination: "/",
         permanent: false,
+        variations,
       },
     };
   }
@@ -256,7 +265,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       product: _product,
+      variations,
     },
-    revalidate: 60,
+    revalidate: 60 * 2, // 2 min
   };
 };

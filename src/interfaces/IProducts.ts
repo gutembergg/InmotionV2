@@ -76,6 +76,8 @@ export interface IProduct {
   sku: string;
   acf: Acf;
   variations: IVariation[];
+  subtotal_tax: string;
+  weight: string;
 }
 
 export interface ProductWithVariations {

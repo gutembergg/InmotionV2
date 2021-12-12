@@ -45,7 +45,13 @@ import {
   BtnCouponsBlock,
 } from "../../../styles/CheckoutMobility";
 import { ICoupons } from "../../../interfaces/ICoupons";
-import { CouponLines } from "../../../interfaces/Order";
+import { CouponLines, Order } from "../../../interfaces/Order";
+import {
+  getShippingMethods,
+  getShippingZones,
+} from "../../../services/woocommerceApi/ShippingMethods";
+import { ShippingMethods } from "../../../interfaces/ShippingMethods";
+import { IProduct } from "../../../interfaces/IProducts";
 
 interface ILineItems {
   id: number;
@@ -56,12 +62,18 @@ interface ILineItems {
   sku: string;
   subtotal: string;
   subtotal_tax: string;
+  total_tax: string;
   slug: string;
 }
 
-export default function CheckoutMobility() {
+interface Props {
+  _shippingMethods: ShippingMethods[];
+}
+
+export default function CheckoutMobility({ _shippingMethods }: Props) {
   const orderIdRef = useRef(0);
-  const lineItemsRef = useRef<ILineItems[]>({} as ILineItems[]);
+  const lineItemsRef = useRef<ILineItems[]>([]);
+  const shippingPriceRef = useRef(0);
 
   const [loged, setloged] = useState(false);
   const { cart, updateTotal } = useCart();
@@ -126,11 +138,18 @@ export default function CheckoutMobility() {
 
   const [currency, setCurrency] = useState("");
   const [isCoupon, setIsCoupon] = useState(false);
-
+  const [priceTotalWithCoupon, setPriceTotalWithCoupon] = useState("");
+  const [openedCodePromo, setOpenedCodePromo] = useState(false);
+  const [_order, _setOrder] = useState<Order>({} as Order);
+  const [shippingMethods, setShippingMethods] = useState<ShippingMethods>(
+    {} as ShippingMethods
+  );
+  const [shippingPrice, setShippingPrice] = useState(0);
+  const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
   //------------------------------------------tvaResult------------------------------------------------!!
-  const tva = 8.8;
+  const tva = 7.7;
   const tvaResult = (cart.totalProductsPrice / 100) * tva;
-  const cartNewTotal = tvaResult + 10.22;
+  const cartNewTotal = parseFloat(tvaResult.toFixed(2));
   const totalValue = cart.totalProductsPrice + cartNewTotal;
 
   useEffect(() => {
@@ -156,12 +175,16 @@ export default function CheckoutMobility() {
 
         return { product_id, quantity };
       });
+
+      getShippingPrice();
+
       setLineItems(_lineItems);
       setUserShippingBilling({
         ...userShippingBilling,
         line_items: _lineItems,
       });
     }
+    setCartProducts(cart.products);
     // eslint-disable-next-line
   }, [cart]);
 
@@ -201,6 +224,38 @@ export default function CheckoutMobility() {
     // eslint-disable-next-line
   }, [user, lineItems]);
 
+  const getShippingPrice = useCallback(() => {
+    const productsWeight = cart.products.reduce(
+      (acc, item) => {
+        const weight = Number(item.weight) + Number(acc.weight);
+
+        return { weight: weight };
+      },
+      { weight: 0 }
+    );
+
+    switch (true) {
+      case productsWeight?.weight <= 2:
+        //alert("CHF 8,50");
+        setShippingPrice(8.5);
+        break;
+      case productsWeight?.weight > 2 && productsWeight?.weight <= 10:
+        //alert("CHF 11,20");
+        setShippingPrice(11.2);
+        break;
+      case productsWeight?.weight > 10 && productsWeight?.weight <= 30:
+        // alert("CHF 30,50");
+        setShippingPrice(30.5);
+        break;
+      case productsWeight?.weight > 30:
+        //alert("Pointe de Vente!!");
+        break;
+      default:
+        alert("none");
+        break;
+    }
+  }, [cart.products]);
+
   const _handleBillingShippingData = (values: IFormValues) => {
     const billing = {
       last_name: values.billing_last_name,
@@ -233,6 +288,7 @@ export default function CheckoutMobility() {
     const couponsCodeArray = usedCoupons.map((coupon) => {
       return { code: coupon.code };
     });
+
     const order = {
       payment_method: "Pedding",
       payment_method_title: "Pedding",
@@ -299,40 +355,46 @@ export default function CheckoutMobility() {
           _billingShippingData.shipping?.country,
       },
       line_items: lineItems,
-      /*  shipping_lines: [
+      coupon_lines: couponsCodeArray,
+      shipping_lines: [
         {
           method_id: "flat_rate",
           method_title: "Flat Rate",
-          total: "184.00",
+          total: shippingPrice.toFixed(2),
         },
-      ], */
-
-      coupon_lines: couponsCodeArray,
+      ],
     };
 
-    //Recuperer ici la reponse de la commande crée//////////////////
     if (couponsCodeArray.length > 0) {
       setIsCoupon(true);
     }
 
     if (isCoupon === false) {
       const response = await wc_createOrder(order);
+      _setOrder(response);
       orderIdRef.current = response.id;
-      setOrderId(response.id);
-
       lineItemsRef.current = response.line_items as ILineItems[];
+      const shippinResult = response.shipping_total;
+
+      console.log("shippinResult: ", Number(shippinResult));
+      shippingPriceRef.current = Number(shippinResult);
+
+      setOrderId(response.id);
       setDiscountCupons(response.coupon_lines);
 
       console.log("responseOrder", response);
 
-      const tvaShipping = tvaResult + 10.22;
-      const taxTvaShp = tvaShipping.toFixed(2);
-      const _taxe = parseFloat(taxTvaShp);
+      console.log("cartPrice: ", cart.totalProductsPrice);
+      console.log("discount_total: ", response.discount_total);
+      console.log("shippingPrice: ", shippingPrice);
 
-      const totalWithTVA = parseFloat(response.total) + _taxe;
-
-      console.log("totalWithTVA", totalWithTVA);
-      updateTotal(totalWithTVA.toFixed(2));
+      setPriceTotalWithCoupon(
+        (
+          cart.totalProductsPrice +
+          shippingPrice -
+          Number(response.discount_total)
+        ).toFixed(2)
+      );
     } else {
       return;
     }
@@ -342,14 +404,25 @@ export default function CheckoutMobility() {
     lineItems,
     userShippingBilling,
     _billingShippingData,
-    updateTotal,
     usedCoupons,
     currency,
     isCoupon,
-    tvaResult,
+    shippingPrice,
+    cart.totalProductsPrice,
   ]);
 
   const checkout = useCallback(async () => {
+    const couponsCodeArray = usedCoupons.map((coupon) => {
+      return { code: coupon.code };
+    });
+
+    if (couponsCodeArray.length > 0) {
+      let validatedCoupon = confirm("Vous avez validé vos Codes Promo?");
+
+      if (validatedCoupon === false) {
+        return;
+      }
+    }
     setIsPayment(true);
     setIsOrder(false);
     setPaymentValidate(true);
@@ -365,23 +438,14 @@ export default function CheckoutMobility() {
 
     await _sendOrder();
 
-    const tvaShipping = tvaResult + 10.22;
-    const taxTvaShp = tvaShipping.toFixed(2);
-    const _taxe = parseFloat(taxTvaShp);
-
-    const tax = _taxe / lineItemsRef.current.length;
-    const resultTaxes = tax.toFixed(2);
-    let _taxes = parseFloat(resultTaxes);
-
     const productsCheckout = lineItemsRef.current?.map((product) => {
       const id = product.id;
       const name = product.name;
       const price = product.price * product.quantity;
       const qty = product.quantity;
       const sku = product.sku ? product.sku : "no-sku";
-      const taxes = _taxes;
 
-      return { id, name, price, qty, sku, taxes };
+      return { id, name, price, qty, sku };
     });
 
     if (Object.keys(cart).length > 0) {
@@ -389,6 +453,7 @@ export default function CheckoutMobility() {
         productsCheckout,
         orderId: orderIdRef.current,
         currency: currencySelected,
+        shippingTaxe: shippingPrice,
       });
 
       setPaymentMethods(data.paymentMethods);
@@ -404,7 +469,8 @@ export default function CheckoutMobility() {
     _billingShippingData.billing?.country,
     userShippingBilling.billing_info.billing_country,
     _sendOrder,
-    tvaResult,
+    usedCoupons,
+    shippingPrice,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -441,6 +507,23 @@ export default function CheckoutMobility() {
     [orderId, transactionId]
   );
 
+  const openCodePromo = () => {
+    setOpenedCodePromo(!openedCodePromo);
+  };
+
+  const selectSHPmethod = useCallback(
+    (method: ShippingMethods) => {
+      if (method.method_id === "local_pickup") {
+        setShippingPrice(0);
+      } else if (method.method_id === "flexible_shipping_single") {
+        getShippingPrice();
+      }
+
+      setShippingMethods(method);
+    },
+    [getShippingPrice]
+  );
+
   return (
     <>
       <Container>
@@ -466,27 +549,49 @@ export default function CheckoutMobility() {
                   handleBillingShippingData={_handleBillingShippingData}
                 />
               </section>
-              <section>
-                <h2>{wayDelivery}</h2>
+              <section className="shipping">
+                <div className="title">
+                  <h2>2. {wayDelivery}</h2>
+                </div>
+
+                <div style={{ marginTop: "40px" }}>
+                  {_shippingMethods.map((method) => {
+                    return (
+                      <div
+                        key={method.id}
+                        onClick={() => selectSHPmethod(method)}
+                      >
+                        {method.method_title}
+                      </div>
+                    );
+                  })}
+                </div>
               </section>
 
-              <section>
-                <CouponsCode
-                  userMail={
-                    userShippingBilling.billing_info.billing_email ||
-                    _billingShippingData.billing?.email
-                  }
-                  userID={user.profile?.id}
-                  userGrp={user.profile?.wcb2b_group}
-                  setusedCoupons={setusedCoupons}
-                  usedCoupons={usedCoupons}
-                />
-                <BtnCouponsBlock>
-                  <button type="button">Annuler</button>
-                  <button type="button" onClick={_sendOrder}>
-                    Valider mes coupons
-                  </button>
-                </BtnCouponsBlock>
+              <section className="code_promo">
+                <div className="title" onClick={openCodePromo}>
+                  <h2>3. Code Promo</h2>
+                </div>
+                {openedCodePromo && (
+                  <>
+                    <CouponsCode
+                      userMail={
+                        userShippingBilling.billing_info.billing_email ||
+                        _billingShippingData.billing?.email
+                      }
+                      userID={user.profile?.id}
+                      userGrp={user.profile?.wcb2b_group}
+                      setusedCoupons={setusedCoupons}
+                      usedCoupons={usedCoupons}
+                    />
+                    <BtnCouponsBlock>
+                      <button type="button">Annuler</button>
+                      <button type="button" onClick={_sendOrder}>
+                        Valider mes coupons
+                      </button>
+                    </BtnCouponsBlock>
+                  </>
+                )}
               </section>
             </FormSection>
             <OrderSession>
@@ -526,12 +631,17 @@ export default function CheckoutMobility() {
                       <div>{cart.totalProductsPrice?.toFixed(2)} CHF</div>
                     </div>
                     <div className="taxes_item">
-                      <div>dont TVA ({tva}%): </div>
-                      <div>{tvaResult.toFixed(2)} CHF</div>
+                      <div>dont TVA ({tva}%): (incluse) </div>
+                      <div>
+                        {Object.keys(_order).length > 0
+                          ? _order.total_tax
+                          : tvaResult.toFixed(2)}{" "}
+                        CHF
+                      </div>
                     </div>
                     <div className="taxes_item">
                       <div>Frais denvoi: (T.T.C)</div>
-                      <div>10 CHF</div>
+                      <div>{shippingPrice} CHF</div>
                     </div>
                     <div className="taxes_item">
                       <div>Frais de payment: (T.T.C)</div>
@@ -556,9 +666,9 @@ export default function CheckoutMobility() {
                     <span>Total (T.T.C): </span>
                     <span>
                       CHF{" "}
-                      {cart.totalWithCoupon
-                        ? cart.totalWithCoupon?.toFixed(2)
-                        : totalValue.toFixed(2)}
+                      {!!priceTotalWithCoupon
+                        ? priceTotalWithCoupon
+                        : cart.totalProductsPrice + shippingPrice}{" "}
                     </span>
                   </h5>
                 </div>
@@ -648,7 +758,11 @@ CheckoutMobility.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const _shippingMethods = await getShippingMethods();
+
   return {
-    props: {}, // will be passed to the page component as props
+    props: {
+      _shippingMethods,
+    }, // will be passed to the page component as props
   };
 };

@@ -20,7 +20,10 @@ import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
 import imageHelp from "../../../public/images/homeMobility/contactUs.png";
 import Link from "next/dist/client/link";
 import SliderMobility from "../../components/Sliders/SliderMobility";
-import { getFeaturedProduct, getOnSaleProducts } from "../../services/woocommerceApi/Products";
+import {
+  getFeaturedProduct,
+  getOnSaleProducts,
+} from "../../services/woocommerceApi/Products";
 import { GetStaticProps } from "next";
 import { IProduct } from "../../interfaces/IProducts";
 import { ProductCard } from "../../styles/ProductDetail";
@@ -30,8 +33,7 @@ interface Props {
   onSaleProducts: IProduct[];
 }
 
-
-export default function Home({featuredProducts, onSaleProducts }:Props) {
+export default function Home({ featuredProducts, onSaleProducts }: Props) {
   const { user } = useUser();
   const [loged] = useState(false);
 
@@ -52,11 +54,12 @@ export default function Home({featuredProducts, onSaleProducts }:Props) {
   const contactLink = t("home:contactLink");
   const shopHours = t("home:shopHours");
 
-  const [featuredproducts, _setfeaturedproducts] = useState<IProduct[]>(featuredProducts);
-  const [onSaleProduct, _setOnSaleproduct] = useState<IProduct[]>(onSaleProducts);
-console.log("featured productzs",featuredproducts)
-console.log("onsale products",onSaleProducts)
-
+  const [featuredproducts, _setfeaturedproducts] =
+    useState<IProduct[]>(featuredProducts);
+  const [onSaleProduct, _setOnSaleproduct] =
+    useState<IProduct[]>(onSaleProducts);
+  console.log("featured productzs", featuredproducts);
+  console.log("onsale products", onSaleProducts);
 
   useEffect(() => {
     _setfeaturedproducts(featuredProducts);
@@ -150,19 +153,16 @@ Home.getLayout = function getLayout(page: ReactElement) {
   return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
 };
 
-
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const featuredproducts = await getFeaturedProduct(lang as string);
   const onSaleProducts = await getOnSaleProducts(lang as string);
 
-
-
   return {
     props: {
       featuredProducts: featuredproducts,
-      onSaleProducts:onSaleProducts
+      onSaleProducts: onSaleProducts,
     },
     revalidate: 60 * 2,
   };

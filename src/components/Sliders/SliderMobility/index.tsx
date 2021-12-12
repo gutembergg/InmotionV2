@@ -44,7 +44,10 @@ const SliderMobility = () => {
             />
           </div>
           <div className="content">
-            <h2>Découvrez un nouveau moyen de vous déplacer avec l'Inmotion <span className="red">P2F</span></h2>
+            <h2>
+              Découvrez un nouveau moyen de vous déplacer avec lInmotion{" "}
+              <span className="red">P2F</span>
+            </h2>
             <p>
               Le P2 est un vélo électrique léger, compact et pliable doté d’une
               grande autonomie et de trois modes de conduite : vélo classique,

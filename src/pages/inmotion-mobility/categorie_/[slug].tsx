@@ -50,8 +50,6 @@ export default function Equipements({
     {} as ICategories
   );
 
-  console.log("_productsByCategory: ", _productsByCategory);
-
   useEffect(() => {
     setSelectedProductsCategory(_productsByCategory);
   }, [_productsByCategory]);
