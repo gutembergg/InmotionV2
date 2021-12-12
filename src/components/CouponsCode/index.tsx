@@ -20,6 +20,7 @@ interface IProps {
   userGrp: string;
   usedCoupons: ICoupons[];
   setusedCoupons: Dispatch<SetStateAction<ICoupons[]>>;
+  codePromoSteps: () => void;
 }
 
 const CouponsCode = ({
@@ -28,6 +29,7 @@ const CouponsCode = ({
   userGrp,
   setusedCoupons,
   usedCoupons,
+  codePromoSteps,
 }: IProps) => {
   const { cart } = useCart();
   const [inputValue, setInputValue] = useState<string>("");
@@ -297,6 +299,7 @@ const CouponsCode = ({
 
     Notiflix.Notify.success(CouponsMessages.validCoupon);
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
+    codePromoSteps();
   };
 
   return (

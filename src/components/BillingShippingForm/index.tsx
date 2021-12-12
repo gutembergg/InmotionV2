@@ -1,11 +1,11 @@
 import { Formik, Form, Field, FormikProps } from "formik";
 import useUser from "../../hooks/useUser";
 import { validatorSchema } from "./validator";
-
-import { Container, FormSession, ButtonRegiste } from "./styles";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { IUserState } from "../Context/UserContext";
+
+import { Container, FormSession, ButtonRegiste } from "./styles";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -533,7 +533,9 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                 )}
               </div>
 
-              <ButtonRegiste type="submit">{register}</ButtonRegiste>
+              <div className="btn_register">
+                <ButtonRegiste type="submit">{register}</ButtonRegiste>
+              </div>
             </Form>
           )}
         </Formik>

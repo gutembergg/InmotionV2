@@ -42,8 +42,12 @@ export const FormSection = styled.div`
   section.sections_title {
     padding-right: 3rem;
 
-    h2 {
+    h2.active {
       background-color: var(--Blue);
+    }
+
+    h2 {
+      background-color: var(--BlueSelected);
       color: var(--White);
       font-weight: 600;
       font-size: 1.7rem;
@@ -54,6 +58,15 @@ export const FormSection = styled.div`
   section.shipping {
     margin-top: 3rem;
     padding-right: 3rem;
+
+    h2.active2 {
+      background-color: var(--Blue);
+    }
+
+    h2.completed2 {
+      background-color: var(--BlueSelected);
+    }
+
     h2 {
       background-color: var(--DarkGray);
       color: var(--White);
@@ -61,11 +74,21 @@ export const FormSection = styled.div`
       font-size: 1.7rem;
       padding: 0.7rem;
     }
+
+    .title {
+      cursor: pointer;
+    }
   }
 
   section.code_promo {
-    margin-top: 3rem;
+    cursor: pointer;
+    margin-top: 0.8rem;
     padding-right: 3rem;
+
+    h2.active3 {
+      background-color: var(--Blue);
+    }
+
     h2 {
       background-color: var(--DarkGray);
       color: var(--White);
@@ -173,6 +196,9 @@ export const OrderSession = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      div {
+        font-size: 0.8rem;
+      }
     }
   }
 
@@ -377,19 +403,47 @@ export const IoMdRadioButtonNot = styled(IoMdRadioButtonOff)`
 export const BtnCouponsBlock = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   margin-top: 1rem;
+  margin-bottom: 1.6rem;
 
   button + button {
     margin-left: 0.5rem;
   }
 
   button {
-    background: var(--Blue);
-    color: var(--White);
+    background: var(--DarkGray);
     height: 40px;
     width: 200px;
     padding: 0.7rem;
 
     border: none;
+  }
+
+  button.active {
+    background: var(--Blue);
+    color: var(--White);
+  }
+
+  button.active_cancel {
+    background: var(--Blue);
+    color: var(--White);
+  }
+`;
+
+export const ShipMethods = styled.div`
+  width: 100%;
+  padding-top: 0.9rem;
+  padding-left: 0.6rem;
+`;
+
+export const ShipItem = styled.div`
+  cursor: pointer;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+
+  .ship_methods_name {
+    font-weight: 600;
   }
 `;

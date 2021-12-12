@@ -11,6 +11,7 @@ export default createGlobalStyle`
   :root {
     --Blue: #0570A6;
     --BlueHover: #03486b;
+    --BlueSelected: #6797B0;
     --Red: #F2142B;
     --Orange:#F2571F;
     --Green:#027011;
@@ -24,7 +25,6 @@ export default createGlobalStyle`
 
   }
 
-  }
   button{
       cursor: pointer;
   }

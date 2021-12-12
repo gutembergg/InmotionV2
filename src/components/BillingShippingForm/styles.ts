@@ -90,6 +90,11 @@ export const Container = styled.div`
     span {
       margin-left: 4px;
     }
+
+    input[type="checkbox"] {
+      height: 20px;
+      width: 20px;
+    }
   }
 `;
 
@@ -101,10 +106,15 @@ export const FormSession = styled.div`
     flex-direction: row;
     align-items: center;
   }
+
+  .btn_register {
+    display: flex;
+    justify-content: end;
+  }
 `;
 
 export const ButtonRegiste = styled.button`
-  height: 30px;
+  height: 45px;
   width: 100%;
   max-width: 300px;
 

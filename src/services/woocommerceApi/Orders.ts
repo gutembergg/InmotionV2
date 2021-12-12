@@ -40,3 +40,14 @@ export const updateOrder = async (orderId: number, status: string) => {
     console.log("Error: ", error);
   }
 };
+
+export const deleteOrder = async (id: number) => {
+  try {
+    const { data } = await wooCommerce.delete(`orders/${id}`);
+
+    console.log("deleteOrder====>", data);
+    return true;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};

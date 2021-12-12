@@ -21,6 +21,7 @@ import BillingShippingForm, {
   IFormValues,
 } from "../../../components/BillingShippingForm";
 import {
+  deleteOrder,
   wc_createOrder,
   _updateOrder,
 } from "../../../services/woocommerceApi/Orders";
@@ -31,6 +32,14 @@ import useUser from "../../../hooks/useUser";
 import apiPFinance from "../../../services/postFinanceApi/apiPFinance";
 import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 import Spiner from "../../../components/Spiner";
+
+import { ICoupons } from "../../../interfaces/ICoupons";
+import { CouponLines, Order } from "../../../interfaces/Order";
+import {
+  getShippingMethods,
+  getShippingZones,
+} from "../../../services/woocommerceApi/ShippingMethods";
+import { ShippingMethods } from "../../../interfaces/ShippingMethods";
 
 import {
   Container,
@@ -43,15 +52,9 @@ import {
   IoMdRadioButtonOk,
   IoMdRadioButtonNot,
   BtnCouponsBlock,
+  ShipMethods,
+  ShipItem,
 } from "../../../styles/CheckoutMobility";
-import { ICoupons } from "../../../interfaces/ICoupons";
-import { CouponLines, Order } from "../../../interfaces/Order";
-import {
-  getShippingMethods,
-  getShippingZones,
-} from "../../../services/woocommerceApi/ShippingMethods";
-import { ShippingMethods } from "../../../interfaces/ShippingMethods";
-import { IProduct } from "../../../interfaces/IProducts";
 
 interface ILineItems {
   id: number;
@@ -76,7 +79,7 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
   const shippingPriceRef = useRef(0);
 
   const [loged, setloged] = useState(false);
-  const { cart, updateTotal } = useCart();
+  const { cart } = useCart();
   const { user } = useUser();
 
   const { t } = useTranslation();
@@ -97,7 +100,6 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
 
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
   const [discountCupons, setDiscountCupons] = useState<CouponLines[]>([]);
-
   const [userShippingBilling, setUserShippingBilling] = useState({
     billing_info: {
       billing_address_1: user ? user.billing_info?.billing_address_1 : "",
@@ -125,32 +127,32 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
     },
     line_items: lineItems,
   });
-
   const [orderId, setOrderId] = useState<number>();
   const [isOrder, setIsOrder] = useState<boolean | null>(null);
   const [isPayment, setIsPayment] = useState(false);
   const [isCheckMethod, setIsCheckMethod] = useState(false);
   const [paymentValidate, setPaymentValidate] = useState(false);
-
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     number | undefined
   >();
-
+  const [methodShipping, setMethodShipping] = useState(0);
   const [currency, setCurrency] = useState("");
   const [isCoupon, setIsCoupon] = useState(false);
   const [priceTotalWithCoupon, setPriceTotalWithCoupon] = useState("");
-  const [openedCodePromo, setOpenedCodePromo] = useState(false);
   const [_order, _setOrder] = useState<Order>({} as Order);
-  const [shippingMethods, setShippingMethods] = useState<ShippingMethods>(
-    {} as ShippingMethods
-  );
   const [shippingPrice, setShippingPrice] = useState(0);
-  const [cartProducts, setCartProducts] = useState<IProduct[]>([]);
+
+  const [paymentSteps, setPaymentSteps] = useState(1);
+  const [openedCodePromo, setOpenedCodePromo] = useState(false);
+  const [openDeliveryWays, setOpenDeliveryWays] = useState(false);
+  const [codePromoState, setCodePromoState] = useState(false);
+  const [codePromoCancel, setCodePromoCancel] = useState(false);
+
   //------------------------------------------tvaResult------------------------------------------------!!
   const tva = 7.7;
   const tvaResult = (cart.totalProductsPrice / 100) * tva;
-  const cartNewTotal = parseFloat(tvaResult.toFixed(2));
-  const totalValue = cart.totalProductsPrice + cartNewTotal;
+
+  console.log("usedCoupons: ", usedCoupons);
 
   useEffect(() => {
     setCurrency(
@@ -184,7 +186,7 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
         line_items: _lineItems,
       });
     }
-    setCartProducts(cart.products);
+
     // eslint-disable-next-line
   }, [cart]);
 
@@ -236,19 +238,16 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
 
     switch (true) {
       case productsWeight?.weight <= 2:
-        //alert("CHF 8,50");
         setShippingPrice(8.5);
         break;
       case productsWeight?.weight > 2 && productsWeight?.weight <= 10:
-        //alert("CHF 11,20");
         setShippingPrice(11.2);
         break;
       case productsWeight?.weight > 10 && productsWeight?.weight <= 30:
-        // alert("CHF 30,50");
         setShippingPrice(30.5);
         break;
       case productsWeight?.weight > 30:
-        //alert("Pointe de Vente!!");
+        console.log("Pointe de Vente!!");
         break;
       default:
         alert("none");
@@ -257,6 +256,8 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
   }, [cart.products]);
 
   const _handleBillingShippingData = (values: IFormValues) => {
+    setPaymentSteps(2);
+    setOpenDeliveryWays(true);
     const billing = {
       last_name: values.billing_last_name,
       first_name: values.shipping_first_name,
@@ -285,6 +286,7 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
   };
 
   const _sendOrder = useCallback(async () => {
+    setCodePromoCancel(true);
     const couponsCodeArray = usedCoupons.map((coupon) => {
       return { code: coupon.code };
     });
@@ -356,13 +358,6 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
       },
       line_items: lineItems,
       coupon_lines: couponsCodeArray,
-      shipping_lines: [
-        {
-          method_id: "flat_rate",
-          method_title: "Flat Rate",
-          total: shippingPrice.toFixed(2),
-        },
-      ],
     };
 
     if (couponsCodeArray.length > 0) {
@@ -383,10 +378,6 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
       setDiscountCupons(response.coupon_lines);
 
       console.log("responseOrder", response);
-
-      console.log("cartPrice: ", cart.totalProductsPrice);
-      console.log("discount_total: ", response.discount_total);
-      console.log("shippingPrice: ", shippingPrice);
 
       setPriceTotalWithCoupon(
         (
@@ -460,7 +451,6 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
       setTransactionId(data.transactionId);
 
       if (data) {
-        console.log("transaction: ", data);
         setIsOrder(true);
       }
     }
@@ -509,20 +499,41 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
 
   const openCodePromo = () => {
     setOpenedCodePromo(!openedCodePromo);
+    setPaymentSteps(3);
+  };
+
+  const _openDeliveryWays = () => {
+    setOpenDeliveryWays(!openDeliveryWays);
   };
 
   const selectSHPmethod = useCallback(
-    (method: ShippingMethods) => {
+    (method: ShippingMethods, index: number) => {
+      setMethodShipping(index);
       if (method.method_id === "local_pickup") {
         setShippingPrice(0);
       } else if (method.method_id === "flexible_shipping_single") {
         getShippingPrice();
       }
-
-      setShippingMethods(method);
     },
     [getShippingPrice]
   );
+
+  const codePromoSteps = useCallback(() => {
+    setCodePromoState(true);
+  }, []);
+
+  const deleteOrders = useCallback(async (id: number) => {
+    const response = await deleteOrder(id);
+    console.log("resp===>", response);
+
+    if (response) {
+      setDiscountCupons([]);
+      _setOrder({} as Order);
+      setusedCoupons([]);
+      setPriceTotalWithCoupon("");
+      setIsCoupon(false);
+    }
+  }, []);
 
   return (
     <>
@@ -543,34 +554,59 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
               </section>
               <section className="sections_title">
                 <div className="title">
-                  <h2>1. Vos coordonnées</h2>
+                  <h2 className={paymentSteps === 1 ? "active" : ""}>
+                    1. Vos coordonnées
+                  </h2>
                 </div>
                 <BillingShippingForm
                   handleBillingShippingData={_handleBillingShippingData}
                 />
               </section>
               <section className="shipping">
-                <div className="title">
-                  <h2>2. {wayDelivery}</h2>
+                <div className="title" onClick={_openDeliveryWays}>
+                  <h2
+                    className={
+                      paymentSteps === 2
+                        ? "active2"
+                        : paymentSteps === 3
+                        ? "completed2"
+                        : ""
+                    }
+                  >
+                    2. {wayDelivery}
+                  </h2>
                 </div>
 
-                <div style={{ marginTop: "40px" }}>
-                  {_shippingMethods.map((method) => {
-                    return (
-                      <div
-                        key={method.id}
-                        onClick={() => selectSHPmethod(method)}
-                      >
-                        {method.method_title}
-                      </div>
-                    );
-                  })}
-                </div>
+                {openDeliveryWays && (
+                  <ShipMethods>
+                    {_shippingMethods.map((method, index) => {
+                      return (
+                        <ShipItem
+                          key={method.id}
+                          onClick={() => selectSHPmethod(method, index)}
+                        >
+                          <div>
+                            {methodShipping === index ? (
+                              <IoMdRadioButtonOk />
+                            ) : (
+                              <IoMdRadioButtonNot />
+                            )}
+                          </div>
+                          <div className="ship_methods_name">
+                            {method.method_title}
+                          </div>
+                        </ShipItem>
+                      );
+                    })}
+                  </ShipMethods>
+                )}
               </section>
 
               <section className="code_promo">
                 <div className="title" onClick={openCodePromo}>
-                  <h2>3. Code Promo</h2>
+                  <h2 className={paymentSteps === 3 ? "active3" : ""}>
+                    3. Code Promo
+                  </h2>
                 </div>
                 {openedCodePromo && (
                   <>
@@ -583,10 +619,23 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
                       userGrp={user.profile?.wcb2b_group}
                       setusedCoupons={setusedCoupons}
                       usedCoupons={usedCoupons}
+                      codePromoSteps={codePromoSteps}
                     />
                     <BtnCouponsBlock>
-                      <button type="button">Annuler</button>
-                      <button type="button" onClick={_sendOrder}>
+                      <button
+                        type="button"
+                        disabled={!codePromoCancel}
+                        className={codePromoCancel ? "active_cancel" : ""}
+                        onClick={() => deleteOrders(orderIdRef.current)}
+                      >
+                        Annuler
+                      </button>
+                      <button
+                        type="button"
+                        onClick={_sendOrder}
+                        disabled={!codePromoState}
+                        className={codePromoState ? "active" : ""}
+                      >
                         Valider mes coupons
                       </button>
                     </BtnCouponsBlock>
@@ -684,7 +733,7 @@ export default function CheckoutMobility({ _shippingMethods }: Props) {
                         disabled={isPayment}
                       >
                         <div className="btn_payment_method">
-                          <span>Méthodes de payments</span>
+                          <span>Proccéder au paiement</span>
                           <span>{isOrder === false && <Spiner />}</span>
                         </div>
                       </button>
