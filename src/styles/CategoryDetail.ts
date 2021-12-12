@@ -66,6 +66,10 @@ export const ProductInfos = styled.div`
 `;
 
 export const ProductImage = styled.div`
+    width: 100%;
+    position: relative;
+    height: auto;
+
   @media (max-width: 1015px) {
     order: -1;
   }

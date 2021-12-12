@@ -51,7 +51,7 @@ export default function Category({ category, productsByCategory }: Props) {
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
   const [activedModelIndex, setActivedModelIndex] = useState(0);
-console.log(products)
+
   useEffect(() => {
     _setProducts(productsByCategory);
   }, [productsByCategory]);
@@ -144,8 +144,8 @@ console.log(products)
           </ProductInfos>
           <ProductImage>
             <Image
-              width={250}
-              height={260}
+              objectFit="contain"
+              layout="fill"
               src={
                 products[productIndex]?.images[0]
                   ? products[productIndex]?.images[0].src

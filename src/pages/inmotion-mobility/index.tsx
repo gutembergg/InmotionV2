@@ -18,6 +18,8 @@ import Image from "next/dist/client/image";
 import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
 import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
 import imageHelp from "../../../public/images/homeMobility/contactUs.png";
+import horairesBG from "../../../public/images/homeMobility/horaireBg.jpg";
+
 import Link from "next/dist/client/link";
 import SliderMobility from "../../components/Sliders/SliderMobility";
 import {
@@ -26,7 +28,7 @@ import {
 } from "../../services/woocommerceApi/Products";
 import { GetStaticProps } from "next";
 import { IProduct } from "../../interfaces/IProducts";
-import { ProductCard } from "../../styles/ProductDetail";
+import CarouselSwiper from "../../components/Sliders/Carousel";
 
 interface Props {
   featuredProducts: IProduct[];
@@ -60,6 +62,13 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
     useState<IProduct[]>(onSaleProducts);
   console.log("featured productzs", featuredproducts);
   console.log("onsale products", onSaleProducts);
+  const horaireLundi = t("home:horaireLundi");
+  const horaireMardi = t("home:horaireMardi");
+  const horaireMercredi = t("home:horaireMercredi");
+  const horaireJeudi = t("home:horaireJeudi");
+  const horaireVendredi = t("home:horaireVendredi");
+  const horaireSamedi = t("home:horaireSamedi");
+  const horaireDimanche = t("home:horaireDimanche");
 
   useEffect(() => {
     _setfeaturedproducts(featuredProducts);
@@ -81,8 +90,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
         </MobilitySlider>
         <PromotedProducts>
           <h1 className="squared">{PromotedProductTitle}</h1>
-          {/* <ProductCard product={featuredproducts[0]} /> */}
-          placer les produits mis en avant ici max 4
+          <CarouselSwiper products={featuredproducts} />
         </PromotedProducts>
         <PromotedSection>
           <div className="clipPathShadow">
@@ -105,13 +113,13 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
         </PromotedSection>
         <NewProducts>
           <h1 className="squared">{NewProductTitle}</h1>
-          placer les last products ici max 4
+          <CarouselSwiper products={onSaleProduct} />
         </NewProducts>
         <RentalSection>
           <div className="content">
             <h2>{locationTitle}</h2>
             <p>{locationTxt}</p>
-            <Link href="/">
+            <Link href="/inmotion-mobility/services/location">
               <a>{LocationLink}</a>
             </Link>
           </div>
@@ -128,7 +136,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
           <div className="content">
             <h2 className="squared">{contactTitle}</h2>
             <p>{contactTxt}</p>
-            <Link href="/">
+            <Link href="/inmotion-mobility/contact">
               <a>{contactLink}</a>
             </Link>
           </div>
@@ -142,7 +150,27 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
           </div>
         </HelpSection>
         <InfoSection>
-          <h2 className="squared">{shopHours}</h2>
+          <div className="clipPathShadow">
+            <div className="promotedSectionImage">
+              <Image
+                src={horairesBG}
+                alt="protection rour trottinette,vélo et gyroroues "
+                layout="fill"
+                objectFit="cover"
+                objectPosition="left bottom"
+              />
+            </div>
+          </div>
+          <div className="content">
+            <h2 className="squared">{shopHours}</h2>
+            <p>{horaireLundi}</p>
+            <p>{horaireMardi}</p>
+            <p>{horaireMercredi}</p>
+            <p>{horaireJeudi}</p>
+            <p>{horaireVendredi}</p>
+            <p>{horaireSamedi}</p>
+            <p>{horaireDimanche}</p>
+          </div>
         </InfoSection>
       </MainContent>
     </Container>

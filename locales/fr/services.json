@@ -1,0 +1,26 @@
+{
+  "serviceTitle": "Qu'est ce que nous offrons",
+  "serviceApresVente": "Service après-vente",
+  "prestationB2b": "Prestation B2B",
+  "paymentOnline": "Paiements en ligne",
+  "shopInBern": "Boutique à Bern",
+  "docAndFormTitle": "Documents & Formulaires",
+  "locationTitle": "Service de location",
+  "locationLink": "Afficher nos conditions",
+  "returnTitle": "Formulaire de renvoi",
+  "returnLink": "Afficher le formulaire",
+  "ManualsTitle": "Manuels d'utilisation",
+  "manualsLink": "consulter les manuels",
+
+  "DirectiveTitle": "Autorisation de retour",
+  "DirectiveDesc": "Votre produit pourrait être renvoyé après acceptation de notre équipe d’assistance Inmotion Suisse.",
+  "ul1": "Préparez votre numéro de série",
+  "ul2": "Remplissez complètement le formulaire avec votre nom – adresse email – numéro de téléphone et numéro de série",
+  "ul3": "Notre équipe d’assistance suisse vous contactera sous peu dans les 48h (du lundi au vendredi)",
+  "ul4": "Notre équipe d’assistance suisse vérifiera votre produit à distance",
+  "ul5": "Si votre produit doit être réparé ou si des pièces défectueuses doivent être changées, notre équipe d’assistance suisse vous enverra un formulaire avec un numéro RMA et toutes les informations nécessaires.",
+  "ul6": "Les frais de retour sont à la charge de l’acheteur",
+  "ul7": "Le produit doit être renvoyé avec tous les accessoires, une copie de votre facture, correctement et emballé avec sécurité. La zone de navigation est limitée à la Suisse.",
+  "ul8": "Si le produit n’est pas couvert par la garantie, notre équipe d’assistance suisse vous enverra un devis. La réparation sera faite après l’acceptation du client",
+  "FormTitle": "Formulaire de retour"
+}

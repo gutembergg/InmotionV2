@@ -24,6 +24,7 @@ export default createGlobalStyle`
 
   }
 
+  }
   button{
       cursor: pointer;
   }
@@ -59,6 +60,9 @@ h1{
         z-index:3;
         position: relative;
         font-weight: 600;
+        @media (max-width:960px){
+          font-size:1.6em
+        }
     }
     h1::before {
         content: " ";
@@ -76,6 +80,9 @@ h2{
         margin-bottom: 10px;
         z-index:3;
         position: relative;
+        @media (max-width:960px){
+          font-size:1.2em
+        }
     }
     h2.squared{ 
       margin-left: 16px;

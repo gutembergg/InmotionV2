@@ -1,0 +1,26 @@
+{
+    "serviceTitle":"What we offer",
+    "serviceApresVente":"After sales service",
+    "prestationB2b":"B2B service",
+    "paymentOnline":"Online payments",
+    "shopInBern":"Shop in Bern",
+    "docAndFormTitle":"Documents & Forms",
+    "locationTitle":"Rental service",
+    "locationLink":"View our conditions",
+    "returnTitle":"Referral form",
+    "returnLink":"Display the form",
+    "ManualsTitle":"User manuals",
+    "manualsLink":"consult the manuals",
+    
+  "DirectiveTitle": "Return authorization",
+  "DirectiveDesc": "Your product may be returned after acceptance by our Inmotion Switzerland support team.",
+  "ul1": "Prepare your serial number",
+  "ul2": "Fill out the form completely with your name - email address - phone number and serial number",
+  "ul3": "Our Swiss support team will contact you within 48 hours (Monday to Friday)",
+  "ul4": "Our Swiss support team will check your product remotely",
+  "ul5": "If your product needs to be repaired or if defective parts need to be changed, our Swiss support team will send you a form with an RMA number and all necessary information.",
+  "ul6": "Return shipping costs are at the buyer's expense",
+  "ul7": "The product must be returned with all accessories, a copy of your invoice, properly and securely packed. The shipping area is limited to Switzerland.",
+  "ul8": "If the product is not covered by the warranty, our Swiss support team will send you a quote. The repair will be done after the customer's acceptance",
+  "FormTitle": "Return form"
+}
