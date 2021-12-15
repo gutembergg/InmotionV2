@@ -1,5 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { IoMdRadioButtonOn, IoMdRadioButtonOff } from "react-icons/io";
+import { shade } from "polished";
+
+interface Props {
+  scrollref: boolean;
+}
 
 export const Container = styled.div`
   display: flex;
@@ -30,6 +35,17 @@ export const Content = styled.div`
     width: 100%;
     margin-top: 2.5rem;
 
+    .order_section {
+      position: relative;
+
+      width: 100%;
+      max-width: 600px;
+
+      @media (max-width: 877px) {
+        margin: auto;
+      }
+    }
+
     @media (max-width: 877px) {
       flex-direction: column;
     }
@@ -47,11 +63,26 @@ export const FormSection = styled.div`
     }
 
     h2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background-color: var(--BlueSelected);
       color: var(--White);
       font-weight: 600;
       font-size: 1.7rem;
       padding: 1rem;
+
+      .coordonnes {
+        font-size: 1.7rem;
+      }
+
+      .btn_update {
+        cursor: pointer;
+
+        &:hover {
+          color: ${shade(0.2, "#fff")};
+        }
+      }
     }
   }
 
@@ -65,6 +96,11 @@ export const FormSection = styled.div`
 
     h2.completed2 {
       background-color: var(--BlueSelected);
+    }
+
+    h2.disableb {
+      cursor: not-allowed;
+      background-color: var(--DarkGray);
     }
 
     h2 {
@@ -83,10 +119,16 @@ export const FormSection = styled.div`
   section.code_promo {
     cursor: pointer;
     margin-top: 0.8rem;
+    margin-bottom: 2rem;
     padding-right: 3rem;
 
     h2.active3 {
       background-color: var(--Blue);
+    }
+
+    h2.disabled3 {
+      cursor: not-allowed;
+      background-color: var(--DarkGray);
     }
 
     h2 {
@@ -95,6 +137,12 @@ export const FormSection = styled.div`
       font-weight: 600;
       font-size: 1.7rem;
       padding: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .coupon_code_block {
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -116,12 +164,22 @@ export const FormSection = styled.div`
   }
 `;
 
-export const OrderSession = styled.div`
+export const OrderSession = styled.div<Props>`
+  /*  ${(props) =>
+    props.scrollref &&
+    css`
+      div.order_section_block {
+        position: fixed;
+        top: 30px;
+
+        width: 41vw;
+      }
+    `} */
+
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-  max-width: 600px;
+  width: 41vw;
 
   .products_list {
     list-style-type: none;
@@ -240,9 +298,14 @@ export const OrderSession = styled.div`
   }
 
   @media (max-width: 877px) {
-    display: flex;
-    justify-self: center;
-    align-self: center;
+    width: 100%;
+    max-width: 600px;
+
+    div.order_section_block {
+      position: static;
+      width: 100%;
+      max-width: 600px;
+    }
   }
 
   @media (max-width: 400px) {
@@ -255,9 +318,11 @@ export const Payment = styled.div`
   max-width: 340px;
   display: flex;
   margin-top: 1.4rem;
+  margin-bottom: 1rem;
 
   .payment_container {
     width: 100%;
+
     .button_block {
       display: flex;
 
@@ -268,6 +333,7 @@ export const Payment = styled.div`
 
       .disabled {
         cursor: not-allowed;
+        background-color: var(--DarkGray);
       }
 
       .btn_payment_method {
@@ -403,7 +469,7 @@ export const IoMdRadioButtonNot = styled(IoMdRadioButtonOff)`
 export const BtnCouponsBlock = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: end;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
 
@@ -413,9 +479,12 @@ export const BtnCouponsBlock = styled.div`
 
   button {
     background: var(--DarkGray);
-    height: 40px;
-    width: 200px;
+    height: 45px;
+    width: 100%;
+    max-width: 300px;
     padding: 0.7rem;
+    border: none;
+    font-weight: 600;
 
     border: none;
   }
@@ -428,6 +497,12 @@ export const BtnCouponsBlock = styled.div`
   button.active_cancel {
     background: var(--Blue);
     color: var(--White);
+  }
+
+  button.desatived {
+    cursor: not-allowed;
+    background: var(--DarkGray);
+    color: var(--LightGray);
   }
 `;
 
@@ -447,3 +522,60 @@ export const ShipItem = styled.div`
     font-weight: 600;
   }
 `;
+
+export const CouponsList = styled.div`
+  padding: 1.8rem 0.3rem;
+  font-size: 0.8rem;
+
+  .couponsList_block {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    div {
+      margin-left: 0.6rem;
+      font-weight: 600;
+    }
+  }
+
+  .closeButton {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    box-sizing: border-box;
+    line-height: 20px;
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+
+    &:before,
+    &:after {
+      transform: rotate(-45deg);
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -1px;
+      margin-left: -10px;
+      display: block;
+      height: 3px;
+      width: 20px;
+      background-color: var(--Red);
+      transition: all 0.25s ease-out;
+    }
+
+    &:after {
+      transform: rotate(-135deg);
+    }
+
+    &:hover {
+      &:before,
+      &:after {
+        transform: rotate(0deg);
+      }
+    }
+  }
+`;
+
+export const AddressView = styled.div``;

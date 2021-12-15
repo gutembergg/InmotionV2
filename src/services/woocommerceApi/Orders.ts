@@ -1,3 +1,4 @@
+import { ICoupons } from "../../interfaces/ICoupons";
 import { Order } from "../../interfaces/Order";
 import wcApi from "./wcAxiosConfig";
 import { wooCommerce } from "./woocommerceConfig";
@@ -39,6 +40,15 @@ export const updateOrder = async (orderId: number, status: string) => {
   } catch (error) {
     console.log("Error: ", error);
   }
+};
+
+export const updateCouponsOrder = async (id: number, coupons: ICoupons[]) => {
+  const query = {
+    coupon_lines: coupons,
+  };
+  const { data } = await wcApi.put(`orders/${id}`, query);
+
+  return data;
 };
 
 export const deleteOrder = async (id: number) => {

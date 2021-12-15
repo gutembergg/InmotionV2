@@ -13,3 +13,12 @@ export const getShippingMethods = async () => {
 
   return data;
 };
+
+// Get zone methods ///////////////////////////////////////////////
+
+export const getShippingZoneMethods = async (zoneId: number) => {
+  const { data } = await wooCommerce.get(`shipping/zones/${zoneId}/methods`);
+
+  console.log("Res=====", data);
+  return data;
+};

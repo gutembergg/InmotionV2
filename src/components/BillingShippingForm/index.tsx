@@ -69,7 +69,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     },
     {
       name: germany,
-      code: "GE",
+      code: "DE",
     },
     {
       name: italy,
@@ -94,12 +94,6 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
   ];
 
   const { user } = useUser();
-  const [_user, _setUser] = useState<IUserState>(user);
-
-  const [_formValues, _setFormValues] = useState<IFormValues>(
-    {} as IFormValues
-  );
-
   const [formValues, setFormValues] = useState<IFormValues>({
     billing_last_name: user.billing_info?.billing_last_name || "",
     billing_first_name: user.billing_info?.billing_first_name || "",
@@ -111,7 +105,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     billing_city: user.billing_info?.billing_city || "",
     billing_state: user.billing_info?.billing_state || "",
     billing_country:
-      user.billing_info?.billing_country || authorizedCounty[0].name,
+      user.billing_info?.billing_country || authorizedCounty[0].code,
     isShippingForm: false,
     shipping_last_name: user.shipping_info?.shipping_last_name || "",
     shipping_first_name: user.shipping_info?.shipping_first_name || "",
@@ -122,11 +116,13 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     shipping_city: user.shipping_info?.shipping_city || "",
     shipping_state: user.shipping_info?.shipping_state || "",
     shipping_country:
-      user.shipping_info?.shipping_country || authorizedCounty[0].name,
+      user.shipping_info?.shipping_country || authorizedCounty[0].code,
   });
+  const [_user, _setUser] = useState<IUserState>({} as IUserState);
 
   useEffect(() => {
     if (user.token) {
+      _setUser(user);
       console.log(
         "user.billing_info?",
         user.billing_info?.billing_country || authorizedCounty[2]
@@ -142,7 +138,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
         billing_city: user.billing_info?.billing_city,
         billing_state: user.billing_info?.billing_state,
         billing_country:
-          user.billing_info?.billing_country || authorizedCounty[0].name,
+          user.billing_info?.billing_country || authorizedCounty[0].code,
         isShippingForm: false,
         shipping_last_name: user.shipping_info?.shipping_last_name,
         shipping_first_name: user.shipping_info?.shipping_first_name,
@@ -153,7 +149,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
         shipping_city: user.shipping_info?.shipping_city,
         shipping_state: user.shipping_info?.shipping_state,
         shipping_country:
-          user.shipping_info?.shipping_country || authorizedCounty[0].name,
+          user.shipping_info?.shipping_country || authorizedCounty[0].code,
       };
 
       setFormValues(initialValues);
@@ -169,7 +165,9 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
           enableReinitialize={true}
           validationSchema={validatorSchema}
           onSubmit={(value) => {
-            console.log("value", value);
+            if (user.token) {
+              console.log("value-user-update", value);
+            }
             handleBillingShippingData(value);
           }}
         >
@@ -534,7 +532,13 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
               </div>
 
               <div className="btn_register">
-                <ButtonRegiste type="submit">{register}</ButtonRegiste>
+                {!!_user.token ? (
+                  <ButtonRegiste type="submit">
+                    Modifier/confirmer
+                  </ButtonRegiste>
+                ) : (
+                  <ButtonRegiste type="submit">{register}</ButtonRegiste>
+                )}
               </div>
             </Form>
           )}
