@@ -1,10 +1,7 @@
 import Notiflix from "notiflix";
 import { createContext, ReactNode, useCallback, useState } from "react";
 import { AuthUser } from "../../interfaces/AuthUser";
-import {
-  createInmotionUsers,
-  userLogin,
-} from "../../services/wordpressApi/users";
+import { userLogin } from "../../services/wordpressApi/users";
 
 interface Children {
   children: ReactNode;

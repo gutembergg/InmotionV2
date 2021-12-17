@@ -10,10 +10,6 @@ const UserInfosView = ({
   _billingShippingData,
   userShippingBilling,
 }: Props) => {
-  console.log(
-    "userShippingBilling:View ",
-    userShippingBilling.billing_info.address_1
-  );
   return (
     <Container>
       <div className="billing">

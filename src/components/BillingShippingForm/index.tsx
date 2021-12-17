@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { IUserState } from "../Context/UserContext";
 
 import { Container, FormSession, ButtonRegiste } from "./styles";
+import { updateUsers } from "../../services/wordpressApi/users";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -60,6 +61,10 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
 
   const authorizedCounty: country[] = [
     {
+      name: "Sélectionnez un pays",
+      code: "",
+    },
+    {
       name: swiss,
       code: "CH",
     },
@@ -81,15 +86,15 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     },
     {
       name: spain,
-      code: "SP",
+      code: "ES",
     },
     {
       name: austria,
-      code: "AU",
+      code: "AT",
     },
     {
       name: holland,
-      code: "HL",
+      code: "NL",
     },
   ];
 
@@ -123,10 +128,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
   useEffect(() => {
     if (user.token) {
       _setUser(user);
-      console.log(
-        "user.billing_info?",
-        user.billing_info?.billing_country || authorizedCounty[2]
-      );
+
       const initialValues = {
         billing_last_name: user.billing_info?.billing_last_name,
         billing_first_name: user.billing_info?.billing_first_name,
@@ -157,6 +159,10 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
     // eslint-disable-next-line
   }, [user]);
 
+  const _updateUsers = async (value: IFormValues, token: string) => {
+    await updateUsers(value, token);
+  };
+
   return (
     <Container>
       <FormSession>
@@ -167,6 +173,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
           onSubmit={(value) => {
             if (user.token) {
               console.log("value-user-update", value);
+              _updateUsers(value, user.token);
             }
             handleBillingShippingData(value);
           }}

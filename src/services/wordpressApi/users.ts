@@ -1,5 +1,7 @@
 import axios from "axios";
+import { IFormValues } from "../../components/BillingShippingForm";
 import { AuthUser } from "../../interfaces/AuthUser";
+import { UserBillingShipping } from "../../interfaces/UserBillingShipping";
 import { UserDto } from "../../interfaces/UserDTO";
 import api from "../axiosApi";
 
@@ -26,5 +28,20 @@ export const userLogin = async (authUser: AuthUser) => {
     return response;
   } catch (error) {
     console.log("error:::", error);
+  }
+};
+
+export const updateUsers = async (
+  usersBillingShipping: IFormValues,
+  token: string
+) => {
+  try {
+    const { data } = await api.put("users", usersBillingShipping, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return data;
+  } catch (error) {
+    console.log("Error: ", error);
   }
 };

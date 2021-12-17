@@ -36,7 +36,8 @@ export const Content = styled.div`
     margin-top: 2.5rem;
 
     .order_section {
-      position: relative;
+      display: flex;
+      justify-content: center;
 
       width: 100%;
       max-width: 600px;
@@ -54,10 +55,30 @@ export const Content = styled.div`
 
 export const FormSection = styled.div`
   width: 100%;
+  overflow-y: scroll;
+  height: 900px;
 
+  padding: 0.5rem 1rem;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
   section.sections_title {
-    padding-right: 3rem;
-
     h2.active {
       background-color: var(--Blue);
     }
@@ -88,7 +109,7 @@ export const FormSection = styled.div`
 
   section.shipping {
     margin-top: 3rem;
-    padding-right: 3rem;
+    margin-bottom: 2rem;
 
     h2.active2 {
       background-color: var(--Blue);
@@ -120,7 +141,6 @@ export const FormSection = styled.div`
     cursor: pointer;
     margin-top: 0.8rem;
     margin-bottom: 2rem;
-    padding-right: 3rem;
 
     h2.active3 {
       background-color: var(--Blue);
@@ -146,6 +166,35 @@ export const FormSection = styled.div`
     }
   }
 
+  section.methods_payment {
+    cursor: pointer;
+    margin-top: 0.8rem;
+    margin-bottom: 20rem;
+
+    h2 {
+      background-color: var(--DarkGray);
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      padding: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .active {
+      background-color: var(--Blue);
+    }
+
+    @media (max-width: 877px) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 877px) {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   @media (max-width: 400px) {
     section.sections_title {
       display: flex;
@@ -165,21 +214,25 @@ export const FormSection = styled.div`
 `;
 
 export const OrderSession = styled.div<Props>`
-  /*  ${(props) =>
+  /*   ${(props) =>
     props.scrollref &&
     css`
       div.order_section_block {
         position: fixed;
         top: 30px;
+        right: 77px;
 
-        width: 41vw;
+        width: 100%;
+        max-width: 41vw;
       }
     `} */
 
   display: flex;
   flex-direction: column;
 
-  width: 41vw;
+  width: 100%;
+  max-width: 650px;
+  padding: 0 1rem;
 
   .products_list {
     list-style-type: none;

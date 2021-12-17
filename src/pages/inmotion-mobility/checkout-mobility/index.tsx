@@ -134,7 +134,7 @@ export default function CheckoutMobility() {
   });
   const [orderId, setOrderId] = useState<number>();
   const [isOrder, setIsOrder] = useState<boolean | null>(null);
-  const [isPayment, setIsPayment] = useState(true);
+  const [isPayment, setIsPayment] = useState(false);
   const [isCheckMethod, setIsCheckMethod] = useState(false);
   const [paymentValidate, setPaymentValidate] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -144,6 +144,7 @@ export default function CheckoutMobility() {
   const [methodsShippingList, setMethodsShippingList] = useState<
     ShippingMethods[]
   >([]);
+  const [noAllowShipping, setNoAllowShipping] = useState(false);
 
   const [currency, setCurrency] = useState("");
   const [isCoupon, setIsCoupon] = useState(false);
@@ -156,6 +157,7 @@ export default function CheckoutMobility() {
   const [openDeliveryWays, setOpenDeliveryWays] = useState(false);
   const [codePromoState, setCodePromoState] = useState(false);
   const [codePromoCancel, setCodePromoCancel] = useState(false);
+  const [statePromoCode, setStatePromoCode] = useState(true);
 
   //------------------------------------------tvaResult------------------------------------------------!!
   const tva = 7.7;
@@ -259,14 +261,19 @@ export default function CheckoutMobility() {
       );
 
       method.settings.method_rules.value.map((rule) => {
-        rule.conditions.filter((condition) => {
+        const result = rule.conditions.filter((condition) => {
           if (
             productsWeight?.weight >= condition.min &&
             productsWeight?.weight <= condition.max
           ) {
             setShippingPrice(Number(rule.cost_per_order));
+            //setNoAllowShipping(false);
+            console.log("OK livraison", rule);
           }
         });
+        console.log("result======>", result);
+
+        return result;
       });
     },
     [cart.products]
@@ -305,9 +312,6 @@ export default function CheckoutMobility() {
   };
 
   const _sendOrder = useCallback(async () => {
-    setCodePromoCancel(true);
-    setIsPayment(false);
-
     const couponsCodeArray = usedCoupons.map((coupon) => {
       return { code: coupon.code };
     });
@@ -388,15 +392,16 @@ export default function CheckoutMobility() {
     if (isCoupon === false) {
       const response = await wc_createOrder(order);
       _setOrder(response);
+      setCodePromoState(false);
       orderIdRef.current = response.id;
       lineItemsRef.current = response.line_items as ILineItems[];
       const shippinResult = response.shipping_total;
 
-      console.log("shippinResult: ", Number(shippinResult));
       shippingPriceRef.current = Number(shippinResult);
 
       setOrderId(response.id);
       setDiscountCupons(response.coupon_lines);
+      setIsPayment(true);
 
       console.log("responseOrder", response);
 
@@ -435,7 +440,7 @@ export default function CheckoutMobility() {
         return;
       }
     }
-    setIsPayment(true);
+
     setIsOrder(false);
     setPaymentValidate(true);
 
@@ -523,10 +528,6 @@ export default function CheckoutMobility() {
     setPaymentSteps(3);
   };
 
-  const _openDeliveryWays = () => {
-    setOpenDeliveryWays(!openDeliveryWays);
-  };
-
   const selectSHPmethod = useCallback(
     (method: ShippingMethods, index: number) => {
       setMethodShipping(index);
@@ -541,7 +542,7 @@ export default function CheckoutMobility() {
 
   const codePromoSteps = useCallback(() => {
     setCodePromoState(true);
-    setIsPayment(true);
+    setIsPayment(false);
   }, []);
 
   const deleteOrders = useCallback(async (id: number) => {
@@ -564,6 +565,7 @@ export default function CheckoutMobility() {
     let selectedCountry = 0;
 
     const zones: ShippingZone[] = await getShippingZones();
+    console.log("getShippingZones: ", zones);
 
     const country =
       userShippingBilling.shipping_info?.shipping_country ||
@@ -577,11 +579,11 @@ export default function CheckoutMobility() {
       case "CH":
         selectedCountry = 1;
         break;
-      case "FR":
-        selectedCountry = 3;
+      case "ES":
+        selectedCountry = 4;
         break;
       default:
-        alert("none");
+        selectedCountry = 3;
         break;
     }
 
@@ -590,10 +592,10 @@ export default function CheckoutMobility() {
     setMethodsShippingList(response);
 
     getShippingPrice(response[0]);
-    setIsPayment(false);
+    setIsPayment(true);
     setPaymentSteps(3);
 
-    console.log("zones: ", zones);
+    console.log("zonesResp: ", response);
   }, [
     _billingShippingData.billing?.country,
     userShippingBilling.billing_info.billing_country,
@@ -606,12 +608,20 @@ export default function CheckoutMobility() {
     (id: number) => {
       const couponsList = usedCoupons.filter((coupon) => coupon.id !== id);
       setusedCoupons(couponsList);
+
+      if (couponsList.length === 0) {
+        setCodePromoState(false);
+        setIsPayment(true);
+      }
+      setCodePromoCancel(true);
+
+      console.log("couponsList: ", couponsList);
     },
     [usedCoupons]
   );
 
-  console.log("_billingShippingData", _billingShippingData);
-  console.log("userShippingBilling", userShippingBilling);
+  console.log("codePromoState", codePromoState);
+  //console.log("codePromoState", codePromoState);
 
   return (
     <>
@@ -619,7 +629,7 @@ export default function CheckoutMobility() {
         <h1>Votre Commande</h1>
         <Content>
           <div className="content">
-            <FormSection>
+            <FormSection className="sections">
               <section className="form_users">
                 {" "}
                 {!loged && (
@@ -671,25 +681,29 @@ export default function CheckoutMobility() {
 
                 {openDeliveryWays && (
                   <ShipMethods>
-                    {methodsShippingList.map((method, index) => {
-                      return (
-                        <ShipItem
-                          key={method.id}
-                          onClick={() => selectSHPmethod(method, index)}
-                        >
-                          <div>
-                            {methodShipping === index ? (
-                              <IoMdRadioButtonOk />
-                            ) : (
-                              <IoMdRadioButtonNot />
-                            )}
-                          </div>
-                          <div className="ship_methods_name">
-                            {method.method_title}
-                          </div>
-                        </ShipItem>
-                      );
-                    })}
+                    {noAllowShipping ? (
+                      <h4>Pointe vente</h4>
+                    ) : (
+                      methodsShippingList.map((method, index) => {
+                        return (
+                          <ShipItem
+                            key={method.id}
+                            onClick={() => selectSHPmethod(method, index)}
+                          >
+                            <div>
+                              {methodShipping === index ? (
+                                <IoMdRadioButtonOk />
+                              ) : (
+                                <IoMdRadioButtonNot />
+                              )}
+                            </div>
+                            <div className="ship_methods_name">
+                              {method.method_title}
+                            </div>
+                          </ShipItem>
+                        );
+                      })
+                    )}
                   </ShipMethods>
                 )}
               </section>
@@ -735,7 +749,9 @@ export default function CheckoutMobility() {
                         onClick={_sendOrder}
                         disabled={!codePromoState}
                         className={
-                          codePromoState && Object.keys(_order).length === 0
+                          codePromoState &&
+                          usedCoupons.length > 0 &&
+                          Object.keys(_order).length === 0
                             ? "active"
                             : "desatived"
                         }
@@ -745,6 +761,82 @@ export default function CheckoutMobility() {
                     </BtnCouponsBlock>
                   </>
                 )}
+              </section>
+              <section className="methods_payment">
+                <div className="btn_payment_method">
+                  <h2
+                    onClick={checkout}
+                    className={
+                      isPayment && codePromoState === false
+                        ? "active"
+                        : "disabled"
+                    }
+                  >
+                    4. Paiement
+                  </h2>
+                  <span>{isOrder === false && <Spiner />}</span>
+                </div>
+
+                <div className="payment_block">
+                  <Payment>
+                    <div className="payment_container">
+                      <div className="payment_list">
+                        <div className="payments_block">
+                          {paymentMethodes.length > 0 &&
+                            paymentMethodes.map((method, index) => {
+                              return (
+                                <PaymentMethods key={method.id}>
+                                  <div className="methods">
+                                    <div
+                                      onClick={() =>
+                                        updateTransaction(method, index)
+                                      }
+                                    >
+                                      {selectedPaymentMethod === index ? (
+                                        <IoMdRadioButtonOk />
+                                      ) : (
+                                        <IoMdRadioButtonNot />
+                                      )}
+                                    </div>
+                                    <div className="logo_box">
+                                      <Image
+                                        src={method.resolvedImageUrl}
+                                        width={50}
+                                        height={50}
+                                        alt="logo-payment-methods"
+                                      />
+                                    </div>
+                                    <div className="method_name">
+                                      {method.name}
+                                    </div>
+                                  </div>
+                                </PaymentMethods>
+                              );
+                            })}
+                        </div>
+
+                        {paymentMethodes.length > 0 && (
+                          <div className="button_block btn_payment">
+                            <button
+                              onClick={validateCheckout}
+                              className={
+                                isCheckMethod || paymentValidate
+                                  ? "disabled"
+                                  : ""
+                              }
+                              disabled={isCheckMethod || paymentValidate}
+                            >
+                              <div className="btn_payment_method">
+                                <span>{payment}</span>
+                                <span>{isCheckMethod && <Spiner />}</span>
+                              </div>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </Payment>
+                </div>
               </section>
             </FormSection>
             <div className="order_section">
@@ -827,80 +919,6 @@ export default function CheckoutMobility() {
                         </span>
                       </h5>
                     </div>
-                  </div>
-
-                  <div className="payment_block">
-                    <Payment>
-                      <div className="payment_container">
-                        <div className="button_block">
-                          <button
-                            onClick={checkout}
-                            className={isPayment ? "disabled" : ""}
-                            disabled={isPayment}
-                          >
-                            <div className="btn_payment_method">
-                              <span>Proccéder au paiement</span>
-                              <span>{isOrder === false && <Spiner />}</span>
-                            </div>
-                          </button>
-                        </div>
-
-                        <div className="payment_list">
-                          <div className="payments_block">
-                            {paymentMethodes.length > 0 &&
-                              paymentMethodes.map((method, index) => {
-                                return (
-                                  <PaymentMethods key={method.id}>
-                                    <div className="methods">
-                                      <div
-                                        onClick={() =>
-                                          updateTransaction(method, index)
-                                        }
-                                      >
-                                        {selectedPaymentMethod === index ? (
-                                          <IoMdRadioButtonOk />
-                                        ) : (
-                                          <IoMdRadioButtonNot />
-                                        )}
-                                      </div>
-                                      <div className="logo_box">
-                                        <Image
-                                          src={method.resolvedImageUrl}
-                                          width={50}
-                                          height={50}
-                                          alt="logo-payment-methods"
-                                        />
-                                      </div>
-                                      <div className="method_name">
-                                        {method.name}
-                                      </div>
-                                    </div>
-                                  </PaymentMethods>
-                                );
-                              })}
-                          </div>
-
-                          {paymentMethodes.length > 0 && (
-                            <div className="button_block btn_payment">
-                              <button
-                                onClick={validateCheckout}
-                                className={
-                                  isCheckMethod || paymentValidate
-                                    ? "disabled"
-                                    : ""
-                                }
-                                disabled={isCheckMethod || paymentValidate}
-                              >
-                                <div className="btn_payment_method">
-                                  <span>{payment}</span>
-                                  <span>{isCheckMethod && <Spiner />}</span>
-                                </div>
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </Payment>
                   </div>
                 </div>
               </OrderSession>
