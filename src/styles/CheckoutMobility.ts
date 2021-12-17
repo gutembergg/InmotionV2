@@ -111,23 +111,28 @@ export const FormSection = styled.div`
     margin-top: 3rem;
     margin-bottom: 2rem;
 
-    h2.active2 {
+    .ship_title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .active2 {
       background-color: var(--Blue);
     }
 
-    h2.completed2 {
+    .completed2 {
       background-color: var(--BlueSelected);
     }
 
-    h2.disableb {
+    .disableb {
       cursor: not-allowed;
       background-color: var(--DarkGray);
     }
 
     h2 {
-      background-color: var(--DarkGray);
+      margin-bottom: 0;
       color: var(--White);
-      font-weight: 600;
       font-size: 1.7rem;
       padding: 0.7rem;
     }
@@ -171,17 +176,39 @@ export const FormSection = styled.div`
     margin-top: 0.8rem;
     margin-bottom: 20rem;
 
-    h2 {
+    .btn_payment_method {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       background-color: var(--DarkGray);
-      color: var(--White);
-      font-weight: 600;
-      font-size: 1.7rem;
       padding: 0.7rem;
-      margin-bottom: 1.2rem;
+
+      h2 {
+        margin-bottom: 0;
+        color: var(--White);
+        font-weight: 600;
+        font-size: 1.7rem;
+      }
+
+      span {
+        margin-left: 1.2rem;
+      }
     }
 
     .active {
       background-color: var(--Blue);
+
+      h2 {
+        margin-bottom: 0;
+        color: var(--White);
+        font-weight: 600;
+        font-size: 1.7rem;
+      }
+    }
+
+    .disabled {
+      cursor: not-allowed;
+      background-color: var(--DarkGray);
     }
 
     @media (max-width: 877px) {
@@ -190,6 +217,7 @@ export const FormSection = styled.div`
   }
 
   @media (max-width: 877px) {
+    height: 100%;
     ::-webkit-scrollbar {
       display: none;
     }
@@ -387,17 +415,6 @@ export const Payment = styled.div`
       .disabled {
         cursor: not-allowed;
         background-color: var(--DarkGray);
-      }
-
-      .btn_payment_method {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-
-        span + span {
-          margin-left: 1rem;
-        }
       }
     }
 

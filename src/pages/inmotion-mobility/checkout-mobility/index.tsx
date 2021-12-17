@@ -21,7 +21,6 @@ import BillingShippingForm, {
   IFormValues,
 } from "../../../components/BillingShippingForm";
 import {
-  deleteOrder,
   wc_createOrder,
   _updateOrder,
 } from "../../../services/woocommerceApi/Orders";
@@ -35,15 +34,9 @@ import Spiner from "../../../components/Spiner";
 
 import { ICoupons } from "../../../interfaces/ICoupons";
 import { CouponLines, Order } from "../../../interfaces/Order";
-import {
-  getShippingMethods,
-  getShippingZoneMethods,
-  getShippingZones,
-} from "../../../services/woocommerceApi/ShippingMethods";
-import {
-  ShippingMethods,
-  ShippingZone,
-} from "../../../interfaces/ShippingMethods";
+import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
+import { ShippingMethods } from "../../../interfaces/ShippingMethods";
+import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 
 import {
   Container,
@@ -61,7 +54,6 @@ import {
   CouponsList,
   AddressView,
 } from "../../../styles/CheckoutMobility";
-import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 
 interface ILineItems {
   id: number;
@@ -145,19 +137,19 @@ export default function CheckoutMobility() {
     ShippingMethods[]
   >([]);
   const [noAllowShipping, setNoAllowShipping] = useState(false);
+  const [isSelectedShipping, setIsSelectedShipping] = useState(false);
 
   const [currency, setCurrency] = useState("");
   const [isCoupon, setIsCoupon] = useState(false);
   const [priceTotalWithCoupon, setPriceTotalWithCoupon] = useState("");
   const [_order, _setOrder] = useState<Order>({} as Order);
+  const [validateOrder, setValidateOrder] = useState(false);
   const [shippingPrice, setShippingPrice] = useState(0);
 
   const [paymentSteps, setPaymentSteps] = useState(1);
   const [openedCodePromo, setOpenedCodePromo] = useState(false);
   const [openDeliveryWays, setOpenDeliveryWays] = useState(false);
   const [codePromoState, setCodePromoState] = useState(false);
-  const [codePromoCancel, setCodePromoCancel] = useState(false);
-  const [statePromoCode, setStatePromoCode] = useState(true);
 
   //------------------------------------------tvaResult------------------------------------------------!!
   const tva = 7.7;
@@ -260,21 +252,25 @@ export default function CheckoutMobility() {
         { weight: 0 }
       );
 
-      method.settings.method_rules.value.map((rule) => {
+      const allowedShipping = method.settings.method_rules.value.map((rule) => {
         const result = rule.conditions.filter((condition) => {
           if (
             productsWeight?.weight >= condition.min &&
             productsWeight?.weight <= condition.max
           ) {
             setShippingPrice(Number(rule.cost_per_order));
-            //setNoAllowShipping(false);
             console.log("OK livraison", rule);
+
+            return rule;
           }
         });
-        console.log("result======>", result);
 
         return result;
       });
+
+      if (allowedShipping.flat().length === 0) {
+        setNoAllowShipping(true);
+      }
     },
     [cart.products]
   );
@@ -312,6 +308,7 @@ export default function CheckoutMobility() {
   };
 
   const _sendOrder = useCallback(async () => {
+    //setValidateOrder(true);
     const couponsCodeArray = usedCoupons.map((coupon) => {
       return { code: coupon.code };
     });
@@ -393,10 +390,10 @@ export default function CheckoutMobility() {
       const response = await wc_createOrder(order);
       _setOrder(response);
       setCodePromoState(false);
+
       orderIdRef.current = response.id;
       lineItemsRef.current = response.line_items as ILineItems[];
       const shippinResult = response.shipping_total;
-
       shippingPriceRef.current = Number(shippinResult);
 
       setOrderId(response.id);
@@ -545,27 +542,13 @@ export default function CheckoutMobility() {
     setIsPayment(false);
   }, []);
 
-  const deleteOrders = useCallback(async (id: number) => {
-    const response = await deleteOrder(id);
-
-    if (response) {
-      setDiscountCupons([]);
-      _setOrder({} as Order);
-      setusedCoupons([]);
-      setPriceTotalWithCoupon("");
-      setIsCoupon(false);
-    }
-  }, []);
-
   const updateForm = () => {
     setChangeBillingView(false);
   };
 
   const getShippingZone = useCallback(async () => {
+    setIsSelectedShipping(true);
     let selectedCountry = 0;
-
-    const zones: ShippingZone[] = await getShippingZones();
-    console.log("getShippingZones: ", zones);
 
     const country =
       userShippingBilling.shipping_info?.shipping_country ||
@@ -591,11 +574,13 @@ export default function CheckoutMobility() {
 
     setMethodsShippingList(response);
 
+    if (response) {
+      setIsSelectedShipping(false);
+    }
+
     getShippingPrice(response[0]);
     setIsPayment(true);
     setPaymentSteps(3);
-
-    console.log("zonesResp: ", response);
   }, [
     _billingShippingData.billing?.country,
     userShippingBilling.billing_info.billing_country,
@@ -613,15 +598,9 @@ export default function CheckoutMobility() {
         setCodePromoState(false);
         setIsPayment(true);
       }
-      setCodePromoCancel(true);
-
-      console.log("couponsList: ", couponsList);
     },
     [usedCoupons]
   );
-
-  console.log("codePromoState", codePromoState);
-  //console.log("codePromoState", codePromoState);
 
   return (
     <>
@@ -666,23 +645,24 @@ export default function CheckoutMobility() {
               </section>
               <section className="shipping">
                 <div className="title" onClick={getShippingZone}>
-                  <h2
+                  <div
                     className={
                       paymentSteps === 2
-                        ? "active2"
+                        ? "active2 ship_title "
                         : paymentSteps === 3
-                        ? "completed2"
-                        : "disableb"
+                        ? "completed2 ship_title"
+                        : "disableb ship_title"
                     }
                   >
-                    2. {wayDelivery}
-                  </h2>
+                    <h2> 2. {wayDelivery}</h2>
+                    <span>{isSelectedShipping && <Spiner />}</span>
+                  </div>
                 </div>
 
                 {openDeliveryWays && (
                   <ShipMethods>
                     {noAllowShipping ? (
-                      <h4>Pointe vente</h4>
+                      <h4>Shipping not allowed</h4>
                     ) : (
                       methodsShippingList.map((method, index) => {
                         return (
@@ -756,24 +736,24 @@ export default function CheckoutMobility() {
                             : "desatived"
                         }
                       >
-                        Valider ma commande
+                        Valider ma commande{" "}
+                        <span>{validateOrder && <Spiner />}</span>
                       </button>
                     </BtnCouponsBlock>
                   </>
                 )}
               </section>
               <section className="methods_payment">
-                <div className="btn_payment_method">
-                  <h2
-                    onClick={checkout}
-                    className={
-                      isPayment && codePromoState === false
-                        ? "active"
-                        : "disabled"
-                    }
-                  >
-                    4. Paiement
-                  </h2>
+                <div
+                  onClick={checkout}
+                  className={
+                    isPayment && codePromoState === false
+                      ? "active btn_payment_method"
+                      : "disabled btn_payment_method"
+                  }
+                >
+                  <h2>4. Paiement</h2>
+
                   <span>{isOrder === false && <Spiner />}</span>
                 </div>
 
