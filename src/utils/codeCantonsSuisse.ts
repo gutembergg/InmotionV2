@@ -23,7 +23,6 @@ export const swissDepartementCode = [
 {code: "CH-UR", nom: "Uri"},
 {code: "CH-VS", nom: "Valais"},
 {code: "CH-VD", nom: "Vaud"},
-{code: "CH-VS", nom: "Wallis"},
 {code: "CH-ZG", nom: "Zug"},
 {code: "CH-ZH", nom: "Zürich"}
 ]
