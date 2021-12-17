@@ -12,4 +12,13 @@ module.exports = nextTranslate({
   typescript: {
     ignoreBuildErrors: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/inmotion-mobility',
+        permanent: true,
+      },
+    ]
+  },
 });

@@ -6,6 +6,7 @@ import { Container, FormSession, ButtonRegiste } from "./styles";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { IUserState } from "../Context/UserContext";
+import returnProducthandler from "../../pages/api/node-mail/returnProductMail";
 
 export interface IReturnFormValues {
   first_name: string;
@@ -30,8 +31,6 @@ const ReturnProductForm = () => {
   const phone = t("forms:phone");
   const address = t("forms:address");
   const city = t("forms:city");
-  const state = t("forms:state");
-  const otherAddress = t("forms:otherAddress");
   const register = t("forms:register");
   const swiss = t("forms:swiss");
   const france = t("forms:france");
@@ -113,6 +112,7 @@ const ReturnProductForm = () => {
           validationSchema={validatorSchema}
           onSubmit={(value) => {
             console.log("value", value);
+            // returnProducthandler( );
           }}
         >
           {(props: FormikProps<IReturnFormValues>) => (
