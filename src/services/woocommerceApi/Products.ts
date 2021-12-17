@@ -127,8 +127,8 @@ export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
 
 // catalog Visibility filtering -exclude hidden products///////////////////////////
 
-const filterCategoryVisibility = async (productList:IProduct[]) => {
-  const filteredProductList = productList.filter(product => product.catalog_visibility!=="hidden")
-  console.log("filteredProductList",filteredProductList)
+const filterCategoryVisibility = (productList:IProduct[]) => {
+  const filteredProductList = productList.filter(product => product.catalog_visibility!=="hidden");
+
   return filteredProductList;
 }
