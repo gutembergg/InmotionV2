@@ -2,14 +2,14 @@ import { IProduct } from "../../interfaces/IProducts";
 import wcApi from "./wcAxiosConfig";
 import { wooCommerce } from "./woocommerceConfig";
 
-// Get all products////////////////////////////////////////////
+// Get all products////////////////////////////////////////////  !!!!!!!!!!!!!!FILTER NOT WORK HERE ACTUALY for admin/caisse
 export const getProducts = async () => {
   const response = await wooCommerce.get("products", {
     per_page: 100,
   });
-
-  return filterCategoryVisibility(response);
-  // return response;
+console.log("response",response)
+  // return filterCategoryVisibility(response);
+  return response;
 };
 
 // Get Products by categories //////////////////////////////
