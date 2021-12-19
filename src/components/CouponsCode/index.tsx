@@ -306,18 +306,20 @@ const CouponsCode = ({
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        <label>{doYouHaveCodePromo}</label>
-        <input
-          id="promoInput"
-          type="text"
-          placeholder="code Promo"
-          onChange={handleChange}
-          value={inputValue}
-          disabled={inputDisabledStatus}
-        />
-        <button type="submit" disabled={inputDisabledStatus === true && true}>
-          Vérifier{" "}
-        </button>
+        <p>{doYouHaveCodePromo}</p>
+        <div className="input_block">
+          <input
+            id="promoInput"
+            type="text"
+            placeholder="code Promo"
+            onChange={handleChange}
+            value={inputValue}
+            disabled={inputDisabledStatus}
+          />
+          <button type="submit" disabled={inputDisabledStatus === true && true}>
+            Vérifier{" "}
+          </button>
+        </div>
       </form>
     </Container>
   );

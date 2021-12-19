@@ -1,10 +1,22 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { IoMdRadioButtonOn, IoMdRadioButtonOff } from "react-icons/io";
 import { shade } from "polished";
 
 interface Props {
   scrollref: boolean;
 }
+
+const shippingAnimation = keyframes`
+ 100% {  opacity: 1; height: 80px; }
+`;
+
+const couponsAnimation = keyframes`
+ 100% {  opacity: 1; height: 170px; }
+`;
+
+const couponsResponsiveAnimation = keyframes`
+ 100% {  opacity: 1; height: 250px; }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -17,7 +29,7 @@ export const Container = styled.div`
     margin-top: 2rem;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 416px) {
     margin-top: 40px;
   }
 `;
@@ -105,9 +117,24 @@ export const FormSection = styled.div`
         }
       }
     }
+
+    button.btn_update {
+      background: transparent;
+      border: none;
+      color: white;
+    }
+
+    @media (max-width: 416px) {
+      h2 {
+        span.coordonnes {
+          font-size: 1.1rem;
+        }
+      }
+    }
   }
 
   section.shipping {
+    position: relative;
     margin-top: 3rem;
     margin-bottom: 2rem;
 
@@ -139,6 +166,14 @@ export const FormSection = styled.div`
 
     .title {
       cursor: pointer;
+
+      @media (max-width: 416px) {
+        div {
+          h2.font_responsive {
+            font-size: 1.2rem;
+          }
+        }
+      }
     }
   }
 
@@ -146,6 +181,14 @@ export const FormSection = styled.div`
     cursor: pointer;
     margin-top: 0.8rem;
     margin-bottom: 2rem;
+
+    .coupon_section {
+      opacity: 0;
+      height: 0px;
+      animation-name: ${couponsAnimation};
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
 
     h2.active3 {
       background-color: var(--Blue);
@@ -169,6 +212,24 @@ export const FormSection = styled.div`
       display: flex;
       justify-content: center;
     }
+
+    @media (max-width: 416px) {
+      margin-bottom: 3rem;
+
+      .coupon_section {
+        opacity: 0;
+        height: 0px;
+        animation-name: ${couponsResponsiveAnimation};
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+      }
+
+      div {
+        h2.font_responsive {
+          font-size: 1.2rem;
+        }
+      }
+    }
   }
 
   section.methods_payment {
@@ -183,15 +244,20 @@ export const FormSection = styled.div`
       background-color: var(--DarkGray);
       padding: 0.7rem;
 
+      span {
+        margin-left: 1.2rem;
+      }
+
       h2 {
         margin-bottom: 0;
         color: var(--White);
         font-weight: 600;
-        font-size: 1.7rem;
       }
 
-      span {
-        margin-left: 1.2rem;
+      @media (max-width: 416px) {
+        h2.font_responsive {
+          font-size: 1.2rem;
+        }
       }
     }
 
@@ -317,8 +383,18 @@ export const OrderSession = styled.div<Props>`
       flex-direction: row;
       justify-content: space-between;
 
-      @media (max-width: 400px) {
+      @media (max-width: 416px) {
         font-size: 0.8rem;
+
+        div.price_block {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          span {
+            font-size: 0.8rem;
+          }
+        }
       }
 
       div {
@@ -353,6 +429,11 @@ export const OrderSession = styled.div<Props>`
 
     span {
       font-size: 1.2rem;
+    }
+
+    @media (max-width: 416px) {
+      padding: 0 0;
+      padding-top: 1rem;
     }
   }
 
@@ -401,6 +482,10 @@ export const Payment = styled.div`
   margin-top: 1.4rem;
   margin-bottom: 1rem;
 
+  .payment_container.no_list {
+    display: none;
+  }
+
   .payment_container {
     width: 100%;
 
@@ -415,6 +500,10 @@ export const Payment = styled.div`
       .disabled {
         cursor: not-allowed;
         background-color: var(--DarkGray);
+      }
+
+      .active {
+        background-color: var(--Blue);
       }
     }
 
@@ -540,14 +629,13 @@ export const BtnCouponsBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
-  margin-top: 1rem;
   margin-bottom: 1.6rem;
 
-  button + button {
-    margin-left: 0.5rem;
-  }
-
   button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background: var(--DarkGray);
     height: 45px;
     width: 100%;
@@ -557,6 +645,10 @@ export const BtnCouponsBlock = styled.div`
     font-weight: 600;
 
     border: none;
+
+    span + span {
+      margin-left: 0.5rem;
+    }
   }
 
   button.active {
@@ -578,8 +670,16 @@ export const BtnCouponsBlock = styled.div`
 
 export const ShipMethods = styled.div`
   width: 100%;
-  padding-top: 0.9rem;
+  padding-top: 1.4rem;
   padding-left: 0.6rem;
+
+  .ship_methodsList {
+    opacity: 0;
+    height: 0px;
+    animation-name: ${shippingAnimation};
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
 `;
 
 export const ShipItem = styled.div`

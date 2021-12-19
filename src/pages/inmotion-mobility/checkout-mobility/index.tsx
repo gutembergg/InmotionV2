@@ -276,7 +276,7 @@ export default function CheckoutMobility() {
   );
 
   const _handleBillingShippingData = (values: IFormValues) => {
-    setOpenDeliveryWays(true);
+    /*  setOpenDeliveryWays(true); */
     console.log("formValues: ", values);
     const billing = {
       last_name: values.billing_last_name,
@@ -308,7 +308,7 @@ export default function CheckoutMobility() {
   };
 
   const _sendOrder = useCallback(async () => {
-    //setValidateOrder(true);
+    setValidateOrder(true);
     const couponsCodeArray = usedCoupons.map((coupon) => {
       return { code: coupon.code };
     });
@@ -412,6 +412,7 @@ export default function CheckoutMobility() {
     } else {
       return;
     }
+    setValidateOrder(false);
 
     ///////////////////////////////////////////////////////////////
   }, [
@@ -426,6 +427,10 @@ export default function CheckoutMobility() {
   ]);
 
   const checkout = useCallback(async () => {
+    if (codePromoState === false && paymentSteps !== 3) {
+      return;
+    }
+
     const couponsCodeArray = usedCoupons.map((coupon) => {
       return { code: coupon.code };
     });
@@ -451,6 +456,7 @@ export default function CheckoutMobility() {
         : "EUR";
 
     await _sendOrder();
+    setValidateOrder(false);
 
     const productsCheckout = lineItemsRef.current?.map((product) => {
       const id = product.id;
@@ -484,6 +490,8 @@ export default function CheckoutMobility() {
     _sendOrder,
     usedCoupons,
     shippingPrice,
+    codePromoState,
+    paymentSteps,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -527,6 +535,10 @@ export default function CheckoutMobility() {
 
   const selectSHPmethod = useCallback(
     (method: ShippingMethods, index: number) => {
+      if (Object.keys(_order).length > 0) {
+        return;
+      }
+
       setMethodShipping(index);
       if (method.method_id === "local_pickup") {
         setShippingPrice(0);
@@ -534,7 +546,7 @@ export default function CheckoutMobility() {
         getShippingPrice(method);
       }
     },
-    [getShippingPrice]
+    [getShippingPrice, _order]
   );
 
   const codePromoSteps = useCallback(() => {
@@ -547,7 +559,12 @@ export default function CheckoutMobility() {
   };
 
   const getShippingZone = useCallback(async () => {
+    if (paymentSteps !== 2) {
+      return;
+    }
+
     setIsSelectedShipping(true);
+
     let selectedCountry = 0;
 
     const country =
@@ -576,6 +593,7 @@ export default function CheckoutMobility() {
 
     if (response) {
       setIsSelectedShipping(false);
+      setOpenDeliveryWays(true);
     }
 
     getShippingPrice(response[0]);
@@ -587,6 +605,7 @@ export default function CheckoutMobility() {
     getShippingPrice,
     _billingShippingData.shipping?.country,
     userShippingBilling.shipping_info.shipping_country,
+    paymentSteps,
   ]);
 
   const deleteCoupons = useCallback(
@@ -622,11 +641,17 @@ export default function CheckoutMobility() {
               <section className="sections_title">
                 <div className="title">
                   <h2 className={paymentSteps === 1 ? "active" : ""}>
-                    <span className="coordonnes">1. Vos coordonnées</span>
+                    <span className="coordonnes font_responsive">
+                      1. Vos coordonnées
+                    </span>
                     {changeBillinhView && (
-                      <span className="btn_update" onClick={updateForm}>
-                        modifier
-                      </span>
+                      <button
+                        className="btn_update"
+                        onClick={updateForm}
+                        disabled={Object.keys(_order).length > 0}
+                      >
+                        Modifier
+                      </button>
                     )}
                   </h2>
                 </div>
@@ -654,48 +679,56 @@ export default function CheckoutMobility() {
                         : "disableb ship_title"
                     }
                   >
-                    <h2> 2. {wayDelivery}</h2>
+                    <h2 className="font_responsive"> 2. {wayDelivery}</h2>
                     <span>{isSelectedShipping && <Spiner />}</span>
                   </div>
                 </div>
 
                 {openDeliveryWays && (
                   <ShipMethods>
-                    {noAllowShipping ? (
-                      <h4>Shipping not allowed</h4>
-                    ) : (
-                      methodsShippingList.map((method, index) => {
-                        return (
-                          <ShipItem
-                            key={method.id}
-                            onClick={() => selectSHPmethod(method, index)}
-                          >
-                            <div>
-                              {methodShipping === index ? (
-                                <IoMdRadioButtonOk />
-                              ) : (
-                                <IoMdRadioButtonNot />
-                              )}
-                            </div>
-                            <div className="ship_methods_name">
-                              {method.method_title}
-                            </div>
-                          </ShipItem>
-                        );
-                      })
-                    )}
+                    <div className="ship_methodsList">
+                      {noAllowShipping ? (
+                        <h4>Shipping not allowed</h4>
+                      ) : (
+                        methodsShippingList.map((method, index) => {
+                          return (
+                            <ShipItem
+                              key={method.id}
+                              onClick={() => selectSHPmethod(method, index)}
+                            >
+                              <div>
+                                {methodShipping === index ? (
+                                  <IoMdRadioButtonOk />
+                                ) : (
+                                  <IoMdRadioButtonNot />
+                                )}
+                              </div>
+                              <div className="ship_methods_name">
+                                {method.method_title}
+                              </div>
+                            </ShipItem>
+                          );
+                        })
+                      )}
+                    </div>
                   </ShipMethods>
                 )}
               </section>
 
               <section className="code_promo">
                 <div className="title" onClick={openCodePromo}>
-                  <h2 className={paymentSteps === 3 ? "active3" : "disabled3"}>
+                  <h2
+                    className={
+                      paymentSteps === 3
+                        ? "active3 font_responsive"
+                        : "disabled3 font_responsive"
+                    }
+                  >
                     3. Code Promo
                   </h2>
                 </div>
                 {openedCodePromo && (
-                  <>
+                  <div className="coupon_section">
                     <div className="coupon_code_block">
                       <CouponsCode
                         userMail={
@@ -736,11 +769,11 @@ export default function CheckoutMobility() {
                             : "desatived"
                         }
                       >
-                        Valider ma commande{" "}
+                        <span>Valider ma commande</span>
                         <span>{validateOrder && <Spiner />}</span>
                       </button>
                     </BtnCouponsBlock>
-                  </>
+                  </div>
                 )}
               </section>
               <section className="methods_payment">
@@ -752,14 +785,20 @@ export default function CheckoutMobility() {
                       : "disabled btn_payment_method"
                   }
                 >
-                  <h2>4. Paiement</h2>
+                  <h2 className="font_responsive">4. Paiement</h2>
 
                   <span>{isOrder === false && <Spiner />}</span>
                 </div>
 
                 <div className="payment_block">
                   <Payment>
-                    <div className="payment_container">
+                    <div
+                      className={
+                        paymentMethodes.length > 0
+                          ? "payment_container"
+                          : "payment_container no_list"
+                      }
+                    >
                       <div className="payment_list">
                         <div className="payments_block">
                           {paymentMethodes.length > 0 &&
@@ -806,8 +845,16 @@ export default function CheckoutMobility() {
                               }
                               disabled={isCheckMethod || paymentValidate}
                             >
-                              <div className="btn_payment_method">
-                                <span>{payment}</span>
+                              <div
+                                className={
+                                  isCheckMethod === false
+                                    ? "btn_payment_method active"
+                                    : "disabled btn_payment_method"
+                                }
+                              >
+                                <span>
+                                  <h2>{payment}</h2>
+                                </span>
                                 <span>{isCheckMethod && <Spiner />}</span>
                               </div>
                             </button>
@@ -855,7 +902,10 @@ export default function CheckoutMobility() {
                       <div className="taxes">
                         <div className="taxes_item">
                           <div>Valeur de marchandise(T.T.C)</div>
-                          <div>{cart.totalProductsPrice?.toFixed(2)} CHF</div>
+                          <div className="price_block">
+                            <span>{cart.totalProductsPrice?.toFixed(2)} </span>
+                            <span>CHF</span>
+                          </div>
                         </div>
                         <div className="taxes_item">
                           <div>dont TVA ({tva}%): (incluse) </div>
