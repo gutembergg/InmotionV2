@@ -4,10 +4,8 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   gap: 20px;
-
-  width: 100%;
 
   margin-top: 5rem;
 
@@ -19,22 +17,34 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  gap: 80px;
+  width: 100%;
+  padding: 0 8rem;
+
+  @media (max-width: 1160px) {
+    padding: 0 5rem;
+  }
 
   @media (max-width: 1015px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+
+  @media (max-width: 416px) {
+    gap: 12px;
+    padding: 0 0;
+  }
 `;
 
 export const ProductInfos = styled.div`
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   display: grid;
+  min-width: 290px;
   grid-template-columns: 1fr;
   grid-template-rows: 4fr;
-
   gap: 20px;
 
   .weight {
@@ -46,32 +56,55 @@ export const ProductInfos = styled.div`
     margin-left: 5px;
   }
 
-  span + span {
-    margin-left: 1.5rem;
-  }
-
   .politic_text {
     display: flex;
     align-items: center;
   }
 
+  span + span {
+    margin-left: 1.5rem;
+  }
+
+  @media (max-width: 1160px) {
+    min-width: 200px;
+  }
+
   @media (max-width: 1015px) {
     grid-template-columns: repeat(2, 1fr);
+    min-width: 600px;
   }
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
     grid-template-rows: 4fr;
+    min-width: 40px;
+  }
+
+  @media (max-width: 416px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 4fr;
+    min-width: 20px;
   }
 `;
 
 export const ProductImage = styled.div`
-    width: 100%;
-    position: relative;
-    height: auto;
+  width: 100%;
+  position: relative;
+  height: auto;
+  min-height: 200px;
+  min-width: 200px;
 
   @media (max-width: 1015px) {
     order: -1;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 416px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 200px;
   }
 `;
 
@@ -131,7 +164,7 @@ export const ProductMenuResponsive = styled.div`
 
   @media (max-width: 1015px) {
     display: flex;
-    width: 100%;
+    width: 100vw;
     order: -2;
     margin-top: 1.4rem;
   }

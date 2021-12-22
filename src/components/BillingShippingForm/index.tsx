@@ -7,6 +7,7 @@ import { IUserState } from "../Context/UserContext";
 
 import { Container, FormSession, ButtonRegiste } from "./styles";
 import { updateUsers } from "../../services/wordpressApi/users";
+import { swissDepartementCode } from "../../utils/codeCantonsSuisse";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -61,7 +62,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
 
   const authorizedCounty: country[] = [
     {
-      name: "Sélectionnez un pays",
+      name: "Pays",
       code: "",
     },
     {
@@ -331,41 +332,50 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                     ) : null}
                   </div>
 
-                  <div className="input_block">
+                  <div>
                     <Field
-                      className={
-                        props.errors.billing_state &&
-                        props.touched.billing_state
-                          ? "erros"
-                          : ""
-                      }
+                      as="select"
                       name="billing_state"
-                      placeholder={state}
-                    />
-                    {props.errors.billing_state &&
-                    props.touched.billing_state ? (
-                      <div className="input_erros">
-                        {props.errors.billing_state}
-                      </div>
-                    ) : null}
+                      className="input_selects"
+                    >
+                      {swissDepartementCode.map((state) => (
+                        <option key={state.code} value={state.code}>
+                          {state.nom}
+                        </option>
+                      ))}
+                    </Field>
                   </div>
-
-                  <Field as="select" name="billing_country">
-                    {authorizedCounty.map((country) => (
-                      <option
-                        key={country.code}
-                        value={country.code}
-                        defaultChecked={true}
-                        defaultValue={
-                          props.initialValues.billing_country.length > 0
-                            ? props.initialValues.billing_country
-                            : country.name
-                        }
-                      >
-                        {country.name}
-                      </option>
-                    ))}
-                  </Field>
+                  <div>
+                    <Field
+                      as="select"
+                      name="billing_country"
+                      className="input_selects"
+                    >
+                      {/* {authorizedCounty.map((country) => (
+                        <option
+                          key={country.code}
+                          value={country.code}
+                          defaultChecked={true}
+                          defaultValue={
+                            props.initialValues.billing_country.length > 0
+                              ? props.initialValues.billing_country
+                              : country.name
+                          }
+                        >
+                          {country.name}
+                        </option>
+                      ))} */}
+                      {authorizedCounty.map((country) => (
+                        <option
+                          key={country.code}
+                          value={country.code}
+                          defaultChecked={true}
+                        >
+                          {country.name}
+                        </option>
+                      ))}
+                    </Field>
+                  </div>
 
                   <div className="isShippingForm">
                     <Field type="checkbox" name="isShippingForm" />
@@ -508,26 +518,23 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       ) : null}
                     </div>
 
-                    <div className="input_block">
-                      <Field
-                        className={
-                          props.errors.shipping_state &&
-                          props.touched.shipping_state
-                            ? "erros"
-                            : ""
-                        }
-                        name="shipping_state"
-                        placeholder={state}
-                      />
-                      {props.errors.shipping_state &&
-                      props.touched.shipping_state ? (
-                        <div className="input_erros">
-                          {props.errors.shipping_state}
-                        </div>
-                      ) : null}
-                    </div>
+                    <Field
+                      as="select"
+                      name="shipping_state"
+                      className="input_selects"
+                    >
+                      {swissDepartementCode.map((state) => (
+                        <option key={state.code} value={state.code}>
+                          {state.nom}
+                        </option>
+                      ))}
+                    </Field>
 
-                    <Field as="select" name="shipping_country">
+                    <Field
+                      as="select"
+                      name="shipping_country"
+                      className="input_selects"
+                    >
                       {authorizedCounty.map((country) => (
                         <option key={country.code} value={country.code}>
                           {country.name}

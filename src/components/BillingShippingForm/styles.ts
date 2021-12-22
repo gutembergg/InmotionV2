@@ -46,6 +46,11 @@ export const Container = styled.div`
         color: red;
       }
     }
+
+    select.input_selects {
+      width: 100%;
+      height: 40px;
+    }
   }
 
   .form_2 {
@@ -54,6 +59,11 @@ export const Container = styled.div`
     width: 100%;
     gap: 0.7rem 0;
     padding-top: 1rem;
+
+    select.input_selects {
+      width: 100%;
+      height: 40px;
+    }
 
     .input_block {
       display: flex;

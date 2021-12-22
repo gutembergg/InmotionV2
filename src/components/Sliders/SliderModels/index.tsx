@@ -26,7 +26,7 @@ const SliderModels = ({
     <Container>
       <Swiper
         direction="horizontal"
-        slidesPerView={3}
+        slidesPerView={3.5}
         spaceBetween={20}
         breakpoints={{
           320: {

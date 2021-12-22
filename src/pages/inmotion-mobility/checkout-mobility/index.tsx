@@ -37,6 +37,7 @@ import { CouponLines, Order } from "../../../interfaces/Order";
 import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
 import { ShippingMethods } from "../../../interfaces/ShippingMethods";
 import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
+import { Collapse } from "react-collapse";
 
 import {
   Container,
@@ -72,7 +73,6 @@ export default function CheckoutMobility() {
   const orderIdRef = useRef(0);
   const lineItemsRef = useRef<ILineItems[]>([]);
   const shippingPriceRef = useRef(0);
-  const [_scroll, _setScroll] = useState(false);
 
   const [loged, setloged] = useState(false);
   const { cart } = useCart();
@@ -150,26 +150,11 @@ export default function CheckoutMobility() {
   const [openedCodePromo, setOpenedCodePromo] = useState(false);
   const [openDeliveryWays, setOpenDeliveryWays] = useState(false);
   const [codePromoState, setCodePromoState] = useState(false);
+  const [checkoutClicked, setCheckoutClicked] = useState(false);
 
   //------------------------------------------tvaResult------------------------------------------------!!
   const tva = 7.7;
   const tvaResult = (cart.totalProductsPrice / 100) * tva;
-
-  useEffect(() => {
-    const scrollHeader = () => {
-      if (typeof window !== "undefined") {
-        if (window.scrollY > 300) {
-          _setScroll(true);
-        } else {
-          _setScroll(false);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", scrollHeader);
-
-    return () => window.removeEventListener("scroll", scrollHeader);
-  }, []);
 
   useEffect(() => {
     setCurrency(
@@ -443,6 +428,7 @@ export default function CheckoutMobility() {
       }
     }
 
+    setCheckoutClicked(true);
     setIsOrder(false);
     setPaymentValidate(true);
 
@@ -684,7 +670,8 @@ export default function CheckoutMobility() {
                   </div>
                 </div>
 
-                {openDeliveryWays && (
+                {/*   {openDeliveryWays && ( */}
+                <Collapse isOpened={openDeliveryWays}>
                   <ShipMethods>
                     <div className="ship_methodsList">
                       {noAllowShipping ? (
@@ -712,7 +699,7 @@ export default function CheckoutMobility() {
                       )}
                     </div>
                   </ShipMethods>
-                )}
+                </Collapse>
               </section>
 
               <section className="code_promo">
@@ -727,70 +714,73 @@ export default function CheckoutMobility() {
                     3. Code Promo
                   </h2>
                 </div>
-                {openedCodePromo && (
-                  <div className="coupon_section">
-                    <div className="coupon_code_block">
-                      <CouponsCode
-                        userMail={
-                          userShippingBilling.billing_info.billing_email ||
-                          _billingShippingData.billing?.email
-                        }
-                        userID={user.profile?.id}
-                        userGrp={user.profile?.wcb2b_group}
-                        setusedCoupons={setusedCoupons}
-                        usedCoupons={usedCoupons}
-                        codePromoSteps={codePromoSteps}
-                      />
-                    </div>
 
-                    <CouponsList>
-                      {usedCoupons.map((coupon) => {
-                        return (
-                          <div key={coupon.id} className="couponsList_block">
-                            <button
-                              className="closeButton"
-                              onClick={() => deleteCoupons(coupon.id)}
-                            ></button>
-                            <div>{coupon.description}</div>
-                          </div>
-                        );
-                      })}
-                    </CouponsList>
-                    <BtnCouponsBlock>
-                      <button
-                        type="button"
-                        onClick={_sendOrder}
-                        disabled={!codePromoState}
-                        className={
-                          codePromoState &&
-                          usedCoupons.length > 0 &&
-                          Object.keys(_order).length === 0
-                            ? "active"
-                            : "desatived"
-                        }
-                      >
-                        <span>Valider ma commande</span>
-                        <span>{validateOrder && <Spiner />}</span>
-                      </button>
-                    </BtnCouponsBlock>
+                <Collapse isOpened={openedCodePromo}>
+                  <div className="coupon_code_block">
+                    <CouponsCode
+                      userMail={
+                        userShippingBilling.billing_info.billing_email ||
+                        _billingShippingData.billing?.email
+                      }
+                      userID={user.profile?.id}
+                      userGrp={user.profile?.wcb2b_group}
+                      setusedCoupons={setusedCoupons}
+                      usedCoupons={usedCoupons}
+                      codePromoSteps={codePromoSteps}
+                    />
                   </div>
-                )}
+
+                  <CouponsList>
+                    {usedCoupons.map((coupon) => {
+                      return (
+                        <div key={coupon.id} className="couponsList_block">
+                          <button
+                            className="closeButton"
+                            onClick={() => deleteCoupons(coupon.id)}
+                          ></button>
+                          <div>{coupon.description}</div>
+                        </div>
+                      );
+                    })}
+                  </CouponsList>
+                  <BtnCouponsBlock>
+                    <button
+                      type="button"
+                      onClick={_sendOrder}
+                      disabled={!codePromoState}
+                      className={
+                        codePromoState &&
+                        usedCoupons.length > 0 &&
+                        Object.keys(_order).length === 0
+                          ? "active"
+                          : "desatived"
+                      }
+                    >
+                      <span>Valider ma commande</span>
+                      <span>{validateOrder && <Spiner />}</span>
+                    </button>
+                  </BtnCouponsBlock>
+                </Collapse>
               </section>
               <section className="methods_payment">
-                <div
+                <button
                   onClick={checkout}
                   className={
                     isPayment && codePromoState === false
                       ? "active btn_payment_method"
                       : "disabled btn_payment_method"
                   }
+                  disabled={codePromoState || checkoutClicked}
                 >
                   <h2 className="font_responsive">4. Paiement</h2>
 
                   <span>{isOrder === false && <Spiner />}</span>
-                </div>
+                </button>
 
-                <div className="payment_block">
+                <Collapse
+                  isOpened={paymentMethodes.length > 0}
+                  className="payment_block"
+                >
                   <Payment>
                     <div
                       className={
@@ -852,7 +842,7 @@ export default function CheckoutMobility() {
                                     : "disabled btn_payment_method"
                                 }
                               >
-                                <span>
+                                <span className="btn_end_payment">
                                   <h2>{payment}</h2>
                                 </span>
                                 <span>{isCheckMethod && <Spiner />}</span>
@@ -863,14 +853,14 @@ export default function CheckoutMobility() {
                       </div>
                     </div>
                   </Payment>
-                </div>
+                </Collapse>
               </section>
             </FormSection>
             <div className="order_section">
-              <OrderSession scrollref={_scroll}>
+              <OrderSession>
                 <div className="order_section_block">
+                  <h2 id="title_order">Résumé de votre commande</h2>
                   <div className="cart_products">
-                    <h2>Résumé de votre commande</h2>
                     <div className="prod_block">
                       {cart.totalProductsCount > 0 ? (
                         cart.products.map((product) => {
@@ -909,11 +899,13 @@ export default function CheckoutMobility() {
                         </div>
                         <div className="taxes_item">
                           <div>dont TVA ({tva}%): (incluse) </div>
-                          <div>
-                            {Object.keys(_order).length > 0
-                              ? _order.total_tax
-                              : tvaResult.toFixed(2)}{" "}
-                            CHF
+                          <div className="price_block">
+                            <span>
+                              {Object.keys(_order).length > 0
+                                ? _order.total_tax
+                                : tvaResult.toFixed(2)}{" "}
+                            </span>
+                            <span> CHF</span>
                           </div>
                         </div>
                         <div className="taxes_item">

@@ -1,4 +1,8 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const opacityAnimation = keyframes`
+  100% {opacity: 1;}
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -6,6 +10,8 @@ export const Container = styled.div`
   justify-content: space-around;
 
   padding: 1.8rem;
+  opacity: 0;
+  animation: ${opacityAnimation} 2s forwards;
 
   li {
     list-style: none;

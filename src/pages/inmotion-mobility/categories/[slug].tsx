@@ -17,6 +17,13 @@ import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Pr
 import getAcfContent from "../../../utils/getAcfContent";
 import placeholder from "../../../../public/images/placeholder_woocommerce.png";
 
+import useCart from "../../../hooks/useCart";
+import ButtonSkew from "../../../components/ButtonSkew";
+import useTranslation from "next-translate/useTranslation";
+import LayoutMobility from "../../../Layout/LayoutMobility";
+import HeaderSeo from "../../../components/HeaderSeo";
+import SliderModels from "../../../components/Sliders/SliderModels";
+
 import {
   Container,
   ProductInfos,
@@ -27,12 +34,6 @@ import {
   AddToCartSession,
   ProductMenuResponsive,
 } from "../../../styles/CategoryDetail";
-import useCart from "../../../hooks/useCart";
-import ButtonSkew from "../../../components/ButtonSkew";
-import useTranslation from "next-translate/useTranslation";
-import LayoutMobility from "../../../Layout/LayoutMobility";
-import HeaderSeo from "../../../components/HeaderSeo";
-import SliderModels from "../../../components/Sliders/SliderModels";
 
 interface Props {
   category: ICategories;

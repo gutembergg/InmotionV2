@@ -1,8 +1,19 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  display: flex;
   width: 100%;
   max-width: 1300px;
+
+  .swiper {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .swiper-wrapper {
+    display: flex;
+    justify-content: center;
+  }
 
   .swiper-slide {
     width: 100%;
