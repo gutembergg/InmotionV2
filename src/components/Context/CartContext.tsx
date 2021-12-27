@@ -1,4 +1,4 @@
-import Notiflix from "notiflix";
+import Notiflix, { Report } from "notiflix";
 import {
   createContext,
   ReactNode,
@@ -26,6 +26,8 @@ export interface ICartState {
   totalProductsPrice: number;
   totalWithCoupon?: number;
 }
+
+
 
 export const CartContext = createContext<ICartContext>({} as ICartContext);
 
@@ -73,8 +75,13 @@ const CartProvider = ({ children }: Children) => {
       totalProductsCount: qty,
       totalProductsPrice: price,
     };
-    Notiflix.Notify.success("produit ajouté au panier");
-
+    console.log("product", products)
+    // Notiflix.Notify.success("produit ajouté au panier");
+    Report.success(
+      'Produit Ajouté au panier',
+      '<p>Pensez à vous protéger! Voici ce que nous vous conseillons:</p><br /><br />',
+      'Okay',
+      );
     if (typeof window !== "undefined") {
       localStorage.setItem("inmotion:cart", JSON.stringify(_cart));
     }
