@@ -3,10 +3,10 @@ import nodemailer from "nodemailer";
 
 export const transporter = nodemailer.createTransport({
     port: 465,
-    host: "smtp.gmail.com",
+    host: "mail.fat-e.ch",
     auth: {
-      user: 'demo@demo.gmail',
-      pass: 'password',
+      user: process.env.EMAIL_SENDER,
+      pass: process.env.MDP_EMAIL_SENDER,
     },
     secure: true,
     

@@ -4,9 +4,12 @@ import { validatorSchema } from "./validator";
 
 import { Container, FormSession, ButtonRegiste } from "./styles";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { IUserState } from "../Context/UserContext";
 import returnProducthandler from "../../pages/api/node-mail/returnProductMail";
+import axios from "axios";
+import Notiflix from "notiflix";
+import ReCAPTCHA, { ReCAPTCHAProps } from "react-google-recaptcha";
 
 export interface IReturnFormValues {
   first_name: string;
@@ -103,6 +106,26 @@ const ReturnProductForm = () => {
     serial: "",
     message: "",
   };
+
+  const handleSubmit = async (value: IReturnFormValues) => {
+
+    try {
+      let res = await axios.post("/api/node-mail/returnProductMail", value);
+      // return console.log("Success!",res);
+      Notiflix.Report.success(
+        'Succès !',
+        'Votre message nous a été transmis. Nous vous contacterons dans les plus brefs délais',
+        'Ok',
+        );
+    } catch (error) {
+      Notiflix.Report.failure(
+        'Ooops !',
+        "Une erreure s'est produite lors de l'envoi du formulaire, veuillez réessayer ou nous contacter si cela se reproduit",
+        'Ok',
+        );
+    }
+  };
+
   return (
     <Container>
       <FormSession>
@@ -112,15 +135,15 @@ const ReturnProductForm = () => {
           validationSchema={validatorSchema}
           onSubmit={(value) => {
             console.log("value", value);
-            // returnProducthandler( );
+            // handleSubmit(value);
           }}
         >
           {(props: FormikProps<IReturnFormValues>) => (
-            <Form className="form">
+          <Form className="form">
               <div className="forms_session">
                 <div className="form_1">
                   <div className="left">
-                      <h3>{CustomerInfoTxt}</h3>
+                    <h3>{CustomerInfoTxt}</h3>
                     <div className="inputcontent">
                       <div className="input_block">
                         <Field
@@ -342,7 +365,7 @@ const ReturnProductForm = () => {
                         ) : null}
                       </div>
                     </div>
-                    <ButtonRegiste type="submit">{register}</ButtonRegiste>
+                    {/* <ButtonRegiste type="submit">{register}</ButtonRegiste> */}
                   </div>
                 </div>
               </div>
