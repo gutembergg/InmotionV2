@@ -532,7 +532,7 @@ export const PaymentMethods = styled.div`
   padding: 0 1rem;
   opacity: 0;
 
-  animation: ${paymentMethodsAnimation} 2s forwards;
+  animation: ${paymentMethodsAnimation} 3s forwards;
 
   .methods {
     display: flex;

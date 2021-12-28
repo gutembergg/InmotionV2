@@ -500,11 +500,9 @@ export default function CheckoutMobility() {
         methodId: method.id,
       });
 
-      console.log("dataUpdated::", data);
-
       setTransactionId(data);
 
-      await _updateOrder(orderId as number, method.name);
+      await _updateOrder(orderId as number, method.name, String(transactionId));
 
       if (data) {
         setIsCheckMethod(false);

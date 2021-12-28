@@ -60,8 +60,8 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
     useState<IProduct[]>(featuredProducts);
   const [onSaleProduct, _setOnSaleproduct] =
     useState<IProduct[]>(onSaleProducts);
-  console.log("featured productzs", featuredproducts);
-  console.log("onsale products", onSaleProducts);
+  /*   console.log("featured productzs", featuredproducts);
+  console.log("onsale products", onSaleProducts); */
   const horaireLundi = t("home:horaireLundi");
   const horaireMardi = t("home:horaireMardi");
   const horaireMercredi = t("home:horaireMercredi");

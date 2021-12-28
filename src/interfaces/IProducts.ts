@@ -52,6 +52,7 @@ export interface IProduct {
   catalog_visibility: string;
   stock_quantity?: number;
   stock_status?: string;
+  lang: string;
   meta_data: IProductMetaData[];
   yoast_head?: string;
   yoast_head_json: {

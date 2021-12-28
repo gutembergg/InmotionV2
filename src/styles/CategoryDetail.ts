@@ -239,7 +239,7 @@ export const AddToCartSession = styled.div`
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 450px) {
     flex-direction: column;
     width: 250px;
 

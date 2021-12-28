@@ -4,9 +4,10 @@ import initMiddleware from "../../../utils/init-middleware";
 import Cors from "cors";
 import { updateOrder } from "../../../services/woocommerceApi/Orders";
 
-let spaceId: number = 23340;
-let userId: number = 48407;
-let apiSecret: string = "8AHR3Enly7vmpBwrtXplvccVK4Tvrq9WoDWwn/nmiRQ=";
+let spaceId: number = Number(process.env.NEXT_PUBLIC_POSTFINANCE_SPACE_ID);
+let userId: number = Number(process.env.NEXT_PUBLIC_POSTFINANCE_USER_ID);
+let apiSecret: string = process.env
+  .NEXT_PUBLIC_POSTFINANCE_API_SECRET as string;
 
 let config = {
   space_id: spaceId,

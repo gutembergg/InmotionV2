@@ -19,6 +19,13 @@ export const Container = styled.div`
     width: 100%;
     max-width: 230px;
   }
+
+  @media (max-width: 416px) {
+    .swiper-wrapper {
+      display: flex;
+      justify-content: start;
+    }
+  }
 `;
 
 export const UpSellButton = styled.span`
