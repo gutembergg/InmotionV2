@@ -158,11 +158,8 @@ export default function CheckoutMobility() {
 
   useEffect(() => {
     setCurrency(
-      userShippingBilling.billing_info.billing_country === "CH"
-        ? "CHF"
-        : ("EUR" && _billingShippingData.billing?.country === "Suisse") ||
-          _billingShippingData.billing?.country === "Swiss" ||
-          _billingShippingData.billing?.country === "schweizerisch"
+      userShippingBilling.billing_info.billing_country ||
+        _billingShippingData.billing?.country === "CH"
         ? "CHF"
         : "EUR"
     );
@@ -261,7 +258,6 @@ export default function CheckoutMobility() {
   );
 
   const _handleBillingShippingData = (values: IFormValues) => {
-    /*  setOpenDeliveryWays(true); */
     console.log("formValues: ", values);
     const billing = {
       last_name: values.billing_last_name,
@@ -432,15 +428,6 @@ export default function CheckoutMobility() {
     setIsOrder(false);
     setPaymentValidate(true);
 
-    const currencySelected =
-      userShippingBilling.billing_info.billing_country === "CH"
-        ? "CHF"
-        : ("EUR" && _billingShippingData.billing?.country === "Suisse") ||
-          _billingShippingData.billing?.country === "Swiss" ||
-          _billingShippingData.billing?.country === "schweizerisch"
-        ? "CHF"
-        : "EUR";
-
     await _sendOrder();
     setValidateOrder(false);
 
@@ -458,7 +445,7 @@ export default function CheckoutMobility() {
       const { data } = await apiPFinance.post("transaction-create", {
         productsCheckout,
         orderId: orderIdRef.current,
-        currency: currencySelected,
+        currency: currency,
         shippingTaxe: shippingPrice,
       });
 
@@ -471,13 +458,12 @@ export default function CheckoutMobility() {
     }
   }, [
     cart,
-    _billingShippingData.billing?.country,
-    userShippingBilling.billing_info.billing_country,
     _sendOrder,
     usedCoupons,
     shippingPrice,
     codePromoState,
     paymentSteps,
+    currency,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -543,9 +529,9 @@ export default function CheckoutMobility() {
   };
 
   const getShippingZone = useCallback(async () => {
-    if (paymentSteps !== 2) {
+    /*  if (paymentSteps !== 2) {
       return;
-    }
+    } */
 
     setIsSelectedShipping(true);
 
@@ -589,7 +575,6 @@ export default function CheckoutMobility() {
     getShippingPrice,
     _billingShippingData.shipping?.country,
     userShippingBilling.shipping_info.shipping_country,
-    paymentSteps,
   ]);
 
   const deleteCoupons = useCallback(

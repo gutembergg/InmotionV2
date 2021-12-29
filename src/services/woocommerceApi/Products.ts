@@ -4,15 +4,17 @@ import { wooCommerce } from "./woocommerceConfig";
 
 // Get all products////////////////////////////////////////////  !!!!!!!!!!!!!!FILTER NOT WORK HERE ACTUALY for admin/caisse
 export const getProducts = async () => {
-  const response = await wooCommerce.get("products", {
+  const { data } = await wooCommerce.get("products", {
     per_page: 100,
   });
-  // return filterCategoryVisibility(response);
-  return response;
+  return filterCategoryVisibility(data);
 };
 
 // Get Products by categories //////////////////////////////
-export const getProductByCategory = async (id: number, lang: string) => {
+export const getProductByCategory = async (
+  id: number,
+  lang: string
+): Promise<IProduct[]> => {
   const { data } = await wooCommerce.get(`products`, {
     id,
     lang: lang,

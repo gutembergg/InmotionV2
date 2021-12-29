@@ -3,17 +3,7 @@ import useUser from "../../hooks/useUser";
 import React, { ReactElement, useEffect, useState } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 import useTranslation from "next-translate/useTranslation";
-import {
-  Container,
-  MainContent,
-  MobilitySlider,
-  PromotedProducts,
-  NewProducts,
-  RentalSection,
-  PromotedSection,
-  HelpSection,
-  InfoSection,
-} from "../../styles/MobilityIndex";
+
 import Image from "next/dist/client/image";
 import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
 import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
@@ -25,10 +15,23 @@ import SliderMobility from "../../components/Sliders/SliderMobility";
 import {
   getFeaturedProduct,
   getOnSaleProducts,
+  getProductByCategory,
 } from "../../services/woocommerceApi/Products";
 import { GetStaticProps } from "next";
 import { IProduct } from "../../interfaces/IProducts";
 import CarouselSwiper from "../../components/Sliders/Carousel";
+
+import {
+  Container,
+  MainContent,
+  MobilitySlider,
+  PromotedProducts,
+  NewProducts,
+  RentalSection,
+  PromotedSection,
+  HelpSection,
+  InfoSection,
+} from "../../styles/MobilityIndex";
 
 interface Props {
   featuredProducts: IProduct[];
@@ -76,7 +79,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
 
   useEffect(() => {
     _setOnSaleproduct(onSaleProduct);
-  }, [onSaleProducts]);
+  }, [onSaleProduct]);
 
   return (
     <Container>
@@ -186,6 +189,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const featuredproducts = await getFeaturedProduct(lang as string);
   const onSaleProducts = await getOnSaleProducts(lang as string);
+
+  /*  const allProducts = await getProductByCategory(80, "fr");
+  console.log("allProducts::", allProducts.length); */
 
   return {
     props: {

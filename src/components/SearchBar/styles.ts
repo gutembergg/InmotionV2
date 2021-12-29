@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-export const MenuSearchBar = styled.div`
+export const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
 
+export const MenuSearchBar = styled.div`
   display: flex;
   border-bottom: 1px solid var(--Black);
   margin-right: 25px;
@@ -20,3 +25,22 @@ export const MenuSearchBar = styled.div`
   }
 `;
 
+export const SearchProductsList = styled.div`
+  position: absolute;
+  z-index: 99999;
+  top: 50px;
+  right: 0;
+  background: var(--White);
+
+  height: auto;
+  width: 100%;
+  padding: 0.5rem;
+`;
+
+export const ProductName = styled.div`
+  padding-bottom: 0.5rem;
+
+  &:hover {
+    color: var(--LightGray);
+  }
+`;

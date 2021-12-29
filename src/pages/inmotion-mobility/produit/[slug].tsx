@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import React, { ChangeEvent, ReactElement, ReactNode, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useRouter } from "next/router";
 
@@ -8,7 +8,10 @@ import HouseIcon from "../../../../public/images/icons/house.svg";
 import getAcfContent from "../../../utils/getAcfContent";
 import useCart from "../../../hooks/useCart";
 import { IProduct } from "../../../interfaces/IProducts";
-import { wc_getProductBySlug } from "../../../services/woocommerceApi/Products";
+import {
+  getVariations,
+  wc_getProductBySlug,
+} from "../../../services/woocommerceApi/Products";
 import placeholder from "../../../../public/images/placeholder_woocommerce.png";
 import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
@@ -33,6 +36,7 @@ import {
   Sections,
   Section,
 } from "../../../styles/ProductDetail";
+import Notiflix from "notiflix";
 
 interface Props {
   product: IProduct;
@@ -48,8 +52,36 @@ export default function ProductDetail({ product, variations }: Props) {
   const btnAddToCart = t("productDetail:addToCart");
   const [productQty, setProductQty] = useState(1);
 
+  useEffect(() => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+
+    if (router.isFallback) {
+      handleStart();
+    } else {
+      handleStop();
+    }
+
+    return () => {
+      handleStart();
+      handleStop();
+    };
+  }, [router]);
+
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   const videoUrl = product.meta_data?.filter((meta) => {
@@ -83,7 +115,6 @@ export default function ProductDetail({ product, variations }: Props) {
     setProductQty(quantity);
   };
 
-  console.log("product========>", product);
   return (
     <>
       <HeaderSeo
@@ -249,8 +280,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const product = await wc_getProductBySlug(slug as string, lang as string);
 
-  /*  const variations: IProduct[] = await getVariations(_product.id);
-  console.log("variations: ", variations); */
+  const variations: IProduct[] = await getVariations(product.id);
+  console.log("variations: ", variations);
 
   if (!product) {
     return {

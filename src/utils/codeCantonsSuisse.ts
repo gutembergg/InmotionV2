@@ -1,4 +1,5 @@
 export const swissDepartementCode = [
+  { code: "", nom: "Choisir canton" },
   { code: "AG", nom: "Aargau" },
   { code: "AR", nom: "Appenzell Ausserrhoden" },
   { code: "AI", nom: "Appenzell Innerrhoden" },
