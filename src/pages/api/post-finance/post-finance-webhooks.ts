@@ -37,62 +37,61 @@ export default async function handlerCompleted(
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
 
-    console.log("dataWh::", spaceId, dataWebhook.entityId);
+    console.log("dataWh::", dataWebhook.spaceId, dataWebhook.entityId);
 
-    transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
-      const orderID = response.body.metaData?.orderId;
-      console.log("state: ", response.body.state);
-      console.log("response:", response.body);
-      console.log("orderId: ", orderID);
-      console.log("dataWebhook.entityId", dataWebhook.entityId);
+    transactionService
+      .read(dataWebhook.spaceId, dataWebhook.entityId)
+      .then((response) => {
+        const orderID = response.body.metaData?.orderId;
+        console.log("state: ", response.body.state);
+        console.log("response:", response.body);
+        console.log("orderId: ", orderID);
+        console.log("dataWebhook.entityId", dataWebhook.entityId);
 
-      return res.status(200).json(response.body);
+        if (response.body.state === "AUTHORIZED") {
+          console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
+          updateOrder(Number(orderID), "on-hold")
+            .then((resp) => {
+              console.log("Resp====>", resp);
 
-      /*     
- if (response.body.state === "AUTHORIZED") {
-        console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
-        updateOrder(Number(orderID), "on-hold")
-          .then((resp) => {
-            console.log("Resp====>", resp);
+              return res.status(200).json({ Message: "Order Authorized!" });
+            })
+            .catch((error) => {
+              return res.status(200).json({ Error: "Internal error" });
+            });
+        } else if (response.body.state === "FULFILL") {
+          console.log(`response.FULFILL:${orderID}`, response.body.state);
+          updateOrder(Number(orderID), "completed")
+            .then((resp) => {
+              console.log("Resp====>", resp);
+              return res.status(200).json({ Message: "Order Completed!" });
+            })
+            .catch((error) => {
+              return res.status(200).json({ Error: "Internal error" });
+            });
+        } else if (response.body.state === "FAILED") {
+          console.log(`response.FAILED:${orderID}`, response.body.state);
 
-            return res.status(200).json({ Message: "Order Authorized!" });
-          })
-          .catch((error) => {
-            return res.status(200).json({ Error: "Internal error" });
-          });
-      } else if (response.body.state === "FULFILL") {
-        console.log(`response.FULFILL:${orderID}`, response.body.state);
-        updateOrder(Number(orderID), "completed")
-          .then((resp) => {
-            console.log("Resp====>", resp);
-            return res.status(200).json({ Message: "Order Completed!" });
-          })
-          .catch((error) => {
-            return res.status(200).json({ Error: "Internal error" });
-          });
-      } else if (response.body.state === "FAILED") {
-        console.log(`response.FAILED:${orderID}`, response.body.state);
+          updateOrder(Number(orderID), "failed")
+            .then((response) => {
+              return res.status(200).json({ Message: "Order Failed!" });
+            })
+            .catch((error) => {
+              return res.status(200).json({ Error: "Internal error" });
+            });
+        } else if (response.body.state === "DECLINE") {
+          console.log(`response.DECLINE:${orderID}`, response.body.state);
 
-        updateOrder(Number(orderID), "failed")
-          .then((response) => {
-            return res.status(200).json({ Message: "Order Failed!" });
-          })
-          .catch((error) => {
-            return res.status(200).json({ Error: "Internal error" });
-          });
-      } else if (response.body.state === "DECLINE") {
-        console.log(`response.DECLINE:${orderID}`, response.body.state);
-
-        updateOrder(Number(orderID), "cancelled")
-          .then((response) => {
-            return res.status(200).json({ Message: "Order Cancelled!" });
-          })
-          .catch((error) => {
-            return res.status(200).json({ Error: "Internal error" });
-          });
-      } else {
-        return res.status(200).json(response.body);
-      } */
-    });
+          updateOrder(Number(orderID), "cancelled")
+            .then((response) => {
+              return res.status(200).json({ Message: "Order Cancelled!" });
+            })
+            .catch((error) => {
+              return res.status(200).json({ Error: "Internal error" });
+            });
+        } else {
+          return res.status(200).json(response.body);
+        }
+      });
   }
 }
