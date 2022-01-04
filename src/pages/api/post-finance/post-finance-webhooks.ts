@@ -32,7 +32,7 @@ export default async function handlerCompleted(
   if (method === "POST") {
     const dataWebhook = req.body;
 
-    console.log("dataWebhook", dataWebhook);
+    console.log("dataWebhook", config);
 
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
@@ -41,7 +41,7 @@ export default async function handlerCompleted(
 
     console.log("spaceId-env", spaceId, config.space_id);
 
-    transactionService
+    /*     transactionService
       .read(dataWebhook.spaceId, dataWebhook.entityId)
       .then((response) => {
         const orderID = response.body.metaData?.orderId;
@@ -51,51 +51,7 @@ export default async function handlerCompleted(
         console.log("dataWebhook.entityId", dataWebhook.entityId);
 
         return res.status(200).json(response.body);
-
-        /*  if (response.body.state === "AUTHORIZED") {
-          console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
-          updateOrder(Number(orderID), "on-hold")
-            .then((resp) => {
-              console.log("Resp====>", resp);
-
-              return res.status(200).json({ Message: "Order Authorized!" });
-            })
-            .catch((error) => {
-              return res.status(200).json({ Error: "Internal error" });
-            });
-        } else if (response.body.state === "FULFILL") {
-          console.log(`response.FULFILL:${orderID}`, response.body.state);
-          updateOrder(Number(orderID), "completed")
-            .then((resp) => {
-              console.log("Resp====>", resp);
-              return res.status(200).json({ Message: "Order Completed!" });
-            })
-            .catch((error) => {
-              return res.status(200).json({ Error: "Internal error" });
-            });
-        } else if (response.body.state === "FAILED") {
-          console.log(`response.FAILED:${orderID}`, response.body.state);
-
-          updateOrder(Number(orderID), "failed")
-            .then((response) => {
-              return res.status(200).json({ Message: "Order Failed!" });
-            })
-            .catch((error) => {
-              return res.status(200).json({ Error: "Internal error" });
-            });
-        } else if (response.body.state === "DECLINE") {
-          console.log(`response.DECLINE:${orderID}`, response.body.state);
-
-          updateOrder(Number(orderID), "cancelled")
-            .then((response) => {
-              return res.status(200).json({ Message: "Order Cancelled!" });
-            })
-            .catch((error) => {
-              return res.status(200).json({ Error: "Internal error" });
-            });
-        } else {
-          return res.status(200).json(response.body);
-        } */
-      });
+      })
+      .catch((error) => res.status(200).json({ error: error })); */
   }
 }
