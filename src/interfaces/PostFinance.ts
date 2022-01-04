@@ -25,4 +25,5 @@ export interface PostFinancePaymentMethods {
   spaceId: number;
   state: string;
   version: number;
+  taxMethodsPayments: number;
 }

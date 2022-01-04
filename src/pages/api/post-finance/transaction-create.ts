@@ -4,7 +4,7 @@ import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
 import Cors from "cors";
 import initMiddleware from "../../../utils/init-middleware";
 
-interface ProductsLineItems {
+export interface ProductsLineItems {
   id: number;
   name: string;
   price: number;
@@ -72,6 +72,8 @@ export default async function handler(
       return lineItem;
     });
 
+    console.log("lineItemsArray: ", lineItemsArray);
+
     const shipping: any = (lineItem = {
       name: "Shipping",
       uniqueId: "shipping_1",
@@ -95,8 +97,6 @@ export default async function handler(
     transactionService.create(spaceId, transaction).then((response) => {
       let transactionCreate: PostFinanceCheckout.model.Transaction =
         response.body;
-
-      console.log("transactionCurrenty: ", response.body);
 
       //// Fecth payment methods
       transactionService

@@ -57,16 +57,20 @@ const SearchBar = () => {
   };
 
   const selectProduct = (slug: string) => {
+    setSearchValue([]);
+
     router.replace(`http://localhost:3000/inmotion-mobility/produit/${slug}`);
   };
-
-  console.log("productsList: ", productsList);
-  console.log("router: ", router);
 
   return (
     <Container>
       <MenuSearchBar>
-        <input type="search" placeholder={search} onChange={handleChange} />
+        <input
+          type="search"
+          placeholder={search}
+          onChange={handleChange}
+          disabled={!productsList}
+        />
         <div className="searchICon">
           <Image
             src={searchIcon}

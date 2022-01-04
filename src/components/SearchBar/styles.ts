@@ -33,6 +33,8 @@ export const SearchProductsList = styled.div`
   background: var(--White);
 
   height: auto;
+  max-height: 600px;
+  overflow-y: hidden;
   width: 100%;
   padding: 0.5rem;
 `;
