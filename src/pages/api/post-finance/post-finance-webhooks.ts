@@ -94,7 +94,6 @@ export default async function handlerCompleted(
         } else {
           return res.status(200).json(response.body);
         }
-        return res.status(200).json(response.body);
       })
       .catch((error) => res.status(500).json({ error: error }));
   }
