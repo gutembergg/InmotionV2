@@ -34,19 +34,21 @@ export default async function handlerCompleted(
 
     console.log("dataWebhook", dataWebhook);
 
-    return res.status(200).json({ test: "test webhook" });
-
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
 
-    /*   transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
+    console.log("dataWh::", spaceId, dataWebhook.entityId);
+
+    transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const orderID = response.body.metaData?.orderId;
       console.log("state: ", response.body.state);
       console.log("response:", response.body);
       console.log("orderId: ", orderID);
       console.log("dataWebhook.entityId", dataWebhook.entityId);
 
-     
+      return res.status(200).json(response.body);
+
+      /*     
  if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
         updateOrder(Number(orderID), "on-hold")
@@ -90,7 +92,7 @@ export default async function handlerCompleted(
           });
       } else {
         return res.status(200).json(response.body);
-      } 
-    }); */
+      } */
+    });
   }
 }
