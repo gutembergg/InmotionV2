@@ -40,32 +40,29 @@ export default async function handlerCompleted(
       console.log("state: ", response.body.state);
       if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
-        updateOrder(parseInt(orderID as string, 10), "on-hold").then((resp) => {
+        updateOrder(Number(orderID), "on-hold").then((resp) => {
+          console.log("Resp====>", resp);
+
           return res.status(200).json({ Message: "Order Authorized!" });
         });
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
-        updateOrder(parseInt(orderID as string, 10), "completed").then(
-          (resp) => {
-            return res.status(200).json({ Message: "Order Completed!" });
-          }
-        );
+        updateOrder(Number(orderID), "completed").then((resp) => {
+          console.log("Resp====>", resp);
+          return res.status(200).json({ Message: "Order Completed!" });
+        });
       } else if (response.body.state === "FAILED") {
         console.log(`response.FAILED:${orderID}`, response.body.state);
 
-        updateOrder(parseInt(orderID as string, 10), "failed").then(
-          (response) => {
-            return res.status(200).json({ Message: "Order Failed!" });
-          }
-        );
+        updateOrder(Number(orderID), "failed").then((response) => {
+          return res.status(200).json({ Message: "Order Failed!" });
+        });
       } else if (response.body.state === "DECLINE") {
         console.log(`response.DECLINE:${orderID}`, response.body.state);
 
-        updateOrder(parseInt(orderID as string, 10), "cancelled").then(
-          (response) => {
-            return res.status(200).json({ Message: "Order Cancelled!" });
-          }
-        );
+        updateOrder(Number(orderID), "cancelled").then((response) => {
+          return res.status(200).json({ Message: "Order Cancelled!" });
+        });
       } else {
         return res.status(200).json(response.body);
       }
