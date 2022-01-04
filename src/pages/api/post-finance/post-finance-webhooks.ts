@@ -39,6 +39,8 @@ export default async function handlerCompleted(
 
     console.log("dataWh::", dataWebhook.spaceId, dataWebhook.entityId);
 
+    console.log("spaceId-env", spaceId, config.space_id);
+
     transactionService
       .read(dataWebhook.spaceId, dataWebhook.entityId)
       .then((response) => {
@@ -48,7 +50,9 @@ export default async function handlerCompleted(
         console.log("orderId: ", orderID);
         console.log("dataWebhook.entityId", dataWebhook.entityId);
 
-        if (response.body.state === "AUTHORIZED") {
+        return res.status(200).json(response.body);
+
+        /*  if (response.body.state === "AUTHORIZED") {
           console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
           updateOrder(Number(orderID), "on-hold")
             .then((resp) => {
@@ -91,7 +95,7 @@ export default async function handlerCompleted(
             });
         } else {
           return res.status(200).json(response.body);
-        }
+        } */
       });
   }
 }
