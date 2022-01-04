@@ -32,6 +32,7 @@ import {
   HelpSection,
   InfoSection,
 } from "../../styles/MobilityIndex";
+import { updateOrder } from "../../services/woocommerceApi/Orders";
 
 interface Props {
   featuredProducts: IProduct[];
@@ -190,8 +191,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const featuredproducts = await getFeaturedProduct(lang as string);
   const onSaleProducts = await getOnSaleProducts(lang as string);
 
-  /*  const allProducts = await getProductByCategory(80, "fr");
-  console.log("allProducts::", allProducts.length); */
+  const test = await updateOrder(10246, "completed");
+
+  console.log("Test==>", test);
 
   return {
     props: {

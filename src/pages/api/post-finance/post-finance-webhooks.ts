@@ -38,7 +38,11 @@ export default async function handlerCompleted(
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const orderID = response.body.metaData?.orderId;
       console.log("state: ", response.body.state);
-      if (response.body.state === "AUTHORIZED") {
+      console.log("response: ", response.body);
+      console.log("orderId: ", orderID);
+
+      return res.status(200).json(response.body);
+      /* if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
         updateOrder(Number(orderID), "on-hold")
           .then((resp) => {
@@ -81,7 +85,7 @@ export default async function handlerCompleted(
           });
       } else {
         return res.status(200).json(response.body);
-      }
+      } */
     });
   }
 }
