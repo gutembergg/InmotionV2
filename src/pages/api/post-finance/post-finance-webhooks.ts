@@ -38,7 +38,7 @@ export default async function handlerCompleted(
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const orderID = response.body.metaData?.orderId;
       console.log("state: ", response.body.state);
-      console.log("response: ", response.body);
+      console.log("response:", response.body);
       console.log("orderId: ", orderID);
 
       return res.status(200).json(response.body);
