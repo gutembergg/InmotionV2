@@ -351,20 +351,6 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       name="billing_country"
                       className="input_selects"
                     >
-                      {/* {authorizedCounty.map((country) => (
-                        <option
-                          key={country.code}
-                          value={country.code}
-                          defaultChecked={true}
-                          defaultValue={
-                            props.initialValues.billing_country.length > 0
-                              ? props.initialValues.billing_country
-                              : country.name
-                          }
-                        >
-                          {country.name}
-                        </option>
-                      ))} */}
                       {authorizedCounty.map((country) => (
                         <option
                           key={country.code}

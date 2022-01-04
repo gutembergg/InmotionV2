@@ -3,7 +3,6 @@ import { PostFinanceCheckout } from "postfinancecheckout";
 import { LineItemType } from "postfinancecheckout/src/models/LineItemType";
 import Cors from "cors";
 import initMiddleware from "../../../utils/init-middleware";
-import { LineItemCreate } from "postfinancecheckout/src/models/LineItemCreate";
 
 interface ProductsLineItems {
   id: number;
@@ -13,9 +12,10 @@ interface ProductsLineItems {
   sku: string;
 }
 
-let spaceId: number = 23340;
-let userId: number = 48411;
-let apiSecret: string = "YQUOgXtny9XW8L0m7jxx47rTd9ilnKiMqEoFSDOh/9U=";
+let spaceId: number = Number(process.env.NEXT_PUBLIC_POSTFINANCE_SPACE_ID);
+let userId: number = Number(process.env.NEXT_PUBLIC_POSTFINANCE_USER_ID);
+let apiSecret: string = process.env
+  .NEXT_PUBLIC_POSTFINANCE_API_SECRET as string;
 
 let config = {
   space_id: spaceId,

@@ -1,7 +1,8 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import { useRouter } from "next/router";
 
 import HouseIcon from "../../../../public/images/icons/house.svg";
 import getAcfContent from "../../../utils/getAcfContent";
@@ -13,6 +14,10 @@ import {
 } from "../../../services/woocommerceApi/Products";
 import placeholder from "../../../../public/images/placeholder_woocommerce.png";
 import ButtonSkew from "../../../components/ButtonSkew";
+import useTranslation from "next-translate/useTranslation";
+import LayoutMobility from "../../../Layout/LayoutMobility";
+import HeaderSeo from "../../../components/HeaderSeo";
+import { IVariation } from "../../../interfaces/IVariation";
 
 import {
   Container,
@@ -31,10 +36,7 @@ import {
   Sections,
   Section,
 } from "../../../styles/ProductDetail";
-import useTranslation from "next-translate/useTranslation";
-import LayoutMobility from "../../../Layout/LayoutMobility";
-import HeaderSeo from "../../../components/HeaderSeo";
-import { IVariation } from "../../../interfaces/IVariation";
+import Notiflix from "notiflix";
 
 interface Props {
   product: IProduct;
@@ -42,13 +44,45 @@ interface Props {
 }
 
 export default function ProductDetail({ product, variations }: Props) {
+  const router = useRouter();
   const { cartItem, addToCart } = useCart();
 
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
-
   const [productQty, setProductQty] = useState(1);
+
+  useEffect(() => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+
+    if (router.isFallback) {
+      handleStart();
+    } else {
+      handleStop();
+    }
+
+    return () => {
+      handleStart();
+      handleStop();
+    };
+  }, [router]);
+
+  if (router.isFallback) {
+    return <div></div>;
+  }
 
   const videoUrl = product.meta_data?.filter((meta) => {
     if (meta.key === "video_youtube_en_avant") {
@@ -58,31 +92,28 @@ export default function ProductDetail({ product, variations }: Props) {
     }
   });
 
-  const handleAddToCart = useCallback(
-    (product: IProduct) => {
-      const productExist = cartItem.find((item) => item.id === product.id);
+  const handleAddToCart = (product: IProduct) => {
+    const productExist = cartItem.find((item) => item.id === product.id);
 
-      if (productExist) {
-        const newCart = [...cartItem];
+    if (productExist) {
+      const newCart = [...cartItem];
 
-        const cart = newCart.map((item) =>
-          item.id === product.id
-            ? { ...productExist, qty: productExist.qty + productQty }
-            : item
-        );
+      const cart = newCart.map((item) =>
+        item.id === product.id
+          ? { ...productExist, qty: productExist.qty + productQty }
+          : item
+      );
 
-        addToCart(cart);
-      } else {
-        addToCart([...cartItem, { ...product, qty: productQty }]);
-      }
-    },
-    [addToCart, cartItem, productQty]
-  );
+      addToCart(cart);
+    } else {
+      addToCart([...cartItem, { ...product, qty: productQty }]);
+    }
+  };
 
-  const handleChangeQty = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeQty = (e: ChangeEvent<HTMLInputElement>) => {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
-  }, []);
+  };
 
   return (
     <>
@@ -193,7 +224,7 @@ export default function ProductDetail({ product, variations }: Props) {
 
             <DescriptionProduct>
               <Sections>
-                {product.acf.hasOwnProperty("description_du_produit") &&
+                {/*  {product.acf.hasOwnProperty("description_du_produit") &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <Section key={index}>
@@ -222,7 +253,7 @@ export default function ProductDetail({ product, variations }: Props) {
                         </div>
                       </Section>
                     );
-                  })}
+                  })} */}
               </Sections>
             </DescriptionProduct>
           </ProductInfos>
@@ -239,7 +270,7 @@ ProductDetail.getLayout = function getLayout(page: ReactElement) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: "blocking",
+    fallback: true,
   };
 };
 
@@ -247,25 +278,23 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug: any = ctx.params?.slug;
   const lang = ctx.locale;
 
-  const _product = await wc_getProductBySlug(slug as string, lang as string);
+  const product = await wc_getProductBySlug(slug as string, lang as string);
 
-  const variations: IVariation[] = await getVariations(_product.id);
+  const variations: IProduct[] = await getVariations(product.id);
   console.log("variations: ", variations);
 
-  if (!_product) {
+  if (!product) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/inmotion-mobility",
         permanent: false,
-        variations,
       },
     };
   }
 
   return {
     props: {
-      product: _product,
-      variations,
+      product,
     },
     revalidate: 60 * 2, // 2 min
   };

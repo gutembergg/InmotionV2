@@ -74,7 +74,7 @@ CaisseMagasin.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { data } = await getProducts();
+  const data = await getProducts();
 
   const response = await getCategories();
   const categories = response;

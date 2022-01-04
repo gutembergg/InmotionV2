@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
-import React, { ReactElement, ReactNode, useEffect } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import AppProvider from "../components/Context";
 import GlobalStyles from "../styles/globalStyles";
 import Head from "next/head";

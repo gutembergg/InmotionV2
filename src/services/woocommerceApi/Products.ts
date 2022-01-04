@@ -4,23 +4,23 @@ import { wooCommerce } from "./woocommerceConfig";
 
 // Get all products////////////////////////////////////////////  !!!!!!!!!!!!!!FILTER NOT WORK HERE ACTUALY for admin/caisse
 export const getProducts = async () => {
-  const response = await wooCommerce.get("products", {
+  const { data } = await wooCommerce.get("products", {
     per_page: 100,
   });
-console.log("response",response)
-  // return filterCategoryVisibility(response);
-  return response;
+  return filterCategoryVisibility(data);
 };
 
 // Get Products by categories //////////////////////////////
-export const getProductByCategory = async (id: number, lang: string) => {
+export const getProductByCategory = async (
+  id: number,
+  lang: string
+): Promise<IProduct[]> => {
   const { data } = await wooCommerce.get(`products`, {
     id,
     lang: lang,
     per_page: 100,
   });
- return filterCategoryVisibility(data);
-  // return data;
+  return filterCategoryVisibility(data);
 };
 
 // Get Product by slug //////////////////////////////////////////////
@@ -31,18 +31,12 @@ export const getProductBySlug = async (slug: string) => {
 
   const product = data[0];
   return filterCategoryVisibility(product);
-  // return product;
-
- 
 };
 
 // Get variations products //////////////////////////////////////////
 export const getVariations = async (id: number) => {
-  console.log("id", id);
   const { data } = await wooCommerce.get(`products/${id}/variations`);
-  console.log("data==>", data);
   return filterCategoryVisibility(data);
-  // return data;
 };
 
 //  Get Product by slug /////////////////////////////////////////
@@ -73,8 +67,6 @@ export const wc_getProductsByCategory = async (
     },
   });
   return filterCategoryVisibility(data);
-
-  // return data;
 };
 
 //Get products by category SLUG ////////////////////////////////////
@@ -94,9 +86,7 @@ export const getProduitsByCategoriesSlug = async (
   const products = await wc_getProductsByCategory(data[0].id, lang);
 
   return filterCategoryVisibility(products);
-  // return products;
 };
-
 
 // Get FEATURED Products //////////////////////////////////////////////
 export const getFeaturedProduct = async (lang: string): Promise<IProduct[]> => {
@@ -108,7 +98,6 @@ export const getFeaturedProduct = async (lang: string): Promise<IProduct[]> => {
   const product = data;
 
   return filterCategoryVisibility(product);
-  // return product;
 };
 
 // Get OnSale Products //////////////////////////////////////////////
@@ -121,14 +110,14 @@ export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
   const product = data;
 
   return filterCategoryVisibility(product);
-  // return product;
 };
-
 
 // catalog Visibility filtering -exclude hidden products///////////////////////////
 
-const filterCategoryVisibility = (productList:IProduct[]) => {
-  const filteredProductList = productList.filter(product => product.catalog_visibility!=="hidden");
+const filterCategoryVisibility = (productList: IProduct[]) => {
+  const filteredProductList = productList.filter(
+    (product) => product.catalog_visibility !== "hidden"
+  );
 
   return filteredProductList;
-}
+};

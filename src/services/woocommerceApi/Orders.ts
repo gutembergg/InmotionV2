@@ -14,11 +14,16 @@ export const wc_createOrder = async (order: any): Promise<Order> => {
   return data;
 };
 
-export const _updateOrder = async (orderId: number, methodName: string) => {
+export const _updateOrder = async (
+  orderId: number,
+  methodName: string,
+  transactionId: string
+) => {
   try {
     const query = {
       payment_method: methodName,
       payment_method_title: methodName,
+      transaction_id: transactionId,
     };
     const { data } = await wcApi.put(`orders/${orderId}`, query);
 
