@@ -51,8 +51,6 @@ export default async function handler(
     const currencyResp = req.body.currency;
     const shippingTx = req.body.shippingTaxe;
 
-    console.log("Config: ", config);
-
     // Transaction Service
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
