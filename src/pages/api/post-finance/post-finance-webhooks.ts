@@ -41,7 +41,7 @@ export default async function handlerCompleted(
 
     console.log("spaceId-env", spaceId, config.space_id);
 
-    /*     transactionService
+    transactionService
       .read(dataWebhook.spaceId, dataWebhook.entityId)
       .then((response) => {
         const orderID = response.body.metaData?.orderId;
@@ -52,6 +52,6 @@ export default async function handlerCompleted(
 
         return res.status(200).json(response.body);
       })
-      .catch((error) => res.status(200).json({ error: error })); */
+      .catch((error) => res.status(200).json({ error: error }));
   }
 }
