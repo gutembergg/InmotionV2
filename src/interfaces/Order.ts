@@ -49,6 +49,7 @@ export interface TaxLine {
   rate_id: number;
   label: string;
   compound: boolean;
+  rate_percent:number;
   tax_total: string;
   shipping_tax_total: string;
 }

@@ -1,0 +1,17 @@
+{
+  "CompletedOrderTitle": "Order received",
+  "CompletedOrderthanks": "Thank you for your order, you will receive a confirmation by E-Mail soon",  
+  "CompletedOrderOrdernumber": "Order number :",  
+  "CompletedOrderDate": "Date :",  
+  "CompletedOrderMail": "E-Mail :",  
+  "CompletedOrderTotal": "Total :",  
+  "CompletedOrderPaiementMethod": "Payment method :",  
+  "CompletedOrderResumeTitle": "Your order summary",  
+  "CompletedOrderProducts": "Product(s) :",  
+  "CompletedOrderSousTotal": "Subtotal :",  
+  "CompletedOrderShipping": "Shipment :",  
+  "CompletedOrderTVA": "VAT",  
+  "CompletedOrderShippingAddress": "Shipping address :",  
+  "CompletedOrderBillingAddress": "Billing address :", 
+  "signature": "Your Inmotion team" 
+}

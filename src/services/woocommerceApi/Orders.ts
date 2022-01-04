@@ -3,7 +3,6 @@ import { Order } from "../../interfaces/Order";
 import wcApi from "./wcAxiosConfig";
 import { wooCommerce } from "./woocommerceConfig";
 
-// Get coupons////////////////////////////////////////////
 export const createOrder = async (order: any) => {
   const { data } = await wooCommerce.post("orders", order);
   return data;
@@ -57,6 +56,15 @@ export const deleteOrder = async (id: number) => {
 
     console.log("deleteOrder====>", data);
     return true;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+export const getOrder = async (id: number) => {
+  try {
+    const { data } = await wooCommerce.get(`orders/${id}`);
+    return data;
   } catch (error) {
     console.log("Error", error);
   }

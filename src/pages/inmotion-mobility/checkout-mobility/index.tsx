@@ -155,7 +155,7 @@ export default function CheckoutMobility() {
   //------------------------------------------tvaResult------------------------------------------------!!
   const tva = 7.7;
   const tvaResult = (cart.totalProductsPrice / 100) * tva;
-
+// console.log("tvaresult",tvaResult)
   useEffect(() => {
     setCurrency(
       userShippingBilling.billing_info.billing_country === "CH"

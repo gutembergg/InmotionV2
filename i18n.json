@@ -4,7 +4,7 @@
   "pages": {
     "*": ["common", "headerMobility"],
     "/": ["home"],
-    "/inmotion-mobility": ["headerMobility","home"],
+    "/inmotion-mobility": ["headerMobility", "home"],
     "/inmotion-mobility/[slug]": ["headerMobility"],
     "/inmotion-mobility/categorie_/[slug]": [
       "headerMobility",
@@ -16,13 +16,11 @@
       "productDetail",
       "equipmentsPage"
     ],
-    "/inmotion-mobility/services": [
-      "headerMobility",
-      "services"
-    ],
+    "/inmotion-mobility/services": ["headerMobility", "services"],
     "/inmotion-mobility/services/autorisation-retour": [
       "headerMobility",
-      "services","forms"
+      "services",
+      "forms"
     ],
     "/inmotion-mobility/categories/[slug]": ["headerMobility", "productDetail"],
     "/inmotion-mobility/produit/[slug]": ["headerMobility", "productDetail"],
@@ -36,6 +34,7 @@
       "headerMobility",
       "checkout-mobility",
       "forms"
-    ]
+    ],
+    "/inmotion-mobility/completed-order/[slug]": ["headerMobility", "completed-order"]
   }
 }
