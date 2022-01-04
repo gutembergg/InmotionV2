@@ -34,6 +34,8 @@ export default async function handlerCompleted(
 
     console.log("dataWebhook", dataWebhook);
 
+    return res.status(200).json({ test: "test webhook" });
+
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
 
