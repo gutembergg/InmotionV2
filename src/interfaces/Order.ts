@@ -40,7 +40,7 @@ export interface Order {
   payment_method_title: string;
   line_items: LineItemsDTO[];
   tax_lines: TaxLine[];
-  shipping_lines: [method_id: string, method_title: string, total: string];
+  shipping_lines: [{method_id: string, method_title: string, total: string}];
 }
 
 export interface TaxLine {

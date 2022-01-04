@@ -35,6 +35,6 @@
       "checkout-mobility",
       "forms"
     ],
-    "/inmotion-mobility/completed-order/[slug]": ["headerMobility", "completed-order"]
+    "/inmotion-mobility/completed-order": ["headerMobility", "completed-order"]
   }
 }
