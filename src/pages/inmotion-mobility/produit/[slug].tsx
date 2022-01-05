@@ -18,6 +18,7 @@ import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import { IVariation } from "../../../interfaces/IVariation";
+import Notiflix from "notiflix";
 
 import {
   Container,
@@ -34,9 +35,7 @@ import {
   Video,
   DescriptionProduct,
   Sections,
-  Section,
 } from "../../../styles/ProductDetail";
-import Notiflix from "notiflix";
 
 interface Props {
   product: IProduct;

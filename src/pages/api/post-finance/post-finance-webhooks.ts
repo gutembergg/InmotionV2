@@ -32,42 +32,48 @@ export default async function handlerCompleted(
   if (method === "POST") {
     const dataWebhook = req.body;
 
+    console.log("dataWebhook", config);
+
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
+
+    console.log("dataWh::", dataWebhook.spaceId, dataWebhook.entityId);
+
+    console.log("spaceId-env", spaceId, config.api_secret);
 
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const orderID = response.body.metaData?.orderId;
       console.log("state: ", response.body.state);
+      console.log("response:", response.body);
+      console.log("orderId: ", orderID);
+      console.log("dataWebhook.entityId", dataWebhook.entityId);
+
       if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
-        updateOrder(parseInt(orderID as string, 10), "on-hold").then((resp) => {
+        updateOrder(Number(orderID), "on-hold").then((resp) => {
+          console.log("Resp====>", resp);
+
           return res.status(200).json({ Message: "Order Authorized!" });
         });
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
-        updateOrder(parseInt(orderID as string, 10), "completed").then(
-          (resp) => {
-            return res.status(200).json({ Message: "Order Completed!" });
-          }
-        );
+        updateOrder(Number(orderID), "completed").then((resp) => {
+          console.log("Resp====>", resp);
+
+          return res.status(200).json({ Message: "Order Completed!" });
+        });
       } else if (response.body.state === "FAILED") {
         console.log(`response.FAILED:${orderID}`, response.body.state);
-
-        updateOrder(parseInt(orderID as string, 10), "failed").then(
-          (response) => {
-            return res.status(200).json({ Message: "Order Failed!" });
-          }
-        );
+        updateOrder(Number(orderID), "failed").then((response) => {
+          return res.status(200).json({ Message: "Order Failed!" });
+        });
       } else if (response.body.state === "DECLINE") {
         console.log(`response.DECLINE:${orderID}`, response.body.state);
-
-        updateOrder(parseInt(orderID as string, 10), "cancelled").then(
-          (response) => {
-            return res.status(200).json({ Message: "Order Cancelled!" });
-          }
-        );
+        updateOrder(Number(orderID), "cancelled").then((response) => {
+          return res.status(200).json({ Message: "Order Cancelled!" });
+        });
       } else {
-        return res.status(200).json(response.body);
+        return res.status(200).json({ Message: "Webhook ok" });
       }
     });
   }

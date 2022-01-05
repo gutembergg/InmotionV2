@@ -436,7 +436,9 @@ console.log("order",_order)
     const productsCheckout = lineItemsRef.current?.map((product) => {
       const id = product.id;
       const name = product.name;
-      const price = product.price * product.quantity;
+      const price =
+        (Number(product.subtotal) + Number(product.subtotal_tax)) *
+        product.quantity;
       const qty = product.quantity;
       const sku = product.sku ? product.sku : "no-sku";
 
@@ -451,7 +453,38 @@ console.log("order",_order)
         shippingTaxe: shippingPrice,
       });
 
-      setPaymentMethods(data.paymentMethods);
+      const methodsPaymentObject = data.paymentMethods.reduce(
+        (acc: PostFinancePaymentMethods[], item: PostFinancePaymentMethods) => {
+          let taxState = {};
+          switch (item.name) {
+            case "PostFinance e-finance":
+              taxState = { ...item, taxMethodsPayments: 3 };
+              break;
+            case "Carte PostFinance":
+              taxState = { ...item, taxMethodsPayments: 2 };
+              break;
+            case "Facture":
+              taxState = { ...item, taxMethodsPayments: 0 };
+              break;
+            case "PayPal":
+              taxState = { ...item, taxMethodsPayments: 5 };
+              break;
+            case "Carte de crédit/débit":
+              taxState = { ...item, taxMethodsPayments: 2 };
+              break;
+            case "TWINT":
+              taxState = { ...item, taxMethodsPayments: 4 };
+              break;
+          }
+
+          const object = [...acc, taxState];
+
+          return object;
+        },
+        []
+      );
+
+      setPaymentMethods(methodsPaymentObject);
       setTransactionId(data.transactionId);
 
       if (data) {
@@ -482,10 +515,45 @@ console.log("order",_order)
       setSelectedPaymentMethod(index);
       setIsCheckMethod(true);
 
+      const totalPriceWithTaxMethodsPayment = lineItemsRef.current.reduce(
+        (acc, item) => {
+          const subTotal =
+            Number(acc.toFixed(2)) +
+            (Number(item.subtotal) + Number(item.subtotal_tax));
+
+          const total = subTotal;
+
+          return total;
+        },
+        0
+      );
+
+      const taxPaymentMethods = (
+        (method.taxMethodsPayments / 100) *
+        totalPriceWithTaxMethodsPayment
+      ).toFixed(2);
+
+      console.log("taxPaymentMethods", taxPaymentMethods);
+
+      const productsCheckout = lineItemsRef.current?.map((product) => {
+        const id = product.id;
+        const name = product.name;
+        const price =
+          (Number(product.subtotal) + Number(product.subtotal_tax)) *
+          product.quantity;
+        const qty = product.quantity;
+        const sku = product.sku ? product.sku : "no-sku";
+
+        return { id, name, price, qty, sku };
+      });
+
       const { data } = await apiPFinance.post("transaction-update", {
         id: transactionId,
         orderId: orderId,
         methodId: method.id,
+        shippingTaxe: shippingPrice,
+        productsCheckout,
+        taxPaymentMethods,
       });
 
       setTransactionId(data);
@@ -497,7 +565,7 @@ console.log("order",_order)
         setPaymentValidate(false);
       }
     },
-    [orderId, transactionId]
+    [orderId, transactionId, shippingPrice]
   );
 
   const openCodePromo = () => {
@@ -801,7 +869,8 @@ console.log("order",_order)
                                       />
                                     </div>
                                     <div className="method_name">
-                                      {method.name}
+                                      {method.name} +{" "}
+                                      {method.taxMethodsPayments}%
                                     </div>
                                   </div>
                                 </PaymentMethods>

@@ -34,16 +34,12 @@ export const _updateOrder = async (
 };
 
 export const updateOrder = async (orderId: number, status: string) => {
-  try {
-    const query = {
-      status: status,
-    };
-    const { data } = await wcApi.put(`orders/${orderId}`, query);
+  const query = {
+    status: status,
+  };
+  const { data } = await wcApi.put(`orders/${orderId}`, query);
 
-    return data;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+  return data;
 };
 
 export const updateCouponsOrder = async (id: number, coupons: ICoupons[]) => {
