@@ -86,7 +86,7 @@ console.log("order",order)
         <h4>{CompletedOrderSousTotal}</h4>
         <p>{order.currency} {Number(order.total) - Number(order.shipping_total)}</p>
         <h4>{CompletedOrderShipping}</h4>
-        <p>{order.currency} {order.shipping_total} {order.shipping_lines[0].method_title}</p>
+        {/* <p>{order.currency} {order.shipping_total} {order.shipping_lines[0].method_title}</p> */}
         <h4>{CompletedOrderTotal}</h4>
         <p>{order.currency} {order.total}<span>(dont {order.currency} {order.tax_lines[0].tax_total} {CompletedOrderTVA} ({order.tax_lines[0].rate_percent}%)</span></p>
       </div>
