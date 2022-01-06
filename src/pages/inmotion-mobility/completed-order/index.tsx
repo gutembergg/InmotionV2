@@ -75,7 +75,7 @@ console.log("order",order)
           <li key={index}>
                     <p className="productTitle">{lineItem.name}</p>
         <p className="productQty">{lineItem.quantity}x</p>
-        <p className="productTitle">{order.currency} {Number(lineItem.total) + Number(lineItem.total_tax)}</p>
+        <p className="productTitle">{order.currency} {(Number(lineItem.total) + Number(lineItem.total_tax)) / Number(lineItem.quantity)}</p>
                   </li>
                 )
               })

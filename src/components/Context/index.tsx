@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import CartProvider from "./CartContext";
+import CurrencyProvider from "./CurrencyContext";
 import UserProvider from "./UserContext";
 
 interface Children {
@@ -9,7 +10,9 @@ interface Children {
 const AppProvider = ({ children }: Children) => {
   return (
       <UserProvider>
+        <CurrencyProvider>
         <CartProvider>{children}</CartProvider>
+        </CurrencyProvider>
       </UserProvider>
   );
 };

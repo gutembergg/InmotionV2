@@ -275,15 +275,15 @@ console.log("order",_order)
     };
 
     const shipping = {
-      last_name: values.shipping_last_name !== "" ? (values.shipping_last_name):(values.billing_last_name),
-      first_name: values.shipping_first_name !== "" ? (values.shipping_first_name):(values.billing_first_name),
-      phone: values.shipping_phone !== "" ? (values.shipping_phone):(values.billing_phone),
-      address_1: values.shipping_address_1 !== "" ? (values.shipping_address_1):(values.billing_address_1),
-      address_2: values.shipping_address_2 !== "" ? (values.shipping_address_2):(values.billing_address_2),
-      postcode: values.shipping_postcode !== "" ? (values.shipping_postcode):(values.billing_postcode),
-      city: values.shipping_city !== "" ? (values.shipping_city):(values.billing_city),
-      state: values.shipping_state !== "" ? (values.shipping_state):(values.billing_state),
-      country: values.shipping_country !== "" ? (values.shipping_country):(values.billing_country),
+      last_name: values.shipping_last_name,
+      first_name: values.shipping_first_name,
+      phone: values.shipping_phone,
+      address_1: values.shipping_address_1,
+      address_2: values.shipping_address_2,
+      postcode: values.shipping_postcode,
+      city: values.shipping_city,
+      state: values.shipping_state,
+      country: values.shipping_country,
     };
     _setBillingShippingData({ billing, shipping });
     setChangeBillingView(true);
