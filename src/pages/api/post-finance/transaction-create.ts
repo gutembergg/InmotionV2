@@ -63,10 +63,10 @@ export default async function handler(
         uniqueId: item.sku,
         sku: item.sku,
         quantity: item.qty,
-        amountIncludingTax: item.price,
+        amountIncludingTax: Number(item.price.toFixed(2)),
         type: "PRODUCT" as LineItemType,
       };
-
+console.log("lineItem",lineItem)
       return lineItem;
     });
 

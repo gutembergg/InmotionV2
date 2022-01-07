@@ -37,4 +37,5 @@ export interface LineItemsDTO {
   tax_class?: string;
   subtotal?: string;
   total?: string;
+  total_tax?: string;
 }

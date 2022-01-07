@@ -16,6 +16,7 @@ const LanguageSelector = () => {
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
     setopenObject(!openObject);
   };
+  
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
     console.log(event);
     setopenObject(!openObject);

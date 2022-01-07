@@ -12,6 +12,7 @@ import Link from "next/link";
 import printer from "../../../../public/images/icons/printer.svg";
 import { LinkPrint } from "../HeaderAdmin/styles";
 import useTranslation from "next-translate/useTranslation";
+import CurrencySelector from "../../CurrencySelector";
 
 interface Props {
   icon: string;
@@ -38,6 +39,7 @@ const HeaderComponent = ({ icon }: Props) => {
           </a>
         </Link> */}
         <Login />
+        <CurrencySelector />
         <LanguageSelector />
       </div>
 

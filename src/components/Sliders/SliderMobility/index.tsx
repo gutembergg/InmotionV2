@@ -109,7 +109,7 @@ const SliderMobility = () => {
           <div className="content">
             <h2>{titleSlider3}</h2>
             <p>{txtSlider3}</p>
-            <Link href="/inmotion-mobility/produit/inmotion-p2-velo-electrique-2">
+            <Link href="/inmotion-mobility/produit/inmotion-p2">
               <a>{linkSlider3}</a>
             </Link>
           </div>

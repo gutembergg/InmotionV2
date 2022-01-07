@@ -55,6 +55,7 @@ import {
   CouponsList,
   AddressView,
 } from "../../../styles/CheckoutMobility";
+import product from "next-seo/lib/jsonld/product";
 
 interface ILineItems {
   id: number;
@@ -132,7 +133,8 @@ export default function CheckoutMobility() {
   //------------------------------------------tvaResult------------------------------------------------!!
   const tva = 7.7;
   const tvaResult = (cart.totalProductsPrice / 100) * tva;
-
+console.log("tvaresult",tvaResult)
+console.log("order",_order)
   useEffect(() => {
     setCurrency(
       _billingShippingData.shipping?.country === "CH" ? "CHF" : "EUR"
