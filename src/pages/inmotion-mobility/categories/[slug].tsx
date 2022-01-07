@@ -23,6 +23,7 @@ import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import SliderModels from "../../../components/Sliders/SliderModels";
+import { currencyRates } from "../../../services/currencyConvert/CurrencyRates";
 
 import {
   Container,
@@ -287,10 +288,32 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     lang as string
   );
 
+  const ratesCurrency = await currencyRates();
+
+  const productsWithEuroDevide = productsByCategory.reduce(
+    (acc, product) => {
+      let productsList = [];
+      const euroPriceNotFormated =
+        Number(product.price) / ratesCurrency.rates.CHF;
+      const euroPriceString = euroPriceNotFormated.toFixed(2);
+      const euroPrice = Number(euroPriceString);
+
+      productsList.push({ ...product, euroPrice });
+      const _productsList = [...acc, ...productsList];
+
+      const productObjectFiltered = _productsList.filter(
+        (prod) => Object.keys(prod).length > 0 && prod
+      );
+
+      return productObjectFiltered;
+    },
+    [{} as IProduct]
+  );
+
   return {
     props: {
       category,
-      productsByCategory: productsByCategory,
+      productsByCategory: productsWithEuroDevide,
     },
     revalidate: 60 * 2,
   };

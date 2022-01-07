@@ -42,6 +42,7 @@ export interface IProduct {
   name: string;
   images: IImage[];
   price: string;
+  euroPrice?: number;
   regular_price: string;
   sale_price: string;
   on_sale: boolean;

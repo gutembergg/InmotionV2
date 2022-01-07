@@ -26,6 +26,7 @@ export interface ShippingValues {
 export interface OrderValidation {
   billing: BillingValues;
   shipping: ShippingValues;
+  isShippingForm?: boolean;
 }
 
 export interface LineItemsDTO {

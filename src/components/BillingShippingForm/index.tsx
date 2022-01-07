@@ -142,7 +142,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
         billing_state: user.billing_info?.billing_state,
         billing_country:
           user.billing_info?.billing_country || authorizedCounty[0].code,
-        isShippingForm: false,
+        isShippingForm: !!user.shipping_info?.shipping_address_1 ? true : false,
         shipping_last_name: user.shipping_info?.shipping_last_name,
         shipping_first_name: user.shipping_info?.shipping_first_name,
         shipping_phone: user.shipping_info?.shipping_phone,

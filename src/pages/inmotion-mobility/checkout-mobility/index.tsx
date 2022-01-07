@@ -65,6 +65,7 @@ interface ILineItems {
   sku: string;
   subtotal: string;
   subtotal_tax: string;
+  total: string;
   total_tax: string;
   slug: string;
 }
@@ -97,33 +98,6 @@ export default function CheckoutMobility() {
 
   const [usedCoupons, setusedCoupons] = useState<ICoupons[]>([]);
   const [discountCupons, setDiscountCupons] = useState<CouponLines[]>([]);
-  const [userShippingBilling, setUserShippingBilling] = useState({
-    billing_info: {
-      billing_address_1: user ? user.billing_info?.billing_address_1 : "",
-      billing_address_2: user ? user.billing_info?.billing_address_2 : "",
-      billing_city: user ? user.billing_info?.billing_city : "",
-      billing_country: user ? user.billing_info?.billing_country : "",
-      billing_email: user ? user.billing_info?.billing_email : "",
-      billing_first_name: user ? user.billing_info?.billing_first_name : "",
-      billing_last_name: user ? user.billing_info?.billing_last_name : "",
-      billing_phone: user ? user.billing_info?.billing_phone : "",
-      billing_postcode: user ? user.billing_info?.billing_postcode : "",
-      billing_state: user ? user.billing_info?.billing_state : "",
-    },
-    shipping_info: {
-      shipping_address_1: user ? user.shipping_info?.shipping_address_1 : "",
-      shipping_address_2: user ? user.shipping_info?.shipping_address_2 : "",
-      shipping_city: user ? user.shipping_info?.shipping_city : "",
-      shipping_company: user ? user.shipping_info?.shipping_company : "",
-      shipping_country: user ? user.shipping_info?.shipping_country : "",
-      shipping_first_name: user ? user.shipping_info?.shipping_first_name : "",
-      shipping_last_name: user ? user.shipping_info?.shipping_last_name : "",
-      shipping_phone: user ? user.shipping_info?.shipping_phone : "",
-      shipping_postcode: user ? user.shipping_info?.shipping_postcode : "",
-      shipping_state: user ? user.shipping_info?.shipping_state : "",
-    },
-    line_items: lineItems,
-  });
   const [orderId, setOrderId] = useState<number>();
   const [isOrder, setIsOrder] = useState<boolean | null>(null);
   const [isPayment, setIsPayment] = useState(false);
@@ -132,6 +106,7 @@ export default function CheckoutMobility() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     number | undefined
   >();
+  const [_taxPaymentMethods, setTaxPaymentMethods] = useState("");
   const [methodShipping, setMethodShipping] = useState(0);
   const [methodsShippingList, setMethodsShippingList] = useState<
     ShippingMethods[]
@@ -141,10 +116,12 @@ export default function CheckoutMobility() {
 
   const [currency, setCurrency] = useState("");
   const [isCoupon, setIsCoupon] = useState(false);
-  const [priceTotalWithCoupon, setPriceTotalWithCoupon] = useState("");
   const [_order, _setOrder] = useState<Order>({} as Order);
   const [validateOrder, setValidateOrder] = useState(false);
   const [shippingPrice, setShippingPrice] = useState(0);
+  const [_shippingMethods, setShippingMethod] = useState<ShippingMethods>(
+    {} as ShippingMethods
+  );
 
   const [paymentSteps, setPaymentSteps] = useState(1);
   const [openedCodePromo, setOpenedCodePromo] = useState(false);
@@ -158,15 +135,9 @@ export default function CheckoutMobility() {
 
   useEffect(() => {
     setCurrency(
-      userShippingBilling.billing_info.billing_country ||
-        _billingShippingData.billing?.country === "CH"
-        ? "CHF"
-        : "EUR"
+      _billingShippingData.shipping?.country === "CH" ? "CHF" : "EUR"
     );
-  }, [
-    userShippingBilling.billing_info.billing_country,
-    _billingShippingData.billing?.country,
-  ]);
+  }, [_billingShippingData.shipping?.country]);
 
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
@@ -178,10 +149,6 @@ export default function CheckoutMobility() {
       });
 
       setLineItems(_lineItems);
-      setUserShippingBilling({
-        ...userShippingBilling,
-        line_items: _lineItems,
-      });
     }
 
     // eslint-disable-next-line
@@ -189,39 +156,11 @@ export default function CheckoutMobility() {
 
   useEffect(() => {
     if (user.token) {
-      setUserShippingBilling({
-        billing_info: {
-          billing_address_1: user.billing_info.billing_address_1,
-          billing_address_2: user.billing_info.billing_address_2,
-          billing_first_name: user.billing_info.billing_first_name,
-          billing_last_name: user.billing_info.billing_last_name,
-          billing_email: user.billing_info.billing_email,
-          billing_city: user.billing_info.billing_city,
-          billing_country: user.billing_info.billing_country,
-          billing_postcode: user.billing_info.billing_postcode,
-          billing_state: user.billing_info.billing_state,
-          billing_phone: user.billing_info.billing_phone,
-        },
-        shipping_info: {
-          shipping_address_1: user.shipping_info.shipping_address_1,
-          shipping_address_2: user.shipping_info.shipping_address_2,
-          shipping_first_name: user.shipping_info.shipping_first_name,
-          shipping_last_name: user.shipping_info.shipping_last_name,
-          shipping_city: user.shipping_info.shipping_city,
-          shipping_country: user.shipping_info.shipping_country,
-          shipping_postcode: user.shipping_info.shipping_postcode,
-          shipping_state: user.shipping_info.shipping_state,
-          shipping_company: user.shipping_info.shipping_company,
-          shipping_phone: user.shipping_info.shipping_phone,
-        },
-        line_items: lineItems,
-      });
       setloged(true);
     } else {
       setloged(false);
     }
-    // eslint-disable-next-line
-  }, [user, lineItems]);
+  }, [user]);
 
   const getShippingPrice = useCallback(
     (method: ShippingMethods) => {
@@ -241,7 +180,8 @@ export default function CheckoutMobility() {
             productsWeight?.weight <= condition.max
           ) {
             setShippingPrice(Number(rule.cost_per_order));
-            console.log("OK livraison", rule);
+            setShippingMethod(method);
+            console.log("OK livraison", method);
 
             return rule;
           }
@@ -261,7 +201,7 @@ export default function CheckoutMobility() {
     console.log("formValues: ", values);
     const billing = {
       last_name: values.billing_last_name,
-      first_name: values.shipping_first_name,
+      first_name: values.billing_first_name,
       email: values.billing_email,
       phone: values.billing_phone,
       address_1: values.billing_address_1,
@@ -272,18 +212,37 @@ export default function CheckoutMobility() {
       country: values.billing_country,
     };
 
+    const isShippingForm = values.isShippingForm;
+
     const shipping = {
-      last_name: values.shipping_last_name,
-      first_name: values.shipping_first_name,
-      phone: values.shipping_phone,
-      address_1: values.shipping_address_1,
-      address_2: values.shipping_address_2,
-      postcode: values.shipping_postcode,
-      city: values.shipping_city,
-      state: values.shipping_state,
-      country: values.shipping_country,
+      last_name: isShippingForm
+        ? values.shipping_last_name
+        : values.billing_last_name,
+      first_name: isShippingForm
+        ? values.shipping_first_name
+        : values.billing_first_name,
+      phone: isShippingForm ? values.shipping_phone : values.billing_phone,
+      address_1: isShippingForm
+        ? values.shipping_address_1
+        : values.billing_address_1,
+      address_2: isShippingForm
+        ? values.shipping_address_2
+        : values.billing_address_2,
+      postcode: isShippingForm
+        ? values.shipping_postcode
+        : values.billing_postcode,
+      city: isShippingForm ? values.shipping_city : values.billing_city,
+      state: isShippingForm ? values.shipping_state : values.billing_state,
+      country: isShippingForm
+        ? values.shipping_country
+        : values.billing_country,
     };
-    _setBillingShippingData({ billing, shipping });
+    _setBillingShippingData({
+      billing,
+      shipping,
+      isShippingForm,
+    });
+
     setChangeBillingView(true);
     setPaymentSteps(2);
   };
@@ -299,68 +258,39 @@ export default function CheckoutMobility() {
       payment_method_title: "Pedding",
       currency,
       billing: {
-        first_name:
-          userShippingBilling.billing_info.billing_first_name ||
-          _billingShippingData.billing?.first_name,
-        last_name:
-          userShippingBilling.billing_info.billing_last_name ||
-          _billingShippingData.billing?.last_name,
-        address_1:
-          userShippingBilling.billing_info.billing_address_1 ||
-          _billingShippingData.billing?.address_1,
-        address_2:
-          userShippingBilling.billing_info.billing_address_2 ||
-          _billingShippingData.billing?.address_2,
-        city:
-          userShippingBilling.billing_info.billing_city ||
-          _billingShippingData.billing?.city,
-        state:
-          userShippingBilling.billing_info.billing_state ||
-          _billingShippingData.billing?.state,
-        postcode:
-          userShippingBilling.billing_info.billing_postcode ||
-          _billingShippingData.billing?.postcode,
-        country:
-          userShippingBilling.billing_info.billing_country ||
-          _billingShippingData.billing?.country,
-        email:
-          userShippingBilling.billing_info.billing_email ||
-          _billingShippingData.billing?.email,
-        phone:
-          userShippingBilling.billing_info.billing_phone ||
-          _billingShippingData.billing?.phone,
+        first_name: _billingShippingData.billing?.first_name,
+        last_name: _billingShippingData.billing?.last_name,
+        address_1: _billingShippingData.billing?.address_1,
+        address_2: _billingShippingData.billing?.address_2,
+        city: _billingShippingData.billing?.city,
+        state: _billingShippingData.billing?.state,
+        postcode: _billingShippingData.billing?.postcode,
+        country: _billingShippingData.billing?.country,
+        email: _billingShippingData.billing?.email,
+        phone: _billingShippingData.billing?.phone,
       },
+
       shipping: {
-        first_name:
-          userShippingBilling.shipping_info.shipping_first_name ||
-          _billingShippingData.shipping?.first_name,
-        last_name:
-          userShippingBilling.shipping_info.shipping_last_name ||
-          _billingShippingData.shipping?.last_name,
-        address_1:
-          userShippingBilling.shipping_info.shipping_address_1 ||
-          _billingShippingData.shipping?.address_1,
-        address_2:
-          userShippingBilling.shipping_info.shipping_address_2 ||
-          _billingShippingData.shipping?.address_2,
-        phone:
-          userShippingBilling.shipping_info.shipping_phone ||
-          _billingShippingData.shipping?.phone,
-        city:
-          userShippingBilling.shipping_info.shipping_city ||
-          _billingShippingData.shipping?.city,
-        state:
-          userShippingBilling.shipping_info.shipping_state ||
-          _billingShippingData.shipping?.state,
-        postcode:
-          userShippingBilling.shipping_info.shipping_postcode ||
-          _billingShippingData.shipping?.postcode,
-        country:
-          userShippingBilling.shipping_info.shipping_country ||
-          _billingShippingData.shipping?.country,
+        first_name: _billingShippingData.shipping?.first_name,
+        last_name: _billingShippingData.shipping?.last_name,
+        address_1: _billingShippingData.shipping?.address_1,
+        address_2: _billingShippingData.shipping?.address_2,
+        phone: _billingShippingData.shipping?.phone,
+        city: _billingShippingData.shipping?.city,
+        state: _billingShippingData.shipping?.state,
+        postcode: _billingShippingData.shipping?.postcode,
+        country: _billingShippingData.shipping?.country,
       },
       line_items: lineItems,
       coupon_lines: couponsCodeArray,
+      shipping_lines: [
+        {
+          method_id: _shippingMethods.method_id,
+          method_title: _shippingMethods.method_title,
+          total: String(shippingPrice),
+        },
+      ],
+      customer_id: Object.keys(user).length > 0 ? user.profile.id : 0,
     };
 
     if (couponsCodeArray.length > 0) {
@@ -382,14 +312,6 @@ export default function CheckoutMobility() {
       setIsPayment(true);
 
       console.log("responseOrder", response);
-
-      setPriceTotalWithCoupon(
-        (
-          cart.totalProductsPrice +
-          shippingPrice -
-          Number(response.discount_total)
-        ).toFixed(2)
-      );
     } else {
       return;
     }
@@ -398,13 +320,13 @@ export default function CheckoutMobility() {
     ///////////////////////////////////////////////////////////////
   }, [
     lineItems,
-    userShippingBilling,
     _billingShippingData,
     usedCoupons,
     currency,
     isCoupon,
     shippingPrice,
-    cart.totalProductsPrice,
+    _shippingMethods,
+    user,
   ]);
 
   const checkout = useCallback(async () => {
@@ -435,8 +357,7 @@ export default function CheckoutMobility() {
       const id = product.id;
       const name = product.name;
       const price =
-        (Number(product.subtotal) + Number(product.subtotal_tax)) *
-        product.quantity;
+        (Number(product.total) + Number(product.total_tax)) * product.quantity;
       const qty = product.quantity;
       const sku = product.sku ? product.sku : "no-sku";
 
@@ -517,7 +438,7 @@ export default function CheckoutMobility() {
         (acc, item) => {
           const subTotal =
             Number(acc.toFixed(2)) +
-            (Number(item.subtotal) + Number(item.subtotal_tax));
+            (Number(item.total) + Number(item.total_tax));
 
           const total = subTotal;
 
@@ -531,13 +452,15 @@ export default function CheckoutMobility() {
         totalPriceWithTaxMethodsPayment
       ).toFixed(2);
 
+      setTaxPaymentMethods(taxPaymentMethods);
+
       console.log("taxPaymentMethods", taxPaymentMethods);
 
       const productsCheckout = lineItemsRef.current?.map((product) => {
         const id = product.id;
         const name = product.name;
         const price =
-          (Number(product.subtotal) + Number(product.subtotal_tax)) *
+          (Number(product.total) + Number(product.total_tax)) *
           product.quantity;
         const qty = product.quantity;
         const sku = product.sku ? product.sku : "no-sku";
@@ -556,7 +479,12 @@ export default function CheckoutMobility() {
 
       setTransactionId(data);
 
-      await _updateOrder(orderId as number, method.name, String(transactionId));
+      await _updateOrder(
+        orderId as number,
+        method.name,
+        String(transactionId),
+        taxPaymentMethods
+      );
 
       if (data) {
         setIsCheckMethod(false);
@@ -580,7 +508,9 @@ export default function CheckoutMobility() {
       setMethodShipping(index);
       if (method.method_id === "local_pickup") {
         setShippingPrice(0);
+        setShippingMethod(method);
       } else if (method.method_id === "flexible_shipping_single") {
+        setShippingMethod(method);
         getShippingPrice(method);
       }
     },
@@ -597,21 +527,11 @@ export default function CheckoutMobility() {
   };
 
   const getShippingZone = useCallback(async () => {
-    /*  if (paymentSteps !== 2) {
-      return;
-    } */
-
     setIsSelectedShipping(true);
 
     let selectedCountry = 0;
 
-    const country =
-      userShippingBilling.shipping_info?.shipping_country ||
-      _billingShippingData.shipping?.country
-        ? userShippingBilling.shipping_info?.shipping_country ||
-          _billingShippingData.shipping?.country
-        : userShippingBilling.billing_info.billing_country ||
-          _billingShippingData.billing?.country;
+    const country = _billingShippingData.shipping?.country;
 
     switch (country) {
       case "CH":
@@ -637,13 +557,7 @@ export default function CheckoutMobility() {
     getShippingPrice(response[0]);
     setIsPayment(true);
     setPaymentSteps(3);
-  }, [
-    _billingShippingData.billing?.country,
-    userShippingBilling.billing_info.billing_country,
-    getShippingPrice,
-    _billingShippingData.shipping?.country,
-    userShippingBilling.shipping_info.shipping_country,
-  ]);
+  }, [getShippingPrice, _billingShippingData.shipping?.country]);
 
   const deleteCoupons = useCallback(
     (id: number) => {
@@ -696,7 +610,6 @@ export default function CheckoutMobility() {
                   <AddressView>
                     <UserInfosView
                       _billingShippingData={_billingShippingData}
-                      userShippingBilling={userShippingBilling}
                     />
                   </AddressView>
                 ) : (
@@ -769,10 +682,7 @@ export default function CheckoutMobility() {
                 <Collapse isOpened={openedCodePromo}>
                   <div className="coupon_code_block">
                     <CouponsCode
-                      userMail={
-                        userShippingBilling.billing_info.billing_email ||
-                        _billingShippingData.billing?.email
-                      }
+                      userMail={_billingShippingData.billing?.email}
                       userID={user.profile?.id}
                       userGrp={user.profile?.wcb2b_group}
                       setusedCoupons={setusedCoupons}
@@ -955,7 +865,14 @@ export default function CheckoutMobility() {
                             <span>
                               {Object.keys(_order).length > 0
                                 ? _order.total_tax
-                                : tvaResult.toFixed(2)}{" "}
+                                : _billingShippingData.shipping?.country ===
+                                    "CH" ||
+                                  (_billingShippingData.shipping?.country ===
+                                    "" &&
+                                    _billingShippingData.billing?.country ===
+                                      "CH")
+                                ? tvaResult.toFixed(2)
+                                : "0.00"}{" "}
                             </span>
                             <span> CHF</span>
                           </div>
@@ -964,9 +881,10 @@ export default function CheckoutMobility() {
                           <div>Frais denvoi: (T.T.C)</div>
                           <div>{shippingPrice} CHF</div>
                         </div>
+
                         <div className="taxes_item">
                           <div>Frais de payment: (T.T.C)</div>
-                          <div> CHF</div>
+                          <div>{_taxPaymentMethods} CHF</div>
                         </div>
                         <div>
                           {discountCupons.map((coupon) => {
@@ -987,8 +905,8 @@ export default function CheckoutMobility() {
                         <span>Total (T.T.C): </span>
                         <span>
                           CHF{" "}
-                          {!!priceTotalWithCoupon
-                            ? priceTotalWithCoupon
+                          {Object.keys(_order).length > 0
+                            ? Number(_order.total) + Number(_taxPaymentMethods)
                             : cart.totalProductsPrice + shippingPrice}{" "}
                         </span>
                       </h5>

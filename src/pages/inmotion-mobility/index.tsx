@@ -191,10 +191,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const featuredproducts = await getFeaturedProduct(lang as string);
   const onSaleProducts = await getOnSaleProducts(lang as string);
 
-  const test = await updateOrder(10246, "completed");
-
-  console.log("Test==>", test);
-
   return {
     props: {
       featuredProducts: featuredproducts,

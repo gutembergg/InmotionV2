@@ -18,20 +18,23 @@ export const wc_createOrder = async (order: any): Promise<Order> => {
 export const _updateOrder = async (
   orderId: number,
   methodName: string,
-  transactionId: string
+  transactionId: string,
+  taxPaymentMethods: string
 ) => {
-  try {
-    const query = {
-      payment_method: methodName,
-      payment_method_title: methodName,
-      transaction_id: transactionId,
-    };
-    const { data } = await wcApi.put(`orders/${orderId}`, query);
+  const query = {
+    payment_method: methodName,
+    payment_method_title: methodName,
+    transaction_id: transactionId,
+    fee_lines: [
+      {
+        name: "tax payment methods",
+        total: taxPaymentMethods,
+      },
+    ],
+  };
+  const { data } = await wcApi.put(`orders/${orderId}`, query);
 
-    return data;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+  return data;
 };
 
 export const updateOrder = async (orderId: number, status: string) => {

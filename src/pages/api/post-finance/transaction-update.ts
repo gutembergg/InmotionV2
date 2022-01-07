@@ -60,8 +60,6 @@ export default async function handlerUpdate(
         return lineItem;
       });
 
-      console.log("lineItemsArrayUpdate===>", lineItemsArray);
-
       const shipping: any = (lineItem = {
         name: "Shipping",
         uniqueId: "shipping_1",

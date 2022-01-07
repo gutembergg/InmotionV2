@@ -43,8 +43,6 @@ export default async function handler(
 
   const { method } = req;
 
-  console.log("method: ", method);
-
   if (method === "POST") {
     const productsLineItems: ProductsLineItems[] = req.body.productsCheckout;
     const orderId: number = req.body.orderId;
@@ -71,8 +69,6 @@ export default async function handler(
 
       return lineItem;
     });
-
-    console.log("lineItemsArray: ", lineItemsArray);
 
     const shipping: any = (lineItem = {
       name: "Shipping",

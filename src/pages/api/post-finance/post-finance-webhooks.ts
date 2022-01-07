@@ -32,34 +32,20 @@ export default async function handlerCompleted(
   if (method === "POST") {
     const dataWebhook = req.body;
 
-    console.log("dataWebhook", config);
-
     let transactionService: PostFinanceCheckout.api.TransactionService =
       new PostFinanceCheckout.api.TransactionService(config);
 
-    console.log("dataWh::", dataWebhook.spaceId, dataWebhook.entityId);
-
-    console.log("spaceId-env", spaceId, config.api_secret);
-
     transactionService.read(spaceId, dataWebhook.entityId).then((response) => {
       const orderID = response.body.metaData?.orderId;
-      console.log("state: ", response.body.state);
-      console.log("response:", response.body);
-      console.log("orderId: ", orderID);
-      console.log("dataWebhook.entityId", dataWebhook.entityId);
 
       if (response.body.state === "AUTHORIZED") {
         console.log(`response.AUTHORIZED:${orderID}`, response.body.state);
         updateOrder(Number(orderID), "on-hold").then((resp) => {
-          console.log("Resp====>", resp);
-
           return res.status(200).json({ Message: "Order Authorized!" });
         });
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
         updateOrder(Number(orderID), "completed").then((resp) => {
-          console.log("Resp====>", resp);
-
           return res.status(200).json({ Message: "Order Completed!" });
         });
       } else if (response.body.state === "FAILED") {
