@@ -19,6 +19,7 @@ interface IProps {
 export default function MobiliteEletrique({ subCategories }: IProps) {
   return (
     <Container>
+        <h1>Bienvenue dans notre boutique</h1>
       <MainContent>
         {subCategories.map((category) => {
           return (
@@ -28,11 +29,11 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
                   category.slug === "pieces-detachees-mobility" ||
                   category.slug === "detached-pieces-3" ||
                   category.slug === "abgeloeste-teile"
-                    ? `/inmotion-mobility/categorie/${category.slug}`
+                    ? `/inmotion-mobility/categories/pieces-detachees`
                     : category.slug === "equipements" ||
                       category.slug === "equipments" ||
                       category.slug === "ausruestungen"
-                    ? `/inmotion-mobility/categorie_/${category.slug}`
+                    ? `/inmotion-mobility/categories/equipements`
                     : `/inmotion-mobility/categories/${category.slug}`
                 }
               >
