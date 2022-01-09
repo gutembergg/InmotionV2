@@ -16,6 +16,16 @@ interface MethodsSettingsRules {
 interface MethodSettings {
   method_rules: MethodsSettingsRules;
   title: string;
+  method_title: {
+    default: string;
+    description: string;
+    id: string;
+    label: string;
+    placeholder: string;
+    tip: string;
+    type: string;
+    value: string;
+  };
 }
 
 export interface ShippingMethods {

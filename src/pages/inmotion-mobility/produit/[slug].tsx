@@ -36,6 +36,8 @@ import {
   DescriptionProduct,
   Sections,
 } from "../../../styles/ProductDetail";
+import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
+import useCurrency from "../../../hooks/useCurrency";
 
 interface Props {
   product: IProduct;
@@ -45,6 +47,7 @@ interface Props {
 export default function ProductDetail({ product, variations }: Props) {
   const router = useRouter();
   const { cartItem, addToCart } = useCart();
+  const { currency } = useCurrency();
 
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
@@ -162,7 +165,9 @@ export default function ProductDetail({ product, variations }: Props) {
                 </ImageBlock>
 
                 <PriceQuantity>
-                  <div className="price">{product.price}</div>
+                  <div className="price">
+                    {currency === "CHF" ? product.price : product.euroPrice}
+                  </div>
 
                   <input
                     type="number"
@@ -279,8 +284,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const product = await wc_getProductBySlug(slug as string, lang as string);
 
-  const variations: IProduct[] = await getVariations(product.id);
-  console.log("variations: ", variations);
+  /* const variations: IProduct[] = await getVariations(product.id);
+  console.log("variations: ", variations); */
 
   if (!product) {
     return {
@@ -291,9 +296,11 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
+  const productWithEuro = await addEuroPriceInSingleProduct(product);
+
   return {
     props: {
-      product,
+      product: productWithEuro,
     },
     revalidate: 60 * 2, // 2 min
   };

@@ -1,6 +1,10 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { IoMdRadioButtonOn, IoMdRadioButtonOff } from "react-icons/io";
 import { shade } from "polished";
+
+interface Props {
+  positionOrderSection: boolean;
+}
 
 const paymentMethodsAnimation = keyframes`
  100% {  opacity: 1; }
@@ -40,7 +44,7 @@ export const Content = styled.div`
       justify-content: center;
 
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
 
       @media (max-width: 877px) {
         margin: auto;
@@ -55,8 +59,7 @@ export const Content = styled.div`
 
 export const FormSection = styled.div`
   width: 100%;
-  overflow-y: scroll;
-  height: 900px;
+  height: 100%;
 
   padding: 0.5rem 1rem;
 
@@ -64,24 +67,6 @@ export const FormSection = styled.div`
     transition: height 500ms;
   }
 
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
   section.sections_title {
     h2.active {
       background-color: var(--Blue);
@@ -209,7 +194,7 @@ export const FormSection = styled.div`
   section.methods_payment {
     cursor: pointer;
     margin-top: 0.8rem;
-    margin-bottom: 20rem;
+    margin-bottom: 2rem;
 
     .ReactCollapse--collapse {
       transition: height 500ms;
@@ -266,13 +251,6 @@ export const FormSection = styled.div`
     }
   }
 
-  @media (max-width: 877px) {
-    height: 100%;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
   @media (max-width: 416px) {
     padding: 0 0;
     section.sections_title {
@@ -292,13 +270,31 @@ export const FormSection = styled.div`
   }
 `;
 
-export const OrderSession = styled.div`
+export const OrderSession = styled.div<Props>`
+  .order_section_block {
+    ${(props) =>
+      props.positionOrderSection &&
+      css`
+        position: fixed;
+        top: 80px;
+        width: 40vw;
+        max-width: 650px;
+        // width: calc(100% - 17px);
+      `}
+  }
+
   display: flex;
   flex-direction: column;
 
-  width: 100%;
+  width: 40vw;
   max-width: 650px;
-  padding: 0 1rem;
+
+  /*   ${(props) =>
+    props.positionOrderSection &&
+    css`
+      width: 100%;
+      max-width: 650px;
+    `} */
 
   .products_list {
     list-style-type: none;
@@ -371,11 +367,13 @@ export const OrderSession = styled.div`
           display: flex;
           flex-direction: row;
           align-items: center;
-
-          span {
-            font-size: 0.8rem;
-          }
         }
+      }
+    }
+
+    @media (max-width: 416px) {
+      .taxes_title {
+        font-size: 0.8rem;
       }
     }
   }

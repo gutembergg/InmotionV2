@@ -5,11 +5,13 @@ import { StyledCart } from "./styles";
 import placeholder from "../../../public/images/placeholder_woocommerce.png";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import useCurrency from "../../hooks/useCurrency";
 
 const Cart = () => {
-  const { cart, removeCartItem } = useCart();
-  const [opencart, setopencart] = useState(false);
   const cartModalRef = useRef<HTMLDivElement>(null);
+  const { cart, removeCartItem } = useCart();
+  const { currency } = useCurrency();
+  const [opencart, setopencart] = useState(false);
 
   const setCartVisibility = () => {
     setopencart(!opencart);
@@ -65,7 +67,10 @@ const Cart = () => {
                       <div className="cartProductInfos">
                         <h5>{product.name}</h5>
                         <p>
-                          {product.qty}x CHF {product.price}
+                          {product.qty}x {currency === "CHF" ? "CHF" : "EUR"}{" "}
+                          {currency === "CHF"
+                            ? product.price
+                            : product.euroPrice}
                         </p>
                       </div>
                       <div className="cartProductThmbnail">
@@ -90,7 +95,11 @@ const Cart = () => {
               )}
             </ul>
             <h5 className="sousTotalTxt">
-              Sous total: <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+              Sous total:{" "}
+              <span>
+                {currency === "CHF" ? "CHF" : "EUR"}{" "}
+                {cart.totalProductsPrice?.toFixed(2)}
+              </span>
             </h5>
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
               <div className="btnVoirPanier">

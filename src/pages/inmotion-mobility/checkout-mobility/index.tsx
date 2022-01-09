@@ -55,7 +55,8 @@ import {
   CouponsList,
   AddressView,
 } from "../../../styles/CheckoutMobility";
-import product from "next-seo/lib/jsonld/product";
+import useCurrency from "../../../hooks/useCurrency";
+import { convertSingleNumber } from "../../../utils/addEuroPriceInProducts";
 
 interface ILineItems {
   id: number;
@@ -75,10 +76,13 @@ export default function CheckoutMobility() {
   const orderIdRef = useRef(0);
   const lineItemsRef = useRef<ILineItems[]>([]);
   const shippingPriceRef = useRef(0);
+  const cartRef = useRef<HTMLDivElement>(null);
 
-  const [loged, setloged] = useState(false);
   const { cart } = useCart();
   const { user } = useUser();
+  const { currency: currentyCurrency } = useCurrency();
+
+  const [loged, setloged] = useState(false);
 
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
@@ -115,7 +119,6 @@ export default function CheckoutMobility() {
   const [noAllowShipping, setNoAllowShipping] = useState(false);
   const [isSelectedShipping, setIsSelectedShipping] = useState(false);
 
-  const [currency, setCurrency] = useState("");
   const [isCoupon, setIsCoupon] = useState(false);
   const [_order, _setOrder] = useState<Order>({} as Order);
   const [validateOrder, setValidateOrder] = useState(false);
@@ -129,28 +132,31 @@ export default function CheckoutMobility() {
   const [openDeliveryWays, setOpenDeliveryWays] = useState(false);
   const [codePromoState, setCodePromoState] = useState(false);
   const [checkoutClicked, setCheckoutClicked] = useState(false);
+  const [totalCartPriceConverted, setTotalCartPriceConverted] = useState(0);
+  const [totalOrder, setTotalOrder] = useState(0);
+  const [positionOrderSection, setPositionOrderSection] = useState(false);
 
   //------------------------------------------tvaResult------------------------------------------------!!
-  const tva = 7.7;
-  const tvaResult = (cart.totalProductsPrice / 100) * tva;
-console.log("tvaresult",tvaResult)
-console.log("order",_order)
-  useEffect(() => {
-    setCurrency(
-      _billingShippingData.shipping?.country === "CH" ? "CHF" : "EUR"
-    );
-  }, [_billingShippingData.shipping?.country]);
+  const CHFCurrency = currentyCurrency === "CHF";
+  const tva = CHFCurrency ? 7.7 : 0;
+  const tvaResult = CHFCurrency ? (cart.totalProductsPrice / 100) * tva : 0;
 
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
       const _lineItems = cart.products.map((product) => {
         const product_id = product.id;
         const quantity = product.qty;
+        const total = String(product.euroPrice);
 
-        return { product_id, quantity };
+        if (CHFCurrency) {
+          return { product_id, quantity };
+        } else {
+          return { product_id, quantity, total };
+        }
       });
 
       setLineItems(_lineItems);
+      setTotalCartPriceConverted(cart.totalProductsPrice);
     }
 
     // eslint-disable-next-line
@@ -164,6 +170,35 @@ console.log("order",_order)
     }
   }, [user]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const getScrollY = () => {
+        const scrollValue = 250;
+
+        const viewWidth = window.innerWidth;
+
+        if (viewWidth > 1024) {
+          if (window.scrollY > scrollValue) {
+            setPositionOrderSection(true);
+          } else {
+            setPositionOrderSection(false);
+          }
+        }
+        if (viewWidth < 1024) {
+          if (window.scrollY > 40) {
+            setPositionOrderSection(true);
+          } else {
+            setPositionOrderSection(false);
+          }
+        }
+      };
+
+      window.addEventListener("scroll", getScrollY);
+
+      return () => window.removeEventListener("scroll", getScrollY);
+    }
+  }, []);
+
   const getShippingPrice = useCallback(
     (method: ShippingMethods) => {
       const productsWeight = cart.products.reduce(
@@ -175,31 +210,56 @@ console.log("order",_order)
         { weight: 0 }
       );
 
-      const allowedShipping = method.settings.method_rules.value.map((rule) => {
-        const result = rule.conditions.filter((condition) => {
+      method.settings.method_rules?.value.map((rule) => {
+        const result = rule.conditions.filter(async (condition) => {
           if (
             productsWeight?.weight >= condition.min &&
             productsWeight?.weight <= condition.max
           ) {
-            setShippingPrice(Number(rule.cost_per_order));
+            const euroValue = await convertSingleNumber(
+              Number(rule.cost_per_order)
+            );
+
+            setShippingPrice(
+              CHFCurrency ? Number(rule.cost_per_order) : euroValue
+            );
+
+            const shippingConverted = CHFCurrency
+              ? Number(rule.cost_per_order)
+              : euroValue;
+
+            const totalPriceWithShipping =
+              shippingConverted + cart.totalProductsPrice;
+            const totalPriceFormated = Number(
+              totalPriceWithShipping.toFixed(2)
+            );
+
+            setTotalCartPriceConverted(totalPriceFormated);
+
             setShippingMethod(method);
             console.log("OK livraison", method);
+            setNoAllowShipping(false);
 
             return rule;
+          } else {
+            console.log("---PAS-- livraison");
+            setNoAllowShipping(true);
           }
         });
 
         return result;
       });
 
+      /*  console.log("allowedShipping.flat", allowedShipping.flat());
+
       if (allowedShipping.flat().length === 0) {
         setNoAllowShipping(true);
-      }
+      } */
     },
-    [cart.products]
+    [cart.products, CHFCurrency, cart.totalProductsPrice]
   );
 
-  const _handleBillingShippingData = (values: IFormValues) => {
+  const _handleBillingShippingData = async (values: IFormValues) => {
     console.log("formValues: ", values);
     const billing = {
       last_name: values.billing_last_name,
@@ -247,6 +307,7 @@ console.log("order",_order)
 
     setChangeBillingView(true);
     setPaymentSteps(2);
+    await getShippingZone(shipping.country);
   };
 
   const _sendOrder = useCallback(async () => {
@@ -255,10 +316,23 @@ console.log("order",_order)
       return { code: coupon.code };
     });
 
+    let shippingLines: any = [];
+    if (!noAllowShipping) {
+      shippingLines = [
+        {
+          method_id: _shippingMethods.method_id,
+          method_title: _shippingMethods.method_title,
+          total: String(shippingPrice),
+        },
+      ];
+    } else {
+      shippingLines = [];
+    }
+
     const order = {
       payment_method: "Pedding",
       payment_method_title: "Pedding",
-      currency,
+      currency: currentyCurrency,
       billing: {
         first_name: _billingShippingData.billing?.first_name,
         last_name: _billingShippingData.billing?.last_name,
@@ -285,13 +359,8 @@ console.log("order",_order)
       },
       line_items: lineItems,
       coupon_lines: couponsCodeArray,
-      shipping_lines: [
-        {
-          method_id: _shippingMethods.method_id,
-          method_title: _shippingMethods.method_title,
-          total: String(shippingPrice),
-        },
-      ],
+      shipping_lines: shippingLines,
+
       customer_id: Object.keys(user).length > 0 ? user.profile.id : 0,
     };
 
@@ -303,6 +372,8 @@ console.log("order",_order)
       const response = await wc_createOrder(order);
       _setOrder(response);
       setCodePromoState(false);
+
+      setTotalOrder(Number(response.total));
 
       orderIdRef.current = response.id;
       lineItemsRef.current = response.line_items as ILineItems[];
@@ -324,11 +395,12 @@ console.log("order",_order)
     lineItems,
     _billingShippingData,
     usedCoupons,
-    currency,
     isCoupon,
     shippingPrice,
     _shippingMethods,
     user,
+    currentyCurrency,
+    noAllowShipping,
   ]);
 
   const checkout = useCallback(async () => {
@@ -370,7 +442,7 @@ console.log("order",_order)
       const { data } = await apiPFinance.post("transaction-create", {
         productsCheckout,
         orderId: orderIdRef.current,
-        currency: currency,
+        currency: currentyCurrency,
         shippingTaxe: shippingPrice,
       });
 
@@ -379,10 +451,10 @@ console.log("order",_order)
           let taxState = {};
           switch (item.name) {
             case "PostFinance e-finance":
-              taxState = { ...item, taxMethodsPayments: 3 };
+              taxState = { ...item, taxMethodsPayments: 1.3 };
               break;
             case "Carte PostFinance":
-              taxState = { ...item, taxMethodsPayments: 2 };
+              taxState = { ...item, taxMethodsPayments: 1.3 };
               break;
             case "Facture":
               taxState = { ...item, taxMethodsPayments: 0 };
@@ -419,7 +491,7 @@ console.log("order",_order)
     shippingPrice,
     codePromoState,
     paymentSteps,
-    currency,
+    currentyCurrency,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -450,13 +522,11 @@ console.log("order",_order)
       );
 
       const taxPaymentMethods = (
-        (method.taxMethodsPayments / 100) *
-        totalPriceWithTaxMethodsPayment
+        (totalPriceWithTaxMethodsPayment / 100) *
+        method.taxMethodsPayments
       ).toFixed(2);
 
       setTaxPaymentMethods(taxPaymentMethods);
-
-      console.log("taxPaymentMethods", taxPaymentMethods);
 
       const productsCheckout = lineItemsRef.current?.map((product) => {
         const id = product.id;
@@ -481,12 +551,14 @@ console.log("order",_order)
 
       setTransactionId(data);
 
-      await _updateOrder(
+      const orederUpdated = await _updateOrder(
         orderId as number,
         method.name,
         String(transactionId),
         taxPaymentMethods
       );
+
+      setTotalOrder(orederUpdated.total);
 
       if (data) {
         setIsCheckMethod(false);
@@ -511,6 +583,7 @@ console.log("order",_order)
       if (method.method_id === "local_pickup") {
         setShippingPrice(0);
         setShippingMethod(method);
+        getShippingPrice(method);
       } else if (method.method_id === "flexible_shipping_single") {
         setShippingMethod(method);
         getShippingPrice(method);
@@ -528,38 +601,42 @@ console.log("order",_order)
     setChangeBillingView(false);
   };
 
-  const getShippingZone = useCallback(async () => {
-    setIsSelectedShipping(true);
+  const getShippingZone = useCallback(
+    async (shippingCountry: string) => {
+      setIsSelectedShipping(true);
 
-    let selectedCountry = 0;
+      let selectedCountry = 0;
 
-    const country = _billingShippingData.shipping?.country;
+      const country = shippingCountry;
 
-    switch (country) {
-      case "CH":
-        selectedCountry = 1;
-        break;
-      case "ES":
-        selectedCountry = 4;
-        break;
-      default:
-        selectedCountry = 3;
-        break;
-    }
+      switch (country) {
+        case "CH":
+          selectedCountry = 1;
+          break;
+        case "ES":
+          selectedCountry = 4;
+          break;
+        default:
+          selectedCountry = 3;
+          break;
+      }
 
-    const response = await getShippingZoneMethods(selectedCountry);
+      const response = await getShippingZoneMethods(selectedCountry);
 
-    setMethodsShippingList(response);
+      getShippingPrice(response[0]);
 
-    if (response) {
-      setIsSelectedShipping(false);
-      setOpenDeliveryWays(true);
-    }
+      setMethodsShippingList(response);
 
-    getShippingPrice(response[0]);
-    setIsPayment(true);
-    setPaymentSteps(3);
-  }, [getShippingPrice, _billingShippingData.shipping?.country]);
+      if (response) {
+        setIsSelectedShipping(false);
+        setOpenDeliveryWays(true);
+      }
+
+      setIsPayment(true);
+      setPaymentSteps(3);
+    },
+    [getShippingPrice]
+  );
 
   const deleteCoupons = useCallback(
     (id: number) => {
@@ -621,7 +698,7 @@ console.log("order",_order)
                 )}
               </section>
               <section className="shipping">
-                <div className="title" onClick={getShippingZone}>
+                <div className="title">
                   <div
                     className={
                       paymentSteps === 2
@@ -821,8 +898,8 @@ console.log("order",_order)
               </section>
             </FormSection>
             <div className="order_section">
-              <OrderSession>
-                <div className="order_section_block">
+              <OrderSession positionOrderSection={positionOrderSection}>
+                <div className="order_section_block" ref={cartRef}>
                   <h2 id="title_order">Résumé de votre commande</h2>
                   <div className="cart_products">
                     <div className="prod_block">
@@ -841,7 +918,10 @@ console.log("order",_order)
                                 <span>{product.name}</span>
                               </div>
                               <span className="product_price">
-                                {product.qty}x CHF {product.price}
+                                {product.qty}x {CHFCurrency ? "CHF" : "EUR"}{" "}
+                                {CHFCurrency
+                                  ? product.price
+                                  : product.euroPrice}
                               </span>
                             </ProductCart>
                           );
@@ -855,14 +935,18 @@ console.log("order",_order)
                     <div className="taxe_block">
                       <div className="taxes">
                         <div className="taxes_item">
-                          <div>Valeur de marchandise(T.T.C)</div>
+                          <div className="taxes_title">
+                            Valeur de marchandise(T.T.C)
+                          </div>
                           <div className="price_block">
                             <span>{cart.totalProductsPrice?.toFixed(2)} </span>
-                            <span>CHF</span>
+                            <span>{CHFCurrency ? "CHF" : "EUR"}</span>
                           </div>
                         </div>
                         <div className="taxes_item">
-                          <div>dont TVA ({tva}%): (incluse) </div>
+                          <div className="taxes_title">
+                            dont TVA ({tva}%): (incluse){" "}
+                          </div>
                           <div className="price_block">
                             <span>
                               {Object.keys(_order).length > 0
@@ -876,17 +960,25 @@ console.log("order",_order)
                                 ? tvaResult.toFixed(2)
                                 : "0.00"}{" "}
                             </span>
-                            <span> CHF</span>
+                            <span> {CHFCurrency ? "CHF" : "EUR"}</span>
                           </div>
                         </div>
                         <div className="taxes_item">
-                          <div>Frais denvoi: (T.T.C)</div>
-                          <div>{shippingPrice} CHF</div>
+                          <div className="taxes_title">
+                            Frais denvoi: (T.T.C)
+                          </div>
+                          <div>
+                            {shippingPrice} {CHFCurrency ? "CHF" : "EUR"}
+                          </div>
                         </div>
 
                         <div className="taxes_item">
-                          <div>Frais de payment: (T.T.C)</div>
-                          <div>{_taxPaymentMethods} CHF</div>
+                          <div className="taxes_title">
+                            Frais de payment: (T.T.C)
+                          </div>
+                          <div>
+                            {_taxPaymentMethods} {CHFCurrency ? "CHF" : "EUR"}
+                          </div>
                         </div>
                         <div>
                           {discountCupons.map((coupon) => {
@@ -894,7 +986,10 @@ console.log("order",_order)
                               <div key={coupon.id} className="coupons_block">
                                 <div className="coupons">
                                   <div>Code Promo {coupon.code}</div>
-                                  <div>- {coupon.discount} CHF</div>
+                                  <div>
+                                    - {coupon.discount}{" "}
+                                    {CHFCurrency ? "CHF" : "EUR"}
+                                  </div>
                                 </div>
                               </div>
                             );
@@ -906,10 +1001,10 @@ console.log("order",_order)
                       <h5 className="sousTotalTxt">
                         <span>Total (T.T.C): </span>
                         <span>
-                          CHF{" "}
+                          {CHFCurrency ? "CHF" : "EUR"}{" "}
                           {Object.keys(_order).length > 0
-                            ? Number(_order.total) + Number(_taxPaymentMethods)
-                            : cart.totalProductsPrice + shippingPrice}{" "}
+                            ? totalOrder
+                            : totalCartPriceConverted.toFixed(2)}
                         </span>
                       </h5>
                     </div>

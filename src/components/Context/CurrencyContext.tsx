@@ -20,7 +20,7 @@ const CurrencyProvider = ({ children }: Children) => {
     setData(currency);
   }, []);
 
-  console.log("devise", data);
+  //console.log("devise", data);
 
   return (
     <CurrencyContext.Provider value={{ setCurrency, currency: data }}>

@@ -44,6 +44,7 @@ export interface IProduct {
   price: string;
   euroPrice?: number;
   regular_price: string;
+  euroRegularPrice?: number;
   sale_price: string;
   on_sale: boolean;
   description?: string;

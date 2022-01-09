@@ -23,7 +23,7 @@ import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import SliderModels from "../../../components/Sliders/SliderModels";
-import { currencyRates } from "../../../services/currencyConvert/CurrencyRates";
+import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 
 import {
   Container,
@@ -35,6 +35,7 @@ import {
   AddToCartSession,
   ProductMenuResponsive,
 } from "../../../styles/CategoryDetail";
+import useCurrency from "../../../hooks/useCurrency";
 
 interface Props {
   category: ICategories;
@@ -44,6 +45,7 @@ interface Props {
 export default function Category({ category, productsByCategory }: Props) {
   const router = useRouter();
   const { cartItem, addToCart } = useCart();
+  const { currency } = useCurrency();
 
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
@@ -53,6 +55,8 @@ export default function Category({ category, productsByCategory }: Props) {
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
   const [activedModelIndex, setActivedModelIndex] = useState(0);
+
+  console.log("currency", currency);
 
   useEffect(() => {
     _setProducts(productsByCategory);
@@ -213,12 +217,19 @@ export default function Category({ category, productsByCategory }: Props) {
                   products[productIndex]?.on_sale ? "regular_price" : ""
                 }
               >
-                {!!products[productIndex]?.regular_price &&
-                  products[productIndex]?.regular_price}
+                {currency === "CHF"
+                  ? !!products[productIndex]?.regular_price &&
+                    products[productIndex]?.regular_price
+                  : !!products[productIndex]?.euroRegularPrice &&
+                    products[productIndex]?.euroRegularPrice}
               </div>
+
               <div className="sale_price">
-                {!!products[productIndex]?.sale_price &&
-                  products[productIndex]?.sale_price}
+                {currency === "CHF"
+                  ? !!products[productIndex]?.sale_price &&
+                    products[productIndex]?.sale_price
+                  : !!products[productIndex]?.euroPrice &&
+                    products[productIndex]?.euroPrice}
               </div>
             </div>
           </div>
@@ -288,32 +299,14 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     lang as string
   );
 
-  const ratesCurrency = await currencyRates();
-
-  const productsWithEuroDevide = productsByCategory.reduce(
-    (acc, product) => {
-      let productsList = [];
-      const euroPriceNotFormated =
-        Number(product.price) / ratesCurrency.rates.CHF;
-      const euroPriceString = euroPriceNotFormated.toFixed(2);
-      const euroPrice = Number(euroPriceString);
-
-      productsList.push({ ...product, euroPrice });
-      const _productsList = [...acc, ...productsList];
-
-      const productObjectFiltered = _productsList.filter(
-        (prod) => Object.keys(prod).length > 0 && prod
-      );
-
-      return productObjectFiltered;
-    },
-    [{} as IProduct]
+  const productsWithEuroDevise = await addEuroPriceInProducts(
+    productsByCategory
   );
 
   return {
     props: {
       category,
-      productsByCategory: productsWithEuroDevide,
+      productsByCategory: productsWithEuroDevise,
     },
     revalidate: 60 * 2,
   };

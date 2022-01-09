@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import useCurrency from "../../hooks/useCurrency";
 import { IProduct } from "../../interfaces/IProducts";
 
 interface Children {
@@ -27,11 +28,10 @@ export interface ICartState {
   totalWithCoupon?: number;
 }
 
-
-
 export const CartContext = createContext<ICartContext>({} as ICartContext);
 
 const CartProvider = ({ children }: Children) => {
+  const { currency } = useCurrency();
   const [cartItem, setCartItem] = useState<IProduct[]>([]);
   const [cart, setCart] = useState<ICartState>({} as ICartState);
 
@@ -58,7 +58,13 @@ const CartProvider = ({ children }: Children) => {
         const quantity = acc.qty + item.qty;
 
         const total =
-          acc.price + item.qty * parseFloat(parseFloat(item.price).toFixed(2));
+          acc.price +
+          item.qty *
+            parseFloat(
+              parseFloat(
+                currency === "CHF" ? item.price : String(item.euroPrice)
+              ).toFixed(2)
+            );
 
         return {
           qty: quantity,
@@ -75,13 +81,13 @@ const CartProvider = ({ children }: Children) => {
       totalProductsCount: qty,
       totalProductsPrice: price,
     };
-    console.log("product", products)
+    console.log("product", products);
     // Notiflix.Notify.success("produit ajouté au panier");
     Report.success(
-      'Produit Ajouté au panier',
-      '<p>Pensez à vous protéger! Voici ce que nous vous conseillons:</p><br /><br />',
-      'Okay',
-      );
+      "Produit Ajouté au panier",
+      "<p>Pensez à vous protéger! Voici ce que nous vous conseillons:</p><br /><br />",
+      "Okay"
+    );
     if (typeof window !== "undefined") {
       localStorage.setItem("inmotion:cart", JSON.stringify(_cart));
     }
@@ -98,7 +104,13 @@ const CartProvider = ({ children }: Children) => {
       (acc, item) => {
         const quantity = acc.qty - item.qty;
         const totalPrice =
-          acc.price - item.qty * parseFloat(parseFloat(item.price).toFixed(2));
+          acc.price -
+          item.qty *
+            parseFloat(
+              parseFloat(
+                currency === "CHF" ? item.price : String(item.euroPrice)
+              ).toFixed(2)
+            );
 
         return {
           qty: quantity,

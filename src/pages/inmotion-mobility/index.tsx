@@ -15,7 +15,6 @@ import SliderMobility from "../../components/Sliders/SliderMobility";
 import {
   getFeaturedProduct,
   getOnSaleProducts,
-  getProductByCategory,
 } from "../../services/woocommerceApi/Products";
 import { GetStaticProps } from "next";
 import { IProduct } from "../../interfaces/IProducts";
@@ -32,7 +31,6 @@ import {
   HelpSection,
   InfoSection,
 } from "../../styles/MobilityIndex";
-import { updateOrder } from "../../services/woocommerceApi/Orders";
 
 interface Props {
   featuredProducts: IProduct[];

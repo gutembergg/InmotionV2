@@ -40,6 +40,7 @@ export const SearchProductsList = styled.div`
 `;
 
 export const ProductName = styled.div`
+  cursor: pointer;
   padding-bottom: 0.5rem;
 
   &:hover {
