@@ -13,5 +13,8 @@
   "CompletedOrderTVA": "VAT",  
   "CompletedOrderShippingAddress": "Shipping address :",  
   "CompletedOrderBillingAddress": "Billing address :", 
-  "signature": "Your Inmotion team" 
+  "signature": "Your Inmotion team", 
+  "TvaWarningTxt": "Be careful, the customs may charge you the vat in force in your country when sending",
+  "IncludeTxt": "Included :", 
+  "TVATxt": "VAT :" 
 }

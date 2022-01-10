@@ -124,11 +124,11 @@ const HeaderMobile = () => {
                           onClick={() => {
                             category.slug === "pieces-detachees-mobility"
                               ? goToLink(
-                                  `/inmotion-mobility/categorie/${category.slug}`
+                                  `/inmotion-mobility/categories/pieces-detachees`
                                 )
                               : category.slug === "equipements"
                               ? goToLink(
-                                  `/inmotion-mobility/categorie_/${category.slug}`
+                                  `//inmotion-mobility/categories/equipements`
                                 )
                               : goToLink(
                                   `/inmotion-mobility/categories/${category.slug}`
