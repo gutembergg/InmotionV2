@@ -13,6 +13,9 @@
     "CompletedOrderTVA": "TVA",  
     "CompletedOrderShippingAddress": "Adresse de livraison :",  
     "CompletedOrderBillingAddress": "Adresse de facturation :", 
-    "signature": "Votre team Inmotion" 
+    "signature": "Votre team Inmotion" ,
+    "TvaWarningTxt": "Attention, la douane risque de vous facturer la tva en vigeur dans votre pays lors de l'envoi" ,
+    "IncludeTxt": "Inclus:" ,
+    "TVATxt": "TVA :" 
   }
   

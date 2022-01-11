@@ -31,6 +31,9 @@ export default function CompletedOrder() {
   const CompletedOrderSousTotal = t("completed-order:CompletedOrderSousTotal");
   const CompletedOrderShipping = t("completed-order:CompletedOrderShipping");
   const CompletedOrderTVA = t("completed-order:CompletedOrderTVA");
+  const TVATxt = t("completed-order:TVATxt");
+  const IncludeTxt = t("completed-order:IncludeTxt");
+  const TvaWarningTxt = t("completed-order:TvaWarningTxt");
   const CompletedOrderShippingAddress = t(
     "completed-order:CompletedOrderShippingAddress"
   );
@@ -98,14 +101,24 @@ export default function CompletedOrder() {
             {Number(order.total) - Number(order.shipping_total)}
           </p>
           <h4>{CompletedOrderShipping}</h4>
-          {/* <p>{order.currency} {order.shipping_total} {order.shipping_lines[0].method_title}</p> */}
+          <p>{order.currency} {order.shipping_total} {order.shipping_lines[0].method_title}</p>
           <h4>{CompletedOrderTotal}</h4>
           <p>
             {order.currency} {order.total}
-            <span>
-              (dont {order.currency} {order.tax_lines[0].tax_total}{" "}
+            {order.tax_lines.length !== 0 ? (
+              <span>
+              ({IncludeTxt} {order.currency} {order.tax_lines[0].tax_total}{" "}
               {CompletedOrderTVA} ({order.tax_lines[0].rate_percent}%)
             </span>
+            ):(
+              <>
+              <br />
+              <span>
+              ({TVATxt} {order.currency} 0.- , {TvaWarningTxt})
+            </span>
+              </>
+            )}
+            
           </p>
         </div>
         <div className="shippingBillingInfo">
