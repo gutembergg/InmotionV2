@@ -45,8 +45,8 @@ export default async function handlerCompleted(
         });
       } else if (response.body.state === "FULFILL") {
         console.log(`response.FULFILL:${orderID}`, response.body.state);
-        updateOrder(Number(orderID), "completed").then((resp) => {
-          return res.status(200).json({ Message: "Order Completed!" });
+        updateOrder(Number(orderID), "processing").then((resp) => {
+          return res.status(200).json({ Message: "Order processing!" });
         });
       } else if (response.body.state === "FAILED") {
         console.log(`response.FAILED:${orderID}`, response.body.state);

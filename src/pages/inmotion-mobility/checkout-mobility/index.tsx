@@ -98,6 +98,8 @@ export default function CheckoutMobility() {
   const [paymentMethodes, setPaymentMethods] = useState<
     PostFinancePaymentMethods[]
   >([]);
+  const [_methodPayment, _setMethodPayment] =
+    useState<PostFinancePaymentMethods>({} as PostFinancePaymentMethods);
 
   //------------------------------------------USE STATE COUPONS VALIDES ( COUPON ENTIER AVEC DATA)  ------------------------------------------------!!
 
@@ -111,6 +113,7 @@ export default function CheckoutMobility() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     number | undefined
   >();
+
   const [_taxPaymentMethods, setTaxPaymentMethods] = useState("");
   const [methodShipping, setMethodShipping] = useState(0);
   const [methodsShippingList, setMethodsShippingList] = useState<
@@ -135,6 +138,7 @@ export default function CheckoutMobility() {
   const [totalCartPriceConverted, setTotalCartPriceConverted] = useState(0);
   const [totalOrder, setTotalOrder] = useState(0);
   const [positionOrderSection, setPositionOrderSection] = useState(false);
+  const [isValidate, setIsValidate] = useState(false);
 
   //------------------------------------------tvaResult------------------------------------------------!!
   const CHFCurrency = currentyCurrency === "CHF";
@@ -210,47 +214,48 @@ export default function CheckoutMobility() {
         { weight: 0 }
       );
 
-      method.settings.method_rules?.value.map((rule) => {
-        const result = rule.conditions.filter(async (condition) => {
-          if (
-            productsWeight?.weight >= condition.min &&
-            productsWeight?.weight <= condition.max
-          ) {
-            const euroValue = await convertSingleNumber(
-              Number(rule.cost_per_order)
-            );
+      const allowedShipping = method.settings.method_rules?.value.map(
+        (rule) => {
+          const result: any = rule.conditions.filter(async (condition) => {
+            if (
+              productsWeight?.weight >= condition.min &&
+              productsWeight?.weight <= condition.max
+            ) {
+              const euroValue = await convertSingleNumber(
+                Number(rule.cost_per_order)
+              );
 
-            setShippingPrice(
-              CHFCurrency ? Number(rule.cost_per_order) : euroValue
-            );
+              setShippingPrice(
+                CHFCurrency ? Number(rule.cost_per_order) : euroValue
+              );
 
-            const shippingConverted = CHFCurrency
-              ? Number(rule.cost_per_order)
-              : euroValue;
+              const shippingConverted = CHFCurrency
+                ? Number(rule.cost_per_order)
+                : euroValue;
 
-            const totalPriceWithShipping =
-              shippingConverted + cart.totalProductsPrice;
-            const totalPriceFormated = Number(
-              totalPriceWithShipping.toFixed(2)
-            );
+              const totalPriceWithShipping =
+                shippingConverted + cart.totalProductsPrice;
+              const totalPriceFormated = Number(
+                totalPriceWithShipping.toFixed(2)
+              );
 
-            setTotalCartPriceConverted(totalPriceFormated);
+              setTotalCartPriceConverted(totalPriceFormated);
 
-            setShippingMethod(method);
-            console.log("OK livraison", method);
-            setNoAllowShipping(false);
+              setShippingMethod(method);
+              console.log("OK livraison", method);
+              setNoAllowShipping(false);
 
-            return rule;
-          } else {
-            console.log("---PAS-- livraison");
-            setNoAllowShipping(true);
-          }
-        });
-
-        return result;
-      });
-
-      /*  console.log("allowedShipping.flat", allowedShipping.flat());
+              return rule;
+            } else {
+              setNoAllowShipping(true);
+            }
+          });
+          console.log("result", result);
+          return result;
+        }
+      );
+      /* 
+      console.log("allowedShipping.flat", allowedShipping);
 
       if (allowedShipping.flat().length === 0) {
         setNoAllowShipping(true);
@@ -497,11 +502,21 @@ export default function CheckoutMobility() {
   const validateCheckout = useCallback(async () => {
     const query = { id: transactionId, orderId: orderId };
     const { data } = await apiPFinance.post("transaction-validate", query);
+    setIsValidate(true);
+
+    const orederUpdated = await _updateOrder(
+      orderId as number,
+      _methodPayment.name,
+      String(transactionId),
+      _taxPaymentMethods
+    );
+
+    setTotalOrder(orederUpdated.total);
 
     if (typeof window !== "undefined") {
       window.location.href = data;
     }
-  }, [transactionId, orderId]);
+  }, [transactionId, orderId, _methodPayment.name, _taxPaymentMethods]);
 
   const updateTransaction = useCallback(
     async (method: PostFinancePaymentMethods, index: number) => {
@@ -527,6 +542,7 @@ export default function CheckoutMobility() {
       ).toFixed(2);
 
       setTaxPaymentMethods(taxPaymentMethods);
+      _setMethodPayment(method);
 
       const productsCheckout = lineItemsRef.current?.map((product) => {
         const id = product.id;
@@ -551,15 +567,6 @@ export default function CheckoutMobility() {
 
       setTransactionId(data);
 
-      const orederUpdated = await _updateOrder(
-        orderId as number,
-        method.name,
-        String(transactionId),
-        taxPaymentMethods
-      );
-
-      setTotalOrder(orederUpdated.total);
-
       if (data) {
         setIsCheckMethod(false);
         setPaymentValidate(false);
@@ -580,6 +587,7 @@ export default function CheckoutMobility() {
       }
 
       setMethodShipping(index);
+
       if (method.method_id === "local_pickup") {
         setShippingPrice(0);
         setShippingMethod(method);
@@ -1003,7 +1011,9 @@ export default function CheckoutMobility() {
                         <span>
                           {CHFCurrency ? "CHF" : "EUR"}{" "}
                           {Object.keys(_order).length > 0
-                            ? totalOrder
+                            ? isValidate
+                              ? totalOrder
+                              : totalOrder + Number(_taxPaymentMethods)
                             : totalCartPriceConverted.toFixed(2)}
                         </span>
                       </h5>

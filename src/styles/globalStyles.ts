@@ -74,7 +74,7 @@ h1{
         transform: skew(-20deg) translateX(-15px);
     }
 
-h2{
+h2{ 
         font-size:1.5em;
         color: var(--Black);
         margin-bottom: 10px;
@@ -99,7 +99,7 @@ h2{
     }
 
   a , p{
-    font-size:1em
+    font-size: 1em;
   }
 
 `;

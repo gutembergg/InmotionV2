@@ -28,6 +28,7 @@ export const _updateOrder = async (
       {
         name: "tax payment methods",
         total: taxPaymentMethods,
+        tax_status: "none",
       },
     ],
   };

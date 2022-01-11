@@ -1,42 +1,82 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import Link from "next/link";
 import { ReactElement } from "react";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
-import {
-  wc_getCategoriesBySlug,
-  wc_getSub_categories,
-} from "../../../../services/woocommerceApi/Categories";
+import { wc_getSub_categories } from "../../../../services/woocommerceApi/Categories";
 import { getProduitsByCategoriesSlug } from "../../../../services/woocommerceApi/Products";
 import conditionIcon from "../../../../../public/images/icons/conditionsgen.svg";
 import { IProduct } from "../../../../interfaces/IProducts";
-import product from "next-seo/lib/jsonld/product";
-import { MainContent } from "../../../../styles/Boutique";
-import { Container } from "../../../../components/AccessoriesTemplate/AccessorieDetail/styles";
+import { ICategories } from "../../../../interfaces/ICategories";
+import ButtonSkew from "../../../../components/ButtonSkew";
+import { IoIosArrowDown } from "react-icons/io";
+
+import {
+  Container,
+  Content,
+  FiltersBar,
+  ProductsSection,
+  Products,
+  MenuSubCategories,
+  ButtonSelect,
+  PaginateBar,
+} from "../../../../styles/EquipmentsStyles";
+import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
+import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 
 interface Props {
-  _productsByCategory: IProduct[];
-  _slug: string;
+  productsByCategory: IProduct[];
+  slug: string;
+  subCategories: Partial<ICategories[]>;
 }
 
 export default function EquipementsSubCat({
-  _productsByCategory,
-  _slug,
+  productsByCategory,
+  slug,
+  subCategories,
 }: Props) {
-  console.log(_productsByCategory);
-  console.log(_slug);
   return (
     <Container>
-      <h1>{_slug}</h1>
-  <MainContent>
-      <ul>
-        {_productsByCategory.map((product, key) => {
-          return (
-            <li key={key}>
-              <h3>{product.name}</h3>
-            </li>
-          );
-        })}
-      </ul>
-    </MainContent>
+      <h1>{slug}</h1>
+
+      <Content>
+        <ProductsSection>
+          <FiltersBar>
+            <ButtonSelect>
+              <p> Trier par default</p> <IoIosArrowDown />
+            </ButtonSelect>
+            <PaginateBar>
+              <span>{productsByCategory.length} résultats</span>
+            </PaginateBar>
+          </FiltersBar>
+          <Products>
+            {productsByCategory.map((product) => {
+              return (
+                <div key={product.id}>
+                  <ProductSmallCard product={product} />
+                </div>
+              );
+            })}
+          </Products>
+        </ProductsSection>
+        <MenuSubCategories>
+          <ul>
+            <div className="skew_button">
+              <ButtonSkew text="Equipements" />
+            </div>
+            {subCategories.map((category) => {
+              return (
+                <li key={category?.slug} className="category_name">
+                  <Link
+                    href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                  >
+                    <a>{category?.name}</a>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </MenuSubCategories>
+      </Content>
     </Container>
   );
 }
@@ -47,11 +87,7 @@ EquipementsSubCat.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      { params: { slug: "equipements" }, locale: "en" },
-      { params: { slug: "equipements" }, locale: "fr" },
-      { params: { slug: "equipements" }, locale: "de" },
-    ],
+    paths: [],
     fallback: "blocking",
   };
 };
@@ -64,10 +100,26 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     lang as string
   );
 
+  const _subCategories = await wc_getSub_categories(lang as string, 241);
+
+  const subCategories = _subCategories.map((category) => {
+    const name = category.name;
+    const slug = category.slug;
+
+    return { name, slug };
+  });
+
+  const productsWithEuroDevise = await addEuroPriceInProducts(
+    productsByCategory
+  );
+
+  console.log("productsWithEuroDevise: ", productsWithEuroDevise.length);
+
   return {
     props: {
-      _productsByCategory: productsByCategory,
-      _slug: slug,
+      productsByCategory: productsWithEuroDevise,
+      subCategories,
+      slug: slug,
     },
     revalidate: 60 * 2,
   };
