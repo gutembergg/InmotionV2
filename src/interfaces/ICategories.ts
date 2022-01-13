@@ -4,7 +4,7 @@ export interface ICategories {
   id: number;
   name: string;
   slug: string;
-  parent?: number;
+  parent: number;
   description?: string;
   display?: string;
   image: IImage;

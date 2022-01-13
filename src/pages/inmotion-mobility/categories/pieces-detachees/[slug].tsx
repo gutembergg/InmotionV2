@@ -3,7 +3,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
-import { wc_getSub_categories } from "../../../../services/woocommerceApi/Categories";
+import {
+  wc_getCategoriesBySlug,
+  wc_getSub_categories,
+} from "../../../../services/woocommerceApi/Categories";
 import {
   getProductByCategory,
   getProduitsByCategoriesSlug,
@@ -23,6 +26,7 @@ import {
   FiltersBar,
   ProductsSection,
   Products,
+  MenuSubCategoriesMobilie,
   MenuSubCategories,
   ButtonFilterBlock,
   ButtonSelect,
@@ -30,113 +34,166 @@ import {
   ModelList,
   PaginateBar,
 } from "../../../../styles/PieceDetacheeStyles";
+import HeaderSeo from "../../../../components/HeaderSeo";
 
 interface Props {
   productsByCategory: IProduct[];
   subCategories: ICategories[];
   productsUpSells: IProduct[];
-  slug: string;
+  currentyCategory: ICategories;
 }
 
 export default function PiecesDetacheesSubCat({
   productsByCategory,
   subCategories,
   productsUpSells,
-  slug,
+  currentyCategory,
 }: Props) {
   const router = useRouter();
   const [upSellFilter, setUpSellFilter] = useState(false);
   const [products, setProducts] = useState<IProduct[]>(productsByCategory);
   const [upSellName, setUpSellName] = useState("");
+  const [openMenuCategories, setOpenMenuCategories] = useState(false);
 
   useEffect(() => {
     setUpSellName("");
     setProducts(productsByCategory);
   }, [router.query, productsByCategory]);
 
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   const handleUpSellFilter = () => {
     setUpSellFilter(!upSellFilter);
   };
 
   const selectModel = (model: IProduct) => {
+    console.log("Model: ", model);
     const productsBySelectedModel = productsByCategory.filter((product) =>
       product.upsell_ids.find((upSellId) => upSellId === model.id)
     );
+
+    console.log("productsBySelectedModel: ", productsBySelectedModel);
+
     setUpSellName(model.name);
     setProducts(productsBySelectedModel);
     setUpSellFilter(!upSellFilter);
   };
 
-  return (
-    <Container>
-      <h1>{slug}</h1>
+  const handleCategoriesMenu = () => {
+    setOpenMenuCategories(!openMenuCategories);
+  };
 
-      <Content>
-        <ProductsSection>
-          <FiltersBar>
-            <ButtonFilterBlock>
-              <ButtonSelect onClick={handleUpSellFilter}>
-                <p>{!!upSellName ? upSellName : "Trier par Model"} </p>{" "}
-                <IoIosArrowDown />
-              </ButtonSelect>
-              <ModelListWrapper>
-                {upSellFilter && (
-                  <ModelList>
-                    {productsUpSells.map((model) => {
+  /*   console.log("products", products);*/
+  /*   console.log("productsUpSells", productsUpSells);
+   */
+
+  return (
+    <>
+      <HeaderSeo
+        description={currentyCategory.yoast_head_json.og_title}
+        title={currentyCategory.yoast_head_json.og_title}
+        canonical={currentyCategory.yoast_head_json.canonical}
+        og_locale={currentyCategory.yoast_head_json.og_locale}
+        og_title={currentyCategory.yoast_head_json.og_title}
+      />
+      <Container>
+        <h1>{currentyCategory.name}</h1>
+
+        <Content>
+          <ProductsSection>
+            <FiltersBar>
+              <ButtonFilterBlock>
+                <ButtonSelect onClick={handleUpSellFilter}>
+                  <p>{!!upSellName ? upSellName : "Trier par Model"} </p>{" "}
+                  <IoIosArrowDown />
+                </ButtonSelect>
+                <ModelListWrapper>
+                  {upSellFilter && (
+                    <ModelList>
+                      {productsUpSells.map((model) => {
+                        return (
+                          <div
+                            key={model.id}
+                            className="upsell_name"
+                            onClick={() => selectModel(model)}
+                          >
+                            {model.name}
+                          </div>
+                        );
+                      })}
+                    </ModelList>
+                  )}
+                </ModelListWrapper>
+              </ButtonFilterBlock>
+              <MenuSubCategoriesMobilie>
+                <ButtonSelect onClick={handleCategoriesMenu}>
+                  <p>Categories</p> <IoIosArrowDown />
+                </ButtonSelect>
+                {openMenuCategories && (
+                  <div className="menu_subcategories">
+                    {subCategories.map((category) => {
                       return (
                         <div
-                          key={model.id}
-                          className="upsell_name"
-                          onClick={() => selectModel(model)}
+                          key={category?.slug}
+                          onClick={handleCategoriesMenu}
                         >
-                          {model.name}
+                          <Link
+                            href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
+                          >
+                            <a>{category?.name}</a>
+                          </Link>
                         </div>
                       );
                     })}
-                  </ModelList>
+                  </div>
                 )}
-              </ModelListWrapper>
-            </ButtonFilterBlock>
-            <PaginateBar>
-              <span>{products.length} résultats</span>
-            </PaginateBar>
-          </FiltersBar>
-          <Products>
-            {products.map((product) => {
-              return (
-                <div key={product.id}>
-                  <ProductSmallCard product={product} />
-                </div>
-              );
-            })}
-          </Products>
-        </ProductsSection>
-        <MenuSubCategories>
-          <ul>
-            <div className="skew_button">
-              <ButtonSkew text="Pièces Détachée" />
-            </div>
-            {subCategories.map((category) => {
-              return (
-                <li key={category?.slug} className="category_name">
-                  <Link
-                    href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
-                  >
-                    <a
-                      className={
-                        router.query.slug === category?.slug ? "active" : ""
-                      }
+              </MenuSubCategoriesMobilie>
+              <PaginateBar>
+                <span>{products.length} résultats</span>
+              </PaginateBar>
+            </FiltersBar>
+            <Products>
+              {products.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <ProductSmallCard product={product} />
+                  </div>
+                );
+              })}
+            </Products>
+          </ProductsSection>
+
+          <MenuSubCategories>
+            <ul>
+              <div className="skew_button">
+                <ButtonSkew text="Pièces Détachée" />
+              </div>
+              {subCategories.map((category) => {
+                return (
+                  <li key={category?.slug} className="category_name">
+                    <Link
+                      href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
                     >
-                      {category?.name}
-                    </a>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </MenuSubCategories>
-      </Content>
-    </Container>
+                      <a
+                        className={
+                          currentyCategory.slug === category?.slug
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        {category?.name}
+                      </a>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </MenuSubCategories>
+        </Content>
+      </Container>
+    </>
   );
 }
 
@@ -146,8 +203,18 @@ PiecesDetacheesSubCat.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
-    fallback: "blocking",
+    paths: [
+      { params: { slug: "pieces-velos" }, locale: "en" },
+      { params: { slug: "pieces-velos" }, locale: "fr" },
+      { params: { slug: "pieces-velos" }, locale: "de" },
+      { params: { slug: "pieces-trottinettes" }, locale: "en" },
+      { params: { slug: "pieces-trottinettes" }, locale: "fr" },
+      { params: { slug: "pieces-trottinettes" }, locale: "de" },
+      { params: { slug: "pieces-gyroroues" }, locale: "en" },
+      { params: { slug: "pieces-gyroroues" }, locale: "fr" },
+      { params: { slug: "pieces-gyroroues" }, locale: "de" },
+    ],
+    fallback: true,
   };
 };
 export const getStaticProps: GetStaticProps = async (ctx) => {
@@ -168,18 +235,26 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
+  const currentyCategory = await wc_getCategoriesBySlug(
+    slug as string,
+    lang as string
+  );
+
   const productsWithEuroDevise = await addEuroPriceInProducts(
     _productsByCategory
   );
 
-  const subCategories = await wc_getSub_categories(lang as string, 237);
+  const subCategories = await wc_getSub_categories(
+    lang as string,
+    currentyCategory.parent
+  );
 
-  const mobilityProducts = await getProductByCategory(80, "fr");
+  const mobilityProducts = await getProductByCategory(80, lang as string);
 
   const productsUpSells = getProductsUpSells(
     _productsByCategory,
     mobilityProducts,
-    slug as string
+    currentyCategory.slug
   );
 
   return {
@@ -187,7 +262,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       productsByCategory: productsWithEuroDevise,
       subCategories,
       productsUpSells,
-      slug,
+      currentyCategory,
     },
     revalidate: 60 * 2,
   };

@@ -1,4 +1,4 @@
-declare module "react-currency-conv" {
+declare module "react-uuid" {
   let content: any;
 
   export default content;

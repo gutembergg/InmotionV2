@@ -32,6 +32,7 @@ import apiPFinance from "../../../services/postFinanceApi/apiPFinance";
 import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 import Spiner from "../../../components/Spiner";
 
+import useCurrency from "../../../hooks/useCurrency";
 import { ICoupons } from "../../../interfaces/ICoupons";
 import { CouponLines, Order } from "../../../interfaces/Order";
 import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
@@ -39,6 +40,8 @@ import { ShippingMethods } from "../../../interfaces/ShippingMethods";
 import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 import { Collapse } from "react-collapse";
 import { Report } from "notiflix";
+import uuid from "react-uuid";
+import { convertSingleNumber } from "../../../utils/addEuroPriceInProducts";
 
 import {
   Container,
@@ -56,8 +59,6 @@ import {
   CouponsList,
   AddressView,
 } from "../../../styles/CheckoutMobility";
-import useCurrency from "../../../hooks/useCurrency";
-import { convertSingleNumber } from "../../../utils/addEuroPriceInProducts";
 
 interface ILineItems {
   id: number;
@@ -447,7 +448,7 @@ export default function CheckoutMobility() {
         const name = product.name;
         const price = Number(product.total) + Number(product.total_tax);
         const qty = product.quantity;
-        const sku = product.sku ? product.sku : "no-sku";
+        const sku = product.sku + String(uuid());
 
         return { id, name, price, qty, sku };
       });
@@ -572,7 +573,7 @@ export default function CheckoutMobility() {
           const name = product.name;
           const price = Number(product.total) + Number(product.total_tax);
           const qty = product.quantity;
-          const sku = product.sku ? product.sku : "no-sku";
+          const sku = product.sku + String(uuid());
 
           return { id, name, price, qty, sku };
         });

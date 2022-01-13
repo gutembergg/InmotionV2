@@ -7,21 +7,21 @@ const upSellList = keyframes`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
+  width: 85%;
+  max-width: 1600px;
+  margin: auto;
+  margin-top: 3rem;
 
   h1 {
     text-align: center;
-  }
-
-  @media (max-width: 1024) {
-    margin-top: 20rem;
-    background-color: red;
+    margin-bottom: 1.4rem;
   }
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
 `;
 
 export const FiltersBar = styled.div`
@@ -36,6 +36,7 @@ export const FiltersBar = styled.div`
 
 export const ButtonFilterBlock = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 export const ButtonSelect = styled.button`
@@ -47,7 +48,8 @@ export const ButtonSelect = styled.button`
   color: var(--White);
 
   height: 35px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   border: none;
 
   p {
@@ -55,15 +57,18 @@ export const ButtonSelect = styled.button`
   }
 `;
 
-export const ModelListWrapper = styled.div``;
+export const ModelListWrapper = styled.div`
+  position: relative;
+`;
 
 export const ModelList = styled.div`
   cursor: pointer;
   position: absolute;
   z-index: 9999;
   top: 20;
-  right: 0;
+  left: 0;
   width: 100%;
+  max-width: 300px;
   opacity: 0;
   background: var(--White);
   padding: 0.5rem 0.7rem;
@@ -80,7 +85,10 @@ export const ModelList = styled.div`
   }
 `;
 
-export const PaginateBar = styled.div``;
+export const PaginateBar = styled.div`
+  width: 100%;
+  max-width: 100px;
+`;
 
 export const ProductsSection = styled.div`
   display: flex;
@@ -92,13 +100,42 @@ export const ProductsSection = styled.div`
 `;
 
 export const Products = styled.div`
-  width: 100%;
+  width: 95%;
   margin-top: 2rem;
-  padding-right: 4rem;
+  margin-bottom: 2rem;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 25px;
+`;
+
+export const MenuSubCategoriesMobilie = styled.div`
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+    position: relative;
+    width: 100%;
+
+    .menu_subcategories {
+      position: absolute;
+      z-index: 9999;
+      top: 20;
+      right: 0;
+      width: 100%;
+      background: var(--White);
+      padding: 0.5rem 0.7rem;
+      line-height: 200%;
+
+      border-top: none;
+      box-shadow: 0px 7px 8px 0px #2121211c;
+    }
+    a {
+      text-decoration: none;
+      color: var(--Blue);
+      font-weight: 600;
+    }
+  }
 `;
 
 export const MenuSubCategories = styled.div`
@@ -136,5 +173,9 @@ export const MenuSubCategories = styled.div`
     a.active {
       color: var(--Blue);
     }
+  }
+
+  @media (max-width: 1024px) {
+    display: none;
   }
 `;

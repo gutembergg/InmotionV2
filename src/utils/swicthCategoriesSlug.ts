@@ -15,27 +15,27 @@ export const swicthCategoriesSlug = (categorySlug: string) => {
       break;
 
     case "e-bike-parts":
-      state = "velos-electriques";
+      state = "e-bike";
       break;
 
     case "scooter-parts":
-      state = "trottinettes";
+      state = "e-scooter";
       break;
 
     case "e-wheel-parts":
-      state = "gyroroues";
+      state = "e-wheel";
       break;
 
     case "e-rad-teile":
-      state = "gyroroues";
+      state = "e-rad";
       break;
 
     case "fahrradteile":
-      state = "velos-electriques";
+      state = "e-fahrrad";
       break;
 
     case "rollerteile":
-      state = "trottinettes";
+      state = "elektroroller";
       break;
 
     default:
