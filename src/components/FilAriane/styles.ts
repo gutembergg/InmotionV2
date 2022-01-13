@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const StyledFilAriane = styled.div`
   flex: auto;
-  margin-right: 30px;
-  margin-top:20px;
+  margin-right: 10px;
+  margin-top:10px;
   display: flex;
   justify-content: flex-end;
   @media (max-width: 1024px){
@@ -33,7 +33,6 @@ export const StyledFilAriane = styled.div`
     &:last-child {
         a {
               text-shadow: none;
-            font-weight: bold;
             color: var(--Black);
         }
         }

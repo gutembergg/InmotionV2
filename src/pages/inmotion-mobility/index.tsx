@@ -8,7 +8,6 @@ import Image from "next/dist/client/image";
 import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
 import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
 import imageHelp from "../../../public/images/homeMobility/contactUs.png";
-import horairesBG from "../../../public/images/homeMobility/horaireBg.jpg";
 
 import Link from "next/dist/client/link";
 import SliderMobility from "../../components/Sliders/SliderMobility";
@@ -29,7 +28,6 @@ import {
   RentalSection,
   PromotedSection,
   HelpSection,
-  InfoSection,
 } from "../../styles/MobilityIndex";
 
 interface Props {
@@ -56,21 +54,12 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
   const contactTitle = t("home:contactTitle");
   const contactTxt = t("home:contactTxt");
   const contactLink = t("home:contactLink");
-  const shopHours = t("home:shopHours");
 
   const [featuredproducts, _setfeaturedproducts] =
     useState<IProduct[]>(featuredProducts);
   const [onSaleProduct, _setOnSaleproduct] =
     useState<IProduct[]>(onSaleProducts);
-  /*   console.log("featured productzs", featuredproducts);
-  console.log("onsale products", onSaleProducts); */
-  const horaireLundi = t("home:horaireLundi");
-  const horaireMardi = t("home:horaireMardi");
-  const horaireMercredi = t("home:horaireMercredi");
-  const horaireJeudi = t("home:horaireJeudi");
-  const horaireVendredi = t("home:horaireVendredi");
-  const horaireSamedi = t("home:horaireSamedi");
-  const horaireDimanche = t("home:horaireDimanche");
+
 
   useEffect(() => {
     _setfeaturedproducts(featuredProducts);
@@ -146,34 +135,11 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
             <Image
               src={imageHelp}
               alt="contact inmotion, service et conseils de professionels "
-              height={408}
-              width={612}
+              layout="fill"
+              objectFit="contain"
             />
           </div>
         </HelpSection>
-        <InfoSection>
-          <div className="clipPathShadow">
-            <div className="promotedSectionImage">
-              <Image
-                src={horairesBG}
-                alt="protection rour trottinette,vélo et gyroroues "
-                layout="fill"
-                objectFit="cover"
-                objectPosition="left bottom"
-              />
-            </div>
-          </div>
-          <div className="content">
-            <h2 className="squared">{shopHours}</h2>
-            <p>{horaireLundi}</p>
-            <p>{horaireMardi}</p>
-            <p>{horaireMercredi}</p>
-            <p>{horaireJeudi}</p>
-            <p>{horaireVendredi}</p>
-            <p>{horaireSamedi}</p>
-            <p>{horaireDimanche}</p>
-          </div>
-        </InfoSection>
       </MainContent>
     </Container>
   );

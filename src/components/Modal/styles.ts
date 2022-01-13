@@ -122,5 +122,5 @@ export const StyledModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 4000;
+  z-index: 9999;
 `;

@@ -37,13 +37,13 @@ const HeaderComponent = ({ icon }: Props) => {
         <div className="rightContent">
           <SearchBar />
           <Cart />
+        {/* <CurrentPageIcon icon={icon} bgcolor={currentPageIconColor} /> */}
         </div>
       </div>
-      <div className="bottomBlock">
+      {/* <div className="bottomBlock">
         <p>{menuLeftTopText}</p>
         <FilAriane />
-        <CurrentPageIcon icon={icon} bgcolor={currentPageIconColor} />
-      </div>
+      </div> */}
     </StyledHeader>
   );
 };

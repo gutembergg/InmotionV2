@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const StyledLangSelector2 = styled.div`
-  margin-top: 10px;
+  margin-top: 5px;
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 0px;
 
   .langSelector {
     display: flex;
@@ -21,7 +21,7 @@ export const StyledLangSelector2 = styled.div`
       
     }
     .flagImgBox {
-      margin-right: 10px;
+      margin-right: 0px;
 
       p {
         margin-top: -6px;

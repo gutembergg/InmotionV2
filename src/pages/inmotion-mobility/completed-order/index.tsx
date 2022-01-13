@@ -53,7 +53,7 @@ export default function CompletedOrder() {
         setOrder(order);
       }
     });
-  }, [router]);
+  }, [router,orderID]);
 
   if (order) {
     const orderDate = new Date(order.date_created).toLocaleString("fr-CH");

@@ -54,7 +54,7 @@ h1,h2,h3,h4,h5,h6{
   color: var(--Black)
 }
 h1{
-        font-size:2.2em;
+        font-size:1.8em;
         color: var(--Black);
         margin-bottom: 10px;
         z-index:3;
@@ -75,7 +75,7 @@ h1{
     }
 
 h2{ 
-        font-size:1.5em;
+        font-size:1.3em;
         color: var(--Black);
         margin-bottom: 10px;
         z-index:3;

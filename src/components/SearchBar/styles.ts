@@ -4,6 +4,8 @@ export const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+}
 `;
 
 export const MenuSearchBar = styled.div`
@@ -25,21 +27,22 @@ export const MenuSearchBar = styled.div`
   }
 `;
 
-export const SearchProductsList = styled.div`
-  position: absolute;
-  z-index: 99999;
-  top: 50px;
-  right: 0;
-  background: var(--White);
-
-  height: auto;
-  max-height: 600px;
-  overflow-y: hidden;
-  width: 100%;
-  padding: 0.5rem;
+export const SearchProductsList = styled.ul`
+    position: absolute;
+    z-index: 9998;
+    top: 38px;
+    right: 0;
+    background: var(--White);
+    list-style-type: none;
+    height: auto;
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 0.5rem;
+    box-shadow: 0px 3px 3px #0000004f;
 `;
 
-export const ProductName = styled.div`
+export const ProductName = styled.li`
   cursor: pointer;
   padding-bottom: 0.5rem;
 

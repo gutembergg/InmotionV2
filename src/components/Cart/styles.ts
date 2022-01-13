@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const StyledCart = styled.div`
   flex: 0 0 50px;
-
+cursor: pointer;
   .cartIconElement {
     position: relative;
-
+display: flex;
     .cartIcon {
-      margin-right: 10px;
+      margin-right: 0px;
       transition: all ease-in 0.2s;
       @media (max-width: 1024px) {
         width: 20px;
@@ -15,24 +15,14 @@ export const StyledCart = styled.div`
     }
 
     #cartItemsNumber {
-      position: absolute;
-      top: -10px;
-      right: 5px;
-      background-color: #f2142b;
-      color: #fcfcfc;
+      position:relative;
+      color: var(--Blue);
       width: 25px;
       height: 25px;
-      border-radius: 50px;
-      font-size: 0.8em;
+      font-size: 1em;
       display: flex;
       align-items: center;
       justify-content: center;
-      @media (max-width: 1024px) {
-        width: 15px;
-        height: 15px;
-        top: -4px;
-        right: 20px;
-      }
     }
 
     &:hover {
@@ -52,9 +42,8 @@ export const StyledCart = styled.div`
       position: absolute;
       visibility: hidden;
       opacity: 0;
-      padding-top: 10px;
+      padding-top: 38px;
       z-index: 9999;
-      padding-top: 12px;
       right: -1px;
       transform: scaleY(0);
       transform-origin: right 12px;

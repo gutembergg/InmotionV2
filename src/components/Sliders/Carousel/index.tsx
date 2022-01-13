@@ -18,6 +18,7 @@ SwiperCore.use([FreeMode,Navigation]);
 import "./styles.ts";
 import { IProduct } from "../../../interfaces/IProducts";
 import { CarouselBox } from "./styles";
+import { useEffect, useState } from "react";
 
 
 interface Props {
@@ -26,10 +27,15 @@ interface Props {
 
 export default function CarouselSwiper({ products }: Props) {
 
+  const [productList, setProductList] = useState(products as IProduct[])
+
+  useEffect(() => {
+    setProductList(products)
+  }, [products])
   return (
     <CarouselBox>
      <Swiper 
-     slidesPerView={4} 
+     slidesPerView={5} 
      spaceBetween={30} 
      slidesPerGroup={1} 
      loop={true} 
@@ -62,7 +68,7 @@ export default function CarouselSwiper({ products }: Props) {
             slidesPerView: 5,
           },
         }}>
-     {products.map((product) => {
+     {productList.map((product) => {
           return (
             <SwiperSlide key={product.id}>
               <div className="slide_block" >
@@ -71,10 +77,10 @@ export default function CarouselSwiper({ products }: Props) {
                 <Image
                   width={150}
                   height={150}
-                  src={product.images[0].src}
+                  src={product.images[0]?.src}
                   alt="product"
                   placeholder="blur"
-                  blurDataURL={product.images[0].src}
+                  blurDataURL={product.images[0]?.src}
                   />
                 <div className="product_name"><strong>{product.name}</strong></div>
                 <div className="product_price">CHF {product.price}.-</div>
