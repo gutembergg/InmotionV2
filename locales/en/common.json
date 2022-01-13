@@ -1,4 +1,15 @@
 {
   "ourOccasions": "Our occasions",
-  "cartTitle": "Your cart in detail"
+  "cartTitle": "Your cart in detail",
+  "shopHours":"Our opening hours",
+  "horaireLundi": "Monday: Closed",
+  "horaireMardi": "Tuesday: 13:00–18:30",
+  "horaireMercredi": "Wednesday: Closed",
+  "horaireJeudi": "Thursday : 13:00–18:30",
+  "horaireVendredi": "Friday : Closed",
+  "horaireSamedi": "Saturday : 12:00–16:00",
+  "horaireDimanche": "Sunday : Closed",
+  "shopAddressTxt": "Shop location",
+  "legalMentionsTxt": "Legal mention"
+  
 }

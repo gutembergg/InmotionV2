@@ -28,8 +28,8 @@ const LanguageSelector = () => {
         <div className="langSelectorListNameFlag" onClick={openLanguage}>
           <div className="flagImgBox">
             <Image
-              width={40}
-              height={27}
+              width={35}
+              height={22}
               src={
                 (router.locale === "en" && enflag) ||
                 (router.locale === "de" && deflag) ||
@@ -38,9 +38,6 @@ const LanguageSelector = () => {
               alt={router.locale + "flag"}
             />
           </div>
-          <p>
-            <span className={openObject ? "opened" : ""}>&#9662;</span>
-          </p>
         </div>
         <ul
           className={
@@ -55,8 +52,8 @@ const LanguageSelector = () => {
               <li key={locale} value={locale}>
                 <div id={locale} onClick={getSelectedLanguage}>
                   <Image
-                    width={40}
-                    height={27}
+                    width={35}
+                    height={22}
                     src={
                       (locale === "en" && enflag) ||
                       (locale === "de" && deflag) ||

@@ -18,6 +18,7 @@ export const MobilitySlider = styled.div`
   display: flex;
   filter: drop-shadow(-1px 6px 3px rgba(0, 0, 0, 0.5));
   position: relative;
+  margin: 0 5%;
 `;
 
 export const PromotedProducts = styled.section`
@@ -111,7 +112,7 @@ export const RentalSection = styled.section`
   .content {
     background: var(--BgGrayGradient);
     flex: 1 1 40%;
-    padding: 20px;
+    padding: 40px 5%;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -146,19 +147,20 @@ export const RentalSection = styled.section`
 `;
 
 export const HelpSection = styled.section`
-  margin-top: 70px;
-  margin-bottom: 70px;
+ margin: 0px 5% 0 5%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 
   @media (max-width: 640px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   .helpImg {
-    width: 50%;
+    width: 278px;
+    position: relative;
+    height:400px;
     @media (max-width: 640px) {
-      width: 65%;
+      width: 278px;
     }
   }
   .content {
@@ -166,9 +168,7 @@ export const HelpSection = styled.section`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    @media (max-width: 960px) {
-      flex: 0 1 80%;
-    }
+   
     @media (max-width: 640px) {
       align-items: center;
       text-align: center;
@@ -189,78 +189,6 @@ export const HelpSection = styled.section`
   }
 `;
 
-export const InfoSection = styled.section`
-  position: relative;
-  width: 100%;
-  margin-top: 50px;
-  margin-bottom: 70px;
-  .clipPathShadow {
-    filter: drop-shadow(-1px 6px 3px rgba(0, 0, 0, 0.5));
-    z-index: 3;
-    position: absolute;
-    left: 0;
-    width: 60%;
-    margin-top: -9px;
-    @media (max-width: 960px) {
-      width: 49%;
-    }
-    @media (max-width: 640px) {
-      width: 100%;
-      filter: none;
-      position: relative;
-    }
-    .promotedSectionImage {
-      clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-      width: 100%;
-      position: relative;
-      height: 380px;
-      @media (max-width: 640px) {
-          height: 180px;
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-      }
-    }
-  }
-  .content {
-    background: var(--BgGrayGradient);
-    flex: 1 0 20vw;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 10px 1vw 10px 66%;
-    height: 360px;
-    box-shadow: -1px 6px 5px rgb(0 0 0 / 23%);
-    @media (max-width: 960px) {
-      padding: 10px 1vw 10px 55%;
-    }
-    @media (max-width: 640px) {
-        flex: 1 0 100%;
-        padding: 30px 10px 30px 10px;
-        height: auto;
-        align-items: center;
-        text-align: center;
-      }
-    h2 {
-      color: var(--Black);
-    }
-    p {
-      color: var(--Black);
-    }
-    a {
-      color: var(--White);
-      background-color: var(--Blue);
-      padding: 10px 20px;
-      margin-top: 20px;
-      text-decoration: none;
-      transition: all ease-in 0.1s;
-
-      &:hover {
-        background-color: var(--BlueHover);
-        transition: all ease-in 0.1s;
-      }
-    }
-  }
-`;
 
 export const NewProducts = styled.section`
   min-height: 290px;

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import currencyIcon from "../../../public/images/icons/devise.svg";
 import useCurrency from "../../hooks/useCurrency";
+import { CurrencySelectorStyle } from "./styles";
 
 const CurrencySelector = () => {
     const { setCurrency } = useCurrency();
@@ -8,15 +9,15 @@ const CurrencySelector = () => {
     setCurrency(e);
     }
   return (
-      <div>
+      <CurrencySelectorStyle>
 <div className="ImgBox">
-<Image width={30} height={30} src={currencyIcon} alt="currency" />
+<Image width={25} height={25} src={currencyIcon} alt="currency" />
 </div>
     <select onChange={(e)=> handleChange(e.target.value)}>
       <option value="CHF">CHF</option>
       <option value="EUR">EUR</option>
     </select>
-      </div>
+      </CurrencySelectorStyle>
   );
 };
 export default CurrencySelector;

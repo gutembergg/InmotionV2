@@ -6,6 +6,7 @@ import placeholder from "../../../public/images/placeholder_woocommerce.png";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import useCurrency from "../../hooks/useCurrency";
+import {BsCart2} from 'react-icons/bs';
 
 const Cart = () => {
   const cartModalRef = useRef<HTMLDivElement>(null);
@@ -43,9 +44,9 @@ const Cart = () => {
 
   return (
     <StyledCart>
-      <div className="cartIconElement">
-        <div className="cartIcon" onClick={setCartVisibility}>
-          <Image src={cartIcon} width={30} height={30} alt="search icon" />
+      <div className="cartIconElement" onClick={setCartVisibility}>
+        <div className="cartIcon">
+          <BsCart2 size={23} color={"#0570A6"} />
         </div>
 
         {Object.keys(cart).length > 0 && cart.totalProductsCount ? (

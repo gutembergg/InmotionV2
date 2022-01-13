@@ -5,24 +5,24 @@ export const MainMenu = styled.ul`
   align-items: flex-end;
   position: relative;
   list-style: none;
-  font-weight: bold;
-  margin: 0 30px;
+  /* font-weight: ; */
+  margin: 0 20px;
   cursor: pointer;
-
+  
   p {
+    /* font-family: 'Bitter',sans-serif; */
     text-decoration: none;
     color: var(--Blue);
+    font-weight: bold;
 
     &.active {
       color: var(--Red);
-      transform-origin: center center;
-      font-size: 1.1em;
     }
   }
 
   > li {
     flex: 0 1 auto;
-    margin: 0 25px;
+    margin: 0 20px;
     list-style: none;
 
     &:hover {
@@ -43,7 +43,7 @@ export const MainMenu = styled.ul`
       position: absolute;
       border-top: none;
       box-shadow: 0px 7px 8px 0px #2121211c;
-      padding-top: 12px;
+      padding-top: 10px;
       z-index: 9999;
       margin-left: -20px;
       transform: scaleY(0);

@@ -1,9 +1,8 @@
-import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
-import searchIcon from "../../../public/images/icons/search.svg";
 import useTranslation from "next-translate/useTranslation";
 import axios from "axios";
 import { IProduct } from "../../interfaces/IProducts";
+import {FiSearch} from 'react-icons/fi';
 
 import useSWR from "swr";
 
@@ -72,13 +71,7 @@ const SearchBar = () => {
           disabled={!productsList}
         />
         <div className="searchICon">
-          <Image
-            src={searchIcon}
-            width={30}
-            height={30}
-            alt="search icon"
-            layout="fixed"
-          />
+          <FiSearch />
         </div>
       </MenuSearchBar>
 

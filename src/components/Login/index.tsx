@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import Modal from "../Modal";
-import { LoginContainer, LoginLink, MyAccountLink, LogoutLink } from "./styles";
+import { LoginContainer, LoginLink, MyAccountLink } from "./styles";
 import Link from "next/link";
 import Input from "../Input";
 import Notiflix from "notiflix";
@@ -14,16 +14,15 @@ import useUser from "../../hooks/useUser";
 import { AuthUser } from "../../interfaces/AuthUser";
 import RegisterForm from "../Register";
 import useTranslation from "next-translate/useTranslation";
-import Image from "next/image";
-import loginIcon from "../../../public/images/icons/login.svg";
-import myAcount from "../../../public/images/icons/moncompte.svg";
+import {RiLoginBoxLine} from 'react-icons/ri';
+import {RiAccountCircleFill} from 'react-icons/ri';
 
 const LoginForm = () => {
   const { t } = useTranslation();
   const menuLogin = t("headerMobility:login");
   const menuRegister = t("headerMobility:register");
 
-  const { login, logout, user } = useUser();
+  const { login, user } = useUser();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const [userModel, setUserModel] = useState<AuthUser>({} as AuthUser);
@@ -88,18 +87,11 @@ const LoginForm = () => {
       </Modal>
       {loged ? (
         <div>
-          <LogoutLink onClick={logout}>!logout</LogoutLink>
           <MyAccountLink>
             <Link href={`/user`}>
               <a>
                 <div>
-                  <Image
-                    src={myAcount}
-                    width={30}
-                    height={30}
-                    alt="login icon"
-                  />
-                  {"  "}
+                  <RiAccountCircleFill />
                   <span>Mon compte</span>
                 </div>
               </a>
@@ -108,12 +100,11 @@ const LoginForm = () => {
         </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
-          <Image src={loginIcon} width={30} height={30} alt="login icon" />
-          {"  "}
+         <RiLoginBoxLine size={24} />
           {/*   <span>{menuLogin} /</span>
           <span>{menuRegister}</span> */}
           <span>
-            {menuLogin} / {menuRegister}
+            {menuLogin}
           </span>
         </LoginLink>
       )}
