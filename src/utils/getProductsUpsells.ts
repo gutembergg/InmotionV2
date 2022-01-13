@@ -4,8 +4,7 @@ import { swicthCategoriesSlug } from "./swicthCategoriesSlug";
 export const getProductsUpSells = (
   productsList: IProduct[],
   modelsList: IProduct[],
-  categorySlug: string,
-  categoryId?: number
+  categorySlug: string
 ) => {
   let upSell: number[] = [];
 

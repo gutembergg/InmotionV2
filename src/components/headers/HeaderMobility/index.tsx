@@ -8,9 +8,6 @@ import FilAriane from "../../FilAriane/FilAriane";
 import CurrentPageIcon from "../../CurrentPageIcon";
 import LanguageSelector from "../../LanguageSelector";
 import Login from "../../Login";
-import Link from "next/link";
-import printer from "../../../../public/images/icons/printer.svg";
-import { LinkPrint } from "../HeaderAdmin/styles";
 import useTranslation from "next-translate/useTranslation";
 import CurrencySelector from "../../CurrencySelector";
 
@@ -23,21 +20,10 @@ const HeaderComponent = ({ icon }: Props) => {
 
   const { t } = useTranslation();
   const menuLeftTopText = t("headerMobility:leftTopText");
-  const inmotionPrint = t("headerMobility:inmotion-print");
 
   return (
     <StyledHeader>
       <div className="topBlock">
-        {/* <Link href="/inmotion-print">
-          <a>
-            <LinkPrint>
-              <div className="iconLink">
-                <Image width={30} height={30} src={printer.src} alt="photo" />
-              </div>
-              <p>{inmotionPrint} Inmotion-print</p>
-            </LinkPrint>
-          </a>
-        </Link> */}
         <Login />
         <CurrencySelector />
         <LanguageSelector />

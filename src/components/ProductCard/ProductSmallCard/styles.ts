@@ -12,6 +12,7 @@ export const ImageBlock = styled.div`
 `;
 
 export const Name = styled.div`
+  text-align: center;
   color: var(--Blue);
   font-size: 1.1rem;
   font-weight: 600;

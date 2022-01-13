@@ -38,6 +38,7 @@ import { getShippingZoneMethods } from "../../../services/woocommerceApi/Shippin
 import { ShippingMethods } from "../../../interfaces/ShippingMethods";
 import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 import { Collapse } from "react-collapse";
+import { Report } from "notiflix";
 
 import {
   Container,
@@ -139,6 +140,7 @@ export default function CheckoutMobility() {
   const [totalOrder, setTotalOrder] = useState(0);
   const [positionOrderSection, setPositionOrderSection] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
+  const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
   const CHFCurrency = currentyCurrency === "CHF";
@@ -150,7 +152,7 @@ export default function CheckoutMobility() {
       const _lineItems = cart.products.map((product) => {
         const product_id = product.id;
         const quantity = product.qty;
-        const total = String(product.euroPrice);
+        const total = String(product.euroPrice * product.qty);
 
         if (CHFCurrency) {
           return { product_id, quantity };
@@ -214,58 +216,53 @@ export default function CheckoutMobility() {
         { weight: 0 }
       );
 
-      const allowedShipping = method.settings.method_rules?.value.map(
-        (rule) => {
-          const result: any = rule.conditions.filter(async (condition) => {
-            if (
-              productsWeight?.weight >= condition.min &&
-              productsWeight?.weight <= condition.max
-            ) {
-              const euroValue = await convertSingleNumber(
-                Number(rule.cost_per_order)
-              );
+      if (method.method_id === "local_pickup") {
+        setTotalCartPriceConverted(cart.totalProductsPrice);
+      }
+      method.settings.method_rules?.value.map((rule) => {
+        const result: any = rule.conditions.filter(async (condition) => {
+          if (
+            productsWeight?.weight >= condition.min &&
+            productsWeight?.weight <= condition.max
+          ) {
+            const euroValue = await convertSingleNumber(
+              Number(rule.cost_per_order)
+            );
 
-              setShippingPrice(
-                CHFCurrency ? Number(rule.cost_per_order) : euroValue
-              );
+            setShippingPrice(
+              CHFCurrency ? Number(rule.cost_per_order) : euroValue
+            );
 
-              const shippingConverted = CHFCurrency
-                ? Number(rule.cost_per_order)
-                : euroValue;
+            const shippingConverted = CHFCurrency
+              ? Number(rule.cost_per_order)
+              : euroValue;
 
-              const totalPriceWithShipping =
-                shippingConverted + cart.totalProductsPrice;
-              const totalPriceFormated = Number(
-                totalPriceWithShipping.toFixed(2)
-              );
+            const totalPriceWithShipping =
+              shippingConverted + cart.totalProductsPrice;
+            const totalPriceFormated = Number(
+              totalPriceWithShipping.toFixed(2)
+            );
 
-              setTotalCartPriceConverted(totalPriceFormated);
+            setTotalCartPriceConverted(totalPriceFormated);
 
-              setShippingMethod(method);
-              console.log("OK livraison", method);
-              setNoAllowShipping(false);
+            setShippingMethod(method);
+            console.log("OK livraison", method);
+            setNoAllowShipping(false);
 
-              return rule;
-            } else {
-              setNoAllowShipping(true);
-            }
-          });
-          console.log("result", result);
-          return result;
-        }
-      );
-      /* 
-      console.log("allowedShipping.flat", allowedShipping);
-
-      if (allowedShipping.flat().length === 0) {
-        setNoAllowShipping(true);
-      } */
+            return rule;
+          } else {
+            setNoAllowShipping(true);
+          }
+        });
+        return result;
+      });
     },
     [cart.products, CHFCurrency, cart.totalProductsPrice]
   );
 
   const _handleBillingShippingData = async (values: IFormValues) => {
     console.log("formValues: ", values);
+
     const billing = {
       last_name: values.billing_last_name,
       first_name: values.billing_first_name,
@@ -304,6 +301,18 @@ export default function CheckoutMobility() {
         ? values.shipping_country
         : values.billing_country,
     };
+
+    if (
+      (!CHFCurrency && billing.country === "CH" && shipping.country === "CH") ||
+      (CHFCurrency && billing.country !== "CH" && shipping.country !== "CH")
+    ) {
+      Report.failure(
+        "Erreur adresse invalide",
+        "<p>Pour livrer le produit en Suisse vous devez avoir la devise en CHF:</p><br /><br />",
+        "Okay"
+      );
+      return;
+    }
     _setBillingShippingData({
       billing,
       shipping,
@@ -409,85 +418,91 @@ export default function CheckoutMobility() {
   ]);
 
   const checkout = useCallback(async () => {
-    if (codePromoState === false && paymentSteps !== 3) {
-      return;
-    }
-
-    const couponsCodeArray = usedCoupons.map((coupon) => {
-      return { code: coupon.code };
-    });
-
-    if (couponsCodeArray.length > 0) {
-      let validatedCoupon = confirm("Vous avez validé vos Codes Promo?");
-
-      if (validatedCoupon === false) {
+    try {
+      if (codePromoState === false && paymentSteps !== 3) {
         return;
       }
-    }
 
-    setCheckoutClicked(true);
-    setIsOrder(false);
-    setPaymentValidate(true);
-
-    await _sendOrder();
-    setValidateOrder(false);
-
-    const productsCheckout = lineItemsRef.current?.map((product) => {
-      const id = product.id;
-      const name = product.name;
-      const price =
-        (Number(product.total) + Number(product.total_tax)) * product.quantity;
-      const qty = product.quantity;
-      const sku = product.sku ? product.sku : "no-sku";
-
-      return { id, name, price, qty, sku };
-    });
-
-    if (Object.keys(cart).length > 0) {
-      const { data } = await apiPFinance.post("transaction-create", {
-        productsCheckout,
-        orderId: orderIdRef.current,
-        currency: currentyCurrency,
-        shippingTaxe: shippingPrice,
+      const couponsCodeArray = usedCoupons.map((coupon) => {
+        return { code: coupon.code };
       });
 
-      const methodsPaymentObject = data.paymentMethods.reduce(
-        (acc: PostFinancePaymentMethods[], item: PostFinancePaymentMethods) => {
-          let taxState = {};
-          switch (item.name) {
-            case "PostFinance e-finance":
-              taxState = { ...item, taxMethodsPayments: 1.3 };
-              break;
-            case "Carte PostFinance":
-              taxState = { ...item, taxMethodsPayments: 1.3 };
-              break;
-            case "Facture":
-              taxState = { ...item, taxMethodsPayments: 0 };
-              break;
-            case "PayPal":
-              taxState = { ...item, taxMethodsPayments: 5 };
-              break;
-            case "Carte de crédit/débit":
-              taxState = { ...item, taxMethodsPayments: 2 };
-              break;
-            case "TWINT":
-              taxState = { ...item, taxMethodsPayments: 4 };
-              break;
-          }
+      if (couponsCodeArray.length > 0) {
+        let validatedCoupon = confirm("Vous avez validé vos Codes Promo?");
 
-          const object = [...acc, taxState];
-
-          return object;
-        },
-        []
-      );
-
-      setPaymentMethods(methodsPaymentObject);
-      setTransactionId(data.transactionId);
-
-      if (data) {
-        setIsOrder(true);
+        if (validatedCoupon === false) {
+          return;
+        }
       }
+
+      setCheckoutClicked(true);
+      setIsOrder(false);
+      setPaymentValidate(true);
+
+      await _sendOrder();
+      setValidateOrder(false);
+
+      const productsCheckout = lineItemsRef.current?.map((product) => {
+        const id = product.id;
+        const name = product.name;
+        const price = Number(product.total) + Number(product.total_tax);
+        const qty = product.quantity;
+        const sku = product.sku ? product.sku : "no-sku";
+
+        return { id, name, price, qty, sku };
+      });
+
+      if (Object.keys(cart).length > 0) {
+        const { data } = await apiPFinance.post("transaction-create", {
+          productsCheckout,
+          orderId: orderIdRef.current,
+          currency: currentyCurrency,
+          shippingTaxe: shippingPrice,
+        });
+
+        const methodsPaymentObject = data.paymentMethods.reduce(
+          (
+            acc: PostFinancePaymentMethods[],
+            item: PostFinancePaymentMethods
+          ) => {
+            let taxState = {};
+            switch (item.name) {
+              case "PostFinance e-finance":
+                taxState = { ...item, taxMethodsPayments: 1.3 };
+                break;
+              case "Carte PostFinance":
+                taxState = { ...item, taxMethodsPayments: 1.3 };
+                break;
+              case "Facture":
+                taxState = { ...item, taxMethodsPayments: 0 };
+                break;
+              case "PayPal":
+                taxState = { ...item, taxMethodsPayments: 2 };
+                break;
+              case "Carte de crédit/débit":
+                taxState = { ...item, taxMethodsPayments: 2 };
+                break;
+              case "TWINT":
+                taxState = { ...item, taxMethodsPayments: 1.3 };
+                break;
+            }
+
+            const object = [...acc, taxState];
+
+            return object;
+          },
+          []
+        );
+
+        setPaymentMethods(methodsPaymentObject);
+        setTransactionId(data.transactionId);
+
+        if (data) {
+          setIsOrder(true);
+        }
+      }
+    } catch (error) {
+      setErros("Une erreur est survenue!");
     }
   }, [
     cart,
@@ -500,76 +515,85 @@ export default function CheckoutMobility() {
   ]);
 
   const validateCheckout = useCallback(async () => {
-    const query = { id: transactionId, orderId: orderId };
-    const { data } = await apiPFinance.post("transaction-validate", query);
-    setIsValidate(true);
+    try {
+      const query = { id: transactionId, orderId: orderId };
+      const { data } = await apiPFinance.post("transaction-validate", query);
+      setIsValidate(true);
 
-    const orederUpdated = await _updateOrder(
-      orderId as number,
-      _methodPayment.name,
-      String(transactionId),
-      _taxPaymentMethods
-    );
+      const orederUpdated = await _updateOrder(
+        orderId as number,
+        _methodPayment.name,
+        String(transactionId),
+        _taxPaymentMethods
+      );
 
-    setTotalOrder(orederUpdated.total);
+      console.log("orederUpdated", orederUpdated);
 
-    if (typeof window !== "undefined") {
-      window.location.href = data;
+      setTotalOrder(orederUpdated.total);
+
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("inmotion:cart");
+        window.location.href = data;
+      }
+    } catch (error) {
+      setErros("Une erruer est survenue");
     }
   }, [transactionId, orderId, _methodPayment.name, _taxPaymentMethods]);
 
   const updateTransaction = useCallback(
     async (method: PostFinancePaymentMethods, index: number) => {
-      setSelectedPaymentMethod(index);
-      setIsCheckMethod(true);
+      try {
+        setSelectedPaymentMethod(index);
+        setIsCheckMethod(true);
 
-      const totalPriceWithTaxMethodsPayment = lineItemsRef.current.reduce(
-        (acc, item) => {
-          const subTotal =
-            Number(acc.toFixed(2)) +
-            (Number(item.total) + Number(item.total_tax));
+        const totalPriceWithTaxMethodsPayment = lineItemsRef.current.reduce(
+          (acc, item) => {
+            const subTotal =
+              Number(acc.toFixed(2)) +
+              (Number(item.total) + Number(item.total_tax));
 
-          const total = subTotal;
+            const total = subTotal;
 
-          return total;
-        },
-        0
-      );
+            return total;
+          },
+          0
+        );
 
-      const taxPaymentMethods = (
-        (totalPriceWithTaxMethodsPayment / 100) *
-        method.taxMethodsPayments
-      ).toFixed(2);
+        const taxPaymentMethods = (
+          (totalPriceWithTaxMethodsPayment / 100) *
+          method.taxMethodsPayments
+        ).toFixed(2);
 
-      setTaxPaymentMethods(taxPaymentMethods);
-      _setMethodPayment(method);
+        setTaxPaymentMethods(taxPaymentMethods);
+        _setMethodPayment(method);
 
-      const productsCheckout = lineItemsRef.current?.map((product) => {
-        const id = product.id;
-        const name = product.name;
-        const price =
-          (Number(product.total) + Number(product.total_tax)) *
-          product.quantity;
-        const qty = product.quantity;
-        const sku = product.sku ? product.sku : "no-sku";
+        const productsCheckout = lineItemsRef.current?.map((product) => {
+          const id = product.id;
+          const name = product.name;
+          const price = Number(product.total) + Number(product.total_tax);
+          const qty = product.quantity;
+          const sku = product.sku ? product.sku : "no-sku";
 
-        return { id, name, price, qty, sku };
-      });
+          return { id, name, price, qty, sku };
+        });
 
-      const { data } = await apiPFinance.post("transaction-update", {
-        id: transactionId,
-        orderId: orderId,
-        methodId: method.id,
-        shippingTaxe: shippingPrice,
-        productsCheckout,
-        taxPaymentMethods,
-      });
+        const { data } = await apiPFinance.post("transaction-update", {
+          id: transactionId,
+          orderId: orderId,
+          methodId: method.id,
+          shippingTaxe: shippingPrice,
+          productsCheckout,
+          taxPaymentMethods,
+        });
 
-      setTransactionId(data);
+        setTransactionId(data);
 
-      if (data) {
-        setIsCheckMethod(false);
-        setPaymentValidate(false);
+        if (data) {
+          setIsCheckMethod(false);
+          setPaymentValidate(false);
+        }
+      } catch (error) {
+        setErros("Une erruer est survenue");
       }
     },
     [orderId, transactionId, shippingPrice]

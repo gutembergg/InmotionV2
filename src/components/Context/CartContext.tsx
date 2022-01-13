@@ -1,4 +1,3 @@
-import Notiflix, { Report } from "notiflix";
 import {
   createContext,
   ReactNode,
@@ -6,6 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
+
+import Notiflix, { Report } from "notiflix";
 import useCurrency from "../../hooks/useCurrency";
 import { IProduct } from "../../interfaces/IProducts";
 

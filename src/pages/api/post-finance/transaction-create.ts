@@ -66,7 +66,6 @@ export default async function handler(
         amountIncludingTax: Number(item.price.toFixed(2)),
         type: "PRODUCT" as LineItemType,
       };
-console.log("lineItem",lineItem)
       return lineItem;
     });
 
@@ -90,24 +89,32 @@ console.log("lineItem",lineItem)
     transaction.currency = currencyResp;
     transaction.metaData = { orderId: orderId.toString() };
 
-    transactionService.create(spaceId, transaction).then((response) => {
-      let transactionCreate: PostFinanceCheckout.model.Transaction =
-        response.body;
+    transactionService
+      .create(spaceId, transaction)
+      .then((response) => {
+        let transactionCreate: PostFinanceCheckout.model.Transaction =
+          response.body;
 
-      //// Fecth payment methods
-      transactionService
-        .fetchPaymentMethods(
-          spaceId,
-          transactionCreate.id as number,
-          "payment_page"
-        )
-        .then(function (response) {
-          const responseQuery = {
-            transactionId: transactionCreate.id,
-            paymentMethods: response.body,
-          };
-          res.status(200).json(responseQuery);
-        });
-    });
+        //// Fecth payment methods
+        transactionService
+          .fetchPaymentMethods(
+            spaceId,
+            transactionCreate.id as number,
+            "payment_page"
+          )
+          .then(function (response) {
+            const responseQuery = {
+              transactionId: transactionCreate.id,
+              paymentMethods: response.body,
+            };
+            res.status(200).json(responseQuery);
+          })
+          .catch((error) => {
+            return res.status(500).json({ Error: "Internal errror" });
+          });
+      })
+      .catch((error) => {
+        return res.status(500).json({ Error: "Internal error" });
+      });
   }
 }

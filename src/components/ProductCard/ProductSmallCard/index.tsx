@@ -1,6 +1,8 @@
 import Image from "next/image";
+import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
+import ButtonSkew from "../../ButtonSkew";
 import {
   Container,
   ImageBlock,
@@ -16,6 +18,25 @@ interface Props {
 
 const ProductSmallCard = ({ product }: Props) => {
   const { currency } = useCurrency();
+  const { cartItem, addToCart } = useCart();
+
+  const handleAddToCart = (product: IProduct) => {
+    const productExist = cartItem.find((item) => item.id === product.id);
+
+    if (productExist) {
+      const newCart = [...cartItem];
+
+      const cart = newCart.map((item) =>
+        item.id === product.id
+          ? { ...productExist, qty: productExist.qty + 1 }
+          : item
+      );
+
+      addToCart(cart);
+    } else {
+      addToCart([...cartItem, { ...product, qty: 1 }]);
+    }
+  };
 
   return (
     <Container>
@@ -28,6 +49,8 @@ const ProductSmallCard = ({ product }: Props) => {
         alt={product.name}
       />
 
+      {product.on_sale && <ButtonSkew text="Promotion!" />}
+
       <Name>{product.name}</Name>
       <PriceBlock>
         <span>
@@ -35,7 +58,9 @@ const ProductSmallCard = ({ product }: Props) => {
         </span>
       </PriceBlock>
       <Stock>stock{product.stock_quantity}</Stock>
-      <ButtonAddToCart>Ajouter au panier</ButtonAddToCart>
+      <ButtonAddToCart onClick={() => handleAddToCart(product)}>
+        Ajouter au panier
+      </ButtonAddToCart>
     </Container>
   );
 };

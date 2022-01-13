@@ -43,6 +43,9 @@ export default async function handlerValidate(
         let pageUrl: string = response.body;
 
         return res.status(200).json(pageUrl);
+      })
+      .catch((error) => {
+        return res.status(500).json({ Error: "Internal error" });
       });
   }
 }

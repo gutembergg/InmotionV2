@@ -248,8 +248,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const productsUpSellResult = getProductsUpSells(
     productsByDefault,
     mobilityProducts,
-    wc_subCategories[0].slug,
-    wc_subCategories[0].id
+    wc_subCategories[0].slug
   );
 
   return {

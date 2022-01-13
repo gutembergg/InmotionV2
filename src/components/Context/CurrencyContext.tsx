@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useCallback, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 interface ICurrencyContext {
   currency: string;
@@ -14,13 +20,25 @@ export const CurrencyContext = createContext<ICurrencyContext>(
 );
 
 const CurrencyProvider = ({ children }: Children) => {
-  const [data, setData] = useState<string>("CHF");
+  const [data, setData] = useState("");
 
-  const setCurrency = useCallback((currency: string) => {
-    setData(currency);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const clientCurrency = localStorage.getItem("inmotion:currency");
+      console.log("localStorage: ", clientCurrency);
+
+      if (clientCurrency) {
+        setData(clientCurrency);
+      }
+    }
   }, []);
 
-  //console.log("devise", data);
+  const setCurrency = useCallback((currency: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("inmotion:currency", currency);
+    }
+    setData(currency);
+  }, []);
 
   return (
     <CurrencyContext.Provider value={{ setCurrency, currency: data }}>
