@@ -26,9 +26,9 @@ const CurrencySelector = () => {
   };
 
   return (
-    <div>
+    <CurrencySelectorStyle>
       <div className="ImgBox">
-        <Image width={30} height={30} src={currencyIcon} alt="currency" />
+        <Image width={25} height={25} src={currencyIcon} alt="currency" />
       </div>
       <select
         onChange={(e) => handleChange(e.target.value)}
@@ -38,7 +38,7 @@ const CurrencySelector = () => {
         <option value="CHF">CHF</option>
         <option value="EUR">EUR</option>
       </select>
-    </div>
+    </CurrencySelectorStyle>
   );
 };
 export default CurrencySelector;
