@@ -1,6 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { equipementPaths } from "../../../../utils/equipementPaths";
+import HeaderSeo from "../../../../components/HeaderSeo";
+import Notiflix from "notiflix";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
 import {
   wc_getCategoriesBySlug,
@@ -26,7 +30,6 @@ import {
   ButtonSelect,
   PaginateBar,
 } from "../../../../styles/EquipmentsStyles";
-import HeaderSeo from "../../../../components/HeaderSeo";
 
 interface Props {
   productsByCategory: IProduct[];
@@ -40,6 +43,35 @@ export default function EquipementsSubCat({
   subCategories,
 }: Props) {
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+
+    if (router.isFallback) {
+      handleStart();
+    } else {
+      handleStop();
+    }
+
+    return () => {
+      handleStart();
+      handleStop();
+    };
+  }, [router]);
 
   const handleOpenSubCatMenu = () => {
     setOpenMenuCategories(!openMenuCategories);
@@ -137,26 +169,27 @@ EquipementsSubCat.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      { params: { slug: "vetements" }, locale: "en" },
-      { params: { slug: "vetements" }, locale: "fr" },
-      { params: { slug: "vetements" }, locale: "de" },
-      { params: { slug: "accessoires" }, locale: "en" },
-      { params: { slug: "accessoires" }, locale: "fr" },
-      { params: { slug: "accessoires" }, locale: "de" },
-      { params: { slug: "casques" }, locale: "en" },
-      { params: { slug: "casques" }, locale: "fr" },
-      { params: { slug: "casques" }, locale: "de" },
-      { params: { slug: "protections" }, locale: "en" },
-      { params: { slug: "protections" }, locale: "fr" },
-      { params: { slug: "protections" }, locale: "de" },
-    ],
+    paths: equipementPaths,
     fallback: "blocking",
   };
 };
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug = ctx.params?.slug;
   const lang = ctx.locale;
+
+  const currentyCategory = await wc_getCategoriesBySlug(
+    slug as string,
+    lang as string
+  );
+
+  if (!currentyCategory) {
+    return {
+      redirect: {
+        destination: "/inmotion-mobility",
+        permanent: false,
+      },
+    };
+  }
 
   const productsByCategory = await getProduitsByCategoriesSlug(
     slug as string,
@@ -174,11 +207,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const productsWithEuroDevise = await addEuroPriceInProducts(
     productsByCategory
-  );
-
-  const currentyCategory = await wc_getCategoriesBySlug(
-    slug as string,
-    lang as string
   );
 
   return {

@@ -18,11 +18,10 @@ interface IProps {
 }
 
 export default function Equipements({ subCategories, category }: IProps) {
-  console.log("category: ", category);
   return (
     <>
       <HeaderSeo
-        description={category.yoast_head_json.og_title}
+        description={"Equipements mobility"}
         title={category.yoast_head_json.og_title}
         canonical={category.yoast_head_json.canonical}
         og_locale={category.yoast_head_json.og_locale}

@@ -3,7 +3,7 @@ import { swicthCategoriesSlug } from "./swicthCategoriesSlug";
 
 export const getProductsUpSells = (
   productsList: IProduct[],
-  modelsList: IProduct[],
+  modelsList: Pick<IProduct, "name" | "slug" | "id" | "categories">[],
   categorySlug: string
 ) => {
   let upSell: number[] = [];

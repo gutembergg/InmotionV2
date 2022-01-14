@@ -2,6 +2,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
+import { paths as detachedPiecesPaths } from "../../../../utils/piecesDetacheesPaths";
+import HeaderSeo from "../../../../components/HeaderSeo";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
 import {
   wc_getCategoriesBySlug,
@@ -19,6 +21,7 @@ import ButtonSkew from "../../../../components/ButtonSkew";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { getProductsUpSells } from "../../../../utils/getProductsUpsells";
+import Notiflix from "notiflix";
 
 import {
   Container,
@@ -34,7 +37,6 @@ import {
   ModelList,
   PaginateBar,
 } from "../../../../styles/PieceDetacheeStyles";
-import HeaderSeo from "../../../../components/HeaderSeo";
 
 interface Props {
   productsByCategory: IProduct[];
@@ -60,9 +62,33 @@ export default function PiecesDetacheesSubCat({
     setProducts(productsByCategory);
   }, [router.query, productsByCategory]);
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+
+    if (router.isFallback) {
+      handleStart();
+    } else {
+      handleStop();
+    }
+
+    return () => {
+      handleStart();
+      handleStop();
+    };
+  }, [router]);
 
   const handleUpSellFilter = () => {
     setUpSellFilter(!upSellFilter);
@@ -85,6 +111,8 @@ export default function PiecesDetacheesSubCat({
   /*   console.log("products", products);*/
   /*   console.log("productsUpSells", productsUpSells);
    */
+
+  console.log("currentyCategory", currentyCategory);
 
   return (
     <>
@@ -197,39 +225,29 @@ PiecesDetacheesSubCat.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      { params: { slug: "pieces-velos" }, locale: "en" },
-      { params: { slug: "pieces-velos" }, locale: "fr" },
-      { params: { slug: "pieces-velos" }, locale: "de" },
-      { params: { slug: "pieces-trottinettes" }, locale: "en" },
-      { params: { slug: "pieces-trottinettes" }, locale: "fr" },
-      { params: { slug: "pieces-trottinettes" }, locale: "de" },
-      { params: { slug: "pieces-gyroroues" }, locale: "en" },
-      { params: { slug: "pieces-gyroroues" }, locale: "fr" },
-      { params: { slug: "pieces-gyroroues" }, locale: "de" },
-    ],
-    fallback: true,
+    paths: detachedPiecesPaths,
+    fallback: "blocking",
   };
 };
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug = ctx.params?.slug;
   const lang = ctx.locale;
 
-  const _productsByCategory = await getProduitsByCategoriesSlug(
+  const currentyCategory = await wc_getCategoriesBySlug(
     slug as string,
     lang as string
   );
 
-  if (!_productsByCategory) {
+  if (!currentyCategory) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/inmotion-mobility",
         permanent: false,
       },
     };
   }
 
-  const currentyCategory = await wc_getCategoriesBySlug(
+  const _productsByCategory = await getProduitsByCategoriesSlug(
     slug as string,
     lang as string
   );
@@ -238,12 +256,31 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     _productsByCategory
   );
 
-  const subCategories = await wc_getSub_categories(
+  const _subCategories = await wc_getSub_categories(
     lang as string,
     currentyCategory.parent
   );
 
-  const mobilityProducts = await getProductByCategory(80, lang as string);
+  const subCategories = _subCategories.map((category) => {
+    const name = category.name;
+    const slug = category.slug;
+
+    return { name, slug };
+  });
+
+  const _mobilityProducts = await getProductByCategory(80, lang as string);
+
+  const mobilityProducts: Pick<
+    IProduct,
+    "name" | "slug" | "id" | "categories"
+  >[] = _mobilityProducts.map((category) => {
+    const name = category.name;
+    const slug = category.slug;
+    const id = category.id;
+    const categories = category.categories;
+
+    return { name, slug, id, categories };
+  });
 
   const productsUpSells = getProductsUpSells(
     _productsByCategory,

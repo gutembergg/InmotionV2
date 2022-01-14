@@ -60,7 +60,6 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
   const [onSaleProduct, _setOnSaleproduct] =
     useState<IProduct[]>(onSaleProducts);
 
-
   useEffect(() => {
     _setfeaturedproducts(featuredProducts);
   }, [featuredProducts]);
