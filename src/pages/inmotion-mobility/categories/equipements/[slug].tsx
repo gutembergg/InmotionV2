@@ -1,14 +1,19 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
-import { wc_getSub_categories } from "../../../../services/woocommerceApi/Categories";
+import {
+  wc_getCategoriesBySlug,
+  wc_getSub_categories,
+} from "../../../../services/woocommerceApi/Categories";
 import { getProduitsByCategoriesSlug } from "../../../../services/woocommerceApi/Products";
 import conditionIcon from "../../../../../public/images/icons/conditionsgen.svg";
 import { IProduct } from "../../../../interfaces/IProducts";
 import { ICategories } from "../../../../interfaces/ICategories";
 import ButtonSkew from "../../../../components/ButtonSkew";
 import { IoIosArrowDown } from "react-icons/io";
+import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
+import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 
 import {
   Container,
@@ -16,68 +21,113 @@ import {
   FiltersBar,
   ProductsSection,
   Products,
+  MenuSubCategoriesMobilie,
   MenuSubCategories,
   ButtonSelect,
   PaginateBar,
 } from "../../../../styles/EquipmentsStyles";
-import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
-import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
+import HeaderSeo from "../../../../components/HeaderSeo";
 
 interface Props {
   productsByCategory: IProduct[];
-  slug: string;
+  currentyCategory: ICategories;
   subCategories: Partial<ICategories[]>;
 }
 
 export default function EquipementsSubCat({
   productsByCategory,
-  slug,
+  currentyCategory,
   subCategories,
 }: Props) {
-  return (
-    <Container>
-      <h1>{slug}</h1>
+  const [openMenuCategories, setOpenMenuCategories] = useState(false);
 
-      <Content>
-        <ProductsSection>
-          <FiltersBar>
-            <ButtonSelect>
-              <p> Trier par default</p> <IoIosArrowDown />
-            </ButtonSelect>
-            <PaginateBar>
-              <span>{productsByCategory.length} résultats</span>
-            </PaginateBar>
-          </FiltersBar>
-          <Products>
-            {productsByCategory.map((product) => {
-              return (
-                <div key={product.id}>
-                  <ProductSmallCard product={product} />
-                </div>
-              );
-            })}
-          </Products>
-        </ProductsSection>
-        <MenuSubCategories>
-          <ul>
-            <div className="skew_button">
-              <ButtonSkew text="Equipements" />
-            </div>
-            {subCategories.map((category) => {
-              return (
-                <li key={category?.slug} className="category_name">
-                  <Link
-                    href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
-                  >
-                    <a>{category?.name}</a>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </MenuSubCategories>
-      </Content>
-    </Container>
+  const handleOpenSubCatMenu = () => {
+    setOpenMenuCategories(!openMenuCategories);
+  };
+
+  console.log("currentyCategory: ", currentyCategory);
+  return (
+    <>
+      <HeaderSeo
+        description={currentyCategory.yoast_head_json.og_title}
+        title={currentyCategory.yoast_head_json.og_title}
+        canonical={currentyCategory.yoast_head_json.canonical}
+        og_locale={currentyCategory.yoast_head_json.og_locale}
+        og_title={currentyCategory.yoast_head_json.og_title}
+      />
+
+      <Container>
+        <h1>{currentyCategory.slug}</h1>
+        <Content>
+          <ProductsSection>
+            <FiltersBar>
+              <MenuSubCategoriesMobilie>
+                <ButtonSelect onClick={handleOpenSubCatMenu}>
+                  <p>Categories</p> <IoIosArrowDown />
+                </ButtonSelect>
+                {openMenuCategories && (
+                  <ul className="menu_subcategories">
+                    {subCategories.map((category) => {
+                      return (
+                        <li
+                          key={category?.slug}
+                          className="categoiry_item"
+                          onClick={handleOpenSubCatMenu}
+                        >
+                          <Link
+                            href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                          >
+                            <a>{category?.name}</a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </MenuSubCategoriesMobilie>
+              <PaginateBar>
+                <span>{productsByCategory.length} résultats</span>
+              </PaginateBar>
+            </FiltersBar>
+            <Products>
+              {productsByCategory.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <ProductSmallCard product={product} />
+                  </div>
+                );
+              })}
+            </Products>
+          </ProductsSection>
+          <MenuSubCategories>
+            <ul>
+              <div className="skew_button">
+                <ButtonSkew text="Equipements" />
+              </div>
+              {subCategories.map((category) => {
+                return (
+                  <li key={category?.slug} className="category_name">
+                    <Link
+                      href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                    >
+                      <a
+                        className={
+                          currentyCategory.slug === category?.slug
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        {category?.name}
+                      </a>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </MenuSubCategories>
+        </Content>
+      </Container>
+    </>
   );
 }
 
@@ -87,7 +137,20 @@ EquipementsSubCat.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [
+      { params: { slug: "vetements" }, locale: "en" },
+      { params: { slug: "vetements" }, locale: "fr" },
+      { params: { slug: "vetements" }, locale: "de" },
+      { params: { slug: "accessoires" }, locale: "en" },
+      { params: { slug: "accessoires" }, locale: "fr" },
+      { params: { slug: "accessoires" }, locale: "de" },
+      { params: { slug: "casques" }, locale: "en" },
+      { params: { slug: "casques" }, locale: "fr" },
+      { params: { slug: "casques" }, locale: "de" },
+      { params: { slug: "protections" }, locale: "en" },
+      { params: { slug: "protections" }, locale: "fr" },
+      { params: { slug: "protections" }, locale: "de" },
+    ],
     fallback: "blocking",
   };
 };
@@ -113,13 +176,16 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     productsByCategory
   );
 
-  console.log("productsWithEuroDevise: ", productsWithEuroDevise.length);
+  const currentyCategory = await wc_getCategoriesBySlug(
+    slug as string,
+    lang as string
+  );
 
   return {
     props: {
       productsByCategory: productsWithEuroDevise,
       subCategories,
-      slug: slug,
+      currentyCategory,
     },
     revalidate: 60 * 2,
   };

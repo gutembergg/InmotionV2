@@ -10,47 +10,60 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Container, MainContent } from "../../../../styles/Boutique";
+import HeaderSeo from "../../../../components/HeaderSeo";
+
 interface IProps {
   subCategories: ICategories[];
+  category: ICategories;
 }
 
-export default function Equipements({ subCategories }: IProps) {
-  // console.log(subCategories);
+export default function Equipements({ subCategories, category }: IProps) {
+  console.log("category: ", category);
   return (
-    <Container>
-      <h1>Découvrez nos équipements</h1>
-      <MainContent>
-        {subCategories.map((category) => {
-          return (
-            <div key={category.id} className="catItem">
-              <Link
-                href={`/inmotion-mobility/categories/equipements/${category.slug}`}
-              >
-                <a className="link">
-                  <div className="category_card">
-                    <div className="care_blue_hover"></div>
-                    {category.image?.src && (
-                      <div className="imgBox">
-                        <Image
-                          src={category.image?.src}
-                          alt={category.name}
-                          width={300}
-                          height={300}
-                          placeholder="blur"
-                          blurDataURL={category.image?.src}
-                        />
-                      </div>
-                    )}
+    <>
+      <HeaderSeo
+        description={category.yoast_head_json.og_title}
+        title={category.yoast_head_json.og_title}
+        canonical={category.yoast_head_json.canonical}
+        og_locale={category.yoast_head_json.og_locale}
+        og_title={category.yoast_head_json.og_title}
+      />
 
-                    <div className="category_name">{category.name}</div>
-                  </div>
-                </a>
-              </Link>
-            </div>
-          );
-        })}
-      </MainContent>
-    </Container>
+      <Container>
+        <h1>Découvrez nos équipements</h1>
+        <MainContent>
+          {subCategories.map((category) => {
+            return (
+              <div key={category.id} className="catItem">
+                <Link
+                  href={`/inmotion-mobility/categories/equipements/${category.slug}`}
+                >
+                  <a className="link">
+                    <div className="category_card">
+                      <div className="care_blue_hover"></div>
+                      {category.image?.src && (
+                        <div className="imgBox">
+                          <Image
+                            src={category.image?.src}
+                            alt={category.name}
+                            width={300}
+                            height={300}
+                            placeholder="blur"
+                            blurDataURL={category.image?.src}
+                          />
+                        </div>
+                      )}
+
+                      <div className="category_name">{category.name}</div>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            );
+          })}
+        </MainContent>
+      </Container>
+    </>
   );
 }
 
@@ -76,6 +89,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       subCategories: subCategories,
+      category,
     },
     revalidate: 60,
   };

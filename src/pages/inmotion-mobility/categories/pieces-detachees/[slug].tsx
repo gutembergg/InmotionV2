@@ -69,12 +69,9 @@ export default function PiecesDetacheesSubCat({
   };
 
   const selectModel = (model: IProduct) => {
-    console.log("Model: ", model);
     const productsBySelectedModel = productsByCategory.filter((product) =>
       product.upsell_ids.find((upSellId) => upSellId === model.id)
     );
-
-    console.log("productsBySelectedModel: ", productsBySelectedModel);
 
     setUpSellName(model.name);
     setProducts(productsBySelectedModel);
@@ -114,13 +111,13 @@ export default function PiecesDetacheesSubCat({
                     <ModelList>
                       {productsUpSells.map((model) => {
                         return (
-                          <div
+                          <li
                             key={model.id}
                             className="upsell_name"
                             onClick={() => selectModel(model)}
                           >
                             {model.name}
-                          </div>
+                          </li>
                         );
                       })}
                     </ModelList>
@@ -132,22 +129,19 @@ export default function PiecesDetacheesSubCat({
                   <p>Categories</p> <IoIosArrowDown />
                 </ButtonSelect>
                 {openMenuCategories && (
-                  <div className="menu_subcategories">
+                  <ul className="menu_subcategories">
                     {subCategories.map((category) => {
                       return (
-                        <div
-                          key={category?.slug}
-                          onClick={handleCategoriesMenu}
-                        >
+                        <li key={category?.slug} onClick={handleCategoriesMenu}>
                           <Link
                             href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
                           >
                             <a>{category?.name}</a>
                           </Link>
-                        </div>
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 )}
               </MenuSubCategoriesMobilie>
               <PaginateBar>

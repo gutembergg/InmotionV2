@@ -1010,7 +1010,8 @@ export default function CheckoutMobility() {
                             Frais de payment: (T.T.C)
                           </div>
                           <div>
-                            {_taxPaymentMethods} {CHFCurrency ? "CHF" : "EUR"}
+                            {!!_taxPaymentMethods ? _taxPaymentMethods : 0}{" "}
+                            {CHFCurrency ? "CHF" : "EUR"}
                           </div>
                         </div>
                         <div>

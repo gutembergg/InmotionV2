@@ -194,7 +194,7 @@ export const FormSection = styled.div`
   section.methods_payment {
     cursor: pointer;
     margin-top: 0.8rem;
-    margin-bottom: 2rem;
+    margin-bottom: 20rem;
 
     .ReactCollapse--collapse {
       transition: height 500ms;

@@ -3,7 +3,10 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
+  width: 85%;
+  max-width: 1600px;
+  margin: auto;
+  margin-top: 3rem;
 
   h1 {
     text-align: center;
@@ -18,11 +21,16 @@ export const Content = styled.div`
 export const FiltersBar = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   border-bottom: 1px solid;
 
   width: 90%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    justify-content: space-between;
+  }
 `;
 
 export const ButtonSelect = styled.button`
@@ -33,19 +41,20 @@ export const ButtonSelect = styled.button`
   background: var(--Blue);
   color: var(--White);
 
-  height: 35px;
+  height: 40px;
   width: 100%;
-  max-width: 200px;
+  max-width: 300px;
   border: none;
-
-  margin-bottom: 0.8rem;
 
   p {
     margin-right: 0.6rem;
   }
 `;
 
-export const PaginateBar = styled.div``;
+export const PaginateBar = styled.div`
+  width: 100%;
+  max-width: 100px;
+`;
 
 export const ProductsSection = styled.div`
   display: flex;
@@ -54,16 +63,59 @@ export const ProductsSection = styled.div`
 
   width: 100%;
   padding-top: 0.5rem;
+  margin-bottom: 1.6rem;
 `;
 
 export const Products = styled.div`
-  width: 100%;
+  width: 95%;
   margin-top: 2rem;
-  padding-right: 4rem;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 25px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+`;
+
+export const MenuSubCategoriesMobilie = styled.div`
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+    position: relative;
+    width: 100%;
+
+    .menu_subcategories {
+      position: absolute;
+      z-index: 9999;
+      top: 20;
+      left: 0;
+      width: 100%;
+      max-width: 300px;
+      background: var(--White);
+      padding: 0.5rem 0.7rem;
+      line-height: 200%;
+
+      border-top: none;
+      box-shadow: 0px 7px 8px 0px #2121211c;
+
+      list-style: none;
+
+      .categoiry_item {
+        padding-left: 0.4rem;
+        &:hover {
+          background: var(--LightGray);
+        }
+      }
+    }
+    a {
+      text-decoration: none;
+      color: var(--Blue);
+      font-weight: 600;
+    }
+  }
 `;
 
 export const MenuSubCategories = styled.div`
@@ -87,5 +139,13 @@ export const MenuSubCategories = styled.div`
       font-weight: 600;
       font-size: 1.2rem;
     }
+
+    a.active {
+      color: var(--Blue);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    display: none;
   }
 `;

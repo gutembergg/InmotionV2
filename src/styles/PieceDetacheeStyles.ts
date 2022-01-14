@@ -32,6 +32,10 @@ export const FiltersBar = styled.div`
   border-bottom: 1px solid;
 
   width: 90%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 export const ButtonFilterBlock = styled.div`
@@ -61,7 +65,7 @@ export const ModelListWrapper = styled.div`
   position: relative;
 `;
 
-export const ModelList = styled.div`
+export const ModelList = styled.ul`
   cursor: pointer;
   position: absolute;
   z-index: 9999;
@@ -77,11 +81,12 @@ export const ModelList = styled.div`
   border-top: none;
   box-shadow: 0px 7px 8px 0px #2121211c;
 
-  animation: ${upSellList} 1s forwards;
+  animation: ${upSellList} 0.5s forwards;
 
   .upsell_name {
     color: var(--Blue);
     font-weight: 600;
+    list-style: none;
   }
 `;
 
@@ -107,6 +112,10 @@ export const Products = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 25px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 export const MenuSubCategoriesMobilie = styled.div`
@@ -121,14 +130,17 @@ export const MenuSubCategoriesMobilie = styled.div`
       position: absolute;
       z-index: 9999;
       top: 20;
-      right: 0;
+      left: 0;
       width: 100%;
+      max-width: 300px;
       background: var(--White);
       padding: 0.5rem 0.7rem;
       line-height: 200%;
 
       border-top: none;
       box-shadow: 0px 7px 8px 0px #2121211c;
+
+      list-style: none;
     }
     a {
       text-decoration: none;
