@@ -1,9 +1,8 @@
 import { IProduct } from "../interfaces/IProducts";
-import { currencyRates } from "../services/currencyConvert/CurrencyRates";
+import { getRatesChange } from "../services/wordpressApi/ratesChange";
 
-const ratesCurrency = 1.043494;
 export const addEuroPriceInProducts = async (products: IProduct[]) => {
-  // const ratesCurrency = await currencyRates();
+  const currentyRate = await getRatesChange();
 
   const productsWithEuroDevise = products.reduce(
     (acc, product) => {
@@ -11,12 +10,11 @@ export const addEuroPriceInProducts = async (products: IProduct[]) => {
       const priceWithoutTVA = Number(product.price) / 1.077;
       const regularPriceWithoutTVA = Number(product.regular_price) / 1.077;
 
-      const euroPriceNotFormated = priceWithoutTVA / ratesCurrency;
+      const euroPriceNotFormated = priceWithoutTVA * currentyRate;
       const euroPriceString = euroPriceNotFormated.toFixed(2);
       const euroPrice = Number(euroPriceString);
 
-      const euroRegulerPriceNotFormated =
-        regularPriceWithoutTVA / ratesCurrency;
+      const euroRegulerPriceNotFormated = regularPriceWithoutTVA * currentyRate;
       const euroRegularPriceString = euroRegulerPriceNotFormated.toFixed(2);
       const euroRegularPrice = Number(euroRegularPriceString);
 
@@ -36,15 +34,16 @@ export const addEuroPriceInProducts = async (products: IProduct[]) => {
 };
 
 export const addEuroPriceInSingleProduct = async (product: IProduct) => {
-  //const ratesCurrency = await currencyRates();
+  const currentyRate = await getRatesChange();
 
-  const euroPriceNotFormated = Number(product.price) / ratesCurrency;
+  const priceWithoutTVA = Number(product.price) / 1.077;
+  const regularPriceWithoutTVA = Number(product.regular_price) / 1.077;
+
+  const euroPriceNotFormated = priceWithoutTVA * currentyRate;
   const euroPriceString = euroPriceNotFormated.toFixed(2);
   const euroPrice = Number(euroPriceString);
 
-  const priceWithoutTVA = Number(product.price) / 1.077;
-
-  const euroRegulerPriceNotFormated = priceWithoutTVA / ratesCurrency;
+  const euroRegulerPriceNotFormated = regularPriceWithoutTVA * currentyRate;
   const euroRegularPriceString = euroRegulerPriceNotFormated.toFixed(2);
   const euroRegularPrice = Number(euroRegularPriceString);
 
@@ -54,9 +53,8 @@ export const addEuroPriceInSingleProduct = async (product: IProduct) => {
 };
 
 export const convertSingleNumber = async (valueCHF: number) => {
-  // const ratesCurrency = await currencyRates();
-
-  const valueEUR = valueCHF / ratesCurrency;
+  const currentyRate = await getRatesChange();
+  const valueEUR = valueCHF * currentyRate;
   const fixedValue = valueEUR.toFixed(2);
   const result = Number(fixedValue);
 

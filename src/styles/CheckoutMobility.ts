@@ -14,7 +14,9 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
+  width: 85%;
+  max-width: 1600px;
+  margin: auto;
 
   h1 {
     text-align: center;
@@ -35,6 +37,7 @@ export const Content = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 30px;
 
     width: 100%;
     margin-top: 2.5rem;
@@ -44,14 +47,14 @@ export const Content = styled.div`
       justify-content: center;
 
       width: 100%;
-      max-width: 650px;
+      max-width: 600px;
 
-      @media (max-width: 877px) {
+      @media (max-width: 950px) {
         margin: auto;
       }
     }
 
-    @media (max-width: 877px) {
+    @media (max-width: 950px) {
       flex-direction: column;
     }
   }
@@ -246,7 +249,7 @@ export const FormSection = styled.div`
       background-color: var(--DarkGray);
     }
 
-    @media (max-width: 877px) {
+    @media (max-width: 950px) {
       margin-bottom: 0;
     }
   }
@@ -278,7 +281,7 @@ export const OrderSession = styled.div<Props>`
         position: fixed;
         top: 80px;
         width: 40vw;
-        max-width: 650px;
+        max-width: 600px;
         // width: calc(100% - 17px);
       `}
   }
@@ -287,14 +290,7 @@ export const OrderSession = styled.div<Props>`
   flex-direction: column;
 
   width: 40vw;
-  max-width: 650px;
-
-  /*   ${(props) =>
-    props.positionOrderSection &&
-    css`
-      width: 100%;
-      max-width: 650px;
-    `} */
+  max-width: 600px;
 
   .products_list {
     list-style-type: none;
@@ -430,9 +426,10 @@ export const OrderSession = styled.div<Props>`
     width: 100%;
   }
 
-  @media (max-width: 877px) {
+  @media (max-width: 950px) {
     width: 100%;
     max-width: 600px;
+    margin-top: 2.4rem;
 
     div.order_section_block {
       position: static;

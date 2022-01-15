@@ -1,10 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
-import { ReactElement, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { ReactElement, useState } from "react";
 import { equipementPaths } from "../../../../utils/equipementPaths";
 import HeaderSeo from "../../../../components/HeaderSeo";
-import Notiflix from "notiflix";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
 import {
   wc_getCategoriesBySlug,
@@ -43,35 +41,6 @@ export default function EquipementsSubCat({
   subCategories,
 }: Props) {
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    Notiflix.Loading.init({
-      svgColor: "var(--Blue)",
-      svgSize: "100px",
-      messageColor: "var(--Red)",
-      messageFontSize: "17px",
-      backgroundColor: "rgba(234, 234, 234, 0.856)",
-    });
-
-    const handleStart = () => {
-      Notiflix.Loading.standard("Loading...");
-    };
-    const handleStop = () => {
-      Notiflix.Loading.remove();
-    };
-
-    if (router.isFallback) {
-      handleStart();
-    } else {
-      handleStop();
-    }
-
-    return () => {
-      handleStart();
-      handleStop();
-    };
-  }, [router]);
 
   const handleOpenSubCatMenu = () => {
     setOpenMenuCategories(!openMenuCategories);

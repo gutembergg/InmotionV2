@@ -296,6 +296,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
+  console.log("product::::", product);
+
   const productWithEuro = await addEuroPriceInSingleProduct(product);
 
   return {

@@ -180,7 +180,7 @@ export default function CheckoutMobility() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const getScrollY = () => {
-        const scrollValue = 250;
+        const scrollValue = 185;
 
         const viewWidth = window.innerWidth;
 
@@ -192,7 +192,7 @@ export default function CheckoutMobility() {
           }
         }
         if (viewWidth < 1024) {
-          if (window.scrollY > 40) {
+          if (window.scrollY > 220) {
             setPositionOrderSection(true);
           } else {
             setPositionOrderSection(false);
@@ -991,7 +991,7 @@ export default function CheckoutMobility() {
                                     _billingShippingData.billing?.country ===
                                       "CH")
                                 ? tvaResult.toFixed(2)
-                                : "0.00"}{" "}
+                                : "0"}{" "}
                             </span>
                             <span> {CHFCurrency ? "CHF" : "EUR"}</span>
                           </div>

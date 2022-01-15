@@ -135,7 +135,7 @@ export const MenuSubCategories = styled.div`
 
     a {
       text-decoration: none;
-      color: var(--Black);
+      color: var(--DarkGray);
       font-weight: 600;
       font-size: 1.2rem;
     }

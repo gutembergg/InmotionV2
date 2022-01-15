@@ -1,7 +1,6 @@
 import axios from "axios";
 import { IFormValues } from "../../components/BillingShippingForm";
 import { AuthUser } from "../../interfaces/AuthUser";
-import { UserBillingShipping } from "../../interfaces/UserBillingShipping";
 import { UserDto } from "../../interfaces/UserDTO";
 import api from "../axiosApi";
 

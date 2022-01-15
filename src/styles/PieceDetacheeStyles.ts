@@ -66,7 +66,6 @@ export const ModelListWrapper = styled.div`
 `;
 
 export const ModelList = styled.ul`
-  cursor: pointer;
   position: absolute;
   z-index: 9999;
   top: 20;
@@ -84,6 +83,7 @@ export const ModelList = styled.ul`
   animation: ${upSellList} 0.5s forwards;
 
   .upsell_name {
+    cursor: pointer;
     color: var(--Blue);
     font-weight: 600;
     list-style: none;
@@ -152,7 +152,6 @@ export const MenuSubCategoriesMobilie = styled.div`
 
 export const MenuSubCategories = styled.div`
   cursor: pointer;
-
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -173,7 +172,7 @@ export const MenuSubCategories = styled.div`
 
     a {
       text-decoration: none;
-      color: var(--Black);
+      color: var(--DarkGray);
       font-weight: 600;
       font-size: 1.2rem;
 

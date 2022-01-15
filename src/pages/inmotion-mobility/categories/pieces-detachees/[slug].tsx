@@ -21,7 +21,6 @@ import ButtonSkew from "../../../../components/ButtonSkew";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { getProductsUpSells } from "../../../../utils/getProductsUpsells";
-import Notiflix from "notiflix";
 
 import {
   Container,
@@ -62,39 +61,15 @@ export default function PiecesDetacheesSubCat({
     setProducts(productsByCategory);
   }, [router.query, productsByCategory]);
 
-  useEffect(() => {
-    Notiflix.Loading.init({
-      svgColor: "var(--Blue)",
-      svgSize: "100px",
-      messageColor: "var(--Red)",
-      messageFontSize: "17px",
-      backgroundColor: "rgba(234, 234, 234, 0.856)",
-    });
-
-    const handleStart = () => {
-      Notiflix.Loading.standard("Loading...");
-    };
-    const handleStop = () => {
-      Notiflix.Loading.remove();
-    };
-
-    if (router.isFallback) {
-      handleStart();
-    } else {
-      handleStop();
-    }
-
-    return () => {
-      handleStart();
-      handleStop();
-    };
-  }, [router]);
-
   const handleUpSellFilter = () => {
     setUpSellFilter(!upSellFilter);
   };
 
-  const selectModel = (model: IProduct) => {
+  const selectModel = (model: IProduct | { id: number; name: string }) => {
+    if (model.id === 999999999999) {
+      setProducts(productsByCategory);
+      return;
+    }
     const productsBySelectedModel = productsByCategory.filter((product) =>
       product.upsell_ids.find((upSellId) => upSellId === model.id)
     );
@@ -108,11 +83,10 @@ export default function PiecesDetacheesSubCat({
     setOpenMenuCategories(!openMenuCategories);
   };
 
-  /*   console.log("products", products);*/
-  /*   console.log("productsUpSells", productsUpSells);
-   */
-
-  console.log("currentyCategory", currentyCategory);
+  const _productsUpSells = [
+    ...productsUpSells,
+    { id: 999999999999, name: "All Products" },
+  ];
 
   return (
     <>
@@ -137,7 +111,7 @@ export default function PiecesDetacheesSubCat({
                 <ModelListWrapper>
                   {upSellFilter && (
                     <ModelList>
-                      {productsUpSells.map((model) => {
+                      {_productsUpSells.map((model) => {
                         return (
                           <li
                             key={model.id}

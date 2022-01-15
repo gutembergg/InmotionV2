@@ -14,8 +14,8 @@ import useUser from "../../hooks/useUser";
 import { AuthUser } from "../../interfaces/AuthUser";
 import RegisterForm from "../Register";
 import useTranslation from "next-translate/useTranslation";
-import {RiLoginBoxLine} from 'react-icons/ri';
-import {RiAccountCircleFill} from 'react-icons/ri';
+import { RiLoginBoxLine } from "react-icons/ri";
+import { RiAccountCircleFill } from "react-icons/ri";
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -100,12 +100,10 @@ const LoginForm = () => {
         </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
-         <RiLoginBoxLine size={24} />
+          <RiLoginBoxLine size={24} color="#0570A6" />
           {/*   <span>{menuLogin} /</span>
           <span>{menuRegister}</span> */}
-          <span>
-            {menuLogin}
-          </span>
+          <span>{menuLogin}</span>
         </LoginLink>
       )}
     </>
