@@ -53,7 +53,7 @@ export default function CompletedOrder() {
         setOrder(order);
       }
     });
-  }, [router,orderID]);
+  }, [router, orderID]);
 
   if (order) {
     const orderDate = new Date(order.date_created).toLocaleString("fr-CH");
@@ -101,24 +101,26 @@ export default function CompletedOrder() {
             {Number(order.total) - Number(order.shipping_total)}
           </p>
           <h4>{CompletedOrderShipping}</h4>
-          <p>{order.currency} {order.shipping_total} {order.shipping_lines[0].method_title}</p>
+          <p>
+            {order.currency} {order.shipping_total}{" "}
+            {order.shipping_lines[0].method_title}
+          </p>
           <h4>{CompletedOrderTotal}</h4>
           <p>
             {order.currency} {order.total}
             {order.tax_lines.length !== 0 ? (
               <span>
-              ({IncludeTxt} {order.currency} {order.tax_lines[0].tax_total}{" "}
-              {CompletedOrderTVA} ({order.tax_lines[0].rate_percent}%)
-            </span>
-            ):(
+                ({IncludeTxt} {order.currency} {order.tax_lines[0].tax_total}{" "}
+                {CompletedOrderTVA} ({order.tax_lines[0].rate_percent}%)
+              </span>
+            ) : (
               <>
-              <br />
-              <span>
-              ({TVATxt} {order.currency} 0.- , {TvaWarningTxt})
-            </span>
+                <br />
+                <span>
+                  ({TVATxt} {order.currency} 0.- , {TvaWarningTxt})
+                </span>
               </>
             )}
-            
           </p>
         </div>
         <div className="shippingBillingInfo">

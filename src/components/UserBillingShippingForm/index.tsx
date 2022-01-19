@@ -49,9 +49,6 @@ interface Props {
   handleBillingShippingData: (values: FormValues) => void;
 }
 
-interface Errors {
-  test: string;
-}
 const UserBillingShippingForm = ({ handleBillingShippingData }: Props) => {
   const { user } = useUser();
   const [loged, setloged] = useState(false);

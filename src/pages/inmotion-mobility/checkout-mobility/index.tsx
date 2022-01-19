@@ -36,7 +36,11 @@ import useCurrency from "../../../hooks/useCurrency";
 import { ICoupons } from "../../../interfaces/ICoupons";
 import { CouponLines, Order } from "../../../interfaces/Order";
 import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
-import { ShippingMethods } from "../../../interfaces/ShippingMethods";
+import {
+  MethodsSettingsRules,
+  MethodsSettingsRulesValues,
+  ShippingMethods,
+} from "../../../interfaces/ShippingMethods";
 import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 import { Collapse } from "react-collapse";
 import { Report } from "notiflix";
@@ -58,6 +62,7 @@ import {
   ShipItem,
   CouponsList,
   AddressView,
+  PaymentBankTransfert,
 } from "../../../styles/CheckoutMobility";
 
 interface ILineItems {
@@ -220,8 +225,9 @@ export default function CheckoutMobility() {
       if (method.method_id === "local_pickup") {
         setTotalCartPriceConverted(cart.totalProductsPrice);
       }
+
       method.settings.method_rules?.value.map((rule) => {
-        const result: any = rule.conditions.filter(async (condition) => {
+        rule.conditions.filter(async (condition) => {
           if (
             productsWeight?.weight >= condition.min &&
             productsWeight?.weight <= condition.max
@@ -247,7 +253,7 @@ export default function CheckoutMobility() {
             setTotalCartPriceConverted(totalPriceFormated);
 
             setShippingMethod(method);
-            console.log("OK livraison", method);
+            console.log("OK livraison", rule);
             setNoAllowShipping(false);
 
             return rule;
@@ -255,7 +261,8 @@ export default function CheckoutMobility() {
             setNoAllowShipping(true);
           }
         });
-        return result;
+
+        return;
       });
     },
     [cart.products, CHFCurrency, cart.totalProductsPrice]
@@ -304,8 +311,18 @@ export default function CheckoutMobility() {
     };
 
     if (
-      (!CHFCurrency && billing.country === "CH" && shipping.country === "CH") ||
-      (CHFCurrency && billing.country !== "CH" && shipping.country !== "CH")
+      (currentyCurrency === "EUR" && shipping.country === "CH") ||
+      (currentyCurrency === "CHF" && shipping.country !== "CH")
+    ) {
+      Report.failure(
+        "Erreur adresse invalide",
+        "<p>Pour livrer le produit en Suisse vous devez avoir la devise en CHF:</p><br /><br />",
+        "Okay"
+      );
+      return;
+    } else if (
+      (currentyCurrency === "EUR" && billing.country === "CH") ||
+      (currentyCurrency === "CHF" && billing.country !== "CH")
     ) {
       Report.failure(
         "Erreur adresse invalide",
@@ -314,6 +331,39 @@ export default function CheckoutMobility() {
       );
       return;
     }
+
+    const newData = {
+      ...user,
+      billing_info: {
+        billing_address_1: values.billing_address_1,
+        billing_address_2: values.billing_address_2,
+        billing_city: values.billing_city,
+        billing_country: values.billing_country,
+        billing_email: values.billing_email,
+        billing_first_name: values.billing_first_name,
+        billing_last_name: values.billing_last_name,
+        billing_phone: values.billing_phone,
+        billing_postcode: values.billing_postcode,
+        billing_state: values.billing_state,
+      },
+      shipping_info: {
+        shipping_address_1: values.shipping_address_1,
+        shipping_address_2: values.shipping_address_2,
+        shipping_city: values.shipping_city,
+        shipping_company: "",
+        shipping_country: values.shipping_country,
+        shipping_first_name: values.shipping_first_name,
+        shipping_last_name: values.shipping_last_name,
+        shipping_phone: values.shipping_phone,
+        shipping_postcode: values.shipping_postcode,
+        shipping_state: values.shipping_state,
+      },
+    };
+
+    if (typeof window !== "undefined" && Object.keys(user).length > 0) {
+      localStorage.setItem("inmotion:user", JSON.stringify(newData));
+    }
+
     _setBillingShippingData({
       billing,
       shipping,
@@ -461,7 +511,11 @@ export default function CheckoutMobility() {
           shippingTaxe: shippingPrice,
         });
 
-        const methodsPaymentObject = data.paymentMethods.reduce(
+        const _paymentMethodes = data.paymentMethods.filter(
+          (method: any) => method.name !== "Facture"
+        );
+
+        const methodsPaymentObject = _paymentMethodes.reduce(
           (
             acc: PostFinancePaymentMethods[],
             item: PostFinancePaymentMethods
@@ -473,9 +527,6 @@ export default function CheckoutMobility() {
                 break;
               case "Carte PostFinance":
                 taxState = { ...item, taxMethodsPayments: 1.3 };
-                break;
-              case "Facture":
-                taxState = { ...item, taxMethodsPayments: 0 };
                 break;
               case "PayPal":
                 taxState = { ...item, taxMethodsPayments: 2 };
@@ -503,6 +554,7 @@ export default function CheckoutMobility() {
         }
       }
     } catch (error) {
+      alert("Une erreur est survenue!");
       setErros("Une erreur est survenue!");
     }
   }, [
@@ -537,6 +589,7 @@ export default function CheckoutMobility() {
         window.location.href = data;
       }
     } catch (error) {
+      alert("Une erruer est survenue");
       setErros("Une erruer est survenue");
     }
   }, [transactionId, orderId, _methodPayment.name, _taxPaymentMethods]);
@@ -594,6 +647,7 @@ export default function CheckoutMobility() {
           setPaymentValidate(false);
         }
       } catch (error) {
+        alert("Une erruer est survenue");
         setErros("Une erruer est survenue");
       }
     },
@@ -656,11 +710,9 @@ export default function CheckoutMobility() {
 
       const response = await getShippingZoneMethods(selectedCountry);
 
-      getShippingPrice(response[0]);
-
-      setMethodsShippingList(response);
-
       if (response) {
+        getShippingPrice(response[0]);
+        setMethodsShippingList(response);
         setIsSelectedShipping(false);
         setOpenDeliveryWays(true);
       }
@@ -746,12 +798,11 @@ export default function CheckoutMobility() {
                   </div>
                 </div>
 
-                {/*   {openDeliveryWays && ( */}
                 <Collapse isOpened={openDeliveryWays}>
                   <ShipMethods>
                     <div className="ship_methodsList">
                       {noAllowShipping ? (
-                        <h4>Shipping not allowed</h4>
+                        <h4 className="no_allowed_msg">No allowed shipping</h4>
                       ) : (
                         methodsShippingList.map((method, index) => {
                           return (
@@ -836,6 +887,9 @@ export default function CheckoutMobility() {
                 </Collapse>
               </section>
               <section className="methods_payment">
+                <PaymentBankTransfert>
+                  <h2>Bank Transfert</h2>
+                </PaymentBankTransfert>
                 <button
                   onClick={checkout}
                   className={

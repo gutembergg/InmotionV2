@@ -3,17 +3,17 @@ interface MethodsSettingsRulesValuesConditions {
   min: number;
 }
 
-interface MethodsSettingsRulesValues {
+export interface MethodsSettingsRulesValues {
   conditions: MethodsSettingsRulesValuesConditions[];
   cost_per_order: string;
 }
 
-interface MethodsSettingsRules {
+export interface MethodsSettingsRules {
   id: string;
   value: MethodsSettingsRulesValues[];
 }
 
-interface MethodSettings {
+export interface MethodSettings {
   method_rules: MethodsSettingsRules;
   title: string;
   method_title: {

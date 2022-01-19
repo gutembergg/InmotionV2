@@ -116,7 +116,6 @@ export const FormSection = styled.div`
   section.shipping {
     position: relative;
     margin-top: 3rem;
-    margin-bottom: 2rem;
 
     .ship_title {
       display: flex;
@@ -159,8 +158,7 @@ export const FormSection = styled.div`
 
   section.code_promo {
     cursor: pointer;
-    margin-top: 0.8rem;
-    margin-bottom: 1rem;
+    margin-top: 1.4rem;
 
     h2.active3 {
       background-color: var(--Blue);
@@ -177,7 +175,6 @@ export const FormSection = styled.div`
       font-weight: 600;
       font-size: 1.7rem;
       padding: 0.7rem;
-      margin-bottom: 1.2rem;
     }
 
     .coupon_code_block {
@@ -197,7 +194,7 @@ export const FormSection = styled.div`
   section.methods_payment {
     cursor: pointer;
     margin-top: 0.8rem;
-    margin-bottom: 20rem;
+    margin-bottom: 2rem;
 
     .ReactCollapse--collapse {
       transition: height 500ms;
@@ -273,6 +270,19 @@ export const FormSection = styled.div`
   }
 `;
 
+export const PaymentBankTransfert = styled.button`
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--Blue);
+    color: var(--White);
+    font-weight: 600;
+    font-size: 1.7rem;
+    padding: 0.7rem;
+  }
+`;
+
 export const OrderSession = styled.div<Props>`
   .order_section_block {
     ${(props) =>
@@ -282,6 +292,7 @@ export const OrderSession = styled.div<Props>`
         top: 80px;
         width: 40vw;
         max-width: 600px;
+        z-index: 5;
         // width: calc(100% - 17px);
       `}
   }
@@ -654,6 +665,11 @@ export const ShipMethods = styled.div`
   width: 100%;
   padding-top: 1.4rem;
   padding-left: 0.6rem;
+
+  .no_allowed_msg {
+    opacity: 0;
+    animation: ${paymentMethodsAnimation} 3s linear 2s forwards;
+  }
 `;
 
 export const ShipItem = styled.div`

@@ -1,8 +1,10 @@
 import axios from "axios";
 import { IFormValues } from "../../components/BillingShippingForm";
 import { AuthUser } from "../../interfaces/AuthUser";
+import { User } from "../../interfaces/User";
 import { UserDto } from "../../interfaces/UserDTO";
 import api from "../axiosApi";
+import { wooCommerce } from "../woocommerceApi/woocommerceConfig";
 
 export const createInmotionUsers = async (user: UserDto) => {
   try {
@@ -43,4 +45,10 @@ export const updateUsers = async (
   } catch (error) {
     console.log("Error: ", error);
   }
+};
+
+export const getUserById = async (id: number): Promise<User> => {
+  const { data } = await wooCommerce.get(`customers/${id}`);
+
+  return data;
 };

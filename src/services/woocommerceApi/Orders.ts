@@ -66,11 +66,13 @@ export const deleteOrder = async (id: number) => {
   }
 };
 
-export const getOrder = async (id: number) => {
-  try {
-    const { data } = await wooCommerce.get(`orders/${id}`);
-    return data;
-  } catch (error) {
-    console.log("Error", error);
-  }
+export const getOrder = async (id: number): Promise<Order> => {
+  const { data } = await wooCommerce.get(`orders/${id}`);
+  return data;
+};
+
+export const getOrdersByUserId = async (id: number) => {
+  const { data } = await wcApi.get(`orders?customer=${id}`);
+
+  return data;
 };

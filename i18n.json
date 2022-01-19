@@ -35,6 +35,12 @@
       "checkout-mobility",
       "forms"
     ],
-    "/inmotion-mobility/completed-order": ["headerMobility", "completed-order"]
+    "/inmotion-mobility/completed-order": ["headerMobility", "completed-order"],
+    "/inmotion-mobility/utilisateurs": ["headerMobility", "forms"],
+    "/inmotion-mobility/utilisateurs/commandes/[orderId]": [
+      "headerMobility",
+      "forms",
+      "completed-order"
+    ]
   }
 }
