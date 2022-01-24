@@ -4,12 +4,13 @@ import Image from "next/image";
 import deflag from "../../../public/images/icons/deflag.svg";
 import frflag from "../../../public/images/icons/frflag.svg";
 import enflag from "../../../public/images/icons/enflag.svg";
-import { MouseEvent, MouseEventHandler, useState } from "react";
+import { MouseEvent, MouseEventHandler, useEffect, useRef, useState } from "react";
 
 const LanguageSelector = () => {
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const [openObject, setopenObject] = useState(false);
+  const objectModalRef = useRef<HTMLDivElement>(null);
 
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log("value", e.currentTarget.id);
@@ -21,7 +22,7 @@ const LanguageSelector = () => {
     console.log(event);
     setopenObject(!openObject);
   };
-
+  
   return (
     <StyledLangSelector2>
       <div className="langSelector">

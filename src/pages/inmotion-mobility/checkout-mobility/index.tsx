@@ -1110,7 +1110,7 @@ export default function CheckoutMobility() {
 }
 
 CheckoutMobility.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

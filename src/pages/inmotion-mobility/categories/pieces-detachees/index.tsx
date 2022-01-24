@@ -96,5 +96,5 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 };
 
 PiecesDetachees.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={confidentialiteIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

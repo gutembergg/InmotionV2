@@ -61,6 +61,20 @@ const SearchBar = () => {
     router.replace(`http://localhost:3000/inmotion-mobility/produit/${slug}`);
   };
 
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (searchValue) {
+        setSearchValue(undefined);
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [searchValue]);
+
   return (
     <Container>
       <MenuSearchBar>

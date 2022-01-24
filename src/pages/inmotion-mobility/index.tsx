@@ -145,7 +145,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {

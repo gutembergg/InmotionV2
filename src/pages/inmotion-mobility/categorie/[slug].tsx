@@ -195,7 +195,7 @@ export default function AccessoryPage({
 }
 
 AccessoryPage.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

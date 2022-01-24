@@ -133,5 +133,5 @@ export default function Panier() {
 }
 
 Panier.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

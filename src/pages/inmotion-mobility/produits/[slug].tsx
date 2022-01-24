@@ -54,7 +54,7 @@ export default function Occasions({ products, category }: Props) {
 }
 
 Occasions.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={HouseIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

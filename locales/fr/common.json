@@ -10,5 +10,8 @@
   "horaireSamedi": "samedi: 12:00–16:00",
   "horaireDimanche": "dimanche: Fermé",
   "shopAddressTxt": "Adresse Magasin",
-  "legalMentionsTxt": "Mention légale"
+  "legalMentionsTxt": "Mention légale",
+  "previousPageLink": "Précédent",
+  "CurrencyBlocked": "Vous avez déjà selectionner des articles dans le panier, retirez-les si vous soouhaiter changer de devises"
+
 }

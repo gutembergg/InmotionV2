@@ -259,7 +259,7 @@ export default function Category({ category, productsByCategory }: Props) {
 }
 
 Category.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={HomeIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

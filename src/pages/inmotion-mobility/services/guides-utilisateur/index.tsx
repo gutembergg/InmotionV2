@@ -17,5 +17,5 @@ export default function GuidesUtilisateur() {
 }
 
 GuidesUtilisateur.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={confidentialiteIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

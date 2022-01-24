@@ -38,6 +38,7 @@ import {
 } from "../../../styles/ProductDetail";
 import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
 import useCurrency from "../../../hooks/useCurrency";
+import PreviousPageLink from "../../../components/PreviousPageLink";
 
 interface Props {
   product: IProduct;
@@ -130,6 +131,7 @@ export default function ProductDetail({ product, variations }: Props) {
       <Container>
         <Main>
           <CardWrapper>
+            <PreviousPageLink />
             <ProductCard>
               <Card>
                 <h2 className="first_title">
@@ -268,7 +270,7 @@ export default function ProductDetail({ product, variations }: Props) {
 }
 
 ProductDetail.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={HouseIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
