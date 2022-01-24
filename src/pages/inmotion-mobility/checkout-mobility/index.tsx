@@ -146,6 +146,7 @@ export default function CheckoutMobility() {
   const [totalOrder, setTotalOrder] = useState(0);
   const [positionOrderSection, setPositionOrderSection] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
+  const [qtyCartProducts, setQtyCartProducts] = useState(false);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
@@ -169,6 +170,7 @@ export default function CheckoutMobility() {
 
       setLineItems(_lineItems);
       setTotalCartPriceConverted(cart.totalProductsPrice);
+      setQtyCartProducts(cart.totalProductsCount > 3 ? true : false);
     }
 
     // eslint-disable-next-line
@@ -894,8 +896,8 @@ export default function CheckoutMobility() {
                   onClick={checkout}
                   className={
                     isPayment && codePromoState === false
-                      ? "active btn_payment_method"
-                      : "disabled btn_payment_method"
+                      ? "active btn_payment_method btn_main"
+                      : "disabled btn_payment_method btn_main"
                   }
                   disabled={codePromoState || checkoutClicked}
                 >
@@ -985,7 +987,10 @@ export default function CheckoutMobility() {
               </section>
             </FormSection>
             <div className="order_section">
-              <OrderSession positionOrderSection={positionOrderSection}>
+              <OrderSession
+                positionOrderSection={positionOrderSection}
+                qtyCartProducts={qtyCartProducts}
+              >
                 <div className="order_section_block" ref={cartRef}>
                   <h2 id="title_order">Résumé de votre commande</h2>
                   <div className="cart_products">
@@ -1002,7 +1007,9 @@ export default function CheckoutMobility() {
                                   width={50}
                                 />
 
-                                <span>{product.name}</span>
+                                <span className="product_name_cart">
+                                  {product.name}
+                                </span>
                               </div>
                               <span className="product_price">
                                 {product.qty}x {CHFCurrency ? "CHF" : "EUR"}{" "}

@@ -4,6 +4,7 @@ import { shade } from "polished";
 
 interface Props {
   positionOrderSection: boolean;
+  qtyCartProducts: boolean;
 }
 
 const paymentMethodsAnimation = keyframes`
@@ -205,6 +206,10 @@ export const FormSection = styled.div`
       border: none;
     }
 
+    .btn_main {
+      margin-top: 0.8rem;
+    }
+
     .btn_payment_method {
       display: flex;
       flex-direction: row;
@@ -271,15 +276,22 @@ export const FormSection = styled.div`
 `;
 
 export const PaymentBankTransfert = styled.button`
+  background-color: var(--Blue);
+  padding: 0.7rem;
+
   h2 {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: var(--Blue);
     color: var(--White);
     font-weight: 600;
     font-size: 1.7rem;
-    padding: 0.7rem;
+    margin-bottom: 0px;
+  }
+
+  @media (max-width: 416px) {
+    h2 {
+      font-size: 1.2rem;
+    }
   }
 `;
 
@@ -294,6 +306,32 @@ export const OrderSession = styled.div<Props>`
         max-width: 600px;
         z-index: 5;
         // width: calc(100% - 17px);
+      `}
+
+    ${(props) =>
+      props.qtyCartProducts &&
+      css`
+        height: 600px;
+        overflow-y: scroll;
+        /* width */
+        ::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
       `}
   }
 
@@ -590,6 +628,16 @@ export const ProductCart = styled.div`
       margin-left: 1rem;
       font-size: 1.3rem;
       font-weight: 600;
+    }
+  }
+
+  @media (max-width: 416px) {
+    span {
+      font-size: 0.9rem;
+    }
+
+    span.product_name_cart {
+      font-size: 0.8rem;
     }
   }
 
