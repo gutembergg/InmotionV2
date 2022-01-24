@@ -10,6 +10,8 @@
   "horaireSamedi": "Saturday : 12:00–16:00",
   "horaireDimanche": "Sunday : Closed",
   "shopAddressTxt": "Shop location",
-  "legalMentionsTxt": "Legal mention"
-  
+  "legalMentionsTxt": "Legal mention",
+  "previousPageLink": "Back",
+  "CurrencyBlocked": "You have already selected Product in Cart, remove them if you want change the currency"
+
 }

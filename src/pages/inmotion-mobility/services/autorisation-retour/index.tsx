@@ -44,5 +44,5 @@ export default function AutorisationRetour() {
 }
 
 AutorisationRetour.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={confidentialiteIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

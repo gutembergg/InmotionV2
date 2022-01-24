@@ -66,7 +66,7 @@ export default function MobiliteEletrique({ subCategories }: IProps) {
 }
 
 MobiliteEletrique.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={conditionIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

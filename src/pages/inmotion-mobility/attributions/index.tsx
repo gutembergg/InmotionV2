@@ -15,5 +15,5 @@ export default function Attributions() {
 }
 
 Attributions.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={thankIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

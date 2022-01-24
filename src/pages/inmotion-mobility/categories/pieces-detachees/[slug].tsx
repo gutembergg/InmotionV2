@@ -194,7 +194,7 @@ export default function PiecesDetacheesSubCat({
 }
 
 PiecesDetacheesSubCat.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={conditionIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

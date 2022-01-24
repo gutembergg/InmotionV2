@@ -35,7 +35,7 @@ export const LoginLink = styled.div`
   margin-right: 10px;
 
   span {
-    color: var(--Blue);
+    color: var(--White);
   }
 
   @media (max-width: 1024px) {

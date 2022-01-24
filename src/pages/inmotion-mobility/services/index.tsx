@@ -85,5 +85,5 @@ export default function Services() {
 }
 
 Services.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={servicesIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

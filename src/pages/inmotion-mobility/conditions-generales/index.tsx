@@ -16,5 +16,5 @@ export default function ConditionsGenerales() {
 }
 
 ConditionsGenerales.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutMobility icon={conditionIcon}>{page}</LayoutMobility>;
+  return <LayoutMobility>{page}</LayoutMobility>;
 };

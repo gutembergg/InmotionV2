@@ -4,10 +4,8 @@ import logo from "../../../../public/images/logo-blue.png";
 import SearchBar from "../../SearchBar";
 import Cart from "../../Cart";
 import { StyledHeader } from "./styles";
-import FilAriane from "../../FilAriane/FilAriane";
 import LanguageSelector from "../../LanguageSelector";
 import MenuMainPrinter from "../../menus/MenuMainPrinter";
-import CurrentPageIcon from "../../CurrentPageIcon";
 import LoginForm from "../../Login";
 import Link from "next/link";
 import { LinkMobility } from "../HeaderAdmin/styles";
@@ -59,7 +57,6 @@ const HeaderPrinterV2 = ({ icon }: Props) => {
       </div>
       <div className="bottomBlock">
         <p>Votre spécialiste en impression 3D & Filaments</p>
-        <FilAriane />
         {/*  <CurrentPageIcon bgcolor="blue" icon={icon.icon} /> */}
       </div>
     </StyledHeader>

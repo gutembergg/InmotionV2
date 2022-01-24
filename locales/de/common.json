@@ -10,5 +10,7 @@
   "horaireSamedi": "Samstag: 12:00–16:00",
   "horaireDimanche": "Sonntag: Geschlossen",
   "shopAddressTxt": "Shop Adresse",
-  "legalMentionsTxt": "Rechtliche Erwähnung"
+  "legalMentionsTxt": "Rechtliche Erwähnung",
+  "previousPageLink": "Zürück",
+  "CurrencyBlocked": "Sie haben schon Produckt im warenKorb, sie konnen nicht wechseln"
 }
