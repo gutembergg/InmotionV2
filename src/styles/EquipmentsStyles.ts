@@ -31,6 +31,10 @@ export const FiltersBar = styled.div`
     width: 100%;
     justify-content: space-between;
   }
+
+  @media (max-width: 516px) {
+    border-bottom: none;
+  }
 `;
 
 export const ButtonSelect = styled.button`
@@ -46,6 +50,10 @@ export const ButtonSelect = styled.button`
   max-width: 300px;
   border: none;
 
+  &:hover {
+    background: var(--BlueHover);
+  }
+
   p {
     margin-right: 0.6rem;
   }
@@ -54,6 +62,10 @@ export const ButtonSelect = styled.button`
 export const PaginateBar = styled.div`
   width: 100%;
   max-width: 100px;
+
+  @media (max-width: 516px) {
+    display: none;
+  }
 `;
 
 export const ProductsSection = styled.div`
@@ -95,7 +107,7 @@ export const MenuSubCategoriesMobilie = styled.div`
       width: 100%;
       max-width: 300px;
       background: var(--White);
-      padding: 0.5rem 0.7rem;
+      //padding: 0.5rem 0.7rem;
       line-height: 200%;
 
       border-top: none;
@@ -105,8 +117,10 @@ export const MenuSubCategoriesMobilie = styled.div`
 
       .categoiry_item {
         padding-left: 0.4rem;
+        padding-top: 0.4rem;
         &:hover {
           background: var(--LightGray);
+          color: var(--White);
         }
       }
     }

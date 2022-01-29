@@ -63,6 +63,7 @@ export const Content = styled.div`
 
 export const FormSection = styled.div`
   width: 100%;
+  max-width: 800px;
   height: 100%;
 
   padding: 0.5rem 1rem;
@@ -168,6 +169,10 @@ export const FormSection = styled.div`
     h2.disabled3 {
       cursor: not-allowed;
       background-color: var(--DarkGray);
+    }
+
+    h2.completed {
+      background-color: var(--BlueSelected);
     }
 
     h2 {
@@ -276,16 +281,52 @@ export const FormSection = styled.div`
 `;
 
 export const PaymentBankTransfert = styled.button`
-  background-color: var(--Blue);
-  padding: 0.7rem;
+  div.way_payment_block {
+    background-color: var(--Blue);
+    padding: 0.7rem;
 
-  h2 {
-    display: flex;
-    align-items: center;
-    color: var(--White);
-    font-weight: 600;
-    font-size: 1.7rem;
-    margin-bottom: 0px;
+    h2 {
+      display: flex;
+      align-items: center;
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      margin-bottom: 0px;
+    }
+
+    @media (max-width: 416px) {
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  div.disable {
+    background-color: var(--DarkGray);
+    padding: 0.7rem;
+
+    h2 {
+      display: flex;
+      align-items: center;
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      margin-bottom: 0px;
+    }
+  }
+
+  div.completed {
+    background-color: var(--BlueSelected);
+    padding: 0.7rem;
+
+    h2 {
+      display: flex;
+      align-items: center;
+      color: var(--White);
+      font-weight: 600;
+      font-size: 1.7rem;
+      margin-bottom: 0px;
+    }
   }
 
   @media (max-width: 416px) {
@@ -295,13 +336,32 @@ export const PaymentBankTransfert = styled.button`
   }
 `;
 
+export const WayPaymentRadio = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  padding-top: 1.2rem;
+  padding-bottom: 0.7rem;
+
+  .way_payment_radio {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  span {
+    font-size: 1.2rem;
+  }
+`;
+
 export const OrderSession = styled.div<Props>`
   .order_section_block {
     ${(props) =>
       props.positionOrderSection &&
       css`
         position: fixed;
-        top: 80px;
+        top: 100px;
         width: 40vw;
         max-width: 600px;
         z-index: 5;
@@ -431,8 +491,11 @@ export const OrderSession = styled.div<Props>`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      div {
-        font-size: 0.8rem;
+
+      @media (max-width: 416px) {
+        div.coupon_text {
+          font-size: 0.8rem;
+        }
       }
     }
   }

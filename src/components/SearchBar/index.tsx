@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 const SearchBar = () => {
   const router = useRouter();
   const [mobileSearchStatus, setMobileSearchStatus] = useState(false);
-  //const [productsList, setProductsList] = useState<IProduct[]>([]);
+  const [productsList, setProductsList] = useState<IProduct[]>([]);
   const [searchValue, setSearchValue] = useState<IProduct[] | undefined>([]);
 
   const { t } = useTranslation();
@@ -27,18 +27,18 @@ const SearchBar = () => {
     setMobileSearchStatus(!mobileSearchStatus);
   };
 
-  const address = "http://localhost:3000/api/products-swr/search-products";
+  /*  const address = "http://localhost:3000/api/products-swr/search-products";
   const fetcher = async (url: string) =>
     await axios.get<IProduct[]>(url).then((res) => res.data);
-  const { data: productsList, error } = useSWR(address, fetcher);
+  const { data: productsList, error } = useSWR(address, fetcher); */
 
-  /*   useEffect(() => {
+  useEffect(() => {
     axios
       .get("http://localhost:3000/api/products-swr/search-products")
       .then((response) => {
         setProductsList(response.data);
       });
-  }, []); */
+  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchText = e.target.value;

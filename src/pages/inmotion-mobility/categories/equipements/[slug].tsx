@@ -9,7 +9,6 @@ import {
   wc_getSub_categories,
 } from "../../../../services/woocommerceApi/Categories";
 import { getProduitsByCategoriesSlug } from "../../../../services/woocommerceApi/Products";
-import conditionIcon from "../../../../../public/images/icons/conditionsgen.svg";
 import { IProduct } from "../../../../interfaces/IProducts";
 import { ICategories } from "../../../../interfaces/ICategories";
 import ButtonSkew from "../../../../components/ButtonSkew";
@@ -46,7 +45,6 @@ export default function EquipementsSubCat({
     setOpenMenuCategories(!openMenuCategories);
   };
 
-  console.log("currentyCategory: ", currentyCategory);
   return (
     <>
       <HeaderSeo

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { GetServerSideProps } from "next";
+import router from "next/router";
 import React, {
   ReactElement,
   useCallback,
@@ -12,7 +13,6 @@ import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
 import RegisterForm from "../../../components/Register";
 import useCart from "../../../hooks/useCart";
-import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import {
   LineItemsDTO,
   OrderValidation,
@@ -36,11 +36,7 @@ import useCurrency from "../../../hooks/useCurrency";
 import { ICoupons } from "../../../interfaces/ICoupons";
 import { CouponLines, Order } from "../../../interfaces/Order";
 import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
-import {
-  MethodsSettingsRules,
-  MethodsSettingsRulesValues,
-  ShippingMethods,
-} from "../../../interfaces/ShippingMethods";
+import { ShippingMethods } from "../../../interfaces/ShippingMethods";
 import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 import { Collapse } from "react-collapse";
 import { Report } from "notiflix";
@@ -63,6 +59,7 @@ import {
   CouponsList,
   AddressView,
   PaymentBankTransfert,
+  WayPaymentRadio,
 } from "../../../styles/CheckoutMobility";
 
 interface ILineItems {
@@ -147,6 +144,8 @@ export default function CheckoutMobility() {
   const [positionOrderSection, setPositionOrderSection] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
   const [qtyCartProducts, setQtyCartProducts] = useState(false);
+  const [wayOfPaymentSelected, setWayOfPaymentSelected] = useState(0);
+  const [openWasOfPayments, setOpenWayOfPayments] = useState(false);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
@@ -170,7 +169,7 @@ export default function CheckoutMobility() {
 
       setLineItems(_lineItems);
       setTotalCartPriceConverted(cart.totalProductsPrice);
-      setQtyCartProducts(cart.totalProductsCount > 3 ? true : false);
+      setQtyCartProducts(cart.products.length > 3 ? true : false);
     }
 
     // eslint-disable-next-line
@@ -187,7 +186,7 @@ export default function CheckoutMobility() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const getScrollY = () => {
-        const scrollValue = 185;
+        const scrollValue = 130;
 
         const viewWidth = window.innerWidth;
 
@@ -199,7 +198,7 @@ export default function CheckoutMobility() {
           }
         }
         if (viewWidth < 1024) {
-          if (window.scrollY > 220) {
+          if (window.scrollY > 150) {
             setPositionOrderSection(true);
           } else {
             setPositionOrderSection(false);
@@ -397,8 +396,8 @@ export default function CheckoutMobility() {
     }
 
     const order = {
-      payment_method: "Pedding",
-      payment_method_title: "Pedding",
+      payment_method: "Anticipe",
+      payment_method_title: "Anticipe",
       currency: currentyCurrency,
       billing: {
         first_name: _billingShippingData.billing?.first_name,
@@ -472,7 +471,27 @@ export default function CheckoutMobility() {
 
   const checkout = useCallback(async () => {
     try {
-      if (codePromoState === false && paymentSteps !== 3) {
+      if (codePromoState === false && paymentSteps !== 4) {
+        return;
+      }
+
+      if (wayOfPaymentSelected === 0) {
+        await _sendOrder();
+        console.log(" orderIdRef.current: ", orderIdRef.current);
+
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("inmotion:cart");
+        }
+
+        Report.success(
+          "Notiflix Success",
+          '"Vous serez dirigé vers la page de votre commande."',
+          "Okay"
+        );
+        router.push(
+          `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
+        );
+
         return;
       }
 
@@ -567,6 +586,7 @@ export default function CheckoutMobility() {
     codePromoState,
     paymentSteps,
     currentyCurrency,
+    wayOfPaymentSelected,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -661,6 +681,8 @@ export default function CheckoutMobility() {
     setPaymentSteps(3);
   };
 
+  console.log("cart:::", cart);
+
   const selectSHPmethod = useCallback(
     (method: ShippingMethods, index: number) => {
       if (Object.keys(_order).length > 0) {
@@ -738,6 +760,16 @@ export default function CheckoutMobility() {
     [usedCoupons]
   );
 
+  const handleWayOfPayment = (selectedWay: number) => {
+    console.log("isAntecipted: ", selectedWay);
+    setWayOfPaymentSelected(selectedWay);
+  };
+
+  const openWayOfPayments = useCallback(() => {
+    setPaymentSteps(4);
+    setOpenWayOfPayments(true);
+  }, []);
+
   return (
     <>
       <Container>
@@ -790,7 +822,7 @@ export default function CheckoutMobility() {
                     className={
                       paymentSteps === 2
                         ? "active2 ship_title "
-                        : paymentSteps === 3
+                        : paymentSteps === 3 || paymentSteps === 4
                         ? "completed2 ship_title"
                         : "disableb ship_title"
                     }
@@ -837,6 +869,8 @@ export default function CheckoutMobility() {
                     className={
                       paymentSteps === 3
                         ? "active3 font_responsive"
+                        : paymentSteps === 4
+                        ? "completed font_responsive"
                         : "disabled3 font_responsive"
                     }
                   >
@@ -889,19 +923,62 @@ export default function CheckoutMobility() {
                 </Collapse>
               </section>
               <section className="methods_payment">
-                <PaymentBankTransfert>
-                  <h2>Bank Transfert</h2>
+                <PaymentBankTransfert
+                  onClick={openWayOfPayments}
+                  disabled={paymentSteps === 3 ? false : true}
+                >
+                  <div
+                    className={
+                      paymentSteps === 3
+                        ? "way_payment_block"
+                        : paymentSteps === 4
+                        ? "completed"
+                        : "disable"
+                    }
+                  >
+                    <h2>4. Choisir méthode de paiement</h2>
+                  </div>
                 </PaymentBankTransfert>
+
+                <Collapse isOpened={openWasOfPayments}>
+                  <WayPaymentRadio>
+                    <div
+                      className="way_payment_radio"
+                      onClick={() => handleWayOfPayment(0)}
+                    >
+                      {wayOfPaymentSelected === 0 ? (
+                        <IoMdRadioButtonOk />
+                      ) : (
+                        <IoMdRadioButtonNot />
+                      )}{" "}
+                      <h4>Paiement anticipé</h4>
+                    </div>
+                    <div
+                      className="way_payment_radio"
+                      onClick={() => handleWayOfPayment(1)}
+                    >
+                      {wayOfPaymentSelected === 1 ? (
+                        <IoMdRadioButtonOk />
+                      ) : (
+                        <IoMdRadioButtonNot />
+                      )}{" "}
+                      <h4>Paiment online</h4>
+                    </div>
+                  </WayPaymentRadio>
+                </Collapse>
+
                 <button
                   onClick={checkout}
                   className={
-                    isPayment && codePromoState === false
+                    isPayment && codePromoState === false && paymentSteps === 4
                       ? "active btn_payment_method btn_main"
                       : "disabled btn_payment_method btn_main"
                   }
-                  disabled={codePromoState || checkoutClicked}
+                  disabled={
+                    codePromoState || checkoutClicked || paymentSteps !== 4
+                  }
                 >
-                  <h2 className="font_responsive">4. Paiement</h2>
+                  <h2 className="font_responsive">5. Procéder au paiement</h2>
 
                   <span>{isOrder === false && <Spiner />}</span>
                 </button>
@@ -1080,9 +1157,13 @@ export default function CheckoutMobility() {
                             return (
                               <div key={coupon.id} className="coupons_block">
                                 <div className="coupons">
-                                  <div>Code Promo {coupon.code}</div>
+                                  <div className="coupon_text">
+                                    Code Promo {coupon.code}
+                                  </div>
                                   <div>
-                                    - {coupon.discount}{" "}
+                                    -{" "}
+                                    {Number(coupon.discount) +
+                                      Number(coupon.discount_tax)}{" "}
                                     {CHFCurrency ? "CHF" : "EUR"}
                                   </div>
                                 </div>

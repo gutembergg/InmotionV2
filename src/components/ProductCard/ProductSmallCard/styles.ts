@@ -34,4 +34,8 @@ export const ButtonAddToCart = styled.button`
   background: var(--Blue);
   color: var(--White);
   border: none;
+
+  &:hover {
+    background: var(--BlueHover);
+  }
 `;

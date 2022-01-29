@@ -25,7 +25,16 @@ import { getProductsUpSells } from "../../../../utils/getProductsUpsells";
 import {
   Container,
   Content,
+  FiltersBarMobile,
+  ButtonMenu,
+  UpSellsMenu,
+  UpsellList,
+  CategoryList,
+  CategoryTitle,
+  CategoriesMenu,
   FiltersBar,
+  MenuBlock,
+  UpsellTitle,
   ProductsSection,
   Products,
   MenuSubCategoriesMobilie,
@@ -55,6 +64,7 @@ export default function PiecesDetacheesSubCat({
   const [products, setProducts] = useState<IProduct[]>(productsByCategory);
   const [upSellName, setUpSellName] = useState("");
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   useEffect(() => {
     setUpSellName("");
@@ -68,8 +78,10 @@ export default function PiecesDetacheesSubCat({
   const selectModel = (model: IProduct | { id: number; name: string }) => {
     if (model.id === 999999999999) {
       setProducts(productsByCategory);
+      setOpenMobileMenu(!openMobileMenu);
       return;
     }
+
     const productsBySelectedModel = productsByCategory.filter((product) =>
       product.upsell_ids.find((upSellId) => upSellId === model.id)
     );
@@ -77,10 +89,16 @@ export default function PiecesDetacheesSubCat({
     setUpSellName(model.name);
     setProducts(productsBySelectedModel);
     setUpSellFilter(!upSellFilter);
+    setOpenMobileMenu(false);
   };
 
   const handleCategoriesMenu = () => {
     setOpenMenuCategories(!openMenuCategories);
+    setOpenMobileMenu(!openMobileMenu);
+  };
+
+  const handleMenuMobile = () => {
+    setOpenMobileMenu(!openMobileMenu);
   };
 
   const _productsUpSells = [
@@ -102,6 +120,50 @@ export default function PiecesDetacheesSubCat({
 
         <Content>
           <ProductsSection>
+            <FiltersBarMobile>
+              <ButtonMenu onClick={handleMenuMobile}>
+                <IoIosArrowDown /> <p>Models / Categories</p>
+              </ButtonMenu>
+              {openMobileMenu && (
+                <MenuBlock>
+                  <UpSellsMenu>
+                    <UpsellTitle>Models </UpsellTitle>
+                    <UpsellList>
+                      {_productsUpSells.map((model) => {
+                        return (
+                          <li
+                            key={model.id}
+                            className="upsell_name"
+                            onClick={() => selectModel(model)}
+                          >
+                            {model.name}
+                          </li>
+                        );
+                      })}
+                    </UpsellList>
+                  </UpSellsMenu>
+                  <CategoriesMenu>
+                    <CategoryTitle>Categories</CategoryTitle>
+                    <CategoryList>
+                      {subCategories.map((category) => {
+                        return (
+                          <li
+                            key={category?.slug}
+                            onClick={handleCategoriesMenu}
+                          >
+                            <Link
+                              href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
+                            >
+                              <a>{category?.name}</a>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </CategoryList>
+                  </CategoriesMenu>
+                </MenuBlock>
+              )}
+            </FiltersBarMobile>
             <FiltersBar>
               <ButtonFilterBlock>
                 <ButtonSelect onClick={handleUpSellFilter}>

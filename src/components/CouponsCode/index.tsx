@@ -5,15 +5,15 @@ import {
   SetStateAction,
   useState,
 } from "react";
+import { Notify, Report } from "notiflix";
 import { searchCoupons } from "../../services/woocommerceApi/Coupons";
 import { CouponsMessages } from "../../enums/coupon";
 import { ICoupons } from "../../interfaces/ICoupons";
-import Notiflix from "notiflix";
 import useCart from "../../hooks/useCart";
 import useTranslation from "next-translate/useTranslation";
 
 import { Container } from "./styles";
-import { updateCouponsOrder } from "../../services/woocommerceApi/Orders";
+import Notiflix from "notiflix";
 
 interface IProps {
   userMail: string;
@@ -47,24 +47,34 @@ const CouponsCode = ({
 
   //HANDLE INPUT CHANGES
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputTxt = event.target.value.trim();
+    const inputTxt = event.target.value;
+
     setInputValue(inputTxt);
   };
 
   //HANDLE INPUT SUBMIT
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+
     //if disabled because single use code   tested
     if (inputDisabledStatus === true) {
-      Notiflix.Notify.failure(CouponsMessages.singleCouponUsed);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.singleCouponUsed}`,
+        "Okay"
+      );
       return;
     }
     //if no code in value   tested
     if (inputValue.length === 0) {
-      Notiflix.Notify.failure(CouponsMessages.InputHasntValue);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.InputHasntValue}`,
+        "Okay"
+      );
       return;
     }
-    setInputValue("");
+    // setInputValue("");
     checkCoupons();
   };
 
@@ -74,7 +84,11 @@ const CouponsCode = ({
 
     //CHECK CODE AVAILABILITY  tested
     if (!coupon) {
-      Notiflix.Notify.failure(CouponsMessages.couponNotValable);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.couponNotValable}`,
+        "Okay"
+      );
       return;
     }
 
@@ -82,7 +96,11 @@ const CouponsCode = ({
     const couponID = coupon.id;
     const checkUsedCoupon = usedCoupons.find((item) => item.id === couponID);
     if (checkUsedCoupon) {
-      Notiflix.Notify.failure(`${couponID} à déja été utilisé`);
+      Report.failure(
+        "Coupon invalide",
+        `${couponID} à déja été utilisé`,
+        "Okay"
+      );
       return;
     }
 
@@ -95,7 +113,12 @@ const CouponsCode = ({
       const ExpDateMs = Date.parse(couponExpDate);
 
       if (ExpDateMs < date) {
-        Notiflix.Notify.failure(CouponsMessages.couponDateExpired);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.couponDateExpired}`,
+          "Okay"
+        );
+
         return;
       }
     }
@@ -105,7 +128,11 @@ const CouponsCode = ({
     const usageCount = coupon.usage_count;
 
     if (usageLimit && usageCount >= usageLimit) {
-      Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.couponLimitReached}`,
+        "Okay"
+      );
       return;
     }
 
@@ -113,9 +140,17 @@ const CouponsCode = ({
     if (coupon.individual_use) {
       if (usedCoupons.length === 0) {
         setInputDisabledStatus(true);
-        Notiflix.Notify.info(CouponsMessages.warningNoMoreAvailableCoupon);
+        Report.info(
+          "Coupon invalide",
+          `${CouponsMessages.warningNoMoreAvailableCoupon}`,
+          "Okay"
+        );
       } else {
-        Notiflix.Notify.failure(CouponsMessages.singleCouponOnly);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.singleCouponOnly}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -131,7 +166,11 @@ const CouponsCode = ({
       );
 
       if (searchAuthorizedEmail.length === 0) {
-        Notiflix.Notify.failure(CouponsMessages.couponWrongUser);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.couponWrongUser}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -147,13 +186,21 @@ const CouponsCode = ({
 
       // with email
       if (visitor && visitor.length >= usageLimitPerUser) {
-        Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.couponLimitReached}`,
+          "Okay"
+        );
         return;
       }
       // with userID
       const client = usedByClient.filter((key) => key === userID?.toString());
       if (client && client.length >= usageLimitPerUser) {
-        Notiflix.Notify.failure(CouponsMessages.couponLimitReached);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.couponLimitReached}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -162,7 +209,11 @@ const CouponsCode = ({
     const groupRestriction = coupon.meta_data[0].value.toString();
     if (groupRestriction) {
       if (groupRestriction !== userGrp) {
-        Notiflix.Notify.failure(CouponsMessages.groupNotValid);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.groupNotValid}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -170,7 +221,11 @@ const CouponsCode = ({
 
     // CHECK CART LENGTH
     if (!cartContent) {
-      Notiflix.Notify.failure(CouponsMessages.CartIsEmpty);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.CartIsEmpty}`,
+        "Okay"
+      );
       return;
     }
 
@@ -179,12 +234,20 @@ const CouponsCode = ({
     const maxCartAmount = parseFloat(coupon.maximum_amount);
 
     if (minCartAmount && cartValue < minCartAmount) {
-      Notiflix.Notify.failure(CouponsMessages.minCartAmount);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.minCartAmount}`,
+        "Okay"
+      );
       return;
     }
 
     if (maxCartAmount && cartValue > maxCartAmount) {
-      Notiflix.Notify.failure(CouponsMessages.maxCartAmount);
+      Report.failure(
+        "Coupon invalide",
+        `${CouponsMessages.maxCartAmount}`,
+        "Okay"
+      );
       return;
     }
 
@@ -202,7 +265,11 @@ const CouponsCode = ({
       });
 
       if (findCommonElements(availableProducts, cartProductIDS) === false) {
-        Notiflix.Notify.failure(CouponsMessages.noAvaillableProduct);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.noAvaillableProduct}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -214,7 +281,11 @@ const CouponsCode = ({
         return cartProduct.id;
       });
       if (findCommonElements(excludedProducts, cartProductIDS) === true) {
-        Notiflix.Notify.failure(CouponsMessages.unhautorizedProduct);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.unhautorizedProduct}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -234,7 +305,11 @@ const CouponsCode = ({
         });
       const flatCatList = cartProductCategory.flat();
       if (findCommonElements(availableCategory, flatCatList) === false) {
-        Notiflix.Notify.failure(CouponsMessages.availableCatInCart);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.availableCatInCart}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -253,7 +328,11 @@ const CouponsCode = ({
         });
       const flatCatList = cartProductCategory.flat();
       if (findCommonElements(excludedCategory, flatCatList) === true) {
-        Notiflix.Notify.failure(CouponsMessages.excludedCatInCart);
+        Report.failure(
+          "Coupon invalide",
+          `${CouponsMessages.excludedCatInCart}`,
+          "Okay"
+        );
         return;
       }
     }
@@ -278,7 +357,11 @@ const CouponsCode = ({
         if (
           findCommonElements(cartsoldedProductIDS, onsaleProductsIDs) === true
         ) {
-          Notiflix.Notify.failure(CouponsMessages.soldedProduct);
+          Report.failure(
+            "Coupon invalide",
+            `${CouponsMessages.soldedProduct}`,
+            "Okay"
+          );
           return;
         }
       }
@@ -289,16 +372,21 @@ const CouponsCode = ({
           (product) => product.on_sale === true
         );
         if (listCartOnSaleStatut.length > 0) {
-          Notiflix.Notify.failure(CouponsMessages.soldedItemInCart);
+          Report.failure(
+            "Coupon invalide",
+            `${CouponsMessages.soldedItemInCart}`,
+            "Okay"
+          );
           return;
         }
       }
     }
+
     //
 
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
 
-    Notiflix.Notify.success(CouponsMessages.validCoupon);
+    Report.success("Coupon valide", `${CouponsMessages.validCoupon}`, "Okay");
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
     codePromoSteps();
   };

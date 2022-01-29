@@ -7,9 +7,9 @@ export const StyledHeader = styled.header`
     align-items: center;
     background-color: #0570a6;
     padding: 0 5%;
-    a{
-  text-decoration: none;
-}
+    a {
+      text-decoration: none;
+    }
   }
   .mainBlock {
     width: 100%;
@@ -19,8 +19,8 @@ export const StyledHeader = styled.header`
     box-shadow: rgba(0, 0, 0, 0.5);
     padding: 10px 5%;
     margin: 0 auto;
-background-color: var(--White);
-box-shadow: 0px 2px 6px #00000014;
+    background-color: var(--White);
+    box-shadow: 0px 2px 6px #00000014;
     .logoBox {
       width: 175px;
       transition: all ease-in 0.2s;
@@ -42,7 +42,6 @@ box-shadow: 0px 2px 6px #00000014;
     }
   }
   @media screen and (max-width: 1280px) {
-
     display: block;
 
     @media screen and (max-width: 1024px) {
@@ -50,5 +49,3 @@ box-shadow: 0px 2px 6px #00000014;
     }
   }
 `;
-
-

@@ -24,6 +24,104 @@ export const Content = styled.div`
   justify-content: center;
 `;
 
+export const FiltersBarMobile = styled.div`
+  display: none;
+
+  @media (max-width: 888px) {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+`;
+
+export const MenuBlock = styled.div`
+  position: absolute;
+  top: 45px;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 300px;
+  background: var(--White);
+`;
+
+export const UpSellsMenu = styled.div``;
+
+export const UpsellTitle = styled.div`
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+`;
+
+export const CategoriesMenu = styled.div``;
+
+export const UpsellList = styled.ul`
+  li {
+    cursor: pointer;
+    list-style: none;
+    margin-bottom: 0.4rem;
+    color: var(--Blue);
+    font-weight: 600;
+    padding: 0.4rem 1.4rem;
+
+    &:hover {
+      background: var(--Blue);
+      color: var(--White);
+    }
+  }
+`;
+
+export const CategoryList = styled.ul`
+  li {
+    cursor: pointer;
+    list-style: none;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    padding: 0.4rem 1.4rem;
+
+    &:hover {
+      background: var(--Blue);
+
+      a {
+        color: var(--White);
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--Blue);
+  }
+`;
+
+export const CategoryTitle = styled.div`
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+`;
+
+export const ButtonMenu = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 45px;
+  background: var(--Blue);
+  color: var(--White);
+
+  border: none;
+
+  &:hover {
+    background: var(--BlueHover);
+  }
+
+  p {
+    margin-left: 0.6rem;
+  }
+`;
+
 export const FiltersBar = styled.div`
   display: flex;
   flex-direction: row;
@@ -35,6 +133,10 @@ export const FiltersBar = styled.div`
 
   @media (max-width: 1024px) {
     width: 100%;
+  }
+
+  @media (max-width: 888px) {
+    display: none;
   }
 `;
 
