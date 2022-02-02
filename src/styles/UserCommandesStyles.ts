@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  margin-top: 3rem;
 
   h1 {
     text-align: center;
@@ -18,6 +19,13 @@ export const Content = styled.div`
   gap: 200px;
 
   margin-top: 1.4rem;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+  }
 `;
 
 export const OrderInfos = styled.div``;

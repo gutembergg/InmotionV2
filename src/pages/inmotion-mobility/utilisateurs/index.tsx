@@ -66,9 +66,11 @@ export default function UsersPage() {
   return (
     mounted && (
       <Container>
-        <Welcome>Bienvenue {currentyUser.first_name}</Welcome>
+        <Welcome>
+          <h1>Bienvenue {currentyUser.first_name}</h1>
+        </Welcome>
         <MyOrders>
-          <div>Mes commandes</div>
+          <h2>Mes commandes:</h2>
           <OrdersList>
             {orders.length > 0 ? (
               orders.map((order) => {
@@ -86,8 +88,10 @@ export default function UsersPage() {
             )}
           </OrdersList>
         </MyOrders>
-        <FormContainer></FormContainer>
-        <UserForm currentyUser={currentyUser} />
+        <FormContainer>
+          <h2>Mes infos:</h2>
+          <UserForm currentyUser={currentyUser} />
+        </FormContainer>
       </Container>
     )
   );

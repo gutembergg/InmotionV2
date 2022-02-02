@@ -29,8 +29,9 @@ export interface MethodSettings {
 }
 
 export interface ShippingMethods {
-  id: string;
+  id: number;
   title: string;
+  methodeName: string;
   method_description: string;
   method_title: string;
   method_id: string;

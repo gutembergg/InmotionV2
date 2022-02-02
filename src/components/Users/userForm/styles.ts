@@ -20,7 +20,7 @@ export const Container = styled.div`
     flex-direction: row;
     gap: 1rem;
 
-    @media (max-width: 1200px) {
+    @media (max-width: 900px) {
       flex-direction: column;
     }
   }

@@ -372,10 +372,12 @@ export const OrderSession = styled.div<Props>`
       props.qtyCartProducts &&
       css`
         height: 600px;
+        margin-bottom: 10rem;
         overflow-y: scroll;
         /* width */
         ::-webkit-scrollbar {
           width: 5px;
+          height: 8px;
         }
 
         /* Track */
@@ -418,7 +420,7 @@ export const OrderSession = styled.div<Props>`
   .cart_products {
     background-color: white;
     border: 3px solid var(--Blue);
-    margin-bottom: 2rem;
+    margin-bottom: 14rem;
 
     .prod_block {
       padding: 0 1rem;

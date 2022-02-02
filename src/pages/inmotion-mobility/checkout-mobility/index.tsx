@@ -213,7 +213,7 @@ export default function CheckoutMobility() {
   }, []);
 
   const getShippingPrice = useCallback(
-    (method: ShippingMethods) => {
+    async (method: ShippingMethods) => {
       const productsWeight = cart.products.reduce(
         (acc, item) => {
           const weight = (Number(item.weight) + Number(acc.weight)) * item.qty;
@@ -225,6 +225,24 @@ export default function CheckoutMobility() {
 
       if (method.method_id === "local_pickup") {
         setTotalCartPriceConverted(cart.totalProductsPrice);
+      }
+
+      if (method.id === 10 || method.id === 5) {
+        const costPerOrder = method.settings.method_rules.value.filter(
+          (item) => item.cost_per_order
+        );
+
+        const euroValue = await convertSingleNumber(
+          Number(costPerOrder[0].cost_per_order)
+        );
+        setShippingPrice(
+          CHFCurrency ? Number(costPerOrder[0].cost_per_order) : euroValue
+        );
+        setTotalCartPriceConverted(
+          CHFCurrency
+            ? cart.totalProductsPrice + Number(costPerOrder[0].cost_per_order)
+            : cart.totalProductsPrice + euroValue
+        );
       }
 
       method.settings.method_rules?.value.map((rule) => {
@@ -260,6 +278,7 @@ export default function CheckoutMobility() {
             return rule;
           } else {
             setNoAllowShipping(true);
+            setShippingMethod(method);
           }
         });
 
@@ -270,8 +289,6 @@ export default function CheckoutMobility() {
   );
 
   const _handleBillingShippingData = async (values: IFormValues) => {
-    console.log("formValues: ", values);
-
     const billing = {
       last_name: values.billing_last_name,
       first_name: values.billing_first_name,
@@ -391,6 +408,14 @@ export default function CheckoutMobility() {
           total: String(shippingPrice),
         },
       ];
+    } else if (_shippingMethods.id === 5 || _shippingMethods.id === 10) {
+      shippingLines = [
+        {
+          method_id: _shippingMethods.method_id,
+          method_title: _shippingMethods.method_title,
+          total: String(shippingPrice),
+        },
+      ];
     } else {
       shippingLines = [];
     }
@@ -477,7 +502,6 @@ export default function CheckoutMobility() {
 
       if (wayOfPaymentSelected === 0) {
         await _sendOrder();
-        console.log(" orderIdRef.current: ", orderIdRef.current);
 
         if (typeof window !== "undefined") {
           localStorage.removeItem("inmotion:cart");
@@ -681,8 +705,6 @@ export default function CheckoutMobility() {
     setPaymentSteps(3);
   };
 
-  console.log("cart:::", cart);
-
   const selectSHPmethod = useCallback(
     (method: ShippingMethods, index: number) => {
       if (Object.keys(_order).length > 0) {
@@ -691,11 +713,14 @@ export default function CheckoutMobility() {
 
       setMethodShipping(index);
 
-      if (method.method_id === "local_pickup") {
+      if (method.id === 2) {
         setShippingPrice(0);
         setShippingMethod(method);
         getShippingPrice(method);
-      } else if (method.method_id === "flexible_shipping_single") {
+      } else if (method.id === 8) {
+        setShippingMethod(method);
+        getShippingPrice(method);
+      } else {
         setShippingMethod(method);
         getShippingPrice(method);
       }
@@ -736,7 +761,8 @@ export default function CheckoutMobility() {
 
       if (response) {
         getShippingPrice(response[0]);
-        setMethodsShippingList(response);
+        formatMethodsShippingList(response);
+
         setIsSelectedShipping(false);
         setOpenDeliveryWays(true);
       }
@@ -744,6 +770,7 @@ export default function CheckoutMobility() {
       setIsPayment(true);
       setPaymentSteps(3);
     },
+    // eslint-disable-next-line
     [getShippingPrice]
   );
 
@@ -761,13 +788,43 @@ export default function CheckoutMobility() {
   );
 
   const handleWayOfPayment = (selectedWay: number) => {
-    console.log("isAntecipted: ", selectedWay);
     setWayOfPaymentSelected(selectedWay);
   };
 
   const openWayOfPayments = useCallback(() => {
     setPaymentSteps(4);
     setOpenWayOfPayments(true);
+  }, []);
+
+  const formatMethodsShippingList = useCallback(
+    (methodsList: ShippingMethods[]) => {
+      let methodeName = "";
+      const formatedNameMethods = methodsList.map((method) => {
+        switch (true) {
+          case method.id === 8:
+            methodeName = "Poste";
+            break;
+          case method.id === 2:
+            methodeName = "Point de vente";
+            break;
+          case method.id === 10 || method.id === 5:
+            methodeName = "DHL";
+            break;
+        }
+
+        return { ...method, methodeName };
+      });
+
+      setMethodsShippingList(formatedNameMethods);
+    },
+    []
+  );
+
+  const formatPrice = useCallback((price1: number, price2: number) => {
+    const total = price1 + price2;
+    const formatedTotal = total.toFixed(2);
+
+    return formatedTotal;
   }, []);
 
   return (
@@ -835,29 +892,25 @@ export default function CheckoutMobility() {
                 <Collapse isOpened={openDeliveryWays}>
                   <ShipMethods>
                     <div className="ship_methodsList">
-                      {noAllowShipping ? (
-                        <h4 className="no_allowed_msg">No allowed shipping</h4>
-                      ) : (
-                        methodsShippingList.map((method, index) => {
-                          return (
-                            <ShipItem
-                              key={method.id}
-                              onClick={() => selectSHPmethod(method, index)}
-                            >
-                              <div>
-                                {methodShipping === index ? (
-                                  <IoMdRadioButtonOk />
-                                ) : (
-                                  <IoMdRadioButtonNot />
-                                )}
-                              </div>
-                              <div className="ship_methods_name">
-                                {method.method_title}
-                              </div>
-                            </ShipItem>
-                          );
-                        })
-                      )}
+                      {methodsShippingList.map((method, index) => {
+                        return (
+                          <ShipItem
+                            key={method.id}
+                            onClick={() => selectSHPmethod(method, index)}
+                          >
+                            <div>
+                              {methodShipping === index ? (
+                                <IoMdRadioButtonOk />
+                              ) : (
+                                <IoMdRadioButtonNot />
+                              )}
+                            </div>
+                            <div className="ship_methods_name">
+                              {method.methodeName}
+                            </div>
+                          </ShipItem>
+                        );
+                      })}
                     </div>
                   </ShipMethods>
                 </Collapse>
@@ -1181,7 +1234,10 @@ export default function CheckoutMobility() {
                           {Object.keys(_order).length > 0
                             ? isValidate
                               ? totalOrder
-                              : totalOrder + Number(_taxPaymentMethods)
+                              : formatPrice(
+                                  totalOrder,
+                                  Number(_taxPaymentMethods)
+                                )
                             : totalCartPriceConverted.toFixed(2)}
                         </span>
                       </h5>
