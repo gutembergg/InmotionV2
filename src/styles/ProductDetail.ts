@@ -198,6 +198,10 @@ const title_description = {
   maxWidth: "600px",
 };
 
+export const Variations = styled.div``;
+
+export const VariationImage = styled.div``;
+
 export const Sections = styled.div``;
 
 export const Section = styled.div`

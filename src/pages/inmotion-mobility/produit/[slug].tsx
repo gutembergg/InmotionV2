@@ -19,6 +19,9 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import { IVariation } from "../../../interfaces/IVariation";
 import Notiflix from "notiflix";
+import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
+import useCurrency from "../../../hooks/useCurrency";
+import PreviousPageLink from "../../../components/PreviousPageLink";
 
 import {
   Container,
@@ -35,10 +38,9 @@ import {
   Video,
   DescriptionProduct,
   Sections,
+  Variations,
+  VariationImage,
 } from "../../../styles/ProductDetail";
-import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
-import useCurrency from "../../../hooks/useCurrency";
-import PreviousPageLink from "../../../components/PreviousPageLink";
 
 interface Props {
   product: IProduct;
@@ -117,6 +119,8 @@ export default function ProductDetail({ product, variations }: Props) {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
   };
+
+  console.log("variations: ", variations);
 
   return (
     <>
@@ -228,6 +232,25 @@ export default function ProductDetail({ product, variations }: Props) {
               </Video>
             )}
 
+            <Variations>
+              <ul>
+                {variations.map((variation) => {
+                  return (
+                    <li key={variation.id}>
+                      <VariationImage>
+                        <Image
+                          src={variation.image.src}
+                          width={60}
+                          height={60}
+                          alt={variation.image.name}
+                        />
+                      </VariationImage>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Variations>
+
             <DescriptionProduct>
               <Sections>
                 {/*  {product.acf.hasOwnProperty("description_du_produit") &&
@@ -286,8 +309,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const product = await wc_getProductBySlug(slug as string, lang as string);
 
-  /* const variations: IProduct[] = await getVariations(product.id);
-  console.log("variations: ", variations); */
+  const variations: IVariation[] = await getVariations(product.id);
+  console.log("variations: ", variations);
 
   if (!product) {
     return {
@@ -298,13 +321,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  console.log("product::::", product);
-
   const productWithEuro = await addEuroPriceInSingleProduct(product);
 
   return {
     props: {
       product: productWithEuro,
+      variations,
     },
     revalidate: 60 * 2, // 2 min
   };
