@@ -63,10 +63,8 @@ export const validateUserToken = async (token: any) => {
       }
     );
 
-    console.log("response: ", response);
-
     return response;
   } catch (error) {
-    console.log("error:::", error);
+    alert("Internal Error");
   }
 };

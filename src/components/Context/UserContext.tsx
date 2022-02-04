@@ -81,14 +81,16 @@ const UserProvider = ({ children }: Children) => {
   });
 
   useEffect(() => {
-    const userAuthenticated = localStorage.getItem("inmotion:user");
-    if (userAuthenticated) {
-      const token = data.token;
-      validateUserToken(token).then((response) => {
-        if (response?.status !== 200) {
-          localStorage.removeItem("inmotion:user");
-        }
-      });
+    if (typeof window !== "undefined") {
+      const userAuthenticated = localStorage.getItem("inmotion:user");
+      if (userAuthenticated) {
+        const token = data.token;
+        validateUserToken(token).then((response) => {
+          if (response?.status !== 200) {
+            localStorage.removeItem("inmotion:user");
+          }
+        });
+      }
     }
   }, [data.token]);
 
