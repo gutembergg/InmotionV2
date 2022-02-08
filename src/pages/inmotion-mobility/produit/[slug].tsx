@@ -4,11 +4,14 @@ import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useRouter } from "next/router";
 
-import HouseIcon from "../../../../public/images/icons/house.svg";
-import getAcfContent from "../../../utils/getAcfContent";
+import cityBG from "../../../../public/images/backgrounds/productCity.svg";
+
 import useCart from "../../../hooks/useCart";
 import { IProduct } from "../../../interfaces/IProducts";
 import {
+  getProductByID,
+  getProductBySlug,
+  getProduitsByCategoriesSlug,
   getVariations,
   wc_getProductBySlug,
 } from "../../../services/woocommerceApi/Products";
@@ -29,32 +32,52 @@ import {
   Main,
   ProductCard,
   ProductInfos,
-  Card,
   CardWrapper,
   ProductLogo,
   Video,
   DescriptionProduct,
   Sections,
+  RelatedProduct,
+  SameCatProduct,
+  Caracteristiques,
+  ProductDetaiil,
+  VariationProducts,
 } from "../../../styles/ProductDetail";
-import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
+import {
+  addEuroPriceInProducts,
+  addEuroPriceInSingleProduct,
+} from "../../../utils/addEuroPriceInProducts";
 import useCurrency from "../../../hooks/useCurrency";
-import PreviousPageLink from "../../../components/PreviousPageLink";
+
+import CarouselSwiper from "../../../components/Sliders/Carousel";
+import { ProductImageCarousel } from "../../../components/Sliders/ProductImageCarousel";
 
 interface Props {
   product: IProduct;
   variations: IVariation[];
+  crossSellIDS: IProduct[];
 }
 
-export default function ProductDetail({ product, variations }: Props) {
+export default function ProductDetail({
+  product,
+  variations,
+  crossSellIDS,
+}: Props) {
   const router = useRouter();
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
+//creer usestate crossselid avec crossselids initialisé
+const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
 
+// useEffect(() => {
+//   setcrossSellsID(crossSellIDS);
+// }, [crossSellIDS]);
+
+//si marche pas faire useeffect
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
   const [productQty, setProductQty] = useState(1);
-
   useEffect(() => {
     Notiflix.Loading.init({
       svgColor: "var(--Blue)",
@@ -117,7 +140,9 @@ export default function ProductDetail({ product, variations }: Props) {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
   };
+  console.log(product);
 
+  
   return (
     <>
       <HeaderSeo
@@ -131,92 +156,139 @@ export default function ProductDetail({ product, variations }: Props) {
       <Container>
         <Main>
           <CardWrapper>
-            <PreviousPageLink />
             <ProductCard>
-              <Card>
-                <h2 className="first_title">
-                  {getAcfContent(product, "marque_du_produit")}{" "}
-                  <span>{getAcfContent(product, "modele_du_produit")}</span>
-                </h2>
-
+              {product.images.length === 1 ? (
                 <ImageBlock>
-                  <span className="image">
-                    <Image
-                      width={250}
-                      height={250}
-                      src={
-                        product.images[0]
-                          ? product.images[0].src
-                          : placeholder.src
-                      }
-                      alt={product.name}
-                      placeholder="blur"
-                      blurDataURL={
-                        product.images[0]
-                          ? product.images[0].src
-                          : placeholder.src
-                      }
-                    />
-
-                    {product.on_sale && (
-                      <span>
-                        <ButtonSkew text="Promotion!" />
-                      </span>
-                    )}
-                  </span>
-                </ImageBlock>
-
-                <PriceQuantity>
-                  <div className="price">
-                    {currency === "CHF" ? product.price : product.euroPrice}
-                  </div>
-
-                  <input
-                    type="number"
-                    onChange={handleChangeQty}
-                    value={productQty}
-                    placeholder="1"
+                  <Image
+                    layout="fill"
+                    objectFit="contain"
+                    src={
+                      product.images[0]
+                        ? product.images[0].src
+                        : placeholder.src
+                    }
+                    alt={product.name}
+                    placeholder="blur"
+                    blurDataURL={
+                      product.images[0]
+                        ? product.images[0].src
+                        : placeholder.src
+                    }
                   />
-                </PriceQuantity>
-
-                <Button type="button" onClick={() => handleAddToCart(product)}>
-                  {btnAddToCart}
-                </Button>
-
-                {product.stock_quantity && (
-                  <StockProduct>
-                    <div>En stock: {product.stock_quantity} pièces</div>
-                  </StockProduct>
-                )}
-              </Card>
+                </ImageBlock>
+              ) : (
+                <ProductImageCarousel imageList={product.images} />
+              )}
             </ProductCard>
-            <div style={{ width: "25vw" }}></div>
-          </CardWrapper>
-
-          <ProductInfos>
-            <ProductLogo>
-              <span>
-                <div className="product_category">
+            <ProductDetaiil>
+              <ProductLogo>
+                <span className="product_category">
                   {product.categories[0].name}
-                </div>
-              </span>
-              <h2 className="first_title">
-                <span className="marque_product">
-                  {getAcfContent(product, "marque_du_produit")}
                 </span>
-                <span className="product_sku">
-                  {getAcfContent(product, "modele_du_produit")}
-                </span>
-              </h2>
-            </ProductLogo>
-            <div className="first_description">
-              ----Description produit----- Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Dolores, esse. Rerum soluta vitae
-              qui? Earum deleniti sapiente, sint facilis architecto saepe fuga
-              quibusdam sunt eius, a sequi voluptas corrupti. Veniam?{" "}
-              {product.description}
-            </div>
+                <h1 className="first_title">{product.name}</h1>
+                <div className="priceBox">
+                  {product.on_sale && <p>Promotion !</p>}
+                  <div className="price">
+                    <div className={product.on_sale ? "regular_price" : ""}>
+                      {currency === "CHF"
+                        ? !!product.regular_price &&
+                          product.regular_price + " " + currency
+                        : !!product.euroRegularPrice &&
+                          product.euroRegularPrice + " " + currency}
+                    </div>
 
+                    <div className="sale_price">
+                      {currency === "CHF"
+                        ? !!product.sale_price &&
+                          product.sale_price + " " + currency
+                        : !!product.sale_price &&
+                          product.euroPrice + " " + currency}
+                    </div>
+                  </div>
+                </div>
+              </ProductLogo>
+              <div className="first_description">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: product.short_description,
+                  }}
+                />
+              </div>
+              <VariationProducts>
+                <h4>Choisissez une variation</h4>
+                <div className="variation">
+                  <p>variation1</p>
+                  <select name="variation">
+                    <option value="1">variation1</option>
+                    </select>
+                    </div>
+              </VariationProducts>
+              <PriceQuantity>
+                <input
+                  type="number"
+                  onChange={handleChangeQty}
+                  value={productQty}
+                  placeholder="1"
+                />
+                <Button type="button" onClick={() => handleAddToCart(product)}>
+                {btnAddToCart}
+              </Button>
+              </PriceQuantity>
+
+              
+
+              {product.stock_quantity && (
+                <StockProduct>
+                  <div>En stock: {product.stock_quantity} pièces</div>
+                </StockProduct>
+              )}
+            </ProductDetaiil>
+          </CardWrapper>
+          <ProductInfos>
+           
+            <div className="bgcity"> 
+            <div className="sectionTitle">
+            <p>Informations complémentaires</p>
+          </div>
+            <Image
+              layout="fill"
+              objectFit="cover"
+              src={cityBG}
+              alt="city background"
+              />
+              </div>
+            <DescriptionProduct>
+
+              <Sections>
+                {product.acf.hasOwnProperty("description_du_produit") &&
+                  product.acf.description_du_produit.map((section, index) => {
+                    return (
+                      <section key={index}>
+                        <div
+                          className={index % 2 === 1 ? "section2" : "section1"}
+                        >
+                          <div className="title_description">
+                            <h3> {section.titre_section}</h3>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: section.description_section,
+                              }}
+                            />
+                          </div>
+                          <div className="image_section">
+                            <Image
+                              layout="fill"
+                              objectFit="cover"
+                              src={section.image_de_la_section}
+                              alt={section.titre_section}
+                            />
+                          </div>
+                        </div>
+                      </section>
+                    );
+                  })}
+              </Sections>
+            </DescriptionProduct>
             {videoUrl.length > 0 && (
               <Video className="video_product">
                 <ReactPlayer
@@ -227,42 +299,37 @@ export default function ProductDetail({ product, variations }: Props) {
                 />
               </Video>
             )}
-
-            <DescriptionProduct>
-              <Sections>
-                {/*  {product.acf.hasOwnProperty("description_du_produit") &&
-                  product.acf.description_du_produit.map((section, index) => {
+</ProductInfos>
+            <Caracteristiques>
+              <table>
+                <caption>Caractéristiques</caption>
+                <tbody>
+                  {product.attributes.map((attribute) => {
                     return (
-                      <Section key={index}>
-                        <div
-                          className={index % 2 === 1 ? "section2" : "section1"}
-                        >
-                          <div className="title_description">
-                            <div> {section.titre_section}</div>
-
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: section.description_section,
-                              }}
-                            />
-                          </div>
-
-                          <div className="image_section">
-                            <Image
-                              width={320}
-                              height={320}
-                              src={section.image_de_la_section}
-                              alt={section.titre_section}
-                              objectFit="cover"
-                            />
-                          </div>
-                        </div>
-                      </Section>
+                      <tr key={attribute.id}>
+                        <td>{attribute.name}</td>
+                        <td>
+                          {attribute.options.map((option, id) => {
+                            return (
+                              <p
+                                key={id}
+                                dangerouslySetInnerHTML={{
+                                  __html: option,
+                                }}
+                              ></p>
+                            );
+                          })}
+                        </td>
+                      </tr>
                     );
-                  })} */}
-              </Sections>
-            </DescriptionProduct>
-          </ProductInfos>
+                  })}
+                </tbody>
+              </table>
+            </Caracteristiques>
+            <RelatedProduct>
+              <h2 className="squared">Complétez votre équipement</h2>
+              <CarouselSwiper products={crossSellsID} />
+            </RelatedProduct>
         </Main>
       </Container>
     </>
@@ -285,7 +352,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const product = await wc_getProductBySlug(slug as string, lang as string);
-
   /* const variations: IProduct[] = await getVariations(product.id);
   console.log("variations: ", variations); */
 
@@ -298,13 +364,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  console.log("product::::", product);
 
-  const productWithEuro = await addEuroPriceInSingleProduct(product);
+//crossSell ids 
+const relatedProducts = product.cross_sell_ids;
+const crossSellIDS = await getProductByID(relatedProducts);
+
+
+const productWithEuro = await addEuroPriceInSingleProduct(product);
 
   return {
     props: {
       product: productWithEuro,
+      crossSellIDS: crossSellIDS,
     },
     revalidate: 60 * 2, // 2 min
   };

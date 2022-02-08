@@ -14,7 +14,7 @@ export const GlobalContainer = styled.div`
   min-height: 100vh;
 
   .location{
-    margin-top:110px;
+    margin-top: 85px;
 display: flex;
   }
   main {

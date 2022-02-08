@@ -12,6 +12,18 @@ export const StyledFooterBlock = styled.div`
     justify-content: space-between;
     align-items: flex-start;
     box-shadow: 0px -3px 5px 0px #00000026;
+    @media (max-width:730px){
+      padding: 20px 2%;
+    }
+    @media (max-width:660px){
+      flex-direction: column;
+      width: 100%;
+      align-items:start;
+      >div{
+        padding-left: 1rem;
+        margin: 20px 0;
+      }
+    }
 
   h2{
     font-size:1em
@@ -19,6 +31,10 @@ export const StyledFooterBlock = styled.div`
   .box1 {
     display: flex;
     flex: 0 1 10%;
+    @media (max-width:960px){
+      display: none;
+      visibility: hidden;
+    }
     .logobox {
       position: relative;
       width: 100%;

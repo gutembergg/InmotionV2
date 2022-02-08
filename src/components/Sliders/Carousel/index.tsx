@@ -28,6 +28,9 @@ interface Props {
 export default function CarouselSwiper({ products }: Props) {
 
   const [productList, setProductList] = useState(products as IProduct[])
+console.log( productList.length);
+
+const listCount = productList.length;
 
   useEffect(() => {
     setProductList(products)
@@ -35,37 +38,37 @@ export default function CarouselSwiper({ products }: Props) {
   return (
     <CarouselBox>
      <Swiper 
-     slidesPerView={5} 
+     slidesPerView={listCount >= 5 ? (5):(listCount)} 
      spaceBetween={30} 
      slidesPerGroup={1} 
-     loop={true} 
+     loop={false} 
      loopFillGroupWithBlank={false} 
     //  freeMode={true} 
      navigation={true}   
      breakpoints={{
           // when window width is >= 320px
           320: {
-            slidesPerView: 1,
+            slidesPerView: listCount >= 2 ? (2):(listCount),
             spaceBetween: 0,
           },
           // when window width is >= 480px
           480: {
-            slidesPerView: 2,
+            slidesPerView: listCount >= 3 ? (3):(listCount),
           },
           // when window width is >= 640px
           640: {
-            slidesPerView: 3,
+            slidesPerView: listCount >= 3 ? (3):(listCount),
           },
           // when window width is >= 768px
           768: {
-            slidesPerView: 3,
+            slidesPerView: listCount >= 3 ? (3):(listCount),
           },
           // when window width is >= 900px
           1024: {
-            slidesPerView: 4,
+            slidesPerView: listCount >= 4 ? (4):(listCount),
           },
           1280: {
-            slidesPerView: 5,
+            slidesPerView: listCount >= 5 ? (5):(listCount),
           },
         }}>
      {productList.map((product) => {

@@ -38,12 +38,14 @@ interface Acf {
 }
 
 export interface IProduct {
+  cross_sell_ids: string[];
   id: number;
   name: string;
   images: IImage[];
   price: string;
   euroPrice: number;
   regular_price: string;
+  related_ids: string[];
   euroRegularPrice: number;
   sale_price: string;
   on_sale: boolean;
@@ -81,6 +83,7 @@ export interface IProduct {
   variations: IVariation[];
   subtotal_tax: string;
   weight: string;
+  short_description: string;
 }
 
 export interface ProductWithVariations {

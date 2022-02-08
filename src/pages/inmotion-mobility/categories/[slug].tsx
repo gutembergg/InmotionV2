@@ -5,8 +5,7 @@ import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
-import HomeIcon from "../../../../public/images/icons/house.svg";
-import WeigthIcon from "../../../../public/images/icons/weight-product.png";
+import RoadIcon from "../../../../public/images/icons/road.svg";
 import SpeedIcon from "../../../../public/images/icons/speed.svg";
 import AutonomieIcon from "../../../../public/images/icons/autonomie-icon.svg";
 import CheckIcon from "../../../../public/images/icons/draw-check-mark.svg";
@@ -82,7 +81,11 @@ export default function Category({ category, productsByCategory }: Props) {
   const vitesse = products[productIndex]?.attributes.find(
     (item) => item.name === "Vitesse"
   );
-
+  const autorisationRouler = products[productIndex]?.attributes.find(
+    (item) => item.name === "autorisation circulation"
+  );
+console.log(autorisationRouler?.options);
+  console.log("item",products);
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
 
@@ -115,12 +118,6 @@ export default function Category({ category, productsByCategory }: Props) {
           <ProductInfos>
             <div className="weight">
               <span>
-                <Image src={WeigthIcon} alt="poids" />
-              </span>
-              <span>17 KM</span>
-            </div>
-            <div className="weight">
-              <span>
                 <Image src={SpeedIcon} alt="poids" />
               </span>
               <span>{vitesse?.options[0]}</span>
@@ -134,18 +131,18 @@ export default function Category({ category, productsByCategory }: Props) {
             <div className="politic_text autonomie">
               <span>
                 <Image
-                  width={52}
-                  height={55}
-                  src={CheckIcon}
+                  width={42}
+                  height={45}
+                  src={RoadIcon}
                   alt="poids"
                   className="image"
-                />
+                  />
               </span>
-              <span>
-                {" "}
-                Autorisé en Suisse à circuler sur voie publique : piste cyclable
-                et route
-              </span>
+              <div>
+                {autorisationRouler?.options.map((autorisation, key) =>{
+                  return <p key={key}>{autorisation}</p>
+                })}
+              </div>
             </div>
           </ProductInfos>
           <ProductImage>
@@ -247,12 +244,7 @@ export default function Category({ category, productsByCategory }: Props) {
             <a className="link">{linkShowDetails}</a>
           </Link>
         </AddToCartSession>
-        <div className="decouvrez_model">
-          Decovrez le{" "}
-          {products[productIndex] &&
-            getAcfContent(products[productIndex], "modele_du_produit")}{" "}
-          en détail
-        </div>
+
       </Container>
     </>
   );

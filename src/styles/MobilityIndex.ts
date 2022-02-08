@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import bgHeader from "../../public/images/homeMobility/HeadHomeBg.jpg"
 export const Container = styled.div``;
 export const MainContent = styled.div`
   @media (max-width: 1024px) {
@@ -12,6 +12,7 @@ export const MainContent = styled.div`
     text-align: center;
     margin-bottom: 40px;
     margin-top: 30px;
+  ;
   }
 `;
 export const MobilitySlider = styled.div`
