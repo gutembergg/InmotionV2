@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -10,6 +11,7 @@ import {
   Stock,
   PriceBlock,
   ButtonAddToCart,
+  BtnProductDetail,
 } from "./styles";
 
 interface Props {
@@ -61,6 +63,11 @@ const ProductSmallCard = ({ product }: Props) => {
       <ButtonAddToCart onClick={() => handleAddToCart(product)}>
         Ajouter au panier
       </ButtonAddToCart>
+      <BtnProductDetail>
+        <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+          Afficher detail du produit
+        </Link>
+      </BtnProductDetail>
     </Container>
   );
 };

@@ -52,3 +52,19 @@ export const getUserById = async (id: number): Promise<User> => {
 
   return data;
 };
+
+export const validateUserToken = async (token: any) => {
+  try {
+    const response = await axios.post(
+      "https://dx7l6anesh.preview.infomaniak.website/wp-json/jwt-auth/v1/token/validate",
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    alert("Internal Error");
+  }
+};

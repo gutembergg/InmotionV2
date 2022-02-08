@@ -1,9 +1,11 @@
+interface Image {
+  id: number;
+  src: string;
+  name: string;
+}
+
 export interface IVariation {
   id: number;
-  date_created: string;
-  date_created_gmt: string;
-  date_modified: string;
-  date_modified_gmt: string;
   description: string;
   permalink: string;
   sku: string;
@@ -26,16 +28,7 @@ export interface IVariation {
   };
   shipping_class: string;
   shipping_class_id: number;
-  image: {
-    id: number;
-    date_created: string;
-    date_created_gmt: string;
-    date_modified: string;
-    date_modified_gmt: string;
-    src: string;
-    name: string;
-    alt: string;
-  };
+  image: Image;
   attributes: [
     {
       id: number;

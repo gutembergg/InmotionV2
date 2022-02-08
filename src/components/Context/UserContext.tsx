@@ -1,7 +1,16 @@
 import Notiflix from "notiflix";
-import { createContext, ReactNode, useCallback, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { AuthUser } from "../../interfaces/AuthUser";
-import { userLogin } from "../../services/wordpressApi/users";
+import {
+  userLogin,
+  validateUserToken,
+} from "../../services/wordpressApi/users";
 
 interface Children {
   children: ReactNode;
@@ -70,6 +79,20 @@ const UserProvider = ({ children }: Children) => {
 
     return {} as IUserState;
   });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userAuthenticated = localStorage.getItem("inmotion:user");
+      if (userAuthenticated) {
+        const token = data.token;
+        validateUserToken(token).then((response) => {
+          if (response?.status !== 200) {
+            localStorage.removeItem("inmotion:user");
+          }
+        });
+      }
+    }
+  }, [data.token]);
 
   const login = useCallback(async (authUser: AuthUser) => {
     try {

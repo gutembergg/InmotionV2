@@ -37,7 +37,8 @@ export const getProductBySlug = async (slug: string) => {
 // Get variations products //////////////////////////////////////////
 export const getVariations = async (id: number) => {
   const { data } = await wooCommerce.get(`products/${id}/variations`);
-  return filterCategoryVisibility(data);
+
+  return data;
 };
 
 // Get  products by ID LISTE//////////////////////////////////////////

@@ -37,7 +37,7 @@
     ],
     "/inmotion-mobility/completed-order": ["headerMobility", "completed-order"],
     "/inmotion-mobility/utilisateurs": ["headerMobility", "forms"],
-    "/inmotion-mobility/utilisateurs/commandes/[orderId]": [
+    "/inmotion-mobility/utilisateurs/commande/[orderId]": [
       "headerMobility",
       "forms",
       "completed-order"

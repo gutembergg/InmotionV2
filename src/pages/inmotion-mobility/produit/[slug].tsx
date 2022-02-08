@@ -22,6 +22,9 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import { IVariation } from "../../../interfaces/IVariation";
 import Notiflix from "notiflix";
+import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
+import useCurrency from "../../../hooks/useCurrency";
+import PreviousPageLink from "../../../components/PreviousPageLink";
 
 import {
   Container,
@@ -42,15 +45,14 @@ import {
   Caracteristiques,
   ProductDetaiil,
   VariationProducts,
+  Variations,
+  VariationImage,
 } from "../../../styles/ProductDetail";
-import {
-  addEuroPriceInProducts,
-  addEuroPriceInSingleProduct,
-} from "../../../utils/addEuroPriceInProducts";
-import useCurrency from "../../../hooks/useCurrency";
 
 import CarouselSwiper from "../../../components/Sliders/Carousel";
 import { ProductImageCarousel } from "../../../components/Sliders/ProductImageCarousel";
+
+
 
 interface Props {
   product: IProduct;
@@ -67,7 +69,7 @@ export default function ProductDetail({
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
 //creer usestate crossselid avec crossselids initialisé
-const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
+// const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
 
 // useEffect(() => {
 //   setcrossSellsID(crossSellIDS);
@@ -142,7 +144,8 @@ const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
   };
   console.log(product);
 
-  
+  console.log("variations: ", variations);
+
   return (
     <>
       <HeaderSeo
@@ -214,6 +217,26 @@ const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
                   }}
                 />
               </div>
+              
+            <Variations>
+              <ul>
+                {variations.map((variation) => {
+                  return (
+                    <li key={variation.id}>
+                      <VariationImage>
+                        <Image
+                          src={variation.image.src}
+                          width={60}
+                          height={60}
+                          alt={variation.image.name}
+                        />
+                      </VariationImage>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Variations>
+
               <VariationProducts>
                 <h4>Choisissez une variation</h4>
                 <div className="variation">
@@ -328,7 +351,7 @@ const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
             </Caracteristiques>
             <RelatedProduct>
               <h2 className="squared">Complétez votre équipement</h2>
-              <CarouselSwiper products={crossSellsID} />
+              <CarouselSwiper products={crossSellIDS} />
             </RelatedProduct>
         </Main>
       </Container>
@@ -352,8 +375,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const product = await wc_getProductBySlug(slug as string, lang as string);
-  /* const variations: IProduct[] = await getVariations(product.id);
-  console.log("variations: ", variations); */
+
+  const variations: IVariation[] = await getVariations(product.id);
+  console.log("variations: ", variations);
 
   if (!product) {
     return {
@@ -366,8 +390,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 
 //crossSell ids 
-const relatedProducts = product.cross_sell_ids;
-const crossSellIDS = await getProductByID(relatedProducts);
+const crossSellIDS = await getProductByID(product.cross_sell_ids);
 
 
 const productWithEuro = await addEuroPriceInSingleProduct(product);
@@ -376,6 +399,7 @@ const productWithEuro = await addEuroPriceInSingleProduct(product);
     props: {
       product: productWithEuro,
       crossSellIDS: crossSellIDS,
+      variations,
     },
     revalidate: 60 * 2, // 2 min
   };

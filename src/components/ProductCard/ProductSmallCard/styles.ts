@@ -39,3 +39,19 @@ export const ButtonAddToCart = styled.button`
     background: var(--BlueHover);
   }
 `;
+
+export const BtnProductDetail = styled.button`
+  background: transparent;
+  border: none;
+  padding-top: 0.6rem;
+
+  a {
+    text-decoration: none;
+    color: var(--Blue);
+    font-weight: 600;
+
+    &:hover {
+      color: var(--BlueHover);
+    }
+  }
+`;

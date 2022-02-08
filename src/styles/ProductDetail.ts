@@ -266,6 +266,10 @@ const title_description = {
   width: "100%",
 };
 
+export const Variations = styled.div``;
+
+export const VariationImage = styled.div``;
+
 
 export const Sections = styled.div`
 padding: 0 12rem;
