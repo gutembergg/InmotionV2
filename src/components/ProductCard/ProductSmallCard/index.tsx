@@ -42,6 +42,8 @@ const ProductSmallCard = ({ product }: Props) => {
 
   return (
     <Container>
+      <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+      <a>
       <Image
         width={150}
         height={150}
@@ -49,7 +51,7 @@ const ProductSmallCard = ({ product }: Props) => {
         placeholder="blur"
         blurDataURL={product?.images[0].src}
         alt={product.name}
-      />
+        />
 
       {product.on_sale && <ButtonSkew text="Promotion!" />}
 
@@ -60,14 +62,11 @@ const ProductSmallCard = ({ product }: Props) => {
         </span>
       </PriceBlock>
       <Stock>stock{product.stock_quantity}</Stock>
+        </a>
+        </Link>
       <ButtonAddToCart onClick={() => handleAddToCart(product)}>
         Ajouter au panier
       </ButtonAddToCart>
-      <BtnProductDetail>
-        <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-          Afficher detail du produit
-        </Link>
-      </BtnProductDetail>
     </Container>
   );
 };

@@ -84,8 +84,10 @@ export default function Category({ category, productsByCategory }: Props) {
   const autorisationRouler = products[productIndex]?.attributes.find(
     (item) => item.name === "autorisation circulation"
   );
+
 console.log(autorisationRouler?.options);
   console.log("item",products);
+
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
 
@@ -184,7 +186,9 @@ console.log(autorisationRouler?.options);
                     key={product.id}
                     onClick={() => handleModelMarque(product.id, index)}
                   >
-                     {products[productIndex].name}
+            
+                {product.name}
+                
                   </li>
                 );
               })}

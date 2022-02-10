@@ -7,7 +7,6 @@ import SwiperCore, { Scrollbar } from "swiper";
 import { IProduct } from "../../../interfaces/IProducts";
 
 import { Container, UpSellButton } from "./styles";
-import getAcfContent from "../../../utils/getAcfContent";
 
 SwiperCore.use([Scrollbar]);
 
@@ -56,8 +55,7 @@ const SliderModels = ({
                 onClick={() => handleModelMarque(product.id, index)}
               >
                 <div className={activedModelIndex === index ? "actived" : ""}>
-                  {getAcfContent(product, "marque_du_produit")}{" "}
-                  <span>{getAcfContent(product, "modele_du_produit")}</span>
+                  {product.name}
                 </div>
               </UpSellButton>
             </SwiperSlide>
