@@ -184,8 +184,7 @@ console.log(autorisationRouler?.options);
                     key={product.id}
                     onClick={() => handleModelMarque(product.id, index)}
                   >
-                    {getAcfContent(product, "marque_du_produit")}{" "}
-                    <span>{getAcfContent(product, "modele_du_produit")}</span>
+                     {products[productIndex].name}
                   </li>
                 );
               })}
@@ -202,11 +201,9 @@ console.log(autorisationRouler?.options);
           <div className="logo_box">
             <h2 className="first_title">
               {products[productIndex] &&
-                getAcfContent(products[productIndex], "marque_du_produit")}{" "}
-              <span>
-                {products[productIndex] &&
-                  getAcfContent(products[productIndex], "modele_du_produit")}
-              </span>
+                products[productIndex].name
+                }
+            
             </h2>
             <div className="price">
               <div

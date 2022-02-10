@@ -102,7 +102,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       category.slug !== "non-classe" &&
       category.slug !== "occasions" &&
       category.slug !== "occasions-en" &&
-      category.slug !== "occasions-de"
+      category.slug !== "gelegenheiten"
   );
 
   mainCategories.sort((a: any, b: any) => {

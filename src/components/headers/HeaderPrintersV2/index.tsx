@@ -8,7 +8,6 @@ import LanguageSelector from "../../LanguageSelector";
 import MenuMainPrinter from "../../menus/MenuMainPrinter";
 import LoginForm from "../../Login";
 import Link from "next/link";
-import { LinkMobility } from "../HeaderAdmin/styles";
 import escooter from "../../../../public/images/icons/electric-scooter.svg";
 
 /* interface ISvgProps {
@@ -27,18 +26,6 @@ const HeaderPrinterV2 = ({ icon }: Props) => {
       <div className="topBlock">
         <Link href="/inmotion-mobility">
           <a>
-            <LinkMobility>
-              <div className="iconLink">
-                <Image
-                  width={30}
-                  height={30}
-                  layout="intrinsic"
-                  src={escooter.src}
-                  alt="link-icon"
-                ></Image>
-              </div>
-              <p>Boutique Inmotion-Mobility</p>
-            </LinkMobility>
           </a>
         </Link>
         <LoginForm />
@@ -57,7 +44,6 @@ const HeaderPrinterV2 = ({ icon }: Props) => {
       </div>
       <div className="bottomBlock">
         <p>Votre spécialiste en impression 3D & Filaments</p>
-        {/*  <CurrentPageIcon bgcolor="blue" icon={icon.icon} /> */}
       </div>
     </StyledHeader>
   );

@@ -49,6 +49,7 @@ export interface IProduct {
   euroRegularPrice: number;
   sale_price: string;
   on_sale: boolean;
+  title:string;
   description?: string;
   slug: string;
   qty: number;

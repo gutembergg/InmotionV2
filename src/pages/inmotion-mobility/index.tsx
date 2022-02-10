@@ -98,7 +98,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
           <div className="content">
             <h1>{TitlePromotedSection}</h1>
             <p>{TextPromotedSection}</p>
-            <Link href="/inmotion-mobility/categorie_/equipements">
+            <Link href="/inmotion-mobility/categories/equipements">
               <a>{LinkTxtPromotedSection}</a>
             </Link>
           </div>
