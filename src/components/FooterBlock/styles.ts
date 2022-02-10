@@ -1,7 +1,14 @@
 import styled from "styled-components";
 
-export const StyledFooterBlock = styled.div`
-
+export const StyledFooterBlock = styled.section`
+h1{
+  /* visibility: hidden; */
+  height: 0;
+  width: 0;
+  line-height: 0;
+  opacity: 0;
+  display: none;
+}
     display: flex;
     bottom: 0;
     background-color: #f6f6f6;

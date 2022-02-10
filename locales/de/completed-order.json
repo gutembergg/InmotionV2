@@ -1,22 +1,23 @@
 {
-    "CompletedOrderTitle": "Bestellung erhalten",
-    "CompletedOrderthanks": "Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigung per E-Mail erhalten.",  
-    "CompletedOrderOrdernumber": "Bestellnummer :",  
-    "CompletedOrderDate": "Datum :",  
-    "CompletedOrderMail": "E-Mail :",  
-    "CompletedOrderTotal": "Gesamt :",  
-    "CompletedOrderPaiementMethod": "Zahlungsmittel :",  
-    "CompletedOrderResumeTitle": "Zusammenfassung Ihrer Bestellung",  
-    "CompletedOrderProducts": "Produkt(e) :",  
-    "CompletedOrderSousTotal": "Zwischensumme :",  
-    "CompletedOrderShipping": "Versand :",  
-    "CompletedOrderTVA": "MwSt.",  
-    "CompletedOrderShippingAddress": "Lieferadresse :",  
-    "CompletedOrderBillingAddress": "Rechnungsadresse :", 
-    "signature": "Ihr Inmotion-Team", 
-    "TvaWarningTxt": "Achtung: Der Zoll kann Ihnen beim Versand die in Ihrem Land geltende Mehrwertsteuer in Rechnung stellen.", 
-    "IncludeTxt": "Inklusive", 
-    "TVATxt": "MwSt. :" 
+  "CompletedOrderTitle": "Bestellung erhalten",
+  "CompletedOrderthanks": "Vielen Dank für Ihre Bestellung. Sie werden in Kürze eine Bestätigung per E-Mail erhalten.",  
+  "CompletedOrderOrdernumber": "Bestellnummer :",  
+  "CompletedOrderDate": "Datum :",  
+  "CompletedOrderMail": "E-Mail :",  
+  "CompletedOrderTotal": "Gesamt :",  
+  "CompletedOrderPaiementMethod": "Zahlungsmittel :",  
+  "CompletedOrderResumeTitle": "Zusammenfassung Ihrer Bestellung",  
+  "CompletedOrderProducts": "Produkt(e) :",  
+  "CompletedOrderSousTotal": "Zwischensumme :",  
+  "CompletedOrderShipping": "Versand :",  
+  "CompletedOrderTVA": "MwSt.",  
+  "CompletedOrderShippingAddress": "Lieferadresse :",  
+  "CompletedOrderBillingAddress": "Rechnungsadresse :",
+  "signature": "Ihr Inmotion-Team",
+  "TvaWarningTxt": "Achtung: Der Zoll kann Ihnen beim Versand die in Ihrem Land geltende Mehrwertsteuer in Rechnung stellen.",
+  "IncludeTxt": "Inklusive",
+  "TVATxt": "MwSt. :"
+
   
   }
   

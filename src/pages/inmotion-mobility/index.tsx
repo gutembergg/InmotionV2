@@ -5,9 +5,9 @@ import LayoutMobility from "../../Layout/LayoutMobility";
 import useTranslation from "next-translate/useTranslation";
 
 import Image from "next/dist/client/image";
-import imageSecurity from "../../../public/images/homeMobility/trott2.jpg";
-import imageLocation from "../../../public/images/homeMobility/trott1.jpg";
-import imageHelp from "../../../public/images/homeMobility/contactUs.png";
+import imageSecurity from "../../../public/images/homeMobility/trott2.webp";
+import imageLocation from "../../../public/images/homeMobility/trott1.webp";
+import imageHelp from "../../../public/images/homeMobility/contactUs.webp";
 
 import Link from "next/dist/client/link";
 import SliderMobility from "../../components/Sliders/SliderMobility";
@@ -71,14 +71,16 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
   return (
     <Container>
       <MainContent>
+          <div className="bgHeader">
         <div className="title">
-          <h1>{TXT_Welcome}</h1>
-          <p>{slogan}</p>
+          <h1>{TXT_Welcome}. <br /><span>{slogan}</span></h1>     
         </div>
         <MobilitySlider>
           <SliderMobility />
         </MobilitySlider>
+          </div>
         <PromotedProducts>
+
           <h1 className="squared">{PromotedProductTitle}</h1>
           <CarouselSwiper products={featuredproducts} />
         </PromotedProducts>
@@ -94,7 +96,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
             </div>
           </div>
           <div className="content">
-            <h2>{TitlePromotedSection}</h2>
+            <h1>{TitlePromotedSection}</h1>
             <p>{TextPromotedSection}</p>
             <Link href="/inmotion-mobility/categorie_/equipements">
               <a>{LinkTxtPromotedSection}</a>
@@ -107,7 +109,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
         </NewProducts>
         <RentalSection>
           <div className="content">
-            <h2>{locationTitle}</h2>
+            <h1>{locationTitle}</h1>
             <p>{locationTxt}</p>
             <Link href="/inmotion-mobility/services/location">
               <a>{LocationLink}</a>
@@ -124,7 +126,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
         </RentalSection>
         <HelpSection>
           <div className="content">
-            <h2 className="squared">{contactTitle}</h2>
+            <h1 className="squared">{contactTitle}</h1>
             <p>{contactTxt}</p>
             <Link href="/inmotion-mobility/contact">
               <a>{contactLink}</a>

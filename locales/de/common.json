@@ -1,6 +1,6 @@
 {
-  "ourOccasions": "Unsere Anlässe",
-  "cartTitle": "Ihr Warenkorb im Detail",
+  "ourOccasions": "Unsere Occasion-Modele",
+  "cartTitle": "Übersicht des Warenkorbes",
   "shopHours": "Unsere Öffnungszeiten",
   "horaireLundi": "Montag: Geschlossen",
   "horaireMardi": "Dienstag: 13:00–18:30",
@@ -9,8 +9,9 @@
   "horaireVendredi": "Freitag: Geschlossen",
   "horaireSamedi": "Samstag: 12:00–16:00",
   "horaireDimanche": "Sonntag: Geschlossen",
-  "shopAddressTxt": "Shop Adresse",
+  "shopAddressTxt": "Standort Verkaufsstelle",
   "legalMentionsTxt": "Rechtliche Erwähnung",
   "previousPageLink": "Zürück",
-  "CurrencyBlocked": "Sie haben schon Produckt im warenKorb, sie konnen nicht wechseln"
+  "CurrencyBlocked": "Sie haben schon Produkte im Warenkorb, entfernen Sie sie, um Ihre Devise zu ändern"
+
 }

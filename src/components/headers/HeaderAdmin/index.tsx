@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { SVGProps, useState } from "react";
-import logo from "../../../../public/images/logo-admin.png";
+import logo from "../../../../public/images/logo-admin.webp";
 import SearchBar from "../../SearchBar";
 import { LinkMobility, LinkPrint, StyledHeader } from "./styles";
 import LanguageSelector from "../../LanguageSelector";

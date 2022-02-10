@@ -5,7 +5,7 @@ import { ChangeEvent, useCallback, useState } from "react";
 import useCart from "../../hooks/useCart";
 import { IProduct } from "../../interfaces/IProducts";
 import getAcfContent from "../../utils/getAcfContent";
-import placeholder from"../../../public/images/placeholder_woocommerce.png"
+import placeholder from"../../../public/images/placeholder_woocommerce.webp"
 import {
   Container,
   ImageBlock,

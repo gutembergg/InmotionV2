@@ -14,7 +14,7 @@ import { wc_getCategoriesBySlug } from "../../../services/woocommerceApi/Categor
 import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
 
 import getAcfContent from "../../../utils/getAcfContent";
-import placeholder from "../../../../public/images/placeholder_woocommerce.png";
+import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
 
 import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";

@@ -48,7 +48,7 @@ export const Container = styled.div`
     }
 }
 .sliderImage{
-    width: 54vw;
+    width: 57vw;
     position: relative;
     height: 500px;
     @media screen and (max-width: 1024px) {

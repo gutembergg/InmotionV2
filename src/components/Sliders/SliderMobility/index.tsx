@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import imagetrot from "../../../../public/images/homeMobility/trottl9.jpg";
-import imageP2 from "../../../../public/images/homeMobility/p2fslide.jpg";
-import imagenoel from "../../../../public/images/homeMobility/offrenoel.jpg";
+import imagetrot from "../../../../public/images/homeMobility/trottl9.webp";
+import imageP2 from "../../../../public/images/homeMobility/p2fslide.webp";
+import imagenoel from "../../../../public/images/homeMobility/offrenoel.webp";
 import Link from "next/dist/client/link";
 // Import Swiper styles
 import "swiper/css";
@@ -63,10 +63,10 @@ const SliderMobility = () => {
             <h2>{titleSlider1}</h2>
             <p>{txtSlider1}</p>
             <br />
-            <p>{txtSlider1_2}</p>
-            <h2>
-              <b>{txtSlider1_3}</b>
-            </h2>
+            <p>{txtSlider1_2}</p>  
+            <br />
+            <b>{txtSlider1_3}</b>
+            <br />
             <p>{txtSlider1_4}</p>
           </div>
         </SwiperSlide>
@@ -81,19 +81,13 @@ const SliderMobility = () => {
           </div>
           <div className="content">
             <h2>
-              Découvrez un nouveau moyen de vous déplacer avec lInmotion{" "}
-              <span className="red">P2F</span>
+              {titleSlider2}
             </h2>
             <p>
-              Le P2 est un vélo électrique léger, compact et pliable doté d’une
-              grande autonomie et de trois modes de conduite : vélo classique,
-              avec assistance électrique au pédalage ou tout électrique. La
-              prise en main est facile et le démarrage avec clé sécurisé.
-              Ludique et élégant, rapide et écologique, ce moyen de déplacement
-              saura vous ravir.
+            {txtSlider2}
             </p>
             <Link href="/">
-              <a>lien slider</a>
+              <a>{linkSlider2}</a>
             </Link>
           </div>
         </SwiperSlide>

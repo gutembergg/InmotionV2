@@ -7,7 +7,7 @@ import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import { IProduct } from "../../../interfaces/IProducts";
 import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";
-import placeholder from "../../../../public/images/placeholder_woocommerce.png";
+import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
 
 import { Container, StyledCart } from "../../../styles/PanierStyle";
 import useTranslation from "next-translate/useTranslation";

@@ -3,7 +3,7 @@ import useCart from "../../hooks/useCart";
 import ButtonSkew from "../ButtonSkew";
 import { StyledCart } from "./styles";
 import Link from "next/link";
-import placeholder from "../../../public/images/placeholder_woocommerce.png";
+import placeholder from "../../../public/images/placeholder_woocommerce.webp";
 
 const CartResume = () => {
   const { cart, removeCartItem } = useCart();

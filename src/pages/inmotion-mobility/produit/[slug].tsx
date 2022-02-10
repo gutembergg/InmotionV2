@@ -15,7 +15,7 @@ import {
   getVariations,
   wc_getProductBySlug,
 } from "../../../services/woocommerceApi/Products";
-import placeholder from "../../../../public/images/placeholder_woocommerce.png";
+import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
 import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
