@@ -1,24 +1,48 @@
 import styled from "styled-components";
+import bgHeader from "../../public/images/homeMobility/HeadHomeBg.webp"
 
 export const Container = styled.div``;
 export const MainContent = styled.div`
   @media (max-width: 1024px) {
-    padding-top: 70px;
+    padding-top: 0px;
   }
-  .title {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    margin-bottom: 40px;
-    margin-top: 30px;
+  .bgHeader{
+    margin-top:-80px;
+    padding-top: 100px;
+    background-image: url(${bgHeader.src});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    .title {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      margin: 30px 1rem 40px 1rem;
+      h1{
+        margin: 0 1rem;
+        
+        span{
+          text-transform: lowercase;
+          letter-spacing: 0px;
+        }
+        @media (max-width: 450px) {
+          font-size: 1.4em;
+        }
+      }
+      ;
+    }
   }
 `;
 export const MobilitySlider = styled.div`
   display: flex;
   filter: drop-shadow(-1px 6px 3px rgba(0, 0, 0, 0.5));
   position: relative;
-  margin: 0 5%;
+  transform: translateY(40px);
+  margin: 0 3rem;
+  @media (max-width: 1024px) {
+    margin: 0 2rem;
+  }
 `;
 
 export const PromotedProducts = styled.section`
@@ -74,9 +98,13 @@ export const PromotedSection = styled.section`
     height: 360px;
     box-shadow: -1px 6px 5px rgb(0 0 0 / 23%);
     @media (max-width: 640px) {
-      padding: 30px 10px 30px 10px;
+      padding: 30px 1rem 30px 1rem;
       flex: 0 1 100%;
       height: auto;
+      h1{
+        font-size:1.4em;
+        margin-left: 1rem ;
+      }
     }
 
     h2 {

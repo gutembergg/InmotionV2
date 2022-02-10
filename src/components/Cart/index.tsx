@@ -2,7 +2,7 @@ import Image from "next/image";
 import cartIcon from "../../../public/images/icons/cart.svg";
 import useCart from "../../hooks/useCart";
 import { StyledCart } from "./styles";
-import placeholder from "../../../public/images/placeholder_woocommerce.png";
+import placeholder from "../../../public/images/placeholder_woocommerce.webp";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import useCurrency from "../../hooks/useCurrency";

@@ -65,20 +65,19 @@ export const LoginLink = styled.div`
 
 export const MyAccountLink = styled.div`
   cursor: pointer;
-  margin-top: 10px;
-  color: var(--Blue);
-  font-weight: bold;
+  margin-top: 0px;
+  color: var(--White);
   transition: all ease-in 0.1s;
   &:hover {
     transition: all ease-in 0.1s;
 
     a {
-      color: var(--Black);
+      color: var(--LightGray);
     }
   }
   a {
     text-decoration: none;
-    color: var(--Blue);
+    color: var(--White);
     div {
       display: flex;
       align-items: center;

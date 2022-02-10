@@ -46,24 +46,28 @@ const ProductSmallCard = ({ product }: Props) => {
 
   return (
     <Container>
-      <Image
-        width={150}
-        height={150}
-        src={product.images[0].src}
-        placeholder="blur"
-        blurDataURL={product?.images[0].src}
-        alt={product.name}
-      />
+      <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+        <a>
+          <Image
+            width={150}
+            height={150}
+            src={product.images[0].src}
+            placeholder="blur"
+            blurDataURL={product?.images[0].src}
+            alt={product.name}
+          />
 
-      {product.on_sale && <ButtonSkew text="Promotion!" />}
+          {product.on_sale && <ButtonSkew text="Promotion!" />}
 
-      <Name>{product.name}</Name>
-      <PriceBlock>
-        <span>
-          prix {currency === "CHF" ? product?.price : product.euroPrice}
-        </span>
-      </PriceBlock>
-      <Stock>stock{product.stock_quantity}</Stock>
+          <Name>{product.name}</Name>
+          <PriceBlock>
+            <span>
+              prix {currency === "CHF" ? product?.price : product.euroPrice}
+            </span>
+          </PriceBlock>
+          <Stock>stock{product.stock_quantity}</Stock>
+        </a>
+      </Link>
       <ButtonAddToCart onClick={() => handleAddToCart(product)}>
         {addToCartTradution}
       </ButtonAddToCart>

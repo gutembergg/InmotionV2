@@ -1,14 +1,20 @@
 import { shade } from "polished";
 import styled from "styled-components";
+import backgroundProduct from "../../public/images/backgrounds/MainBackground.jpg"
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-
-  margin-top: 5rem;
-
+  justify-content: flex-start;
+  /* gap: 20px; */
+  min-height:80vh;
+  background-image: url(${backgroundProduct.src});
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  padding-top: 5rem;
+  align-items: flex-start;
   .decouvrez_model {
     margin: auto;
     margin-bottom: 1rem;
@@ -39,13 +45,14 @@ export const Content = styled.div`
 `;
 
 export const ProductInfos = styled.div`
-  width: 100%;
-  max-width: 300px;
-  display: grid;
-  min-width: 290px;
-  grid-template-columns: 1fr;
-  grid-template-rows: 4fr;
-  gap: 20px;
+    width: 100%;
+    min-width: 301px;
+    align-items: start;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    height: 30%;
+}
 
   .weight {
     display: flex;
@@ -90,9 +97,10 @@ export const ProductInfos = styled.div`
 export const ProductImage = styled.div`
   width: 100%;
   position: relative;
-  height: auto;
-  min-height: 200px;
-  min-width: 200px;
+  height: 30vh;
+  min-height: 100px;
+  min-width: 100px;
+  /* padding-top:120px */
 
   @media (max-width: 1015px) {
     order: -1;
@@ -171,7 +179,7 @@ export const ProductMenuResponsive = styled.div`
 `;
 
 export const LogoProduct = styled.div`
-  margin: auto;
+  margin:0 auto;
 
   .logo_box {
     display: flex;
@@ -203,7 +211,7 @@ export const AddToCartSession = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: auto;
+  margin: 0 auto;
 
   width: 400px;
 

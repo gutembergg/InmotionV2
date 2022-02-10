@@ -1,5 +1,5 @@
 import { StyledFooterBlock } from "./styles";
-import logo from "../../../public/images/logo-inmotion-black.png";
+import logo from "../../../public/images/logo-inmotion-black.webp";
 import Image from "next/image";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
@@ -20,6 +20,7 @@ const FooterBlock = () => {
   const horaireDimanche = t("common:horaireDimanche");
   return (
     <StyledFooterBlock>
+      <h1>Informations</h1>
       <div className="box1">
       <div className="logobox">
         <Image

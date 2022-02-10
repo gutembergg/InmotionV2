@@ -88,7 +88,7 @@ const LoginForm = () => {
       {loged ? (
         <div>
           <MyAccountLink>
-            <Link href={`/user`}>
+            <Link href={`/inmotion-mobility/utilisateurs`}>
               <a>
                 <div>
                   <RiAccountCircleFill />

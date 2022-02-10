@@ -67,7 +67,7 @@ h1{
     h1::before {
         content: " ";
         width:35px;
-        height:100%;
+        height: 35px;
         background-color: var(--Red);
         position: absolute;
         z-index:-1;
@@ -89,7 +89,7 @@ h2{
       &::before {
         content: " ";
         width:22px;
-        height:100%;
+        height: 35px;
         background-color: var(--Red);
         position: absolute;
         z-index:-1;

@@ -1,5 +1,5 @@
 {
-  "haveAccount": "Hast du einen Account?",
+  "haveAccount": "Haben Sie einen Account oder möchten Sie einen erstellen?",
   "orderPreview": "Übersicht Ihrer Bestellung",
   "deliveryInfo": "Lieferinformationen",
   "wayDelivery": "Versandart",
@@ -7,9 +7,10 @@
   "emptyCartMessage": "Sie haben keine Produkte in Ihrem Warenkorb",
   "subTotal": "Zwischensumme",
   "addPromoDode": "Gutscheincode hinzufügen",
-  "addTVA": "hinzufügen tva",
+  "addTVA": "MwSt. hinzufügen",
   "addPtotalPrice": "Gesamtpreis hinzufügen",
   "btnSend": "senden",
-  "doYouHaveCodePromo": "Hast du einen promo-code?",
+  "doYouHaveCodePromo": "Besitzen Sie einen Promo-Code?",
   "createAccounts": "Ein Konto erstellen"
+
 }

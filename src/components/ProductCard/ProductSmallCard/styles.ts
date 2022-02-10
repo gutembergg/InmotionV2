@@ -5,6 +5,19 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  a{
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    
+    &:hover{
+      d
+    }
+  }
 `;
 
 export const ImageBlock = styled.div`
