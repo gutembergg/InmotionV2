@@ -6,15 +6,21 @@
     "/": ["home"],
     "/inmotion-mobility": ["headerMobility", "home"],
     "/inmotion-mobility/[slug]": ["headerMobility"],
-    "/inmotion-mobility/categorie_/[slug]": [
-      "headerMobility",
+    "/inmotion-mobility/categories/pieces-detachees": [
       "equipmentsPage",
       "productDetail"
     ],
-    "/inmotion-mobility/categorie/[slug]": [
-      "headerMobility",
-      "productDetail",
-      "equipmentsPage"
+    "/inmotion-mobility/categories/pieces-detachees/[slug]": [
+      "equipmentsPage",
+      "productDetail"
+    ],
+    "/inmotion-mobility/categories/equipements": [
+      "equipmentsPage",
+      "productDetail"
+    ],
+    "/inmotion-mobility/categories/equipements/[slug]": [
+      "equipmentsPage",
+      "productDetail"
     ],
     "/inmotion-mobility/services": ["headerMobility", "services"],
     "/inmotion-mobility/services/autorisation-retour": [

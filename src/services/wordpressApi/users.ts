@@ -65,6 +65,6 @@ export const validateUserToken = async (token: any) => {
 
     return response;
   } catch (error) {
-    alert("Internal Error");
+    console.log("Invalid token");
   }
 };

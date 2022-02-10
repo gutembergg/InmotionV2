@@ -27,6 +27,7 @@ export interface ICartState {
   totalProductsCount: number;
   totalProductsPrice: number;
   totalWithCoupon?: number;
+  timestamp: number;
 }
 
 export const CartContext = createContext<ICartContext>({} as ICartContext);
@@ -36,14 +37,25 @@ const CartProvider = ({ children }: Children) => {
   const [cartItem, setCartItem] = useState<IProduct[]>([]);
   const [cart, setCart] = useState<ICartState>({} as ICartState);
 
+  const timestamp = Date.now();
+
   const getLocalStorageData = useCallback(() => {
     if (typeof window !== "undefined") {
       const existsCart = localStorage.getItem("inmotion:cart");
 
       if (existsCart) {
         const cart: ICartState = JSON.parse(existsCart);
-        setCart(cart);
-        setCartItem(cart.products);
+
+        const today = Date.now();
+        const time = today - cart.timestamp;
+        const dayDifference = time / (1000 * 36000 * 24);
+
+        if (dayDifference <= 1) {
+          setCart(cart);
+          setCartItem(cart.products);
+        } else {
+          localStorage.removeItem("inmotion:cart");
+        }
       }
     }
   }, []);
@@ -81,8 +93,8 @@ const CartProvider = ({ children }: Children) => {
       products: products,
       totalProductsCount: qty,
       totalProductsPrice: price,
+      timestamp,
     };
-    console.log("product", products);
     // Notiflix.Notify.success("produit ajouté au panier");
     Report.success(
       "Produit Ajouté au panier",
@@ -130,6 +142,7 @@ const CartProvider = ({ children }: Children) => {
       products: newProductsCart,
       totalProductsCount: Math.abs(qty),
       totalProductsPrice: Math.abs(price),
+      timestamp,
     };
     Notiflix.Notify.success("produit retiré du panier");
 

@@ -206,6 +206,15 @@ export const ProductsSection = styled.div`
   padding-top: 0.5rem;
 `;
 
+export const ProductsMobile = styled.ul`
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block;
+    margin-top: 1rem;
+  }
+`;
+
 export const Products = styled.div`
   width: 95%;
   margin-top: 2rem;
@@ -217,6 +226,10 @@ export const Products = styled.div`
 
   @media (max-width: 1024px) {
     width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 

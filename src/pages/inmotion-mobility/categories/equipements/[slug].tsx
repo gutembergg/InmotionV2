@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 import { equipementPaths } from "../../../../utils/equipementPaths";
@@ -15,6 +16,7 @@ import ButtonSkew from "../../../../components/ButtonSkew";
 import { IoIosArrowDown } from "react-icons/io";
 import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
+import MobileCard from "../../../../components/ProductCard/MobileCard";
 
 import {
   Container,
@@ -26,6 +28,7 @@ import {
   MenuSubCategories,
   ButtonSelect,
   PaginateBar,
+  ProductsMobile,
 } from "../../../../styles/EquipmentsStyles";
 
 interface Props {
@@ -40,6 +43,8 @@ export default function EquipementsSubCat({
   subCategories,
 }: Props) {
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
+  const { t } = useTranslation();
+  const menuCategories = t("equipmentsPage:categories");
 
   const handleOpenSubCatMenu = () => {
     setOpenMenuCategories(!openMenuCategories);
@@ -62,7 +67,7 @@ export default function EquipementsSubCat({
             <FiltersBar>
               <MenuSubCategoriesMobilie>
                 <ButtonSelect onClick={handleOpenSubCatMenu}>
-                  <p>Categories</p> <IoIosArrowDown />
+                  <p>{menuCategories}</p> <IoIosArrowDown />
                 </ButtonSelect>
                 {openMenuCategories && (
                   <ul className="menu_subcategories">
@@ -88,6 +93,16 @@ export default function EquipementsSubCat({
                 <span>{productsByCategory.length} résultats</span>
               </PaginateBar>
             </FiltersBar>
+            <ProductsMobile>
+              {productsByCategory.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <MobileCard product={product} />
+                  </div>
+                );
+              })}
+            </ProductsMobile>
+
             <Products>
               {productsByCategory.map((product) => {
                 return (

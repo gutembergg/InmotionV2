@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import React, { ReactElement } from "react";
+import useTranslation from "next-translate/useTranslation";
 import confidentialiteIcon from "../../../../../public/images/icons/confidentialite.svg";
 import { ICategories } from "../../../../interfaces/ICategories";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
@@ -18,6 +19,8 @@ interface IProps {
 }
 
 export default function Equipements({ subCategories, category }: IProps) {
+  const { t } = useTranslation();
+  const discoverOurEquipment = t("equipmentsPage:discoverOurEquipment");
   return (
     <>
       <HeaderSeo
@@ -29,7 +32,7 @@ export default function Equipements({ subCategories, category }: IProps) {
       />
 
       <Container>
-        <h1>Découvrez nos équipements</h1>
+        <h1>{discoverOurEquipment}</h1>
         <MainContent>
           {subCategories.map((category) => {
             return (
@@ -71,8 +74,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const category = await wc_getCategoriesBySlug(slug, lang as string);
-
-  console.log("category", category);
 
   if (!category) {
     return {

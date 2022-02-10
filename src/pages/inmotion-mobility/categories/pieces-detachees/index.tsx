@@ -1,5 +1,7 @@
 import { GetStaticProps } from "next";
 import React, { ReactElement } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import confidentialiteIcon from "../../../../../public/images/icons/confidentialite.svg";
 import HeaderSeo from "../../../../components/HeaderSeo";
 import { ICategories } from "../../../../interfaces/ICategories";
@@ -8,10 +10,9 @@ import {
   wc_getCategoriesBySlug,
   wc_getSub_categories,
 } from "../../../../services/woocommerceApi/Categories";
-import Image from "next/image";
-import Link from "next/link";
 import { Container, MainContent } from "../../../../styles/Boutique";
 import { Wrapper } from "../../../../styles/PiecesDetacheeIndex";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   subCategories: ICategories[];
@@ -19,6 +20,8 @@ interface IProps {
 }
 
 export default function PiecesDetachees({ subCategories, category }: IProps) {
+  const { t } = useTranslation();
+  const titleDetachedPieces = t("equipmentsPage:titledtachedPieces");
   return (
     <>
       <HeaderSeo
@@ -31,7 +34,7 @@ export default function PiecesDetachees({ subCategories, category }: IProps) {
 
       <Wrapper>
         <Container>
-          <h1>Catégorie Pièces détachées</h1>
+          <h1>{titleDetachedPieces}</h1>
           <MainContent>
             {subCategories.map((category) => {
               return (

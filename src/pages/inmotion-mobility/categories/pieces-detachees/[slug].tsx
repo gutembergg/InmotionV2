@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
+import useTranslation from "next-translate/useTranslation";
 import { paths as detachedPiecesPaths } from "../../../../utils/piecesDetacheesPaths";
 import HeaderSeo from "../../../../components/HeaderSeo";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
@@ -36,6 +37,7 @@ import {
   MenuBlock,
   UpsellTitle,
   ProductsSection,
+  ProductsMobile,
   Products,
   MenuSubCategoriesMobilie,
   MenuSubCategories,
@@ -45,6 +47,7 @@ import {
   ModelList,
   PaginateBar,
 } from "../../../../styles/PieceDetacheeStyles";
+import MobileCard from "../../../../components/ProductCard/MobileCard";
 
 interface Props {
   productsByCategory: IProduct[];
@@ -60,6 +63,10 @@ export default function PiecesDetacheesSubCat({
   currentyCategory,
 }: Props) {
   const router = useRouter();
+  const { t } = useTranslation();
+  const allArticles = t("equipmentsPage:allArticles");
+  const toSourtOut = t("equipmentsPage:toSourtOut");
+
   const [upSellFilter, setUpSellFilter] = useState(false);
   const [products, setProducts] = useState<IProduct[]>(productsByCategory);
   const [upSellName, setUpSellName] = useState("");
@@ -103,7 +110,7 @@ export default function PiecesDetacheesSubCat({
 
   const _productsUpSells = [
     ...productsUpSells,
-    { id: 999999999999, name: "All Products" },
+    { id: 999999999999, name: allArticles },
   ];
 
   return (
@@ -167,7 +174,7 @@ export default function PiecesDetacheesSubCat({
             <FiltersBar>
               <ButtonFilterBlock>
                 <ButtonSelect onClick={handleUpSellFilter}>
-                  <p>{!!upSellName ? upSellName : "Trier par Model"} </p>{" "}
+                  <p>{!!upSellName ? upSellName : toSourtOut} </p>{" "}
                   <IoIosArrowDown />
                 </ButtonSelect>
                 <ModelListWrapper>
@@ -212,6 +219,15 @@ export default function PiecesDetacheesSubCat({
                 <span>{products.length} résultats</span>
               </PaginateBar>
             </FiltersBar>
+            <ProductsMobile>
+              {products.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <MobileCard product={product} />
+                  </div>
+                );
+              })}
+            </ProductsMobile>
             <Products>
               {products.map((product) => {
                 return (

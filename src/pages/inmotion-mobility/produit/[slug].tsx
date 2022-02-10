@@ -3,8 +3,8 @@ import Image from "next/image";
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useRouter } from "next/router";
+import Notiflix from "notiflix";
 
-import HouseIcon from "../../../../public/images/icons/house.svg";
 import getAcfContent from "../../../utils/getAcfContent";
 import useCart from "../../../hooks/useCart";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -18,7 +18,6 @@ import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import { IVariation } from "../../../interfaces/IVariation";
-import Notiflix from "notiflix";
 import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
 import useCurrency from "../../../hooks/useCurrency";
 import PreviousPageLink from "../../../components/PreviousPageLink";
@@ -119,8 +118,6 @@ export default function ProductDetail({ product, variations }: Props) {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
   };
-
-  console.log("variations: ", variations);
 
   return (
     <>
@@ -310,7 +307,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const product = await wc_getProductBySlug(slug as string, lang as string);
 
   const variations: IVariation[] = await getVariations(product.id);
-  console.log("variations: ", variations);
 
   if (!product) {
     return {

@@ -61,8 +61,9 @@ export const CardWrapper = styled.div`
 
 export const ProductCard = styled.div`
   position: fixed;
-  top: 10;
+  top: 160px;
   left: 10;
+  z-index: 99999;
 
   width: 100%;
   max-width: 400px;

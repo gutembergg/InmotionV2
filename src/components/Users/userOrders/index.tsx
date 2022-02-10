@@ -26,7 +26,7 @@ const UserOrders = ({ orders }: Props) => {
     const day = date.getDate();
     const mounth = date.getMonth() + 1;
     const year = date.getFullYear();
-    const includeZero = mounth <= 10 ? "0" : "";
+    const includeZero = mounth < 10 ? "0" : "";
     const dateFormated = `${day}/${includeZero}${mounth}/${year}`;
 
     return dateFormated;

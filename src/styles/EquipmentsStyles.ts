@@ -89,6 +89,19 @@ export const Products = styled.div`
   @media (max-width: 1024px) {
     width: 100%;
   }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+export const ProductsMobile = styled.ul`
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block;
+    margin-top: 1rem;
+  }
 `;
 
 export const MenuSubCategoriesMobilie = styled.div`

@@ -90,14 +90,20 @@ export default function UsersPage() {
     }
   }, [user, router]);
 
-  const selectSideMenuItem = useCallback((id: number, index: number) => {
-    if (id === 4) {
-      // deconnecter
-      return;
-    }
-    setSideMenuItem({ id, index });
-    setOpenMenuMobile(false);
-  }, []);
+  const selectSideMenuItem = useCallback(
+    (id: number, index: number) => {
+      if (id === 4) {
+        if (typeof window !== undefined) {
+          localStorage.removeItem("inmotion:user");
+          router.push("/inmotion-mobility");
+        }
+        return;
+      }
+      setSideMenuItem({ id, index });
+      setOpenMenuMobile(false);
+    },
+    [router]
+  );
 
   const toggleMobileMenu = useCallback(() => {
     setOpenMenuMobile(!openMenuMobile);

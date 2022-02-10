@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 import useCart from "../../../hooks/useCart";
@@ -21,6 +22,9 @@ interface Props {
 const ProductSmallCard = ({ product }: Props) => {
   const { currency } = useCurrency();
   const { cartItem, addToCart } = useCart();
+  const { t } = useTranslation();
+  const addToCartTradution = t("productDetail:addToCart");
+  const showDetailsTradution = t("productDetail:showDetails");
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -56,16 +60,16 @@ const ProductSmallCard = ({ product }: Props) => {
       <Name>{product.name}</Name>
       <PriceBlock>
         <span>
-          price {currency === "CHF" ? product?.price : product.euroPrice}
+          prix {currency === "CHF" ? product?.price : product.euroPrice}
         </span>
       </PriceBlock>
       <Stock>stock{product.stock_quantity}</Stock>
       <ButtonAddToCart onClick={() => handleAddToCart(product)}>
-        Ajouter au panier
+        {addToCartTradution}
       </ButtonAddToCart>
       <BtnProductDetail>
         <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-          Afficher detail du produit
+          {showDetailsTradution}
         </Link>
       </BtnProductDetail>
     </Container>
