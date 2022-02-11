@@ -33,7 +33,6 @@ export const getProductBySlug = async (slug: string) => {
   return filterCategoryVisibility(product);
 };
 
-
 // Get variations products //////////////////////////////////////////
 export const getVariations = async (id: number) => {
   const { data } = await wooCommerce.get(`products/${id}/variations`);
@@ -43,7 +42,17 @@ export const getVariations = async (id: number) => {
 
 // Get  products by ID LISTE//////////////////////////////////////////
 export const getProductByID = async (idListe: string[]) => {
-  const { data } = await wooCommerce.get(`products/?include=${idListe}`)
+  const { data } = await wooCommerce.get(
+    `products/?include[cross_sell_ids]=${idListe}`
+  );
+
+  return data;
+};
+
+export const _getProductByID = async (idListe: string[]) => {
+  const { data } = await wooCommerce.get(`products`, {
+    includes: idListe,
+  });
 
   return data;
 };

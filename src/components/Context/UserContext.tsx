@@ -87,11 +87,12 @@ const UserProvider = ({ children }: Children) => {
         const token = data.token;
         validateUserToken(token).then((response) => {
           if (response?.status !== 200) {
-            localStorage.removeItem("inmotion:user");
+            logout();
           }
         });
       }
     }
+    // eslint-disable-next-line
   }, [data.token]);
 
   const login = useCallback(async (authUser: AuthUser) => {

@@ -85,8 +85,8 @@ export default function Category({ category, productsByCategory }: Props) {
     (item) => item.name === "autorisation circulation"
   );
 
-console.log(autorisationRouler?.options);
-  console.log("item",products);
+  console.log(autorisationRouler?.options);
+  console.log("item", products);
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -105,6 +105,8 @@ console.log(autorisationRouler?.options);
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
+
+  console.log("products===>", products);
 
   return (
     <>
@@ -138,11 +140,11 @@ console.log(autorisationRouler?.options);
                   src={RoadIcon}
                   alt="poids"
                   className="image"
-                  />
+                />
               </span>
               <div>
-                {autorisationRouler?.options.map((autorisation, key) =>{
-                  return <p key={key}>{autorisation}</p>
+                {autorisationRouler?.options.map((autorisation, key) => {
+                  return <p key={key}>{autorisation}</p>;
                 })}
               </div>
             </div>
@@ -186,9 +188,7 @@ console.log(autorisationRouler?.options);
                     key={product.id}
                     onClick={() => handleModelMarque(product.id, index)}
                   >
-            
-                {product.name}
-                
+                    {product.name}
                   </li>
                 );
               })}
@@ -204,10 +204,7 @@ console.log(autorisationRouler?.options);
           </div>
           <div className="logo_box">
             <h2 className="first_title">
-              {products[productIndex] &&
-                products[productIndex].name
-                }
-            
+              {products[productIndex] && products[productIndex].name}
             </h2>
             <div className="price">
               <div
@@ -217,17 +214,17 @@ console.log(autorisationRouler?.options);
               >
                 {currency === "CHF"
                   ? !!products[productIndex]?.regular_price &&
-                    products[productIndex]?.regular_price
+                    products[productIndex]?.regular_price + " " + currency
                   : !!products[productIndex]?.euroRegularPrice &&
-                    products[productIndex]?.euroRegularPrice}
+                    products[productIndex]?.euroRegularPrice + " " + currency}
               </div>
 
               <div className="sale_price">
                 {currency === "CHF"
                   ? !!products[productIndex]?.sale_price &&
-                    products[productIndex]?.sale_price
-                  : !!products[productIndex]?.euroPrice &&
-                    products[productIndex]?.euroPrice}
+                    products[productIndex]?.sale_price + " " + currency
+                  : !!products[productIndex]?.sale_price &&
+                    products[productIndex]?.euroPrice + " " + currency}
               </div>
             </div>
           </div>
@@ -245,7 +242,6 @@ console.log(autorisationRouler?.options);
             <a className="link">{linkShowDetails}</a>
           </Link>
         </AddToCartSession>
-
       </Container>
     </>
   );

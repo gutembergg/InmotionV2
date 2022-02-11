@@ -53,7 +53,7 @@ const sideMenu = [
 
 export default function UsersPage() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const [mounted, setMounted] = useState(false);
   const [orders, setOrders] = useState<Order[] | undefined>(undefined);
   const [currentyUser, setCurrentyUser] = useState<User>({} as User);
@@ -94,7 +94,7 @@ export default function UsersPage() {
     (id: number, index: number) => {
       if (id === 4) {
         if (typeof window !== undefined) {
-          localStorage.removeItem("inmotion:user");
+          logout();
           router.push("/inmotion-mobility");
         }
         return;
@@ -108,8 +108,6 @@ export default function UsersPage() {
   const toggleMobileMenu = useCallback(() => {
     setOpenMenuMobile(!openMenuMobile);
   }, [openMenuMobile]);
-
-  console.log("sideMenuItem: ", sideMenuItem);
 
   return (
     mounted && (

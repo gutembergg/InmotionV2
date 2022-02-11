@@ -29,6 +29,7 @@ import {
   PromotedSection,
   HelpSection,
 } from "../../styles/MobilityIndex";
+import { addEuroPriceInProducts } from "../../utils/addEuroPriceInProducts";
 
 interface Props {
   featuredProducts: IProduct[];
@@ -71,16 +72,18 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
   return (
     <Container>
       <MainContent>
-          <div className="bgHeader">
-        <div className="title">
-          <h1>{TXT_Welcome}. <br /><span>{slogan}</span></h1>     
-        </div>
-        <MobilitySlider>
-          <SliderMobility />
-        </MobilitySlider>
+        <div className="bgHeader">
+          <div className="title">
+            <h1>
+              {TXT_Welcome}. <br />
+              <span>{slogan}</span>
+            </h1>
           </div>
+          <MobilitySlider>
+            <SliderMobility />
+          </MobilitySlider>
+        </div>
         <PromotedProducts>
-
           <h1 className="squared">{PromotedProductTitle}</h1>
           <CarouselSwiper products={featuredproducts} />
         </PromotedProducts>
@@ -154,12 +157,19 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
   const featuredproducts = await getFeaturedProduct(lang as string);
+  const featuredproductsWithEuroPrice = await addEuroPriceInProducts(
+    featuredproducts
+  );
+
   const onSaleProducts = await getOnSaleProducts(lang as string);
+  const onSaleProductsWithEuroPrice = await addEuroPriceInProducts(
+    onSaleProducts
+  );
 
   return {
     props: {
-      featuredProducts: featuredproducts,
-      onSaleProducts: onSaleProducts,
+      featuredProducts: featuredproductsWithEuroPrice,
+      onSaleProducts: onSaleProductsWithEuroPrice,
     },
     revalidate: 60 * 2,
   };

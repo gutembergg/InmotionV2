@@ -14,7 +14,6 @@ import {
   getProductByCategory,
   getProduitsByCategoriesSlug,
 } from "../../../../services/woocommerceApi/Products";
-import conditionIcon from "../../../../../public/images/icons/conditionsgen.svg";
 import { IProduct } from "../../../../interfaces/IProducts";
 import { IoIosArrowDown } from "react-icons/io";
 import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
@@ -22,6 +21,7 @@ import ButtonSkew from "../../../../components/ButtonSkew";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { getProductsUpSells } from "../../../../utils/getProductsUpsells";
+import MobileCard from "../../../../components/ProductCard/MobileCard";
 
 import {
   Container,
@@ -47,7 +47,6 @@ import {
   ModelList,
   PaginateBar,
 } from "../../../../styles/PieceDetacheeStyles";
-import MobileCard from "../../../../components/ProductCard/MobileCard";
 
 interface Props {
   productsByCategory: IProduct[];

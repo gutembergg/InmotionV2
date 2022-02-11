@@ -54,11 +54,6 @@ export const CardWrapper = styled.div`
 `;
 
 export const ProductCard = styled.div`
-  position: fixed;
-  top: 160px;
-  left: 10;
-  z-index: 99999;
-
   width: 100%;
   max-width: 400px;
 
@@ -420,10 +415,9 @@ table {
     padding: 10px;
     &:nth-child(odd){
         font-weight: bold
+        
       }
   }
-    }
-
-  }
+    
 }
 `;

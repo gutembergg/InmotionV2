@@ -5,27 +5,27 @@ import ReactPlayer from "react-player";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 
-import getAcfContent from "../../../utils/getAcfContent";
 import cityBG from "../../../../public/images/backgrounds/productCity.svg";
 
 import useCart from "../../../hooks/useCart";
 import { IProduct } from "../../../interfaces/IProducts";
 import {
   getProductByID,
-  getProductBySlug,
-  getProduitsByCategoriesSlug,
   getVariations,
   wc_getProductBySlug,
 } from "../../../services/woocommerceApi/Products";
 import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
-import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import { IVariation } from "../../../interfaces/IVariation";
-import { addEuroPriceInSingleProduct } from "../../../utils/addEuroPriceInProducts";
+import {
+  addEuroPriceInProducts,
+  addEuroPriceInSingleProduct,
+} from "../../../utils/addEuroPriceInProducts";
 import useCurrency from "../../../hooks/useCurrency";
-import PreviousPageLink from "../../../components/PreviousPageLink";
+import CarouselSwiper from "../../../components/Sliders/Carousel";
+import { ProductImageCarousel } from "../../../components/Sliders/ProductImageCarousel";
 
 import {
   Container,
@@ -42,16 +42,12 @@ import {
   DescriptionProduct,
   Sections,
   RelatedProduct,
-  SameCatProduct,
   Caracteristiques,
   ProductDetaiil,
   VariationProducts,
   Variations,
   VariationImage,
 } from "../../../styles/ProductDetail";
-
-import CarouselSwiper from "../../../components/Sliders/Carousel";
-import { ProductImageCarousel } from "../../../components/Sliders/ProductImageCarousel";
 
 interface Props {
   product: IProduct;
@@ -68,17 +64,18 @@ export default function ProductDetail({
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
   //creer usestate crossselid avec crossselids initialisé
-  // const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
+  /*   const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
 
-  // useEffect(() => {
-  //   setcrossSellsID(crossSellIDS);
-  // }, [crossSellIDS]);
+   useEffect(() => {
+     setcrossSellsID(crossSellIDS);
+   }, [crossSellIDS]); */
 
   //si marche pas faire useeffect
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
   const [productQty, setProductQty] = useState(1);
+
   useEffect(() => {
     Notiflix.Loading.init({
       svgColor: "var(--Blue)",
@@ -141,7 +138,6 @@ export default function ProductDetail({
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
   };
-  console.log(product);
 
   return (
     <>
@@ -276,7 +272,7 @@ export default function ProductDetail({
             </div>
             <DescriptionProduct>
               <Sections>
-                {product.acf.hasOwnProperty("description_du_produit") &&
+                {product.acf.description_du_produit.length > 0 &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>
@@ -369,8 +365,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const product = await wc_getProductBySlug(slug as string, lang as string);
 
-  const variations: IVariation[] = await getVariations(product.id);
-
   if (!product) {
     return {
       redirect: {
@@ -380,15 +374,20 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  //crossSell ids
+  const variations: IVariation[] = await getVariations(product.id);
+
+  //crossSell ids  8804, 8760, 8821 en  8803, 8756, 8817
   const crossSellIDS = await getProductByID(product.cross_sell_ids);
+  const crossSellProductsWithEuroPrice = await addEuroPriceInProducts(
+    crossSellIDS
+  );
 
   const productWithEuro = await addEuroPriceInSingleProduct(product);
 
   return {
     props: {
       product: productWithEuro,
-      crossSellIDS: crossSellIDS,
+      crossSellIDS: crossSellProductsWithEuroPrice,
       variations,
     },
     revalidate: 60 * 2, // 2 min

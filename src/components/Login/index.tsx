@@ -100,7 +100,7 @@ const LoginForm = () => {
         </div>
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
-           <RiLoginBoxLine size={21} color="#f0f0f0" />
+          <RiLoginBoxLine size={21} color="#f0f0f0" />
           {/*   <span>{menuLogin} /</span>
           <span>{menuRegister}</span> */}
           <span>{menuLogin}</span>
