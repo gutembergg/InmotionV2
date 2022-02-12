@@ -66,8 +66,8 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
   }, [featuredProducts]);
 
   useEffect(() => {
-    _setOnSaleproduct(onSaleProduct);
-  }, [onSaleProduct]);
+    _setOnSaleproduct(onSaleProducts);
+  }, [onSaleProducts]);
 
   return (
     <Container>

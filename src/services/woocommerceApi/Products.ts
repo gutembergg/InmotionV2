@@ -123,7 +123,7 @@ export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
   const { data } = await wooCommerce.get("products", {
     on_sale: true,
     per_page: 8,
-    lang: lang,
+    lang: lang
   });
   const product = data;
 
