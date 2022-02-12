@@ -178,6 +178,26 @@ export const ProductMenuResponsive = styled.div`
   }
 `;
 
+export const BtnProductDetail = styled.button`
+   height: 40px;
+  width: 100%;
+  max-width: 200px;
+  background: var(--Blue);
+  color: var(--White);
+  border: none;
+  text-align: center;
+  margin: 0 auto;
+  &:hover {
+    background: var(--BlueHover);
+}
+a {
+    text-decoration: none;
+    color: var(--White);
+    font-weight: 600;
+
+  }
+`;
+
 export const LogoProduct = styled.div`
   margin:0 auto;
 
