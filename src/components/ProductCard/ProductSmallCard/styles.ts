@@ -5,6 +5,13 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transform: scale(0.96);
+  transition: all ease-in 0.1s;
+  
+  &:hover{
+    transform: scale(1);
+    transition: all ease-in 0.1s;
+  }
 
   a{
     text-decoration: none;
@@ -13,10 +20,6 @@ export const Container = styled.div`
     flex-direction: column;
     align-content: center;
     align-items: center;
-    
-    &:hover{
-      d
-    }
   }
 `;
 
@@ -47,6 +50,7 @@ export const ButtonAddToCart = styled.button`
   background: var(--Blue);
   color: var(--White);
   border: none;
+  font-weight: 600;
 
   &:hover {
     background: var(--BlueHover);
@@ -54,17 +58,19 @@ export const ButtonAddToCart = styled.button`
 `;
 
 export const BtnProductDetail = styled.button`
-  background: transparent;
+   height: 40px;
+  width: 100%;
+  max-width: 200px;
+  background: var(--Blue);
+  color: var(--White);
   border: none;
-  padding-top: 0.6rem;
-
+  &:hover {
+    background: var(--BlueHover);
+}
   a {
     text-decoration: none;
-    color: var(--Blue);
+    color: var(--White);
     font-weight: 600;
 
-    &:hover {
-      color: var(--BlueHover);
-    }
   }
 `;

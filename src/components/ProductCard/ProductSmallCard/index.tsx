@@ -24,8 +24,7 @@ const ProductSmallCard = ({ product }: Props) => {
   const { cartItem, addToCart } = useCart();
   const { t } = useTranslation();
   const addToCartTradution = t("productDetail:addToCart");
-  const showDetailsTradution = t("productDetail:showDetails");
-  const priceTraduction = t("productDetail:price");
+  const showVariationTradution = t("productDetail:showVariationTradution");
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -44,7 +43,7 @@ const ProductSmallCard = ({ product }: Props) => {
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
-
+  console.log("product", product);
   return (
     <Container>
       <Link href={`/inmotion-mobility/produit/${product.slug}`}>
@@ -70,14 +69,17 @@ const ProductSmallCard = ({ product }: Props) => {
           <Stock>stock{product.stock_quantity}</Stock>
         </a>
       </Link>
-      <ButtonAddToCart onClick={() => handleAddToCart(product)}>
-        {addToCartTradution}
-      </ButtonAddToCart>
-      <BtnProductDetail>
-        <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-          {showDetailsTradution}
-        </Link>
-      </BtnProductDetail>
+      {product.variations.length > 0 ? (
+        <BtnProductDetail>
+          <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+            {showVariationTradution}
+          </Link>
+        </BtnProductDetail>
+      ) : (
+        <ButtonAddToCart onClick={() => handleAddToCart(product)}>
+          {addToCartTradution}
+        </ButtonAddToCart>
+      )}
     </Container>
   );
 };

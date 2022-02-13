@@ -33,6 +33,7 @@ import {
   LogoProduct,
   AddToCartSession,
   ProductMenuResponsive,
+  BtnProductDetail
 } from "../../../styles/CategoryDetail";
 import useCurrency from "../../../hooks/useCurrency";
 
@@ -50,6 +51,7 @@ export default function Category({ category, productsByCategory }: Props) {
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
   const linkShowDetails = t("productDetail:showDetails");
+  const showVariationTradution = t("productDetail:showVariationTradution");
 
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
@@ -225,19 +227,28 @@ export default function Category({ category, productsByCategory }: Props) {
             </div>
           </div>
         </LogoProduct>
+        {products[productIndex]?.variations.length > 0 ? (
+      <BtnProductDetail>
+        <Link href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}>
+          {showVariationTradution}
+        </Link>
+      </BtnProductDetail>
+      ):(
         <AddToCartSession>
-          <button
-            className="addToCart_button"
-            onClick={() => handleAddToCart(products[productIndex])}
-          >
-            {btnAddToCart}
-          </button>
-          <Link
-            href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
-          >
-            <a className="link">{linkShowDetails}</a>
-          </Link>
-        </AddToCartSession>
+        <button
+          className="addToCart_button"
+          onClick={() => handleAddToCart(products[productIndex])}
+        >
+          {btnAddToCart}
+        </button>
+        <Link
+          href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+        >
+          <a className="link">{linkShowDetails}</a>
+        </Link>
+      </AddToCartSession>
+      )}
+       
       </Container>
     </>
   );
