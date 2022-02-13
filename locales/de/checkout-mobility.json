@@ -11,6 +11,18 @@
   "addPtotalPrice": "Gesamtpreis hinzufügen",
   "btnSend": "senden",
   "doYouHaveCodePromo": "Besitzen Sie einen Promo-Code?",
-  "createAccounts": "Ein Konto erstellen"
-
+  "createAccounts": "Ein Konto erstellen",
+  "vosCoordonnees": "deine Details",
+  "btnToModify": "ändern",
+  "toConfirm": "bestätigen",
+  "chooseMethdPay": "Zahlungsart auswählen",
+  "proceedToPayment": "weiter zur Zahlung",
+  "commodityValue": "Warenwert",
+  "shippingTraduction": "Versand",
+  "paymentFees": "Zahlungsgebühren",
+  "yourOrder": "deine Bestellung",
+  "advancePayment": "Vorauszahlung",
+  "onlinePayment": "Onlinebezahlung",
+  "deliveryAddress": "Lieferadresse",
+  "billingAddress": "Rechnungsadresse"
 }

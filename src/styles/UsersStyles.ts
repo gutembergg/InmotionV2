@@ -45,12 +45,25 @@ export const SideBarMenuMobile = styled.div`
 `;
 
 export const BtnMobile = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   max-width: 400px;
   height: 2.6rem;
   background: var(--Blue);
   color: var(--White);
   border: none;
+  transition: 0.2s ease;
+
+  span {
+    margin-left: 0.4rem;
+  }
+
+  &:hover {
+    background: var(--BlueHover);
+  }
 `;
 
 export const MenuListMobile = styled.div`

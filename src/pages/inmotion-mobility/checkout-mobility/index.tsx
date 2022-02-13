@@ -88,11 +88,23 @@ export default function CheckoutMobility() {
 
   const [loged, setloged] = useState(false);
 
+  // Traductions///////////////////////////////////////////////
   const { t } = useTranslation();
   const haveAccount = t("checkout-mobility:haveAccount");
   const wayDelivery = t("checkout-mobility:wayDelivery");
   const payment = t("checkout-mobility:payment");
   const emptyCartMessage = t("checkout-mobility:emptyCartMessage");
+  const orderPreview = t("checkout-mobility:orderPreview");
+  const vosCoordonnees = t("checkout-mobility:vosCoordonnees");
+  const btnToModify = t("checkout-mobility:btnToModify");
+  const chooseMethdPay = t("checkout-mobility:chooseMethdPay");
+  const proceedToPayment = t("checkout-mobility:proceedToPayment");
+  const commodityValue = t("checkout-mobility:commodityValue");
+  const shippingTraduction = t("checkout-mobility:shippingTraduction");
+  const paymentFees = t("checkout-mobility:paymentFees");
+  const yourOrder = t("checkout-mobility:yourOrder");
+  const advancePayment = t("checkout-mobility:advancePayment");
+  const onlinePayment = t("checkout-mobility:onlinePayment");
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
@@ -830,7 +842,7 @@ export default function CheckoutMobility() {
   return (
     <>
       <Container>
-        <h1>Votre Commande</h1>
+        <h1>{yourOrder}</h1>
         <Content>
           <div className="content">
             <FormSection className="sections">
@@ -848,7 +860,7 @@ export default function CheckoutMobility() {
                 <div className="title">
                   <h2 className={paymentSteps === 1 ? "active" : ""}>
                     <span className="coordonnes font_responsive">
-                      1. Vos coordonnées
+                      1. {vosCoordonnees}
                     </span>
                     {changeBillinhView && (
                       <button
@@ -856,7 +868,7 @@ export default function CheckoutMobility() {
                         onClick={updateForm}
                         disabled={Object.keys(_order).length > 0}
                       >
-                        Modifier
+                        {btnToModify}
                       </button>
                     )}
                   </h2>
@@ -989,7 +1001,7 @@ export default function CheckoutMobility() {
                         : "disable"
                     }
                   >
-                    <h2>4. Choisir méthode de paiement</h2>
+                    <h2>4. {chooseMethdPay}</h2>
                   </div>
                 </PaymentBankTransfert>
 
@@ -1004,7 +1016,7 @@ export default function CheckoutMobility() {
                       ) : (
                         <IoMdRadioButtonNot />
                       )}{" "}
-                      <h4>Paiement anticipé</h4>
+                      <h4>{advancePayment}</h4>
                     </div>
                     <div
                       className="way_payment_radio"
@@ -1015,7 +1027,7 @@ export default function CheckoutMobility() {
                       ) : (
                         <IoMdRadioButtonNot />
                       )}{" "}
-                      <h4>Paiment online</h4>
+                      <h4>{onlinePayment}</h4>
                     </div>
                   </WayPaymentRadio>
                 </Collapse>
@@ -1031,7 +1043,7 @@ export default function CheckoutMobility() {
                     codePromoState || checkoutClicked || paymentSteps !== 4
                   }
                 >
-                  <h2 className="font_responsive">5. Procéder au paiement</h2>
+                  <h2 className="font_responsive">5. {proceedToPayment}</h2>
 
                   <span>{isOrder === false && <Spiner />}</span>
                 </button>
@@ -1122,7 +1134,7 @@ export default function CheckoutMobility() {
                 qtyCartProducts={qtyCartProducts}
               >
                 <div className="order_section_block" ref={cartRef}>
-                  <h2 id="title_order">Résumé de votre commande</h2>
+                  <h2 id="title_order">{orderPreview}</h2>
                   <div className="cart_products">
                     <div className="prod_block">
                       {cart.totalProductsCount > 0 ? (
@@ -1160,7 +1172,7 @@ export default function CheckoutMobility() {
                       <div className="taxes">
                         <div className="taxes_item">
                           <div className="taxes_title">
-                            Valeur de marchandise(T.T.C)
+                            {commodityValue}(T.T.C)
                           </div>
                           <div className="price_block">
                             <span>{cart.totalProductsPrice?.toFixed(2)} </span>
@@ -1189,7 +1201,7 @@ export default function CheckoutMobility() {
                         </div>
                         <div className="taxes_item">
                           <div className="taxes_title">
-                            Frais denvoi: (T.T.C)
+                            {shippingTraduction}: (T.T.C)
                           </div>
                           <div>
                             {shippingPrice} {CHFCurrency ? "CHF" : "EUR"}
@@ -1198,7 +1210,7 @@ export default function CheckoutMobility() {
 
                         <div className="taxes_item">
                           <div className="taxes_title">
-                            Frais de payment: (T.T.C)
+                            {paymentFees}: (T.T.C)
                           </div>
                           <div>
                             {!!_taxPaymentMethods ? _taxPaymentMethods : 0}{" "}

@@ -8,19 +8,23 @@
     "/inmotion-mobility/[slug]": ["headerMobility"],
     "/inmotion-mobility/categories/pieces-detachees": [
       "equipmentsPage",
-      "productDetail"
+      "productDetail",
+      "headerMobility"
     ],
     "/inmotion-mobility/categories/pieces-detachees/[slug]": [
       "equipmentsPage",
-      "productDetail"
+      "productDetail",
+      "headerMobility"
     ],
     "/inmotion-mobility/categories/equipements": [
       "equipmentsPage",
-      "productDetail"
+      "productDetail",
+      "headerMobility"
     ],
     "/inmotion-mobility/categories/equipements/[slug]": [
       "equipmentsPage",
-      "productDetail"
+      "productDetail",
+      "headerMobility"
     ],
     "/inmotion-mobility/services": ["headerMobility", "services"],
     "/inmotion-mobility/services/autorisation-retour": [
@@ -42,7 +46,12 @@
       "forms"
     ],
     "/inmotion-mobility/completed-order": ["headerMobility", "completed-order"],
-    "/inmotion-mobility/utilisateurs": ["headerMobility", "forms"],
+    "/inmotion-mobility/utilisateurs": [
+      "headerMobility",
+      "forms",
+      "userAccount",
+      "checkout-mobility"
+    ],
     "/inmotion-mobility/utilisateurs/commande/[orderId]": [
       "headerMobility",
       "forms",

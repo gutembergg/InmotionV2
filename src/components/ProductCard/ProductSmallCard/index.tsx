@@ -63,7 +63,7 @@ const ProductSmallCard = ({ product }: Props) => {
           <Name>{product.name}</Name>
           <PriceBlock>
             <span>
-              {priceTraduction}{" "}
+              {currency === "CHF" ? "CHF" : "EUR"}{" "}
               {currency === "CHF" ? product?.price : product.euroPrice}
             </span>
           </PriceBlock>

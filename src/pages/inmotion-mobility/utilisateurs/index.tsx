@@ -4,6 +4,7 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import { FaDropbox, FaUserEdit } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
 import { ImAddressBook } from "react-icons/im";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 
@@ -27,29 +28,7 @@ import {
   MenuList,
   ListItem,
 } from "../../../styles/UsersStyles";
-
-const sideMenu = [
-  {
-    id: 1,
-    name: "Mes commandes",
-    icon: <FaDropbox size={25} />,
-  },
-  {
-    id: 2,
-    name: "Addresse",
-    icon: <ImAddressBook size={25} />,
-  },
-  {
-    id: 3,
-    name: "Mes informations",
-    icon: <FaUserEdit size={25} />,
-  },
-  {
-    id: 4,
-    name: "Se deconnecter",
-    icon: <RiLogoutBoxRFill size={25} />,
-  },
-];
+import useTranslation from "next-translate/useTranslation";
 
 export default function UsersPage() {
   const router = useRouter();
@@ -59,6 +38,36 @@ export default function UsersPage() {
   const [currentyUser, setCurrentyUser] = useState<User>({} as User);
   const [sideMenuItem, setSideMenuItem] = useState({ id: 1, index: 0 });
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
+
+  // Traductions ///////////////////////////////////////////////////
+  const { t } = useTranslation();
+  const myOrders = t("userAccount:myOrders");
+  const address = t("userAccount:address");
+  const myInformations = t("userAccount:myInformations");
+  const signOut = t("userAccount:signOut");
+
+  const sideMenu = [
+    {
+      id: 1,
+      name: myOrders,
+      icon: <FaDropbox size={25} />,
+    },
+    {
+      id: 2,
+      name: address,
+      icon: <ImAddressBook size={25} />,
+    },
+    {
+      id: 3,
+      name: myInformations,
+      icon: <FaUserEdit size={25} />,
+    },
+    {
+      id: 4,
+      name: signOut,
+      icon: <RiLogoutBoxRFill size={25} />,
+    },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -102,6 +111,7 @@ export default function UsersPage() {
       setSideMenuItem({ id, index });
       setOpenMenuMobile(false);
     },
+    // eslint-disable-next-line
     [router]
   );
 
@@ -117,7 +127,10 @@ export default function UsersPage() {
         </Welcome>
         <Content>
           <SideBarMenuMobile>
-            <BtnMobile onClick={toggleMobileMenu}>Menu</BtnMobile>
+            <BtnMobile onClick={toggleMobileMenu}>
+              <IoIosArrowDown />
+              <span>Menu</span>
+            </BtnMobile>
             <MenuListMobile>
               {openMenuMobile && (
                 <MenuList>

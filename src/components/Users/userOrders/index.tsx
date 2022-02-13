@@ -5,6 +5,7 @@ import { IoIosEye } from "react-icons/io";
 import { FaFileInvoice } from "react-icons/fa";
 
 import { MyOrders, BtnTable } from "./styles";
+import useTranslation from "next-translate/useTranslation";
 
 interface Props {
   orders?: Order[];
@@ -12,6 +13,13 @@ interface Props {
 
 const UserOrders = ({ orders }: Props) => {
   const router = useRouter();
+
+  const { t } = useTranslation();
+  const state = t("userAccount:state");
+  const order = t("userAccount:order");
+  const dateTraduction = t("userAccount:dateTraduction");
+  const preview = t("userAccount:preview");
+  const invoice = t("userAccount:invoice");
 
   const selectOrder = useCallback(
     (orderId: number) => {
@@ -38,9 +46,9 @@ const UserOrders = ({ orders }: Props) => {
         <table>
           <thead>
             <tr>
-              <th className="head">Commande</th>
-              <th className="head">Date</th>
-              <th className="head">Etat</th>
+              <th className="head">{order}</th>
+              <th className="head">{dateTraduction}</th>
+              <th className="head">{state}</th>
               <th className="head">Total</th>
               <th className="head"></th>
               <th className="head"></th>
@@ -61,13 +69,13 @@ const UserOrders = ({ orders }: Props) => {
                       onClick={() => selectOrder(order.id)}
                     >
                       <IoIosEye color="#0570A6" />
-                      <span className="eyesIcon">Aperçu</span>
+                      <span className="eyesIcon">{preview}</span>
                     </td>
 
                     <td className="btn_table_invoice">
                       <BtnTable className="btn_invoice" btnColor="#868686">
                         <FaFileInvoice color="white" />
-                        <span className="invoiceIcon">Facture</span>
+                        <span className="invoiceIcon">{invoice}</span>
                       </BtnTable>
                     </td>
                   </tr>

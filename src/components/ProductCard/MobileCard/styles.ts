@@ -35,6 +35,13 @@ export const ProductInfo = styled.div`
   h4 {
     font-size: 0.8rem;
   }
+
+  span {
+    color: var(--Red);
+  }
+  span.span_currency {
+    margin-right: 0.5rem;
+  }
 `;
 
 export const BtnAddToCart = styled.button`
@@ -45,11 +52,20 @@ export const BtnAddToCart = styled.button`
   background: var(--Blue);
   border: none;
   color: var(--White);
+  transition: 0.2s ease;
+
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 export const IconFleche = styled(AiFillPlayCircle)`
   color: var(--Blue);
   font-size: 24px;
+
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 export const BtnDetail = styled.div`

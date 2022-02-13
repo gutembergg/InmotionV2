@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
+import { IoIosArrowDown } from "react-icons/io";
 import { paths as detachedPiecesPaths } from "../../../../utils/piecesDetacheesPaths";
 import HeaderSeo from "../../../../components/HeaderSeo";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
@@ -15,7 +16,6 @@ import {
   getProduitsByCategoriesSlug,
 } from "../../../../services/woocommerceApi/Products";
 import { IProduct } from "../../../../interfaces/IProducts";
-import { IoIosArrowDown } from "react-icons/io";
 import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
 import ButtonSkew from "../../../../components/ButtonSkew";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";

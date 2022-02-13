@@ -138,6 +138,7 @@ export const ButtonRegiste = styled.button`
   font-size: 1rem;
   border: none;
   margin-top: 1rem;
+  transition: 0.2s ease;
 
   &:hover {
     background: ${shade(0.2, "#0570A6")};

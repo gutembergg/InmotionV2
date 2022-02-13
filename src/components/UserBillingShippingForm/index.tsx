@@ -125,7 +125,6 @@ const UserBillingShippingForm = ({ handleBillingShippingData }: Props) => {
         validateOnChange={true}
         validationSchema={ShippingSchema}
         onSubmit={(values, actions) => {
-          console.log("formkkkkkkk", values);
           alert(JSON.stringify(values, null, 2));
           handleBillingShippingData(values);
           // actions.setSubmitting(true);

@@ -2,7 +2,9 @@ import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 import useCart from "../../../hooks/useCart";
+import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
+
 import {
   Container,
   ProductBlock,
@@ -18,6 +20,7 @@ interface Props {
 
 const MobileCard = ({ product }: Props) => {
   const { cartItem, addToCart } = useCart();
+  const { currency } = useCurrency();
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
 
@@ -53,7 +56,16 @@ const MobileCard = ({ product }: Props) => {
         </div>
 
         <ProductInfo className="prod_info">
-          <h4>{product.name}</h4>
+          <div>
+            <h4>{product.name}</h4>
+            <span className="span_currency">
+              {currency === "CHF" ? "CHF" : "EUR"}
+            </span>
+            <span>
+              {currency === "CHF" ? product.price : product.euroPrice}
+            </span>
+          </div>
+
           <BtnAddToCart onClick={() => handleAddToCart(product)}>
             {btnAddToCart}
           </BtnAddToCart>

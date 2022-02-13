@@ -58,6 +58,7 @@ const UserForm = ({ currentyUser }: Props) => {
   const spain = t("forms:spain");
   const austria = t("forms:austria");
   const holland = t("forms:holland");
+  const btnToModify = t("checkout-mobility:btnToModify");
 
   const authorizedCounty: country[] = [
     {
@@ -562,7 +563,7 @@ const UserForm = ({ currentyUser }: Props) => {
               </div>
 
               <div className="btn_register">
-                <ButtonRegiste type="submit">Modifier</ButtonRegiste>
+                <ButtonRegiste type="submit">{btnToModify}</ButtonRegiste>
               </div>
             </Form>
           )}

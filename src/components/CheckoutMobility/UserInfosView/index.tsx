@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import { OrderValidation } from "../../../interfaces/OrderValidation";
 import { Container } from "./styles";
 
@@ -6,10 +7,14 @@ interface Props {
 }
 
 const UserInfosView = ({ _billingShippingData }: Props) => {
+  const { t } = useTranslation();
+  const deliveryAddress = t("checkout-mobility:deliveryAddress");
+  const billingAddress = t("checkout-mobility:billingAddress");
+
   return (
     <Container>
       <div className="billing">
-        <div className="title">Adresse de livraison</div>
+        <div className="title">{deliveryAddress}</div>
         <div>
           <ul>
             <li>{_billingShippingData?.billing?.address_1}</li>
@@ -27,7 +32,7 @@ const UserInfosView = ({ _billingShippingData }: Props) => {
       </div>
       <div className="shipping">
         <div>
-          <div className="title">Adresse de facturation</div>
+          <div className="title">{billingAddress}</div>
           <div>
             <ul>
               <li>{_billingShippingData?.shipping?.address_1}</li>

@@ -54,6 +54,8 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
   const spain = t("forms:spain");
   const austria = t("forms:austria");
   const holland = t("forms:holland");
+  const btnToModify = t("checkout-mobility:btnToModify");
+  const toConfirm = t("checkout-mobility:toConfirm");
 
   interface country {
     name: string;
@@ -173,7 +175,6 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
           validationSchema={validatorSchema}
           onSubmit={(value) => {
             if (user.token) {
-              console.log("value-user-update", value);
               _updateUsers(value, user.token);
             }
             handleBillingShippingData(value);
@@ -534,7 +535,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
               <div className="btn_register">
                 {!!_user.token ? (
                   <ButtonRegiste type="submit">
-                    Modifier/confirmer
+                    {btnToModify}/{toConfirm}
                   </ButtonRegiste>
                 ) : (
                   <ButtonRegiste type="submit">{register}</ButtonRegiste>

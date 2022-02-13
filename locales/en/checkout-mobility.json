@@ -11,5 +11,18 @@
   "addPtotalPrice": "add total price",
   "btnSend": "send",
   "doYouHaveCodePromo": "Do you have a promo code?",
-  "createAccounts": "Create account"
+  "createAccounts": "Create account",
+  "vosCoordonnees": "Your details",
+  "btnToModify": "modify",
+  "toConfirm": "confirm",
+  "chooseMethdPay": "choose payment method",
+  "proceedToPayment": "proceed to payment",
+  "commodityValue": "Commodity value",
+  "shippingTraduction": "Shipping",
+  "paymentFees": "Payment fees",
+  "yourOrder": "your order",
+  "advancePayment": "advanced payment",
+  "onlinePayment": "online payment",
+  "deliveryAddress": "Shipping address",
+  "billingAddress": "Billing address"
 }

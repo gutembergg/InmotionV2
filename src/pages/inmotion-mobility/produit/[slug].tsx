@@ -75,6 +75,7 @@ export default function ProductDetail({
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
   const [productQty, setProductQty] = useState(1);
+  const [isDescriptionProduct, setIsDescriptionProduct] = useState(false);
 
   useEffect(() => {
     Notiflix.Loading.init({
@@ -96,12 +97,14 @@ export default function ProductDetail({
       handleStart();
     } else {
       handleStop();
+      checkDescriptionProduct();
     }
 
     return () => {
       handleStart();
       handleStop();
     };
+    // eslint-disable-next-line
   }, [router]);
 
   if (router.isFallback) {
@@ -137,6 +140,18 @@ export default function ProductDetail({
   const handleChangeQty = (e: ChangeEvent<HTMLInputElement>) => {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
+  };
+
+  const checkDescriptionProduct = () => {
+    const acfKeys = Object.keys(product.acf);
+
+    acfKeys.forEach((item) => {
+      if (item === "description_du_produit") {
+        setIsDescriptionProduct(true);
+      } else {
+        setIsDescriptionProduct(false);
+      }
+    });
   };
 
   return (
@@ -272,7 +287,7 @@ export default function ProductDetail({
             </div>
             <DescriptionProduct>
               <Sections>
-                {product.acf.description_du_produit.length > 0 &&
+                {isDescriptionProduct &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>
@@ -338,10 +353,12 @@ export default function ProductDetail({
               </tbody>
             </table>
           </Caracteristiques>
-          <RelatedProduct>
-            <h2 className="squared">Complétez votre équipement</h2>
-            <CarouselSwiper products={crossSellIDS} />
-          </RelatedProduct>
+          {crossSellIDS && Object.keys(crossSellIDS[0]).length > 0 ? (
+            <RelatedProduct>
+              <h2 className="squared">Complétez votre équipement</h2>
+              <CarouselSwiper products={crossSellIDS} />
+            </RelatedProduct>
+          ) : null}
         </Main>
       </Container>
     </>
@@ -376,8 +393,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const variations: IVariation[] = await getVariations(product.id);
 
-  //crossSell ids  8804, 8760, 8821 en  8803, 8756, 8817
-  const crossSellIDS = await getProductByID(product.cross_sell_ids);
+  //crossSell ids
+  const crossSellIDS = await getProductByID(
+    product.cross_sell_ids,
+    lang as string
+  );
+
   const crossSellProductsWithEuroPrice = await addEuroPriceInProducts(
     crossSellIDS
   );

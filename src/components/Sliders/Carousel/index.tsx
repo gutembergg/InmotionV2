@@ -31,6 +31,7 @@ export default function CarouselSwiper({ products }: Props) {
   useEffect(() => {
     setProductList(products);
   }, [products]);
+
   return (
     <CarouselBox>
       <Swiper

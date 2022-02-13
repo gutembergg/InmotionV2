@@ -1,8 +1,8 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Thumbs } from "swiper";
 import { IImage } from "../../../interfaces/IImages";
-import Image from "next/dist/client/image";
 import { SliderProductImage } from "./styles";
 interface props {
   imageList: IImage[];
@@ -10,7 +10,7 @@ interface props {
 export const ProductImageCarousel = ({ imageList }: props) => {
   // store thumbs swiper instance
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore>();
-  console.log(imageList);
+
   return (
     <SliderProductImage>
       <Swiper modules={[Thumbs]} thumbs={{ swiper: thumbsSwiper }}>
@@ -31,7 +31,6 @@ export const ProductImageCarousel = ({ imageList }: props) => {
           );
         })}
       </Swiper>
-
       <div className="swiperThumb">
         <Swiper
           modules={[Thumbs]}

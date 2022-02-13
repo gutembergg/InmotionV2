@@ -55,8 +55,6 @@ export default function Category({ category, productsByCategory }: Props) {
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
   const [activedModelIndex, setActivedModelIndex] = useState(0);
 
-  console.log("currency", currency);
-
   useEffect(() => {
     _setProducts(productsByCategory);
   }, [productsByCategory]);
@@ -84,9 +82,9 @@ export default function Category({ category, productsByCategory }: Props) {
   const autorisationRouler = products[productIndex]?.attributes.find(
     (item) => item.name === "autorisation circulation"
   );
-
+  /* 
   console.log(autorisationRouler?.options);
-  console.log("item", products);
+  console.log("item", products); */
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -105,8 +103,6 @@ export default function Category({ category, productsByCategory }: Props) {
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
-
-  console.log("products===>", products);
 
   return (
     <>
