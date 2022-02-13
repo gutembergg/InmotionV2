@@ -75,6 +75,12 @@ export const FormSection = styled.div`
   section.sections_title {
     h2.active {
       background-color: var(--Blue);
+
+      span {
+        font-family: "Bitter", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
     }
 
     h2 {
@@ -86,6 +92,12 @@ export const FormSection = styled.div`
       font-weight: 600;
       font-size: 1.7rem;
       padding: 1rem;
+
+      span {
+        font-family: "Bitter", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
       .coordonnes {
         font-size: 1.7rem;

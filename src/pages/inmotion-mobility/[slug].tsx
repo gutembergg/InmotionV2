@@ -11,15 +11,20 @@ import React, { ReactElement } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 
 import { Container, MainContent } from "../../styles/Boutique";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   subCategories: ICategories[];
 }
 
 export default function MobiliteEletrique({ subCategories }: IProps) {
+  //translation
+  const { t } = useTranslation();
+  const shopTitle = t("common:shopTitle");
+
   return (
     <Container>
-        <h1>Bienvenue dans notre boutique</h1>
+      <h1>{shopTitle}</h1>
       <MainContent>
         {subCategories.map((category) => {
           return (

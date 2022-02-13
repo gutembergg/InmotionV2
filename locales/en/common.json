@@ -1,7 +1,7 @@
 {
   "ourOccasions": "Our occasions",
   "cartTitle": "Your cart in detail",
-  "shopHours":"Our opening hours",
+  "shopHours": "Our opening hours",
   "horaireLundi": "Monday: Closed",
   "horaireMardi": "Tuesday: 13:00–18:30",
   "horaireMercredi": "Wednesday: Closed",
@@ -12,6 +12,6 @@
   "shopAddressTxt": "Shop location",
   "legalMentionsTxt": "Legal mention",
   "previousPageLink": "Back",
-  "CurrencyBlocked": "You have already selected Product in Cart, remove them if you want change the currency"
-
+  "CurrencyBlocked": "You have already selected Product in Cart, remove them if you want change the currency",
+  "shopTitle": "welcome to our shop"
 }

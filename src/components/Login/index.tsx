@@ -19,7 +19,13 @@ import { RiAccountCircleFill } from "react-icons/ri";
 
 const LoginForm = () => {
   const { t } = useTranslation();
-  const menuLogin = t("headerMobility:login");
+  const menuLogin = t(
+    "headerMobility:login",
+    { count: 1 },
+    {
+      fallback: "Login",
+    }
+  );
   const menuRegister = t("headerMobility:register");
 
   const { login, user } = useUser();

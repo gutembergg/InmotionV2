@@ -5,7 +5,7 @@
     "*": ["common", "headerMobility"],
     "/": ["home"],
     "/inmotion-mobility": ["headerMobility", "home"],
-    "/inmotion-mobility/[slug]": ["headerMobility"],
+    "/inmotion-mobility/[slug]": ["headerMobility", "common"],
     "/inmotion-mobility/categories/pieces-detachees": [
       "equipmentsPage",
       "productDetail",

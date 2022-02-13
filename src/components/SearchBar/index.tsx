@@ -21,7 +21,13 @@ const SearchBar = () => {
   const [searchValue, setSearchValue] = useState<IProduct[] | undefined>([]);
 
   const { t } = useTranslation();
-  const search = t("headerMobility:search");
+  const search = t(
+    "headerMobility:search",
+    { count: 1 },
+    {
+      fallback: "Search",
+    }
+  );
 
   const openMobileSearch = () => {
     setMobileSearchStatus(!mobileSearchStatus);

@@ -4,6 +4,7 @@ import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
+import useTranslation from "next-translate/useTranslation";
 
 import cityBG from "../../../../public/images/backgrounds/productCity.svg";
 
@@ -15,7 +16,6 @@ import {
   wc_getProductBySlug,
 } from "../../../services/woocommerceApi/Products";
 import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
-import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import { IVariation } from "../../../interfaces/IVariation";
@@ -63,17 +63,11 @@ export default function ProductDetail({
   const router = useRouter();
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
-  //creer usestate crossselid avec crossselids initialisé
-  /*   const [crossSellsID, setcrossSellsID] = useState(crossSellIDS);
 
-   useEffect(() => {
-     setcrossSellsID(crossSellIDS);
-   }, [crossSellIDS]); */
-
-  //si marche pas faire useeffect
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
+
   const [productQty, setProductQty] = useState(1);
   const [isDescriptionProduct, setIsDescriptionProduct] = useState(false);
 
