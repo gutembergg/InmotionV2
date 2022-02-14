@@ -48,6 +48,7 @@ import {
   Variations,
   VariationImage,
 } from "../../../styles/ProductDetail";
+import StockStatuts from "../../../components/StockStatus";
 
 interface Props {
   product: IProduct;
@@ -140,14 +141,14 @@ export default function ProductDetail({
     const acfKeys = Object.keys(product.acf);
 
     acfKeys.forEach((item) => {
-      if (item === "description_du_produit") {
+      if (item === "description_du_produit"){
         setIsDescriptionProduct(true);
       } else {
         setIsDescriptionProduct(false);
       }
     });
   };
-
+console.log("--> product--",product)
   return (
     <>
       <HeaderSeo
@@ -259,12 +260,8 @@ export default function ProductDetail({
                   {btnAddToCart}
                 </Button>
               </PriceQuantity>
-
-              {product.stock_quantity && (
-                <StockProduct>
-                  <div>En stock: {product.stock_quantity} pièces</div>
-                </StockProduct>
-              )}
+<StockStatuts stock_quantity={product.stock_quantity} stock_status={product.stock_status} />
+             
             </ProductDetaiil>
           </CardWrapper>
           <ProductInfos>

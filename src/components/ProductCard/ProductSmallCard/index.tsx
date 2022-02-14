@@ -5,6 +5,7 @@ import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
 import ButtonSkew from "../../ButtonSkew";
+import StockStatuts from "../../StockStatus";
 import {
   Container,
   ImageBlock,
@@ -66,7 +67,7 @@ const ProductSmallCard = ({ product }: Props) => {
               {currency === "CHF" ? product?.price : product.euroPrice}
             </span>
           </PriceBlock>
-          <Stock>stock{product.stock_quantity}</Stock>
+          <StockStatuts stock_quantity={product.stock_quantity} stock_status={product.stock_status} />
         </a>
       </Link>
       {product.variations.length > 0 ? (
