@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Thumbs } from "swiper";
+import SwiperCore, { Navigation, Thumbs } from "swiper";
 import { IImage } from "../../../interfaces/IImages";
 import { SliderProductImage } from "./styles";
 interface props {
@@ -13,7 +13,7 @@ export const ProductImageCarousel = ({ imageList }: props) => {
 
   return (
     <SliderProductImage>
-      <Swiper modules={[Thumbs]} thumbs={{ swiper: thumbsSwiper }}>
+      <Swiper modules={[Thumbs, Navigation]} thumbs={{ swiper: thumbsSwiper }}>
         {imageList.map((product) => {
           return (
             <SwiperSlide key={product.id}>
@@ -33,7 +33,7 @@ export const ProductImageCarousel = ({ imageList }: props) => {
       </Swiper>
       <div className="swiperThumb">
         <Swiper
-          modules={[Thumbs]}
+          modules={[Thumbs, Navigation]}
           watchSlidesProgress
           onSwiper={setThumbsSwiper}
           slidesPerView={3}
