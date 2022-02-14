@@ -6,8 +6,8 @@ import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 
 const MobilityFooter = () => {
-  const facebookLink = "https://www.facebook.com/";
-  const InstaLink = "https://www.instagram.com/";
+  const facebookLink = "https://www.facebook.com/inmotionsuisse/";
+  const InstaLink = "https://www.instagram.com/inmotionsuisse/?hl=fr";
   const { t } = useTranslation();
   const condGenerales = t("headerMobility:condGenerales");
   const confidentiality = t("headerMobility:confidentiality");
