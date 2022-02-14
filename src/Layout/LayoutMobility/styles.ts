@@ -9,6 +9,11 @@ export const GlobalContainer = styled.div`
   width: 100%;
   height: 100%;
   z-index:-1;
+  div{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 }
 >.content{
   display: flex;

@@ -14,12 +14,14 @@ export default function LayoutMobility({ children }: Props) {
   return (
     <GlobalContainer>
       <div className="bgImage">
+        <div>
       <Image
               src={mainBg}
               alt="location de trottinettes,vélos et gyroroues "
               layout="fill"
               objectFit="cover"
-            />
+              />
+              </div>
       </div>
       <div className="content">
         <HeaderComponent />
