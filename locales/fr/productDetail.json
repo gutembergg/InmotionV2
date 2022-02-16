@@ -1,5 +1,8 @@
 {
   "addToCart": "Ajouter au panier",
   "showVariationTradution": "Voir les variations",
-  "showDetails": "Afficher les détails"
+  "showDetails": "Afficher les détails",
+  "InfoComplementaires": "informations complémentaires",
+  "ChooseVariation": "Choisissez une variation",
+  "Caracteristiques": "Caractéristiques"
 }

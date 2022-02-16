@@ -9,8 +9,6 @@ interface Props{
 
 const StockStatuts = ({stock_quantity,stock_status}: Props) => {
 
-  console.log("stock",stock_quantity)
-  console.log("stockstat",stock_status)
   const { t } = useTranslation();
   const InStock = t("common:InStock");
   const OnOrder = t("common:OnOrder");

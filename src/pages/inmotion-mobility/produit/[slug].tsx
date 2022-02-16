@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import useTranslation from "next-translate/useTranslation";
 
@@ -49,6 +49,8 @@ import {
   VariationImage,
 } from "../../../styles/ProductDetail";
 import StockStatuts from "../../../components/StockStatus";
+import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
+import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
 
 interface Props {
   product: IProduct;
@@ -68,6 +70,9 @@ export default function ProductDetail({
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
+  const InfoComplementaires = t("productDetail:InfoComplementaires");
+  const ChooseVariation = t("productDetail:ChooseVariation");
+  const txtCaracteristiques = t("productDetail:Caracteristiques");
 
   const [productQty, setProductQty] = useState(1);
   const [isDescriptionProduct, setIsDescriptionProduct] = useState(false);
@@ -148,7 +153,6 @@ export default function ProductDetail({
       }
     });
   };
-console.log("--> product--",product)
   return (
     <>
       <HeaderSeo
@@ -241,7 +245,7 @@ console.log("--> product--",product)
               </Variations>
 
               <VariationProducts>
-                <h4>Choisissez une variation</h4>
+                <h4>{ChooseVariation}</h4>
                 <div className="variation">
                   <p>variation1</p>
                   <select name="variation">
@@ -267,7 +271,7 @@ console.log("--> product--",product)
           <ProductInfos>
             <div className="bgcity">
               <div className="sectionTitle">
-                <p>Informations complémentaires</p>
+                <p>{InfoComplementaires}</p>
               </div>
               <Image
                 layout="fill"
@@ -320,12 +324,21 @@ console.log("--> product--",product)
           </ProductInfos>
           <Caracteristiques>
             <table>
-              <caption>Caractéristiques</caption>
+              <caption>{txtCaracteristiques}</caption>
               <tbody>
                 {product.attributes.map((attribute) => {
                   return (
                     <tr key={attribute.id}>
-                      <td>{attribute.name}</td>
+                      <td>
+                        {router.locale === "fr" ? 
+                        (attribute.name):
+                      (router.locale === "de" ? (
+                        switchAttributesToDE(attribute.name)
+                      ):(
+                        switchAttributesToEN(attribute.name)
+                      ))}
+                        
+                        </td>
                       <td>
                         {attribute.options.map((option, id) => {
                           return (

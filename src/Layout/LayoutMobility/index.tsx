@@ -5,7 +5,7 @@ import HeaderMobile from "../../components/headers/HeaderMobile";
 import { GlobalContainer } from "./styles";
 import FooterBlock from "../../components/FooterBlock";
 import Image from "next/dist/client/image";
-import mainBg from "../../../public/images/backgrounds/lightBackground.jpg";
+import mainBg from "../../../public/images/backgrounds/lightBackground.webp";
 interface Props {
   children: ReactNode;
 }
