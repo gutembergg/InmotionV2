@@ -13,7 +13,10 @@ export const ProductImageCarousel = ({ imageList }: props) => {
 
   return (
     <SliderProductImage>
-      <Swiper modules={[Thumbs, Navigation]} thumbs={{ swiper: thumbsSwiper }}>
+      <Swiper
+        modules={[Thumbs]}
+        thumbs={{ swiper: thumbsSwiper }}
+      >
         {imageList.map((product) => {
           return (
             <SwiperSlide key={product.id}>
