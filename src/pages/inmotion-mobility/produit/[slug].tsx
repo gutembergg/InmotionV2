@@ -266,7 +266,7 @@ export default function ProductDetail({
                   }}
                 />
               </div>
-
+              {isVariable &&
               <VariationProducts>
                 <h2>{ChooseVariation}</h2>
                 <p>
@@ -336,6 +336,7 @@ export default function ProductDetail({
                   </>
                 )}
               </VariationProducts>
+              }
               <PriceQuantity>
                 <input
                   type="number"
@@ -343,22 +344,32 @@ export default function ProductDetail({
                   value={productQty}
                   placeholder="1"
                 />
-                {selectedVariation.id ? (
+                {isVariable ? (
+selectedVariation.id ? (
+  <Button
+    type="button"
+    onClick={() => handleAddToCart(product)}
+  >
+    {btnAddToCart}
+  </Button>
+) : (
+  <Button
+    type="button"
+    onClick={() => Notiflix.Notify.warning("Choisissez une variation avant de l'ajouter au panier")}
+    className="disabled"
+  >
+    {ChooseVariation}
+  </Button>
+)
+                ):(
                   <Button
-                    type="button"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    {btnAddToCart}
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    onClick={() => Notiflix.Notify.warning("Choisissez une variation avant de l'ajouter au panier")}
-                    className="disabled"
-                  >
-                    {ChooseVariation}
-                  </Button>
+                  type="button"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  {btnAddToCart}
+                </Button>
                 )}
+                
               </PriceQuantity>
               {!isVariable &&(
                 <StockStatuts
