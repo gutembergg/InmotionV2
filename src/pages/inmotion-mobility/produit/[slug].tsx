@@ -1,6 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEventHandler,
+  ReactElement,
+  useEffect,
+  useState,
+} from "react";
 import ReactPlayer from "react-player";
 import router, { useRouter } from "next/router";
 import Notiflix from "notiflix";
@@ -47,6 +53,9 @@ import {
   VariationProducts,
   Variations,
   VariationImage,
+  VariationData,
+  VariationDisplay,
+  SelectedVariation,
 } from "../../../styles/ProductDetail";
 import StockStatuts from "../../../components/StockStatus";
 import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
@@ -56,6 +65,7 @@ interface Props {
   product: IProduct;
   variations: IVariation[];
   crossSellIDS: IProduct[];
+  onChange: () => void;
 }
 
 export default function ProductDetail({
@@ -76,6 +86,36 @@ export default function ProductDetail({
 
   const [productQty, setProductQty] = useState(1);
   const [isDescriptionProduct, setIsDescriptionProduct] = useState(false);
+
+  //----------------------variations--------------------------------
+
+  //check if product is variable or not
+  const isVariable = product?.variations.length > 0 ? true : false;
+  const [selectedVariation, setSelectedVariation] = useState({} as IVariation);
+
+  //
+  const VariationButtons = () => {
+    console.log("selected Variation-->", selectedVariation);
+    return (
+      <>
+        {variations.map((variation) => (
+          <VariationDisplay
+            className={selectedVariation === variation ? "active" : ""}
+            onClick={() => setSelectedVariation(variation)}
+            key={variation.id}
+          >
+            <VariationData>
+              <h3>{variation.attributes[0].option}</h3>
+            </VariationData>
+          </VariationDisplay>
+        ))}
+      </>
+    );
+  };
+
+  // console.log("produit---->", product);
+  // console.log("isvariable", isVariable);
+  // console.log("variations", variations);
 
   useEffect(() => {
     Notiflix.Loading.init({
@@ -146,7 +186,7 @@ export default function ProductDetail({
     const acfKeys = Object.keys(product.acf);
 
     acfKeys.forEach((item) => {
-      if (item === "description_du_produit"){
+      if (item === "description_du_produit") {
         setIsDescriptionProduct(true);
       } else {
         setIsDescriptionProduct(false);
@@ -196,6 +236,7 @@ export default function ProductDetail({
                   {product.categories[0].name}
                 </span>
                 <h1 className="first_title">{product.name}</h1>
+{ !isVariable ? (
                 <div className="priceBox">
                   {product.on_sale && <p>Promotion !</p>}
                   <div className="price">
@@ -215,7 +256,8 @@ export default function ProductDetail({
                           product.euroPrice + " " + currency}
                     </div>
                   </div>
-                </div>
+                </div>):(<></>)
+                }
               </ProductLogo>
               <div className="first_description">
                 <div
@@ -225,33 +267,74 @@ export default function ProductDetail({
                 />
               </div>
 
-              <Variations>
-                <ul>
-                  {variations.map((variation) => {
-                    return (
-                      <li key={variation.id}>
-                        <VariationImage>
-                          <Image
-                            src={variation.image.src}
-                            width={60}
-                            height={60}
-                            alt={variation.image.name}
-                          />
-                        </VariationImage>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </Variations>
-
               <VariationProducts>
-                <h4>{ChooseVariation}</h4>
-                <div className="variation">
-                  <p>variation1</p>
-                  <select name="variation">
-                    <option value="1">variation1</option>
-                  </select>
-                </div>
+                <h2>{ChooseVariation}</h2>
+                <p>
+                  {router.locale === "fr"
+                    ? variations[0]?.attributes[0]?.name
+                    : router.locale === "de"
+                    ? switchAttributesToDE(variations[0]?.attributes[0]?.name)
+                    : switchAttributesToEN(variations[0]?.attributes[0]?.name)}
+                </p>
+                <Variations>
+                  <VariationButtons />
+                </Variations>
+                {selectedVariation.id && (
+                  <>
+                    <SelectedVariation>
+                      <VariationImage>
+                        <div>
+                          <Image
+                            src={selectedVariation.image.src}
+                            layout="fill"
+                            objectFit="contain"
+                            alt={selectedVariation.image.name}
+                          />
+                        </div>
+                      </VariationImage>
+                      <div>
+                        <h4>
+                          {product.name}
+                          {" - "}
+                          {selectedVariation.attributes[0].option}
+                        </h4>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: selectedVariation.description,
+                          }}
+                        />
+                        <div className="price">
+                        {selectedVariation.on_sale && <p>Promotion !</p>}
+                          <div
+                            className={
+                              selectedVariation.on_sale ? "regular_price" : ""
+                            }
+                          >
+                            {currency === "CHF"
+                              ? !!selectedVariation.regular_price &&
+                                selectedVariation.regular_price + " " + currency
+                              : !!selectedVariation.euroRegularPrice &&
+                                selectedVariation.euroRegularPrice +
+                                  " " +
+                                  currency}
+                          </div>
+
+                          <div className="sale_price">
+                            {currency === "CHF"
+                              ? !!selectedVariation.sale_price &&
+                                selectedVariation.sale_price + " " + currency
+                              : !!selectedVariation.sale_price &&
+                                selectedVariation.euroPrice + " " + currency}
+                          </div>
+                        </div>
+                        <StockStatuts
+                          stock_quantity={selectedVariation.stock_quantity}
+                          stock_status={selectedVariation.stock_status}
+                        />
+                      </div>
+                    </SelectedVariation>
+                  </>
+                )}
               </VariationProducts>
               <PriceQuantity>
                 <input
@@ -260,12 +343,29 @@ export default function ProductDetail({
                   value={productQty}
                   placeholder="1"
                 />
-                <Button type="button" onClick={() => handleAddToCart(product)}>
-                  {btnAddToCart}
-                </Button>
+                {selectedVariation.id ? (
+                  <Button
+                    type="button"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    {btnAddToCart}
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    onClick={() => Notiflix.Notify.warning("Choisissez une variation avant de l'ajouter au panier")}
+                    className="disabled"
+                  >
+                    {ChooseVariation}
+                  </Button>
+                )}
               </PriceQuantity>
-<StockStatuts stock_quantity={product.stock_quantity} stock_status={product.stock_status} />
-             
+              {!isVariable &&(
+                <StockStatuts
+                stock_quantity={product.stock_quantity}
+                stock_status={product.stock_status}
+                />
+                )}
             </ProductDetaiil>
           </CardWrapper>
           <ProductInfos>
@@ -330,15 +430,12 @@ export default function ProductDetail({
                   return (
                     <tr key={attribute.id}>
                       <td>
-                        {router.locale === "fr" ? 
-                        (attribute.name):
-                      (router.locale === "de" ? (
-                        switchAttributesToDE(attribute.name)
-                      ):(
-                        switchAttributesToEN(attribute.name)
-                      ))}
-                        
-                        </td>
+                        {router.locale === "fr"
+                          ? attribute.name
+                          : router.locale === "de"
+                          ? switchAttributesToDE(attribute.name)
+                          : switchAttributesToEN(attribute.name)}
+                      </td>
                       <td>
                         {attribute.options.map((option, id) => {
                           return (
@@ -395,8 +492,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  const variations: IVariation[] = await getVariations(product.id);
-
+  const variations: IVariation[] = await getVariations(
+    product.id,
+    lang as string
+  );
   //crossSell ids
   const crossSellIDS = await getProductByID(
     product.cross_sell_ids,
