@@ -32,6 +32,10 @@
       "services",
       "forms"
     ],
+    "/inmotion-mobility/services/cours-gyroroue": [
+      "headerMobility",
+      "cours-gyro"
+    ],
     "/inmotion-mobility/categories/[slug]": ["headerMobility", "productDetail"],
     "/inmotion-mobility/produit/[slug]": ["headerMobility", "productDetail"],
     "/inmotion-mobility/produits/[slug]": [

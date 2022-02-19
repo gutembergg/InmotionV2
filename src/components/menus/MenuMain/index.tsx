@@ -51,6 +51,7 @@ const MenuMain = () => {
   const equipments = t("headerMobility:equipments");
   const detachedPieces = t("headerMobility:detached-pieces");
   const rent = t("headerMobility:rent");
+  const cours = t("headerMobility:cours");
   const userManuals = t("headerMobility:userManuals");
   const returnForm = t("headerMobility:returnForm");
   const menu = [
@@ -151,6 +152,15 @@ const MenuMain = () => {
           {menuServices}
         </p>
         <ul>
+          <li>
+            <p
+              onClick={() => {
+                goToLink("/inmotion-mobility/services/cours-gyroroue");
+              }}
+            >
+              {cours}
+            </p>
+          </li>
           <li>
             <p
               onClick={() => {
