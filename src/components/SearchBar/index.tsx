@@ -42,6 +42,7 @@ const SearchBar = () => {
           params: {
             per_page: 10,
             search: _search,
+            lang: router.locale,
           },
           cancelToken: source.token,
         })
@@ -55,7 +56,7 @@ const SearchBar = () => {
     }
 
     return () => source.cancel();
-  }, [_search]);
+  }, [_search, router.locale]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchText = e.target.value;

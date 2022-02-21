@@ -198,7 +198,7 @@ export default function CheckoutMobility() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const getScrollY = () => {
-        const scrollValue = 130;
+        const scrollValue = 100;
 
         const viewWidth = window.innerWidth;
 

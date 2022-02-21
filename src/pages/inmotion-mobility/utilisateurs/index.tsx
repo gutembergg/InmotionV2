@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import { FaDropbox, FaUserEdit } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import { ImAddressBook } from "react-icons/im";
 import { RiLogoutBoxRFill } from "react-icons/ri";
 
 import useUser from "../../../hooks/useUser";
@@ -54,16 +53,11 @@ export default function UsersPage() {
     },
     {
       id: 2,
-      name: address,
-      icon: <ImAddressBook size={25} />,
-    },
-    {
-      id: 3,
       name: myInformations,
       icon: <FaUserEdit size={25} />,
     },
     {
-      id: 4,
+      id: 3,
       name: signOut,
       icon: <RiLogoutBoxRFill size={25} />,
     },
@@ -101,7 +95,7 @@ export default function UsersPage() {
 
   const selectSideMenuItem = useCallback(
     (id: number, index: number) => {
-      if (id === 4) {
+      if (id === 3) {
         if (typeof window !== undefined) {
           logout();
           router.push("/inmotion-mobility");
@@ -184,10 +178,10 @@ export default function UsersPage() {
           <UserComponents>
             {sideMenuItem.id === 1 ? (
               <UserOrders orders={orders ? orders : undefined} />
-            ) : sideMenuItem.id === 2 ? (
-              <UserAddress currentyUser={currentyUser} />
             ) : (
-              <div>Infos</div>
+              sideMenuItem.id === 2 && (
+                <UserAddress currentyUser={currentyUser} />
+              )
             )}
           </UserComponents>
         </Content>
