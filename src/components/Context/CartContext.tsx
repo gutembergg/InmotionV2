@@ -9,6 +9,7 @@ import {
 import Notiflix, { Report } from "notiflix";
 import useCurrency from "../../hooks/useCurrency";
 import { IProduct } from "../../interfaces/IProducts";
+import { IVariation } from "../../interfaces/IVariation";
 
 interface Children {
   children: ReactNode;
@@ -173,7 +174,13 @@ const CartProvider = ({ children }: Children) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItem, cart, addToCart, removeCartItem, updateTotal }}
+      value={{
+        cartItem,
+        cart,
+        addToCart,
+        removeCartItem,
+        updateTotal,
+      }}
     >
       {children}
     </CartContext.Provider>

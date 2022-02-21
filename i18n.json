@@ -3,23 +3,23 @@
   "defaultLocale": "fr",
   "pages": {
     "*": ["common", "headerMobility"],
-    "/": ["home"],
+    "/": ["home", "headerMobility"],
     "/inmotion-mobility": ["headerMobility", "home"],
     "/inmotion-mobility/[slug]": ["headerMobility", "common"],
     "/inmotion-mobility/categories/pieces-detachees": [
+      "headerMobility",
       "equipmentsPage",
-      "productDetail",
-      "headerMobility"
+      "productDetail"
     ],
     "/inmotion-mobility/categories/pieces-detachees/[slug]": [
+      "headerMobility",
       "equipmentsPage",
-      "productDetail",
-      "headerMobility"
+      "productDetail"
     ],
     "/inmotion-mobility/categories/equipements": [
+      "headerMobility",
       "equipmentsPage",
-      "productDetail",
-      "headerMobility"
+      "productDetail"
     ],
     "/inmotion-mobility/categories/equipements/[slug]": [
       "equipmentsPage",

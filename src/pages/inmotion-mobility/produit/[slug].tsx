@@ -48,6 +48,7 @@ import {
   Variations,
   VariationImage,
 } from "../../../styles/ProductDetail";
+import { checkIsAcfDescription } from "../../../utils/checkIsAcfDescription";
 
 interface Props {
   product: IProduct;
@@ -69,7 +70,6 @@ export default function ProductDetail({
   const btnAddToCart = t("productDetail:addToCart");
 
   const [productQty, setProductQty] = useState(1);
-  const [isDescriptionProduct, setIsDescriptionProduct] = useState(false);
 
   useEffect(() => {
     Notiflix.Loading.init({
@@ -91,7 +91,6 @@ export default function ProductDetail({
       handleStart();
     } else {
       handleStop();
-      checkDescriptionProduct();
     }
 
     return () => {
@@ -121,31 +120,19 @@ export default function ProductDetail({
 
       const cart = newCart.map((item) =>
         item.id === product.id
-          ? { ...productExist, qty: productExist.qty + productQty }
+          ? { ...productExist, qty: productExist.qty + 1 }
           : item
       );
 
       addToCart(cart);
     } else {
-      addToCart([...cartItem, { ...product, qty: productQty }]);
+      addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
 
   const handleChangeQty = (e: ChangeEvent<HTMLInputElement>) => {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
-  };
-
-  const checkDescriptionProduct = () => {
-    const acfKeys = Object.keys(product.acf);
-
-    acfKeys.forEach((item) => {
-      if (item === "description_du_produit") {
-        setIsDescriptionProduct(true);
-      } else {
-        setIsDescriptionProduct(false);
-      }
-    });
   };
 
   return (
@@ -281,7 +268,7 @@ export default function ProductDetail({
             </div>
             <DescriptionProduct>
               <Sections>
-                {isDescriptionProduct &&
+                {product?.isAcfDescription &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>
@@ -385,7 +372,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  const variations: IVariation[] = await getVariations(product.id);
+  const variations = await getVariations(product.id);
 
   //crossSell ids
   const crossSellIDS = await getProductByID(
@@ -399,9 +386,11 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const productWithEuro = await addEuroPriceInSingleProduct(product);
 
+  const productAcfDescriptionFilter = checkIsAcfDescription(productWithEuro);
+
   return {
     props: {
-      product: productWithEuro,
+      product: productAcfDescriptionFilter,
       crossSellIDS: crossSellProductsWithEuroPrice,
       variations,
     },
