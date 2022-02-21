@@ -56,8 +56,8 @@ GuidesUtilisateur.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-
-  const guides = await getUserGuides();
+  const lang = ctx.locale;
+  const guides = await getUserGuides(lang as string);
 
   return {
     props: {
