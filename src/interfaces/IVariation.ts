@@ -28,8 +28,6 @@ export interface IVariation {
     width: string;
     height: string;
   };
-  shipping_class: string;
-  shipping_class_id: number;
   image: Image;
   attributes: [
     {

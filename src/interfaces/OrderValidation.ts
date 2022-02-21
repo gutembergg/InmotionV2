@@ -31,7 +31,7 @@ export interface OrderValidation {
 
 export interface LineItemsDTO {
   name?: string;
-  product_id: number;
+  product_id?: number;
   variation_id?: number;
   quantity: number;
   tax_class?: string;

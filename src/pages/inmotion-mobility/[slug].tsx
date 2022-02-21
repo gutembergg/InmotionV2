@@ -1,17 +1,17 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import conditionIcon from "../../../public/images/icons/conditionsgen.svg";
+import React, { ReactElement } from "react";
+import useTranslation from "next-translate/useTranslation";
+
 import {
   wc_getCategoriesBySlug,
   wc_getSub_categories,
 } from "../../services/woocommerceApi/Categories";
 import { ICategories } from "../../interfaces/ICategories";
-import React, { ReactElement } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 
 import { Container, MainContent } from "../../styles/Boutique";
-import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   subCategories: ICategories[];

@@ -57,6 +57,7 @@ import {
   VariationDisplay,
   SelectedVariation,
 } from "../../../styles/ProductDetail";
+import { checkIsAcfDescription } from "../../../utils/checkIsAcfDescription";
 import StockStatuts from "../../../components/StockStatus";
 import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
 import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
@@ -85,7 +86,6 @@ export default function ProductDetail({
   const txtCaracteristiques = t("productDetail:Caracteristiques");
 
   const [productQty, setProductQty] = useState(1);
-  const [isDescriptionProduct, setIsDescriptionProduct] = useState(false);
 
   //----------------------variations--------------------------------
 
@@ -137,7 +137,6 @@ export default function ProductDetail({
       handleStart();
     } else {
       handleStop();
-      checkDescriptionProduct();
     }
 
     return () => {
@@ -167,13 +166,13 @@ export default function ProductDetail({
 
       const cart = newCart.map((item) =>
         item.id === product.id
-          ? { ...productExist, qty: productExist.qty + productQty }
+          ? { ...productExist, qty: productExist.qty + 1 }
           : item
       );
 
       addToCart(cart);
     } else {
-      addToCart([...cartItem, { ...product, qty: productQty }]);
+      addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
 
@@ -182,17 +181,6 @@ export default function ProductDetail({
     setProductQty(quantity);
   };
 
-  const checkDescriptionProduct = () => {
-    const acfKeys = Object.keys(product.acf);
-
-    acfKeys.forEach((item) => {
-      if (item === "description_du_produit") {
-        setIsDescriptionProduct(true);
-      } else {
-        setIsDescriptionProduct(false);
-      }
-    });
-  };
   return (
     <>
       <HeaderSeo
@@ -236,28 +224,30 @@ export default function ProductDetail({
                   {product.categories[0].name}
                 </span>
                 <h1 className="first_title">{product.name}</h1>
-{ !isVariable ? (
-                <div className="priceBox">
-                  {product.on_sale && <p>Promotion !</p>}
-                  <div className="price">
-                    <div className={product.on_sale ? "regular_price" : ""}>
-                      {currency === "CHF"
-                        ? !!product.regular_price &&
-                          product.regular_price + " " + currency
-                        : !!product.euroRegularPrice &&
-                          product.euroRegularPrice + " " + currency}
-                    </div>
+                {!isVariable ? (
+                  <div className="priceBox">
+                    {product.on_sale && <p>Promotion !</p>}
+                    <div className="price">
+                      <div className={product.on_sale ? "regular_price" : ""}>
+                        {currency === "CHF"
+                          ? !!product.regular_price &&
+                            product.regular_price + " " + currency
+                          : !!product.euroRegularPrice &&
+                            product.euroRegularPrice + " " + currency}
+                      </div>
 
-                    <div className="sale_price">
-                      {currency === "CHF"
-                        ? !!product.sale_price &&
-                          product.sale_price + " " + currency
-                        : !!product.sale_price &&
-                          product.euroPrice + " " + currency}
+                      <div className="sale_price">
+                        {currency === "CHF"
+                          ? !!product.sale_price &&
+                            product.sale_price + " " + currency
+                          : !!product.sale_price &&
+                            product.euroPrice + " " + currency}
+                      </div>
                     </div>
                   </div>
-                </div>):(<></>)
-                }
+                ) : (
+                  <></>
+                )}
               </ProductLogo>
               <div className="first_description">
                 <div
@@ -266,77 +256,81 @@ export default function ProductDetail({
                   }}
                 />
               </div>
-              {isVariable &&
-              <VariationProducts>
-                <h2>{ChooseVariation}</h2>
-                <p>
-                  {router.locale === "fr"
-                    ? variations[0]?.attributes[0]?.name
-                    : router.locale === "de"
-                    ? switchAttributesToDE(variations[0]?.attributes[0]?.name)
-                    : switchAttributesToEN(variations[0]?.attributes[0]?.name)}
-                </p>
-                <Variations>
-                  <VariationButtons />
-                </Variations>
-                {selectedVariation.id && (
-                  <>
-                    <SelectedVariation>
-                      <VariationImage>
+              {isVariable && (
+                <VariationProducts>
+                  <h2>{ChooseVariation}</h2>
+                  <p>
+                    {router.locale === "fr"
+                      ? variations[0]?.attributes[0]?.name
+                      : router.locale === "de"
+                      ? switchAttributesToDE(variations[0]?.attributes[0]?.name)
+                      : switchAttributesToEN(
+                          variations[0]?.attributes[0]?.name
+                        )}
+                  </p>
+                  <Variations>
+                    <VariationButtons />
+                  </Variations>
+                  {selectedVariation.id && (
+                    <>
+                      <SelectedVariation>
+                        <VariationImage>
+                          <div>
+                            <Image
+                              src={selectedVariation.image.src}
+                              layout="fill"
+                              objectFit="contain"
+                              alt={selectedVariation.image.name}
+                            />
+                          </div>
+                        </VariationImage>
                         <div>
-                          <Image
-                            src={selectedVariation.image.src}
-                            layout="fill"
-                            objectFit="contain"
-                            alt={selectedVariation.image.name}
+                          <h4>
+                            {product.name}
+                            {" - "}
+                            {selectedVariation.attributes[0].option}
+                          </h4>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: selectedVariation.description,
+                            }}
+                          />
+                          <div className="price">
+                            {selectedVariation.on_sale && <p>Promotion !</p>}
+                            <div
+                              className={
+                                selectedVariation.on_sale ? "regular_price" : ""
+                              }
+                            >
+                              {currency === "CHF"
+                                ? !!selectedVariation.regular_price &&
+                                  selectedVariation.regular_price +
+                                    " " +
+                                    currency
+                                : !!selectedVariation.euroRegularPrice &&
+                                  selectedVariation.euroRegularPrice +
+                                    " " +
+                                    currency}
+                            </div>
+
+                            <div className="sale_price">
+                              {currency === "CHF"
+                                ? !!selectedVariation.sale_price &&
+                                  selectedVariation.sale_price + " " + currency
+                                : !!selectedVariation.sale_price &&
+                                  selectedVariation.euroPrice + " " + currency}
+                            </div>
+                          </div>
+                          <StockStatuts
+                            stock_quantity={selectedVariation.stock_quantity}
+                            stock_status={selectedVariation.stock_status}
                           />
                         </div>
-                      </VariationImage>
-                      <div>
-                        <h4>
-                          {product.name}
-                          {" - "}
-                          {selectedVariation.attributes[0].option}
-                        </h4>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: selectedVariation.description,
-                          }}
-                        />
-                        <div className="price">
-                        {selectedVariation.on_sale && <p>Promotion !</p>}
-                          <div
-                            className={
-                              selectedVariation.on_sale ? "regular_price" : ""
-                            }
-                          >
-                            {currency === "CHF"
-                              ? !!selectedVariation.regular_price &&
-                                selectedVariation.regular_price + " " + currency
-                              : !!selectedVariation.euroRegularPrice &&
-                                selectedVariation.euroRegularPrice +
-                                  " " +
-                                  currency}
-                          </div>
-
-                          <div className="sale_price">
-                            {currency === "CHF"
-                              ? !!selectedVariation.sale_price &&
-                                selectedVariation.sale_price + " " + currency
-                              : !!selectedVariation.sale_price &&
-                                selectedVariation.euroPrice + " " + currency}
-                          </div>
-                        </div>
-                        <StockStatuts
-                          stock_quantity={selectedVariation.stock_quantity}
-                          stock_status={selectedVariation.stock_status}
-                        />
-                      </div>
-                    </SelectedVariation>
-                  </>
-                )}
-              </VariationProducts>
-              }
+                      </SelectedVariation>
+                    </>
+                  )}
+                </VariationProducts>
+              )}
               <PriceQuantity>
                 <input
                   type="number"
@@ -345,38 +339,41 @@ export default function ProductDetail({
                   placeholder="1"
                 />
                 {isVariable ? (
-selectedVariation.id ? (
-  <Button
-    type="button"
-    onClick={() => handleAddToCart(product)}
-  >
-    {btnAddToCart}
-  </Button>
-) : (
-  <Button
-    type="button"
-    onClick={() => Notiflix.Notify.warning("Choisissez une variation avant de l'ajouter au panier")}
-    className="disabled"
-  >
-    {ChooseVariation}
-  </Button>
-)
-                ):(
+                  selectedVariation.id ? (
+                    <Button
+                      type="button"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      {btnAddToCart}
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        Notiflix.Notify.warning(
+                          "Choisissez une variation avant de l'ajouter au panier"
+                        )
+                      }
+                      className="disabled"
+                    >
+                      {ChooseVariation}
+                    </Button>
+                  )
+                ) : (
                   <Button
-                  type="button"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  {btnAddToCart}
-                </Button>
+                    type="button"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    {btnAddToCart}
+                  </Button>
                 )}
-                
               </PriceQuantity>
-              {!isVariable &&(
+              {!isVariable && (
                 <StockStatuts
-                stock_quantity={product.stock_quantity}
-                stock_status={product.stock_status}
+                  stock_quantity={product.stock_quantity}
+                  stock_status={product.stock_status}
                 />
-                )}
+              )}
             </ProductDetaiil>
           </CardWrapper>
           <ProductInfos>
@@ -393,7 +390,7 @@ selectedVariation.id ? (
             </div>
             <DescriptionProduct>
               <Sections>
-                {isDescriptionProduct &&
+                {product?.isAcfDescription &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>
@@ -503,10 +500,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     };
   }
 
-  const variations: IVariation[] = await getVariations(
-    product.id,
-    lang as string
-  );
+  const variations = await getVariations(product.id, lang as string);
   //crossSell ids
   const crossSellIDS = await getProductByID(
     product.cross_sell_ids,
@@ -519,9 +513,11 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const productWithEuro = await addEuroPriceInSingleProduct(product);
 
+  const productAcfDescriptionFilter = checkIsAcfDescription(productWithEuro);
+
   return {
     props: {
-      product: productWithEuro,
+      product: productAcfDescriptionFilter,
       crossSellIDS: crossSellProductsWithEuroPrice,
       variations,
     },

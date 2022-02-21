@@ -4,8 +4,6 @@ import axios from "axios";
 import { IProduct } from "../../interfaces/IProducts";
 import { FiSearch } from "react-icons/fi";
 
-import useSWR from "swr";
-
 import {
   Container,
   MenuSearchBar,
@@ -38,13 +36,13 @@ const SearchBar = () => {
     await axios.get<IProduct[]>(url).then((res) => res.data);
   const { data: productsList, error } = useSWR(address, fetcher); */
 
-  useEffect(() => {
+  /*  useEffect(() => {
     axios
       .get("http://localhost:3000/api/products-swr/search-products")
       .then((response) => {
         setProductsList(response.data);
       });
-  }, []);
+  }, []); */
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchText = e.target.value;
@@ -95,7 +93,7 @@ const SearchBar = () => {
         </div>
       </MenuSearchBar>
 
-      {searchValue !== undefined && searchValue.length > 0 ? (
+      {/*   {searchValue !== undefined && searchValue.length > 0 ? (
         <SearchProductsList>
           {searchValue &&
             searchValue.map((product) => {
@@ -109,7 +107,7 @@ const SearchBar = () => {
               );
             })}
         </SearchProductsList>
-      ) : null}
+      ) : null} */}
     </Container>
   );
 };

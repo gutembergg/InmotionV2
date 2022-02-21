@@ -33,7 +33,7 @@ import {
   LogoProduct,
   AddToCartSession,
   ProductMenuResponsive,
-  BtnProductDetail
+  BtnProductDetail,
 } from "../../../styles/CategoryDetail";
 import useCurrency from "../../../hooks/useCurrency";
 
@@ -84,7 +84,10 @@ export default function Category({ category, productsByCategory }: Props) {
   const autorisationRouler = products[productIndex]?.attributes.find(
     (item) => item.name === "autorisation circulation"
   );
+<<<<<<< HEAD
+=======
 
+>>>>>>> 585bfc129b87848284f99090b7b253b71529fb90
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -226,27 +229,28 @@ export default function Category({ category, productsByCategory }: Props) {
           </div>
         </LogoProduct>
         {products[productIndex]?.variations.length > 0 ? (
-      <BtnProductDetail>
-        <Link href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}>
-          {showVariationTradution}
-        </Link>
-      </BtnProductDetail>
-      ):(
-        <AddToCartSession>
-        <button
-          className="addToCart_button"
-          onClick={() => handleAddToCart(products[productIndex])}
-        >
-          {btnAddToCart}
-        </button>
-        <Link
-          href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
-        >
-          <a className="link">{linkShowDetails}</a>
-        </Link>
-      </AddToCartSession>
-      )}
-       
+          <BtnProductDetail>
+            <Link
+              href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+            >
+              {showVariationTradution}
+            </Link>
+          </BtnProductDetail>
+        ) : (
+          <AddToCartSession>
+            <button
+              className="addToCart_button"
+              onClick={() => handleAddToCart(products[productIndex])}
+            >
+              {btnAddToCart}
+            </button>
+            <Link
+              href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+            >
+              <a className="link">{linkShowDetails}</a>
+            </Link>
+          </AddToCartSession>
+        )}
       </Container>
     </>
   );

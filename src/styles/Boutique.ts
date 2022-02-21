@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-h1{
-  
-  text-align: center;
-  margin-top:30px;
-}
+  h1 {
+    text-align: center;
+    margin-top: 30px;
+  }
 `;
 
 export const MainContent = styled.div`

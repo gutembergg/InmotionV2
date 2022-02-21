@@ -44,7 +44,7 @@ const ProductSmallCard = ({ product }: Props) => {
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
-  console.log("product", product);
+
   return (
     <Container>
       <Link href={`/inmotion-mobility/produit/${product.slug}`}>

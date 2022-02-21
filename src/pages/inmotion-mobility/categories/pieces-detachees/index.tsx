@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import React, { ReactElement } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import confidentialiteIcon from "../../../../../public/images/icons/confidentialite.svg";
 import HeaderSeo from "../../../../components/HeaderSeo";
 import { ICategories } from "../../../../interfaces/ICategories";
 import LayoutMobility from "../../../../Layout/LayoutMobility";

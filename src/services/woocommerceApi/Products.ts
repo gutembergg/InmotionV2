@@ -37,7 +37,7 @@ export const getProductBySlug = async (slug: string) => {
 export const getVariations = async (id: number,lang: string) => {
   const { data } = await wooCommerce.get(`products/${id}/variations/?lang=${lang}`);
 
-  return data;
+  return filterCategoryVisibility(data);
 };
 
 // Get  products by ID LISTE//////////////////////////////////////////
@@ -123,7 +123,7 @@ export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
   const { data } = await wooCommerce.get("products", {
     on_sale: true,
     per_page: 8,
-    lang: lang
+    lang: lang,
   });
   const product = data;
 

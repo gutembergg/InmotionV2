@@ -49,7 +49,7 @@ export interface IProduct {
   euroRegularPrice: number;
   sale_price: string;
   on_sale: boolean;
-  title:string;
+  title: string;
   description?: string;
   slug: string;
   qty: number;
@@ -81,10 +81,12 @@ export interface IProduct {
   attributes: IProductAttributes[];
   sku: string;
   acf: Acf;
-  variations: IVariation[];
+  variations: number[];
+  selectedVariations: IVariation[];
   subtotal_tax: string;
   weight: string;
   short_description: string;
+  isAcfDescription?: boolean;
 }
 
 export interface ProductWithVariations {

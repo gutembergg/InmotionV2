@@ -15,10 +15,10 @@ module.exports = nextTranslate({
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/inmotion-mobility',
+        source: "/",
+        destination: "/inmotion-mobility",
         permanent: true,
       },
-    ]
+    ];
   },
 });

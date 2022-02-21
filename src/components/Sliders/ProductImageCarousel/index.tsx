@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Thumbs } from "swiper";
 import { IImage } from "../../../interfaces/IImages";
 import { SliderProductImage } from "./styles";
+
 interface props {
   imageList: IImage[];
 }
