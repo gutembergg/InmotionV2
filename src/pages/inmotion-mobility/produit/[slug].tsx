@@ -93,16 +93,12 @@ export default function ProductDetail({
   const isVariable = product?.variations.length > 0 ? true : false;
   const [selectedVariation, setSelectedVariation] = useState({} as any);
 
-  const [selectVariation, setSelectVariation] = useState();
-
-  //
   const VariationButtons = () => {
-    console.log("selected Variation-->", selectedVariation);
     return (
       <>
         {variations.map((variation) => (
           <VariationDisplay
-            className={selectedVariation === variation ? "active" : ""}
+            className={selectedVariation.id === variation.id ? "active" : ""}
             onClick={() => setSelectedVariation(variation)}
             key={variation.id}
           >
@@ -114,10 +110,6 @@ export default function ProductDetail({
       </>
     );
   };
-
-  console.log("produit---->", product);
-  // console.log("isvariable", isVariable);
-  console.log("variations", variations);
 
   useEffect(() => {
     Notiflix.Loading.init({
@@ -162,7 +154,7 @@ export default function ProductDetail({
 
   const handleAddToCart = (product: IProduct, originProductName = "") => {
     const hasSelectedVariation = Object.keys(selectedVariation).length > 0;
-    console.log("productVarition: ", product);
+
     const productExist = cartItem.find((item) => item.id === product.id);
 
     if (productExist) {
@@ -170,7 +162,7 @@ export default function ProductDetail({
 
       const cart = newCart.map((item) =>
         item.id === product.id
-          ? { ...productExist, qty: productExist.qty + 1 }
+          ? { ...productExist, qty: productExist.qty + productQty }
           : item
       );
 
@@ -181,13 +173,13 @@ export default function ProductDetail({
           ...cartItem,
           {
             ...product,
-            qty: 1,
+            qty: productQty,
             isVariation: true,
             name: `${originProductName} - ${selectedVariation.attributes[0].option}`,
           },
         ]);
       } else {
-        addToCart([...cartItem, { ...product, qty: 1 }]);
+        addToCart([...cartItem, { ...product, qty: productQty }]);
       }
     }
   };
@@ -519,6 +511,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
 
   const variations = await getVariations(product.id, lang as string);
+  const variationsWithEuroPrice = await addEuroPriceInProducts(variations);
+
   //crossSell ids
   const crossSellIDS = await getProductByID(
     product.cross_sell_ids,
@@ -537,7 +531,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     props: {
       product: productAcfDescriptionFilter,
       crossSellIDS: crossSellProductsWithEuroPrice,
-      variations,
+      variations: variationsWithEuroPrice,
     },
     revalidate: 60 * 2, // 2 min
   };

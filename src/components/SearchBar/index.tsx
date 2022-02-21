@@ -1,8 +1,10 @@
+import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
 import axios from "axios";
 import { IProduct } from "../../interfaces/IProducts";
 import { FiSearch } from "react-icons/fi";
+import wcApi from "../../services/woocommerceApi/wcAxiosConfig";
 
 import {
   Container,
@@ -10,13 +12,13 @@ import {
   SearchProductsList,
   ProductName,
 } from "./styles";
-import { useRouter } from "next/router";
 
 const SearchBar = () => {
   const router = useRouter();
   const [mobileSearchStatus, setMobileSearchStatus] = useState(false);
-  const [productsList, setProductsList] = useState<IProduct[]>([]);
   const [searchValue, setSearchValue] = useState<IProduct[] | undefined>([]);
+  const [_search, _setSearch] = useState<string | null>(null);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const { t } = useTranslation();
   const search = t(
@@ -31,18 +33,29 @@ const SearchBar = () => {
     setMobileSearchStatus(!mobileSearchStatus);
   };
 
-  /*  const address = "http://localhost:3000/api/products-swr/search-products";
-  const fetcher = async (url: string) =>
-    await axios.get<IProduct[]>(url).then((res) => res.data);
-  const { data: productsList, error } = useSWR(address, fetcher); */
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    if (_search) {
+      setSearchLoading(true);
+      wcApi
+        .get("products", {
+          params: {
+            per_page: 10,
+            search: _search,
+          },
+          cancelToken: source.token,
+        })
+        .then((response) => {
+          setSearchValue(response.data);
+          setSearchLoading(false);
+        })
+        .catch((error) => {
+          if (axios.isCancel(error)) return;
+        });
+    }
 
-  /*  useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/products-swr/search-products")
-      .then((response) => {
-        setProductsList(response.data);
-      });
-  }, []); */
+    return () => source.cancel();
+  }, [_search]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchText = e.target.value;
@@ -52,48 +65,26 @@ const SearchBar = () => {
       return;
     }
 
-    const items = productsList?.filter((item) =>
-      item.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
-    );
-
-    setSearchValue(items);
+    _setSearch(searchText);
   };
 
   const selectProduct = (slug: string) => {
     setSearchValue([]);
 
-    router.replace(`http://localhost:3000/inmotion-mobility/produit/${slug}`);
+    router.push(`/inmotion-mobility/produit/${slug}`);
   };
-
-  useEffect(() => {
-    const checkIfClickedOutside = (e: any) => {
-      if (searchValue) {
-        setSearchValue(undefined);
-      }
-    };
-
-    document.addEventListener("mousedown", checkIfClickedOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", checkIfClickedOutside);
-    };
-  }, [searchValue]);
 
   return (
     <Container>
       <MenuSearchBar>
-        <input
-          type="search"
-          placeholder={search}
-          onChange={handleChange}
-          disabled={!productsList}
-        />
+        <input type="search" placeholder={search} onChange={handleChange} />
+        {searchLoading && <p>Loading...</p>}
         <div className="searchICon">
           <FiSearch />
         </div>
       </MenuSearchBar>
 
-      {/*   {searchValue !== undefined && searchValue.length > 0 ? (
+      {searchValue !== undefined && searchValue.length > 0 ? (
         <SearchProductsList>
           {searchValue &&
             searchValue.map((product) => {
@@ -107,7 +98,7 @@ const SearchBar = () => {
               );
             })}
         </SearchProductsList>
-      ) : null} */}
+      ) : null}
     </Container>
   );
 };

@@ -1,15 +1,13 @@
-import HomeIcon from "../../../public/images/icons/house.svg";
+import Image from "next/image";
+import Link from "next/dist/client/link";
 import useUser from "../../hooks/useUser";
 import React, { ReactElement, useEffect, useState } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 import useTranslation from "next-translate/useTranslation";
 
-import Image from "next/dist/client/image";
 import imageSecurity from "../../../public/images/homeMobility/trott2.webp";
 import imageLocation from "../../../public/images/homeMobility/trott1.webp";
 import imageHelp from "../../../public/images/homeMobility/contactUs.webp";
-
-import Link from "next/dist/client/link";
 import SliderMobility from "../../components/Sliders/SliderMobility";
 import {
   getFeaturedProduct,
@@ -18,6 +16,9 @@ import {
 import { GetStaticProps } from "next";
 import { IProduct } from "../../interfaces/IProducts";
 import CarouselSwiper from "../../components/Sliders/Carousel";
+import { addEuroPriceInProducts } from "../../utils/addEuroPriceInProducts";
+import { IWPPage } from "../../interfaces/IWPPage";
+import { getSliderHome } from "../../services/wordpressApi/sliderHome";
 
 import {
   Container,
@@ -29,9 +30,6 @@ import {
   PromotedSection,
   HelpSection,
 } from "../../styles/MobilityIndex";
-import { addEuroPriceInProducts } from "../../utils/addEuroPriceInProducts";
-import { IWPPage } from "../../interfaces/IWPPage";
-import { getSliderHome } from "../../services/wordpressApi/sliderHome";
 
 interface Props {
   featuredProducts: IProduct[];
@@ -39,7 +37,11 @@ interface Props {
   sliderHome: IWPPage[];
 }
 
-export default function Home({ featuredProducts, onSaleProducts, sliderHome }: Props) {
+export default function Home({
+  featuredProducts,
+  onSaleProducts,
+  sliderHome,
+}: Props) {
   const { user } = useUser();
   const [loged] = useState(false);
 
@@ -175,7 +177,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     props: {
       featuredProducts: featuredproductsWithEuroPrice,
       onSaleProducts: onSaleProductsWithEuroPrice,
-      sliderHome: _sliderHome
+      sliderHome: _sliderHome,
     },
     revalidate: 60 * 2,
   };

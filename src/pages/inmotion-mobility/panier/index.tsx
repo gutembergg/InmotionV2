@@ -1,9 +1,7 @@
-import { NextPage } from "next";
 import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import thankIcon from "../../../../public/images/icons/thank-you.svg";
 import { IProduct } from "../../../interfaces/IProducts";
 import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";
@@ -12,9 +10,13 @@ import placeholder from "../../../../public/images/placeholder_woocommerce.webp"
 import { Container, StyledCart } from "../../../styles/PanierStyle";
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import useCurrency from "../../../hooks/useCurrency";
 
 export default function Panier() {
   const { cart, cartItem, addToCart, removeCartItem } = useCart();
+  const { currency } = useCurrency();
+
+  const currencyCHF = currency === "CHF";
 
   const { t } = useTranslation();
   const titleText = t("common:cartTitle");
@@ -69,16 +71,29 @@ export default function Panier() {
                         onClick={() => removeCartItem(product.id)}
                       ></button>
                       <div className="cartProductThmbnail">
-                        <Image
-                          src={
-                            product.images[0]
-                              ? product.images[0].src
-                              : placeholder.src
-                          }
-                          alt={product.name}
-                          height={60}
-                          width={60}
-                        />
+                        {product.isVariation ? (
+                          <Image
+                            src={
+                              product.image
+                                ? product.image.src
+                                : placeholder.src
+                            }
+                            alt={product.name}
+                            height={60}
+                            width={60}
+                          />
+                        ) : (
+                          <Image
+                            src={
+                              product.images[0]
+                                ? product.images[0].src
+                                : placeholder.src
+                            }
+                            alt={product.name}
+                            height={60}
+                            width={60}
+                          />
+                        )}
                       </div>
                       <h5>{product.name}</h5>
                       {product.on_sale && (
@@ -87,16 +102,38 @@ export default function Panier() {
                       {product.on_sale && (
                         <>
                           <p className="onSalePrice">
-                            CHF <strong>{product.regular_price}</strong>
+                            <span className="product_prices">
+                              {currencyCHF ? "CHF" : "EUR"}
+                            </span>
+
+                            <strong>
+                              {currencyCHF
+                                ? product.regular_price
+                                : product.euroRegularPrice}
+                            </strong>
                           </p>
                           <p className="productPrice">
-                            CHF <strong>{product.sale_price}</strong>
+                            <span className="product_prices">
+                              {currencyCHF ? "CHF" : "EUR"}
+                            </span>
+                            <strong>
+                              {currencyCHF
+                                ? product.sale_price
+                                : product.euroPrice}
+                            </strong>
                           </p>
                         </>
                       )}
                       {!product.on_sale && (
                         <p className="productPrice">
-                          CHF <strong>{product.regular_price} </strong>
+                          <span className="product_prices">
+                            {currencyCHF ? "CHF" : "EUR"}
+                          </span>
+                          <strong>
+                            {currencyCHF
+                              ? product.regular_price
+                              : product.euroRegularPrice}{" "}
+                          </strong>
                         </p>
                       )}
                       <div className="qtyInput">
@@ -118,7 +155,8 @@ export default function Panier() {
               )}
             </ul>
             <h5 className="sousTotalTxt">
-              Sous total: <span>CHF {cart.totalProductsPrice?.toFixed(2)}</span>
+              Sous total: <span>{currencyCHF ? "CHF" : "EUR"} </span>
+              {cart.totalProductsPrice?.toFixed(2)}
             </h5>
             <button className="btnCommander">
               <Link href="/inmotion-mobility/checkout-mobility">

@@ -239,7 +239,7 @@ export default function CheckoutMobility() {
         setTotalCartPriceConverted(cart.totalProductsPrice);
       }
 
-      if (method.id === 10 || method.id === 5) {
+      if (method.id === 10 || method.id === 5 || method.id === 7) {
         const costPerOrder = method.settings.method_rules.value.filter(
           (item) => item.cost_per_order
         );
@@ -420,7 +420,11 @@ export default function CheckoutMobility() {
           total: String(shippingPrice),
         },
       ];
-    } else if (_shippingMethods.id === 5 || _shippingMethods.id === 10) {
+    } else if (
+      _shippingMethods.id === 5 ||
+      _shippingMethods.id === 10 ||
+      _shippingMethods.id === 7
+    ) {
       shippingLines = [
         {
           method_id: _shippingMethods.method_id,
@@ -519,11 +523,6 @@ export default function CheckoutMobility() {
           localStorage.removeItem("inmotion:cart");
         }
 
-        Report.success(
-          "Notiflix Success",
-          '"Vous serez dirigé vers la page de votre commande."',
-          "Okay"
-        );
         router.push(
           `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
         );
@@ -819,9 +818,11 @@ export default function CheckoutMobility() {
           case method.id === 2:
             methodeName = "Point de vente";
             break;
-          case method.id === 10 || method.id === 5:
+          case method.id === 10 || method.id === 5 || method.id === 7:
             methodeName = "DHL";
             break;
+          default:
+            methodeName = "";
         }
 
         return { ...method, methodeName };
