@@ -23,6 +23,9 @@ export interface IWPPage {
     inline_featured_image: boolean;
   };
   acf: {
+    description: string,
+  lien: string,
+  texte_du_lien: string,
     fichiers?: [
       {
         fichier: {

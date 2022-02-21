@@ -30,13 +30,16 @@ import {
   HelpSection,
 } from "../../styles/MobilityIndex";
 import { addEuroPriceInProducts } from "../../utils/addEuroPriceInProducts";
+import { IWPPage } from "../../interfaces/IWPPage";
+import { getSliderHome } from "../../services/wordpressApi/sliderHome";
 
 interface Props {
   featuredProducts: IProduct[];
   onSaleProducts: IProduct[];
+  sliderHome: IWPPage[];
 }
 
-export default function Home({ featuredProducts, onSaleProducts }: Props) {
+export default function Home({ featuredProducts, onSaleProducts, sliderHome }: Props) {
   const { user } = useUser();
   const [loged] = useState(false);
 
@@ -80,7 +83,7 @@ export default function Home({ featuredProducts, onSaleProducts }: Props) {
             </h1>
           </div>
           <MobilitySlider>
-            <SliderMobility />
+            <SliderMobility slider={sliderHome} />
           </MobilitySlider>
         </div>
         <PromotedProducts>
@@ -156,6 +159,8 @@ Home.getLayout = function getLayout(page: ReactElement) {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const lang = ctx.locale;
 
+  const _sliderHome = await getSliderHome(lang as string);
+
   const featuredproducts = await getFeaturedProduct(lang as string);
   const featuredproductsWithEuroPrice = await addEuroPriceInProducts(
     featuredproducts
@@ -170,6 +175,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     props: {
       featuredProducts: featuredproductsWithEuroPrice,
       onSaleProducts: onSaleProductsWithEuroPrice,
+      sliderHome: _sliderHome
     },
     revalidate: 60 * 2,
   };
