@@ -1,40 +1,40 @@
-import type { NextPage } from "next";
-import useTranslation from "next-translate/useTranslation";
-import { ICategories } from "../interfaces/ICategories";
-import { CurvedBackground } from "../styles/BackgroundStyle";
-import Link from "next/link";
-import Image from "next/dist/client/image";
-import logo from "../../public/images/logo-inmotion-black.webp";
-import logoBlue from "../../public/images/logo-blue.webp";
-import LanguageSelector from "../components/LanguageSelector";
-import trotGif from "../../public/video/trottinette.gif";
-import printGif from "../../public/video/printer.gif";
+// import type { NextPage } from "next";
+// import useTranslation from "next-translate/useTranslation";
+// import { ICategories } from "../interfaces/ICategories";
+import LayoutMobility from "../Layout/LayoutMobility";
+// import Link from "next/link";
+// import Image from "next/dist/client/image";
+// import logo from "../../public/images/logo-inmotion-black.webp";
+// import logoBlue from "../../public/images/logo-blue.webp";
+// import LanguageSelector from "../components/LanguageSelector";
+// import trotGif from "../../public/video/trottinette.gif";
+// import printGif from "../../public/video/printer.gif";
+import React, { ReactElement, 
+  // useEffect, 
+  // useState 
+} from "react";
+
 import {
   MainHome,
-  MainContent,
-  HomeContentBody,
-  GifBox1,
-  GifBox2,
-  ContentHeader,
+  // MainContent,
+  // HomeContentBody,
+  // GifBox1,
+  // GifBox2,
+  // ContentHeader,
 } from "../styles/mainHome";
 
-export interface Props {
-  categories: ICategories[];
-  menu_order: ICategories[];
-}
-
-const Home: NextPage<Props> = () => {
+export default function Home() {
   // translation strings
-  const { t } = useTranslation();
-  const TXT_Welcome = t("home:welcomeTitle");
-  const TXT_ChooseShop = t("home:chooseYourShop");
-  const TXT_MobilitySpecialist = t("home:MobilitySpecialist");
-  const TXT_3DSpecialist = t("home:3DSpecialist");
+  // const { t } = useTranslation();
+  // const TXT_Welcome = t("home:welcomeTitle");
+  // const TXT_ChooseShop = t("home:chooseYourShop");
+  // const TXT_MobilitySpecialist = t("home:MobilitySpecialist");
+  // const TXT_3DSpecialist = t("home:3DSpecialist");
 
   return (
-    <CurvedBackground>
       <MainHome>
-        <div className="topBlock">
+        <h1>Inmotion-suisse, votre spécialiste en gyroroues, trottinettes et vélos électriques</h1>
+        {/* <div className="topBlock">
           <LanguageSelector />
         </div>
         <MainContent>
@@ -100,9 +100,11 @@ const Home: NextPage<Props> = () => {
               </Link>
             </div>
           </HomeContentBody>
-        </MainContent>
+        </MainContent> */}
       </MainHome>
-    </CurvedBackground>
   );
+}
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMobility>{page}</LayoutMobility>;
 };
-export default Home;
+

@@ -13,5 +13,10 @@
   "legalMentionsTxt": "Legal mention",
   "previousPageLink": "Back",
   "CurrencyBlocked": "You have already selected Product in Cart, remove them if you want change the currency",
-  "shopTitle": "welcome to our shop"
+  "shopTitle": "welcome to our shop",
+  "InStock":"On Stock",
+  "OnOrder":"on order: 1 week delay",
+  "Pieces":"pieces",
+  "OutOfStock":"Out of Stock",
+  "NoStockInfo":"No information"
 }

@@ -125,9 +125,12 @@ export const Button = styled.button`
   text-align: center;
   margin-left: 20px;
   margin-top: 1.3rem;
-
   color: #fff;
   border: none;
+
+  &.disabled{
+    background-color: var(--LightGray)
+  }
 `;
 
 export const StockProduct = styled.div`
@@ -259,9 +262,45 @@ const title_description = {
   width: "100%",
 };
 
-export const Variations = styled.div``;
+  export const Variations = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top:10px;
+  margin-bottom:20px;
+  `;
+  export const SelectedVariation = styled.div`
+  display: flex;
+  `;
+  
+  export const VariationDisplay = styled.button`
+  display:flex;
+  border: 1px solid var(--Blue);
+  border-radius:5px;
+  padding:5px;
 
-export const VariationImage = styled.div``;
+  background-color: transparent;
+  
+  &:hover{
+    background-color: var(--LightGray)
+  }
+
+  &.active{
+    background-color: var(--Blue);
+  }
+  `;
+
+export const VariationImage = styled.div`
+div{
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+`;
+
+export const VariationData = styled.div`
+display: flex;
+flex-direction: column;
+`;
 
 export const Sections = styled.div`
   padding: 0 12rem;

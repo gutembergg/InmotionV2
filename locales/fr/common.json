@@ -13,5 +13,10 @@
   "legalMentionsTxt": "Mention légale",
   "previousPageLink": "Précédent",
   "CurrencyBlocked": "Vous avez déjà selectionner des articles dans le panier, retirez-les si vous soouhaiter changer de devises",
-  "shopTitle": "bienvenue dans notre boutique"
+  "shopTitle": "bienvenue dans notre boutique",
+  "InStock":"En stock",
+  "OnOrder":"sur commande : 1 semaine de délai",
+  "Pieces":"pièces",
+  "OutOfStock":"Non disponible",
+  "NoStockInfo":"Aucune information"
 }

@@ -84,6 +84,10 @@ export default function Category({ category, productsByCategory }: Props) {
   const autorisationRouler = products[productIndex]?.attributes.find(
     (item) => item.name === "autorisation circulation"
   );
+<<<<<<< HEAD
+=======
+
+>>>>>>> 585bfc129b87848284f99090b7b253b71529fb90
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);

@@ -11,6 +11,8 @@ export interface IVariation {
   sku: string;
   price: string;
   regular_price: string;
+  euroPrice: number;
+  euroRegularPrice: number;
   sale_price: string;
   on_sale: boolean;
   status: string;
@@ -18,7 +20,7 @@ export interface IVariation {
   virtual: boolean;
   tax_status: string;
   tax_class: string;
-  stock_quantity: null;
+  stock_quantity: number;
   stock_status: string;
   weight: string;
   dimensions: {

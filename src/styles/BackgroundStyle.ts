@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import mainBg from "../../public/images/backgrounds/MainBackground.jpg";
-import lightBg from "../../public/images/backgrounds/lightBackground.jpg";
+import lightBg from "../../public/images/backgrounds/lightBackground.webp";
 
 export const CurvedBackground = styled.div`
     background-image:url(${mainBg.src});
