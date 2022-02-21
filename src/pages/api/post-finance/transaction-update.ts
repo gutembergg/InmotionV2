@@ -90,7 +90,7 @@ export default async function handlerUpdate(
           id: response.body.id as number,
           lineItems: [...itemsWithShipping],
           version: response.body.version as number,
-          successUrl: `https://inmotion-v2.vercel.app/inmotion-mobility/completed-order?order=${transaction.orderId}&pf_ts=${transaction.id}`,
+          successUrl: `https://inmotion-suisse-ten.vercel.app/inmotion-mobility/completed-order?order=${transaction.orderId}&pf_ts=${transaction.id}`,
         };
 
         transactionService

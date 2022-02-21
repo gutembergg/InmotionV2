@@ -64,7 +64,7 @@ import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
 
 interface Props {
   product: IProduct;
-  variations: IVariation[];
+  variations: any[];
   crossSellIDS: IProduct[];
   onChange: () => void;
 }
@@ -91,7 +91,9 @@ export default function ProductDetail({
 
   //check if product is variable or not
   const isVariable = product?.variations.length > 0 ? true : false;
-  const [selectedVariation, setSelectedVariation] = useState({} as IVariation);
+  const [selectedVariation, setSelectedVariation] = useState({} as any);
+
+  const [selectVariation, setSelectVariation] = useState();
 
   //
   const VariationButtons = () => {
@@ -113,9 +115,9 @@ export default function ProductDetail({
     );
   };
 
-  // console.log("produit---->", product);
+  console.log("produit---->", product);
   // console.log("isvariable", isVariable);
-  // console.log("variations", variations);
+  console.log("variations", variations);
 
   useEffect(() => {
     Notiflix.Loading.init({
@@ -158,7 +160,9 @@ export default function ProductDetail({
     }
   });
 
-  const handleAddToCart = (product: IProduct) => {
+  const handleAddToCart = (product: IProduct, originProductName = "") => {
+    const hasSelectedVariation = Object.keys(selectedVariation).length > 0;
+    console.log("productVarition: ", product);
     const productExist = cartItem.find((item) => item.id === product.id);
 
     if (productExist) {
@@ -172,7 +176,19 @@ export default function ProductDetail({
 
       addToCart(cart);
     } else {
-      addToCart([...cartItem, { ...product, qty: 1 }]);
+      if (hasSelectedVariation) {
+        addToCart([
+          ...cartItem,
+          {
+            ...product,
+            qty: 1,
+            isVariation: true,
+            name: `${originProductName} - ${selectedVariation.attributes[0].option}`,
+          },
+        ]);
+      } else {
+        addToCart([...cartItem, { ...product, qty: 1 }]);
+      }
     }
   };
 
@@ -342,7 +358,9 @@ export default function ProductDetail({
                   selectedVariation.id ? (
                     <Button
                       type="button"
-                      onClick={() => handleAddToCart(product)}
+                      onClick={() =>
+                        handleAddToCart(selectedVariation, product.name)
+                      }
                     >
                       {btnAddToCart}
                     </Button>

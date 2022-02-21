@@ -38,10 +38,10 @@ interface Acf {
 }
 
 export interface IProduct {
-  cross_sell_ids: string[];
   id: number;
   name: string;
   images: IImage[];
+  image: IImage;
   price: string;
   euroPrice: number;
   regular_price: string;
@@ -58,6 +58,7 @@ export interface IProduct {
   stock_quantity?: number;
   stock_status?: string;
   lang: string;
+  cross_sell_ids: string[];
   meta_data: IProductMetaData[];
   yoast_head?: string;
   yoast_head_json: {
@@ -82,6 +83,7 @@ export interface IProduct {
   sku: string;
   acf: Acf;
   variations: number[];
+  isVariation?: boolean;
   selectedVariations: IVariation[];
   subtotal_tax: string;
   weight: string;

@@ -34,10 +34,12 @@ export const getProductBySlug = async (slug: string) => {
 };
 
 // Get variations products //////////////////////////////////////////
-export const getVariations = async (id: number,lang: string) => {
-  const { data } = await wooCommerce.get(`products/${id}/variations/?lang=${lang}`);
+export const getVariations = async (id: number, lang: string) => {
+  const { data } = await wooCommerce.get(
+    `products/${id}/variations/?lang=${lang}`
+  );
 
-  return filterCategoryVisibility(data);
+  return data;
 };
 
 // Get  products by ID LISTE//////////////////////////////////////////

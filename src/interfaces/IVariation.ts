@@ -14,6 +14,7 @@ export interface IVariation {
   euroPrice: number;
   euroRegularPrice: number;
   sale_price: string;
+  qty: number;
   on_sale: boolean;
   status: string;
   purchasable: boolean;

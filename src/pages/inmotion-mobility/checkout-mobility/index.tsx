@@ -1142,12 +1142,21 @@ export default function CheckoutMobility() {
                           return (
                             <ProductCart key={product.id}>
                               <div className="product_image">
-                                <Image
-                                  src={product.images[0].src}
-                                  alt={product.name}
-                                  height={50}
-                                  width={50}
-                                />
+                                {product.isVariation ? (
+                                  <Image
+                                    src={product.image.src}
+                                    alt={product.name}
+                                    height={50}
+                                    width={50}
+                                  />
+                                ) : (
+                                  <Image
+                                    src={product.images[0].src}
+                                    alt={product.name}
+                                    height={50}
+                                    width={50}
+                                  />
+                                )}
 
                                 <span className="product_name_cart">
                                   {product.name}

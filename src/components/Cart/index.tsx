@@ -6,7 +6,7 @@ import placeholder from "../../../public/images/placeholder_woocommerce.webp";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import useCurrency from "../../hooks/useCurrency";
-import {BsCart2} from 'react-icons/bs';
+import { BsCart2 } from "react-icons/bs";
 
 const Cart = () => {
   const cartModalRef = useRef<HTMLDivElement>(null);
@@ -75,16 +75,29 @@ const Cart = () => {
                         </p>
                       </div>
                       <div className="cartProductThmbnail">
-                        <Image
-                          src={
-                            product.images[0]
-                              ? product.images[0].src
-                              : placeholder.src
-                          }
-                          alt={product.name}
-                          height={50}
-                          width={50}
-                        />
+                        {product.isVariation ? (
+                          <Image
+                            src={
+                              Object.keys(product.image).length > 0
+                                ? product.image.src
+                                : placeholder.src
+                            }
+                            alt={product.name}
+                            height={50}
+                            width={50}
+                          />
+                        ) : (
+                          <Image
+                            src={
+                              product.images[0]
+                                ? product.images[0].src
+                                : placeholder.src
+                            }
+                            alt={product.name}
+                            height={50}
+                            width={50}
+                          />
+                        )}
                       </div>
                     </li>
                   );
