@@ -1,17 +1,12 @@
-import { StyledLangSelector2 } from "./styles";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { MouseEvent, useRef, useState } from "react";
 import deflag from "../../../public/images/icons/deflag.svg";
 import frflag from "../../../public/images/icons/frflag.svg";
 import enflag from "../../../public/images/icons/enflag.svg";
-import {
-  MouseEvent,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 import useCart from "../../hooks/useCart";
+
+import { StyledLangSelector2 } from "./styles";
 
 const LanguageSelector = () => {
   const router = useRouter();
@@ -25,8 +20,10 @@ const LanguageSelector = () => {
     setopenObject(!openObject);
   };
 
+  console.log("cart==>", cart);
+
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
-    if (cart.products.length > 0) return;
+    if (Object.keys(cart).length > 0) return;
     setopenObject(!openObject);
   };
 
