@@ -1,3 +1,5 @@
+import { IImage } from "./IImages";
+
 export interface IWPPage {
   id: number;
   date: string;
@@ -23,6 +25,14 @@ export interface IWPPage {
     inline_featured_image: boolean;
   };
   acf: {
+    description_location:string,
+    image_location:{
+      ID: number;
+      id: number;
+      url: string;
+      link: string;
+      alt: string;
+    };
     description: string,
   lien: string,
   texte_du_lien: string,
@@ -57,11 +67,11 @@ export interface IWPPage {
       }
     ];
     image?: {
-      ID: 69;
-      id: 69;
-      url: "https://dx7l6anesh.preview.infomaniak.website/wp-content/uploads/2021/09/Groupe_87-removebg-preview.png";
-      link: "https://dx7l6anesh.preview.infomaniak.website/guides_utilisateurs/montage-l9/groupe_87-removebg-preview/";
-      alt: "";
+      ID: number;
+      id: number;
+      url: string;
+      link: string;
+      alt: string;
     };
   };
 }
