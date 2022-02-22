@@ -32,6 +32,10 @@
       "services",
       "forms"
     ],
+    "/inmotion-mobility/services/location": [
+      "headerMobility",
+      "location-page"
+    ],
     "/inmotion-mobility/services/cours-gyroroue": [
       "headerMobility",
       "cours-gyro"
