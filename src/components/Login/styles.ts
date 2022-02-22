@@ -33,14 +33,18 @@ export const LoginLink = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
-
+  
   span {
     color: var(--White);
   }
-
+  
   @media (max-width: 1024px) {
     width: 50px;
     margin-right: 15px;
+    svg{
+      fill: var(--Blue);
+
+    }
   }
 
   @media (max-width: 640px) {

@@ -22,25 +22,19 @@ justify-content: space-between;
   min-height: 100vh;
 position: relative;
   .location{
-    margin-top: 85px;
+    margin-top:80px;
     @media (max-width:1024px){
-      margin-top: 55px;
+      margin-top:50px;
     }
     @media (max-width:640px){
-      margin-top: 40px;
+      margin-top:40px;
     }
-    display: flex;
   }
   main {
     padding: 0 0%;
     flex: auto;
   }
   
-  Header {
-    padding: 0 0%;
-    position:fixed;
-    width: 100%;
-    z-index:9990;
-  }
+
 }
 `;

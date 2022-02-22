@@ -17,11 +17,20 @@ interface Imodal {
 
 const Modal: React.FC<Imodal> = ({ show, onClose, children, title }) => {
   const [isBrowser, setIsBrowser] = useState(false);
-
+  // console.log(isBrowser)
+  const [openModal, setopenModal] = useState(false)
   useEffect(() => {
     setIsBrowser(true);
   }, []);
 
+  useEffect(() => {
+    show ? (
+      document.body.style.overflow = "hidden"     
+      ):(
+      document.body.style.overflow = "auto"
+    )
+  }, [show])
+  
   const handleCloseClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     onClose();

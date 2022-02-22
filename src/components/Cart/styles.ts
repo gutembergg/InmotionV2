@@ -6,6 +6,7 @@ cursor: pointer;
   .cartIconElement {
     position: relative;
 display: flex;
+
     .cartIcon {
       margin-right: 0px;
       transition: all ease-in 0.2s;
@@ -53,15 +54,22 @@ display: flex;
         padding-top: 7px;
         left: 0px;
         right: initial;
+        top: 47px;
       }
 
-      .cartContainer {
-        background-color: white;
-        width: 300px;
-        border-top: none;
-        box-shadow: 0px 7px 8px 0px #2121211c;
-        padding-bottom: 2px;
-        @media (max-width: 1024px) {
+    @media (max-width: 640px) {
+      top: 32px;
+    }
+  }
+  
+  .cartContainer {
+    background-color: white;
+    width: 300px;
+    border-top: none;
+    box-shadow: 0px 7px 8px 0px #2121211c;
+    padding: 0 2rem 2px 2rem;
+    @media (max-width: 1024px) {
+          border-top: 2px solid var(--Blue) ;
           width: 100vw;
         }
 
@@ -123,6 +131,9 @@ display: flex;
           border-top: 2px solid var(--DarkGray);
           padding: 10px 0px;
           margin: 4px 16px;
+          @media (max-width: 1024px) {
+            margin: 4px 0px;
+          }
         }
         .closeCartButton {
           text-align: center;
@@ -142,6 +153,10 @@ display: flex;
           text-transform: uppercase;
           font-weight: bold;
           transition: all ease-in 0.2s;
+          @media (max-width: 1024px) {
+            width:100%;
+            margin-left: 0 ;
+          }
           &:hover {
             transition: all ease-in 0.1s;
             background-color: var(--DarkGray);
@@ -181,6 +196,10 @@ display: flex;
           text-transform: uppercase;
           font-weight: bold;
           transition: all ease-in 0.2s;
+          @media (max-width: 1024px) {
+            width:100%;
+            margin-left: 0 ;
+          }
           &:hover {
             transition: all ease-in 0.1s;
             background-color: #1186c0;
