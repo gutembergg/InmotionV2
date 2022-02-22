@@ -1,8 +1,19 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  margin: auto;
+  width: 100%;
+  max-width: 1300px;
+  margin-top: 1.4rem;
+`;
 
 export const StyledCart = styled.div`
+  width: inherit;
+  span.product_prices {
+    margin-right: 0.4rem;
+  }
+
   .cartPreview {
     padding-top: 10px;
 

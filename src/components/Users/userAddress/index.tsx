@@ -5,11 +5,22 @@ interface Props {
   currentyUser: User;
 }
 
+import { Container, PasswordConfig } from "./styles";
+
 const UserAddress = ({ currentyUser }: Props) => {
+  console.log("currentyUser: ", currentyUser);
   return (
-    <div>
+    <Container>
       <UserForm currentyUser={currentyUser} />
-    </div>
+
+      <PasswordConfig>
+        <h4>Votre mot de passe</h4>
+        <div>
+          <input type="password" placeholder="password" />
+          <button>Changer password</button>
+        </div>
+      </PasswordConfig>
+    </Container>
   );
 };
 

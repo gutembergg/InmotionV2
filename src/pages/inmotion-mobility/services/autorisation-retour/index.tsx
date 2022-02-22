@@ -1,10 +1,12 @@
 import useTranslation from "next-translate/useTranslation";
 import React, { ReactElement } from "react";
-import confidentialiteIcon from "../../../../../public/images/icons/confidentialite.svg";
 import { Container } from "../../../../components/HomeMainComponent/styles";
 import ReturnProductForm from "../../../../components/ReturnProductForm";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
-import { DirectivesRetour, MainContent } from "../../../../styles/RetourMarchandise";
+import {
+  DirectivesRetour,
+  MainContent,
+} from "../../../../styles/RetourMarchandise";
 
 export default function AutorisationRetour() {
   const { t } = useTranslation();
@@ -23,19 +25,21 @@ export default function AutorisationRetour() {
     <Container>
       <MainContent>
         <DirectivesRetour>
-        <h1>{DirectiveTitle}</h1>
-        <p><strong>{DirectiveDesc}</strong></p>
-        <ul>
-          <li>{ul1}</li>
-          <li>{ul2}</li>
-          <li>{ul3}</li>
-          <li>{ul4}</li>
-          <li>{ul5}</li>
-          <li>{ul6}</li>
-          <li>{ul7}</li>
-          <li>{ul8}</li>
-        </ul>
-        <h2 className="squared">{FormTitle}</h2>
+          <h1>{DirectiveTitle}</h1>
+          <p>
+            <strong>{DirectiveDesc}</strong>
+          </p>
+          <ul>
+            <li>{ul1}</li>
+            <li>{ul2}</li>
+            <li>{ul3}</li>
+            <li>{ul4}</li>
+            <li>{ul5}</li>
+            <li>{ul6}</li>
+            <li>{ul7}</li>
+            <li>{ul8}</li>
+          </ul>
+          <h2 className="squared">{FormTitle}</h2>
         </DirectivesRetour>
         <ReturnProductForm />
       </MainContent>

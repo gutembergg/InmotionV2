@@ -1,28 +1,32 @@
-import { StyledLangSelector2 } from "./styles";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { MouseEvent, useRef, useState } from "react";
 import deflag from "../../../public/images/icons/deflag.svg";
 import frflag from "../../../public/images/icons/frflag.svg";
 import enflag from "../../../public/images/icons/enflag.svg";
-import { MouseEvent, MouseEventHandler, useEffect, useRef, useState } from "react";
+import useCart from "../../hooks/useCart";
+
+import { StyledLangSelector2 } from "./styles";
 
 const LanguageSelector = () => {
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const [openObject, setopenObject] = useState(false);
   const objectModalRef = useRef<HTMLDivElement>(null);
+  const { cart } = useCart();
 
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("value", e.currentTarget.id);
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
     setopenObject(!openObject);
   };
-  
+
+  console.log("cart==>", cart);
+
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
-    console.log(event);
+    if (Object.keys(cart).length > 0) return;
     setopenObject(!openObject);
   };
-  
+
   return (
     <StyledLangSelector2>
       <div className="langSelector">
