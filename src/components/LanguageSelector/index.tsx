@@ -12,7 +12,6 @@ const LanguageSelector = () => {
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const [openObject, setopenObject] = useState(false);
-  const objectModalRef = useRef<HTMLDivElement>(null);
   const { cart } = useCart();
 
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -20,9 +19,8 @@ const LanguageSelector = () => {
     setopenObject(!openObject);
   };
 
-  console.log("cart==>", cart);
-
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
+    console.log("Object.keys(car", Object.keys(cart).length);
     if (Object.keys(cart).length > 0) return;
     setopenObject(!openObject);
   };

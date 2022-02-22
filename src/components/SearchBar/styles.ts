@@ -24,6 +24,10 @@ export const MenuSearchBar = styled.div`
   .searchIcon {
     width: 25px;
   }
+
+  span {
+    margin: 0 0.3rem;
+  }
 `;
 
 export const SearchProductsList = styled.ul`
@@ -34,7 +38,6 @@ export const SearchProductsList = styled.ul`
   background: var(--White);
   list-style-type: none;
   height: auto;
-  max-height: 400px;
   width: 100%;
   padding: 0.5rem;
   box-shadow: 0px 3px 3px #0000004f;

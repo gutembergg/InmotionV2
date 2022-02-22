@@ -105,7 +105,6 @@ const CartProvider = ({ children }: Children) => {
     if (typeof window !== "undefined") {
       localStorage.setItem("inmotion:cart", JSON.stringify(_cart));
     }
-    console.log("_cart", _cart);
     setCart(_cart);
 
     setCartItem(products);

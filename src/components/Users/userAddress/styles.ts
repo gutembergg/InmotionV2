@@ -12,15 +12,19 @@ export const PasswordConfig = styled.div`
   h4 {
     margin-bottom: 1rem;
   }
+`;
 
-  div {
-    display: flex;
-    align-items: center;
-  }
+export const InputBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 
   input {
     height: 40px;
+    width: 100%;
+    max-width: 300px;
     padding: 0.4rem;
+    margin-bottom: 1rem;
   }
 
   button {
@@ -30,5 +34,10 @@ export const PasswordConfig = styled.div`
     background: var(--Blue);
     font-weight: 600;
     border: none;
+    transition: 0.2s ease;
+
+    &:hover {
+      background: var(--BlueHover);
+    }
   }
 `;

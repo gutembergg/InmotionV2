@@ -57,6 +57,15 @@ export const BtnAddToCart = styled.button`
   &:active {
     transform: scale(0.9);
   }
+
+  a {
+    text-decoration: none;
+    color: var(--White);
+  }
+
+  &:hover {
+    background: var(--BlueHover);
+  }
 `;
 
 export const IconFleche = styled(AiFillPlayCircle)`

@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
 import axios from "axios";
 import { IProduct } from "../../interfaces/IProducts";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
 import wcApi from "../../services/woocommerceApi/wcAxiosConfig";
 
 import {
@@ -75,11 +75,20 @@ const SearchBar = () => {
     router.push(`/inmotion-mobility/produit/${slug}`);
   };
 
+  const calcelSearch = () => {
+    setSearchValue([]);
+    _setSearch("");
+    setSearchLoading(false);
+  };
+
   return (
     <Container>
       <MenuSearchBar>
-        <input type="search" placeholder={search} onChange={handleChange} />
+        <input type="text" placeholder={search} onChange={handleChange} />
         {searchLoading && <p>Loading...</p>}
+        <span>
+          <FiX onClick={calcelSearch} />
+        </span>
         <div className="searchICon">
           <FiSearch />
         </div>
