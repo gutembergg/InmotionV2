@@ -1,14 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import React, {
-  ChangeEvent,
-  FormEventHandler,
-  ReactElement,
-  useEffect,
-  useState,
-} from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import useTranslation from "next-translate/useTranslation";
 
@@ -24,7 +18,6 @@ import {
 import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
-import { IVariation } from "../../../interfaces/IVariation";
 import {
   addEuroPriceInProducts,
   addEuroPriceInSingleProduct,

@@ -16,13 +16,15 @@ import {
 
 interface Props {
   product: IProduct;
+  isEquipement?: boolean;
 }
 
-const MobileCard = ({ product }: Props) => {
+const MobileCard = ({ product, isEquipement = false }: Props) => {
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
+  const showVariationTradution = t("productDetail:showVariationTradution");
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -66,9 +68,17 @@ const MobileCard = ({ product }: Props) => {
             </span>
           </div>
 
-          <BtnAddToCart onClick={() => handleAddToCart(product)}>
-            {btnAddToCart}
-          </BtnAddToCart>
+          {isEquipement ? (
+            <BtnAddToCart>
+              <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+                {showVariationTradution}
+              </Link>
+            </BtnAddToCart>
+          ) : (
+            <BtnAddToCart onClick={() => handleAddToCart(product)}>
+              {btnAddToCart}
+            </BtnAddToCart>
+          )}
         </ProductInfo>
       </ProductBlock>
 

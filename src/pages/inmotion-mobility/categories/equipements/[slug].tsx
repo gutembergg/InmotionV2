@@ -97,7 +97,7 @@ export default function EquipementsSubCat({
               {productsByCategory.map((product) => {
                 return (
                   <div key={product.id}>
-                    <MobileCard product={product} />
+                    <MobileCard product={product} isEquipement={true} />
                   </div>
                 );
               })}

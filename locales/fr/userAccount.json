@@ -7,5 +7,9 @@
   "state": "Etat",
   "dateTraduction": "Date",
   "preview": "Aperçu",
-  "invoice": "Facture"
+  "invoice": "Facture",
+  "changePassword": "changer mot de passe",
+  "newPassword": "nouveau mot de passe",
+  "confirmPassword": "confirmer mot de passe",
+  "register": "Valider"
 }

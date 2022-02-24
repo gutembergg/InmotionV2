@@ -6,6 +6,7 @@ import { UserDto } from "../../interfaces/UserDTO";
 import api from "../axiosApi";
 import { wooCommerce } from "../woocommerceApi/woocommerceConfig";
 
+// Create User ///////////////////////////////////////////////////
 export const createInmotionUsers = async (user: UserDto) => {
   try {
     const response = await api.post("users", user);
@@ -16,6 +17,7 @@ export const createInmotionUsers = async (user: UserDto) => {
   }
 };
 
+// User Login ///////////////////////////////////////////////////
 export const userLogin = async (authUser: AuthUser) => {
   try {
     const response = await axios.post(
@@ -32,6 +34,7 @@ export const userLogin = async (authUser: AuthUser) => {
   }
 };
 
+// User update billing and shipping ///////////////////////////////////////////////////
 export const updateUsers = async (
   usersBillingShipping: IFormValues,
   token: string
@@ -47,6 +50,23 @@ export const updateUsers = async (
   }
 };
 
+// User update password ///////////////////////////////////////////////////
+export const updateUsersPassword = async (password: {
+  password: string;
+  token: string;
+}) => {
+  try {
+    const { data } = await api.put("password", password, {
+      headers: { Authorization: `Bearer ${password.token}` },
+    });
+    console.log("success::", data);
+    return data;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+// Get user by ID ///////////////////////////////////////////////////
 export const getUserById = async (id: number): Promise<User> => {
   const { data } = await wooCommerce.get(`customers/${id}`);
 
