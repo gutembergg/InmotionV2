@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { MouseEvent, useRef, useState } from "react";
+import { MouseEvent, useState } from "react";
 import deflag from "../../../public/images/icons/deflag.svg";
 import frflag from "../../../public/images/icons/frflag.svg";
 import enflag from "../../../public/images/icons/enflag.svg";
@@ -21,7 +21,7 @@ const LanguageSelector = () => {
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
     console.log("Object.keys(car", Object.keys(cart).length);
-    if (Object.keys(cart).length > 0) return;
+    if (Object.keys(cart).length > 0 && cart.products.length > 0) return;
     setopenObject(!openObject);
   };
 

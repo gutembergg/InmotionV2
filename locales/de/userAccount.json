@@ -7,5 +7,9 @@
   "state": "Zustand",
   "dateTraduction": "Datum",
   "preview": "Vorschau",
-  "invoice": "Rechnung"
+  "invoice": "Rechnung",
+  "changePassword": "Passwort ändern",
+  "newPassword": "Neues Kennwort",
+  "confirmPassword": "Bestätige das Passwort",
+  "register": "bestätigen"
 }

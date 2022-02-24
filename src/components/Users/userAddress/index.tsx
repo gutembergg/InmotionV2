@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import { ChangeEvent, useCallback, useState } from "react";
 import useUser from "../../../hooks/useUser";
 import { User } from "../../../interfaces/User";
@@ -19,6 +20,12 @@ interface IPassword {
 const UserAddress = ({ currentyUser }: Props) => {
   const { user } = useUser();
   const [_password, _setPassword] = useState<IPassword>({} as IPassword);
+
+  const { t } = useTranslation();
+  const changePassword = t("userAccount:changePassword");
+  const newPassword = t("userAccount:newPassword");
+  const confirmPassword = t("userAccount:confirmPassword");
+  const register = t("userAccount:register");
 
   const onChangePassword = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,23 +53,23 @@ const UserAddress = ({ currentyUser }: Props) => {
       <UserForm currentyUser={currentyUser} />
 
       <PasswordConfig>
-        <h4>Changer mot de passe</h4>
+        <h4>{changePassword}</h4>
         <InputBlock>
           <input
             type="password"
             name="newPassword"
             onChange={onChangePassword}
-            placeholder="nouveau mot de passe"
+            placeholder={newPassword}
           />
           <div>
             <input
               type="password"
               name="password"
               onChange={onChangePassword}
-              placeholder="confirmez mot de passe"
+              placeholder={confirmPassword}
             />
             <button type="button" onClick={onSubmitPassword}>
-              Valider
+              {register}
             </button>
           </div>
         </InputBlock>
