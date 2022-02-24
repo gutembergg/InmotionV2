@@ -6,6 +6,10 @@ interface Props {
 export const StyledMobileHeader = styled.header`
   display: none;
 
+  .settings{
+    display: flex;
+    flex-direction: row-reverse;
+  }
   .mainBlock.open {
     transition: all ease-in 0.3s;
     background-color: #000000ed;
@@ -16,6 +20,7 @@ export const StyledMobileHeader = styled.header`
       transition: all ease-in 0.3s;
       top: 0;
       left: 0;
+      width: 100%;
     }
   }
 
@@ -45,6 +50,8 @@ export const StyledMobileHeader = styled.header`
       width: 150px;
       height: 22px;
       margin-right: 25px;
+      position: relative;
+
       @media screen and (min-width: 640px) {
         width: 205px;
         height: 36px;
@@ -73,7 +80,9 @@ export const StyledMobileHeader = styled.header`
     overflow-y: scroll;
 
     .logoBox {
-      width: 50%;
+      width: 40%;
+      height: 70px;
+      position: relative;
     }
     .slogan {
     }
@@ -248,11 +257,20 @@ export const MobileMobilityHeader = styled.header`
   position: relative;
   list-style: none;
   font-weight: bold;
-  cursor: pointer;
+  p{
+    cursor: pointer;
+  }
   > li {
-    margin: 10px 0;
+
+    padding: 10px;    
     flex: 0 1 auto;
     list-style: none;
+    width: 100%;
+    border-bottom: 1px solid var(--LightGray);
+    border-collapse:content;
+    p{
+      width: fit-content;
+    }
     p::before {
       content: "- ";
     }

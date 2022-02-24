@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
+position: fixed;
+width: 100%;
+z-index:8000;
+
   .topBlock {
     display: flex;
     justify-content: flex-end;

@@ -1,18 +1,27 @@
 import Image from "next/image";
-import { SVGProps, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../../../public/images/logo-inmotion-black.webp";
-import SearchBar from "../../SearchBar";
+// import SearchBar from "../../SearchBar";
 import Cart from "../../Cart";
 import { MobileMobilityHeader, StyledMobileHeader } from "./styles";
 import LanguageSelector from "../../LanguageSelector";
 import Login from "../../Login";
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
+import CurrencySelector from "../../CurrencySelector";
 
 const HeaderMobile = () => {
   const [loged, setLoged] = useState<boolean>(false);
   const [menuOpen, setmenuOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    }else{
+      document.body.style.overflow = "auto";
+    }
+  }, [menuOpen])
+  
   //menu button click//
   const menuToggle = () => {
     menuOpen === false ? setmenuOpen(true) : setmenuOpen(false);
@@ -34,6 +43,7 @@ const HeaderMobile = () => {
   const condGenerales = t("headerMobility:condGenerales");
   const confidentiality = t("headerMobility:confidentiality");
   const rent = t("headerMobility:rent");
+  const coursGyro = t("headerMobility:cours");
   const userManuals = t("headerMobility:userManuals");
   const returnForm = t("headerMobility:returnForm");
   const leftTopText = t("headerMobility:leftTopText");
@@ -88,15 +98,22 @@ const HeaderMobile = () => {
       </div>
       <div className={menuOpen === true ? "mainBlock open" : "mainBlock"}>
         <div className="contentBg">
-          <div className="bgLeft"></div>
-          <div className="bgRight"></div>
           <div className="content">
             <div className="logoBox">
-              <Image src={logo} alt="logo Inmotion" />
+              <Image 
+              src={logo} 
+              alt="logo Inmotion"
+              layout="fill"
+              objectFit="contain"
+              />
             </div>
             <div className="slogan">
               <p>{leftTopText}</p>
               <hr />
+            </div>
+            <div className="settings">
+              <LanguageSelector />
+              <CurrencySelector />
             </div>
             <MobileMobilityHeader>
               <li>
@@ -108,6 +125,7 @@ const HeaderMobile = () => {
                   {menuHome}
                 </p>
               </li>
+            
               <li>
                 <p
                   onClick={() => {
@@ -168,6 +186,15 @@ const HeaderMobile = () => {
                   <li>
                     <p
                       onClick={() => {
+                        goToLink("/inmotion-mobility/services/cours-gyroroue");
+                      }}
+                    >
+                      {coursGyro}
+                    </p>
+                  </li>
+                  <li>
+                    <p
+                      onClick={() => {
                         goToLink("/inmotion-mobility/services/location");
                       }}
                     >
@@ -198,6 +225,7 @@ const HeaderMobile = () => {
                   </li>
                 </ul>
               </li>
+              <hr />
               <li>
                 <p
                   onClick={() => {
@@ -226,10 +254,6 @@ const HeaderMobile = () => {
                 </p>
               </li>
             </MobileMobilityHeader>
-            <hr />
-            <SearchBar />
-            <hr />
-            <LanguageSelector />
           </div>
         </div>
       </div>
