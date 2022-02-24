@@ -3,11 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
-import SwiperCore, { Scrollbar } from "swiper";
+import SwiperCore,{ Scrollbar} from "swiper";
 import { IProduct } from "../../../interfaces/IProducts";
-
+import Image from "next/dist/client/image";
 import { Container, UpSellButton } from "./styles";
-
+import "swiper/css/scrollbar";
 SwiperCore.use([Scrollbar]);
 
 interface Props {
@@ -24,27 +24,25 @@ const SliderModels = ({
   return (
     <Container>
       <Swiper
+      scrollbar={true}
         direction="horizontal"
-        slidesPerView={3.5}
-        spaceBetween={20}
+        slidesPerView={1}
+        spaceBetween={15}
         breakpoints={{
-          320: {
-            slidesPerView: 1,
-          },
           390: {
-            slidesPerView: 1.5,
-          },
-          518: {
-            slidesPerView: 2,
-          },
-          680: {
             slidesPerView: 2.5,
           },
-          780: {
-            slidesPerView: 3,
-          },
-          1000: {
+          512: {
             slidesPerView: 3.5,
+          },
+          640: {
+            slidesPerView: 3.5,
+          },
+          760: {
+            slidesPerView: 3.5,
+          },
+          980: {
+            slidesPerView: 4.5,
           },
         }}
       >
@@ -55,7 +53,17 @@ const SliderModels = ({
                 onClick={() => handleModelMarque(product.id, index)}
               >
                 <div className={activedModelIndex === index ? "actived" : ""}>
-                  {product.name}
+                  <div className="ImgBox">
+                  <Image
+              objectFit="contain"
+              layout="fill"
+              src={product.images[0].src}
+              alt={product.images[0].alt}
+              placeholder="blur"
+              blurDataURL={product.images[0].src}
+            />
+                  </div>
+                  <h2>{product.name}</h2>
                 </div>
               </UpSellButton>
             </SwiperSlide>

@@ -5,20 +5,30 @@ import backgroundProduct from "../../public/images/backgrounds/MainBackground.jp
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  /* gap: 20px; */
+  justify-content: flex-end;
   min-height:80vh;
   background-image: url(${backgroundProduct.src});
   background-size: cover;
   background-position-x: center;
   background-position-y: bottom;
   background-repeat: no-repeat;
-  padding-top: 5rem;
+  padding-top: 3rem;
   align-items: flex-start;
   .decouvrez_model {
     margin: auto;
     margin-bottom: 1rem;
   }
+
+  .sliderTitle {
+    text-align: center;
+    width: calc(100% - 1rem);
+    flex: 0 1 auto;
+  }
+h1{
+text-align: center;
+width: 100%;
+margin-bottom:20px;
+}
 `;
 
 export const Content = styled.div`
@@ -26,16 +36,17 @@ export const Content = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  padding: 0 8rem;
+  padding: 0 5rem;
+  align-items:center;
+  flex: 1 1 auto;
+  justify-content: center;
 
   @media (max-width: 1160px) {
     padding: 0 5rem;
   }
 
-  @media (max-width: 1015px) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  @media (max-width: 1024px) {
+    padding: 0 2rem;
   }
 
   @media (max-width: 416px) {
@@ -45,13 +56,24 @@ export const Content = styled.div`
 `;
 
 export const ProductInfos = styled.div`
-    width: 100%;
-    min-width: 301px;
-    align-items: start;
+align-items: start;
     flex-direction: column;
     display: flex;
-    justify-content: space-between;
-    height: 30%;
+    -webkit-box-pack: justify;
+    justify-content: space-around;
+    margin: 0 auto;
+    width:100%;
+
+    div{
+      margin-bottom:5px ;
+      .iconBox{
+        height: 25px;
+        width: 25px;
+        position:relative;
+        align-self: center;
+        margin-right:5px ;
+      }
+    }
 }
 
   .weight {
@@ -67,53 +89,21 @@ export const ProductInfos = styled.div`
     display: flex;
     align-items: center;
   }
-
-  span + span {
-    margin-left: 1.5rem;
-  }
-
-  @media (max-width: 1160px) {
-    min-width: 200px;
-  }
-
-  @media (max-width: 1015px) {
-    grid-template-columns: repeat(2, 1fr);
-    min-width: 600px;
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 4fr;
-    min-width: 40px;
-  }
-
-  @media (max-width: 416px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 4fr;
-    min-width: 20px;
-  }
 `;
 
 export const ProductImage = styled.div`
-  width: 100%;
-  position: relative;
-  height: 30vh;
-  min-height: 100px;
-  min-width: 100px;
-  /* padding-top:120px */
-
-  @media (max-width: 1015px) {
-    order: -1;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
+     width: 33%;
+    position: relative;
+    height: 35vh;
+    min-height: 240px;
+    min-width: 100px;
+    margin-right: 30px;
+    align-self: center;
+  @media (max-width: 980px) {
+    height: 25vh;
   }
 
-  @media (max-width: 416px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 200px;
-  }
+
 `;
 
 export const ProductMenuModel = styled.div`
@@ -122,7 +112,7 @@ export const ProductMenuModel = styled.div`
 
   span.skew {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .category_name {
@@ -168,12 +158,11 @@ export const ProductMenuModel = styled.div`
 `;
 
 export const ProductMenuResponsive = styled.div`
-  display: none;
+ margin-bottom: 30px ;
+ width: 98vw;
 
   @media (max-width: 1015px) {
-    display: flex;
-    width: 100vw;
-    order: -2;
+    width: 96vw;
     margin-top: 1.4rem;
   }
 `;
@@ -203,22 +192,24 @@ export const LogoProduct = styled.div`
 
   .logo_box {
     display: flex;
-    align-items: center;
+    flex-direction:column;
     justify-content: center;
     font-weight: 600;
     margin-top: 1rem;
+    align-items: flex-start;
   }
 
   .price {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin-bottom: 15px;
 
-    margin-left: 0.8rem;
   }
 
   .regular_price {
     text-decoration: line-through;
     opacity: 0.4;
+    margin-right: 10px
   }
 
   .sale_price {
@@ -230,8 +221,9 @@ export const AddToCartSession = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
+  align-items: flex-start;
+  margin-top: 20px ;
+  align-items:center;
 
   width: 400px;
 
