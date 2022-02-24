@@ -163,26 +163,7 @@ export const ProductInfos = styled.div`
     @media (max-width: 960px) {
       height: 200px;
     }
-    .sectionTitle {
-      width: 100%;
-      margin: 20px auto 0px auto;
-      padding: 0px;
-      top: -10px;
-      text-align: center;
-      position: absolute;
-
-      p {
-        font-size: 2.3em;
-        font-weight: bold;
-        color: var(--DarkGray);
-        @media (max-width: 760px) {
-          font-size: 1.8em;
-        }
-        @media (max-width: 480px) {
-          font-size: 1.3em;
-        }
-      }
-    }
+   
   }
 `;
 
@@ -254,6 +235,23 @@ export const DescriptionProduct = styled.div`
   gap: 27px;
   margin-top: 2rem;
   width: 100%;
+  .sectionTitle {
+      width: 100%;
+      padding: 0px;
+      text-align: center;
+
+      p {
+        font-size: 2.3em;
+        font-weight: bold;
+        color: var(--DarkGray);
+        @media (max-width: 760px) {
+          font-size: 1.8em;
+        }
+        @media (max-width: 480px) {
+          font-size: 1.3em;
+        }
+      }
+    }
 `;
 
 const title_description = {
