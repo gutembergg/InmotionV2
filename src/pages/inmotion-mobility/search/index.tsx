@@ -43,7 +43,7 @@ export default function Search() {
       wcApi
         .get("products", {
           params: {
-            per_page: 10,
+            per_page: 40,
             search: _search,
             lang: router.locale,
           },

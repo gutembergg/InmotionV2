@@ -4,8 +4,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 6rem;
+  margin-top: 50px;
   margin-bottom: 3rem;
+  @media only screen and (max-width: 640px){
+    padding: 0 2rem;
+    margin-top: 30px;
+  }
 `;
 
 export const InputBlock = styled.div`
