@@ -60,8 +60,12 @@ h1{
         z-index:3;
         position: relative;
         font-weight: 600;
+
         @media (max-width:960px){
           font-size:1.6em
+        }
+        @media (max-width:640px){
+          font-size:1.25em
         }
     }
     h1::before {
@@ -72,6 +76,15 @@ h1{
         position: absolute;
         z-index:-1;
         transform: skew(-20deg) translateX(-15px);
+        @media (max-width:960px){
+          width:35px;
+        height: 35px;
+        }
+        @media (max-width:640px){
+          width: 18px;
+    height: 23px;
+    transform: skew(-20deg) translateX(-4px);
+        }
     }
 
 h2{ 
@@ -81,7 +94,10 @@ h2{
         z-index:3;
         position: relative;
         @media (max-width:960px){
-          font-size:1.2em
+          font-size:1.25em;
+        }
+        @media (max-width:640px){
+          font-size:1.15em;
         }
     }
     h2.squared{ 

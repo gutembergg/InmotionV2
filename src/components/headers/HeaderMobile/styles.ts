@@ -27,7 +27,21 @@ export const StyledMobileHeader = styled.header`
   @media screen and (max-width: 1024px) {
     display: block;
   }
-
+  @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    display: block;
+  }
+  
+  /* Portrait */
+  @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    display: block;
+}
   .topHeader {
     display: flex;
     align-items: center;

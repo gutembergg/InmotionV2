@@ -45,11 +45,24 @@ z-index:8000;
       flex: 0 1 37%;
     }
   }
-  @media screen and (max-width: 1280px) {
-    display: block;
 
-    @media screen and (max-width: 1024px) {
+
+    @media only screen and (max-width: 1024px) {
       display: none;
     }
+    @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    display: none;
   }
+  
+  /* Portrait */
+  @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    display: none;
+}
 `;

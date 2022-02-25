@@ -77,17 +77,9 @@ export default function Home({
   return (
     <Container>
       <MainContent>
-        <div className="bgHeader">
-          <div className="title">
-            <h1>
-              {TXT_Welcome}. <br />
-              <span>{slogan}</span>
-            </h1>
-          </div>
           <MobilitySlider>
             <SliderMobility slider={sliderHome} />
           </MobilitySlider>
-        </div>
         <PromotedProducts>
           <h1 className="squared">{PromotedProductTitle}</h1>
           <CarouselSwiper products={featuredproducts} />

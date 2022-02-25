@@ -160,6 +160,8 @@ export const ProductInfos = styled.div`
     height: 280px;
     position: relative;
     margin-top: 2rem;
+    transform: translateY(-44px);
+    z-index: -1;
     @media (max-width: 960px) {
       height: 200px;
     }
