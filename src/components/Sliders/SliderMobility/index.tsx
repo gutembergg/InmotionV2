@@ -48,6 +48,7 @@ const SliderMobility = ({slider}:Props) => {
             alt="corporate"
             layout="fill"
             objectFit="cover"
+            priority
             />
           </div>
             <div className="content">
@@ -68,6 +69,7 @@ const SliderMobility = ({slider}:Props) => {
             alt="corporate"
             layout="fill"
             objectFit="cover"
+            priority
             />
             )}
           </div>
