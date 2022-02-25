@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
+import MobileCard from "../../../components/ProductCard/MobileCard";
 import ProductSmallCard from "../../../components/ProductCard/ProductSmallCard";
 import { IProduct } from "../../../interfaces/IProducts";
 import LayoutMobility from "../../../Layout/LayoutMobility";
@@ -22,6 +23,8 @@ import {
   MenuSearchBar,
   SearchProductsList,
   ListEmpyt,
+  ResultBlockMobile,
+  SearchProductsListMobile,
 } from "../../../styles/SearchPage";
 
 export default function Search() {
@@ -99,6 +102,25 @@ export default function Search() {
           </div>
         </MenuSearchBar>
       </InputBlock>
+
+      <ResultBlockMobile>
+        {searchValue !== undefined && searchValue.length > 0 ? (
+          <>
+            <h2>
+              {resultsText}: {searchValue.length}{" "}
+            </h2>
+
+            <SearchProductsListMobile>
+              {searchValue &&
+                searchValue.map((product) => {
+                  return <MobileCard key={product.id} product={product} />;
+                })}
+            </SearchProductsListMobile>
+          </>
+        ) : (
+          <ListEmpyt>{noProduct}</ListEmpyt>
+        )}
+      </ResultBlockMobile>
 
       <ResultBlock>
         {searchValue !== undefined && searchValue.length > 0 ? (

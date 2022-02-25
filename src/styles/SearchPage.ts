@@ -16,12 +16,27 @@ export const InputBlock = styled.div`
   width: 100%;
 `;
 
+export const ResultBlockMobile = styled.div`
+  display: none;
+
+  @media (max-width: 450px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export const SearchProductsListMobile = styled.div``;
+
 export const ResultBlock = styled.div`
   width: 100%;
   margin-top: 2rem;
 
   h2 {
     text-align: center;
+  }
+
+  @media (max-width: 450px) {
+    display: none;
   }
 `;
 
