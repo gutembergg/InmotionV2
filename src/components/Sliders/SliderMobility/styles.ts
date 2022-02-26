@@ -35,7 +35,7 @@ export const Container = styled.div`
       padding: 30px 40px 50px 100px;
       position: absolute;
       height: auto;
-      background: #0570a6;
+      background: var(--White);
       z-index: 200;
       bottom: 0;
       min-height: 310px;
@@ -50,7 +50,10 @@ export const Container = styled.div`
       h1 {
         position: relative;
         margin-bottom: 10px;    
-        color: var(--White);
+        color: var(--Blue);
+        &::before {
+          background: none;
+        }
         
         &::before {
           content: " ";
@@ -63,7 +66,7 @@ export const Container = styled.div`
         }
       }
       h2{
-        color: var(--White);
+        color: var(--Blue);
         line-height: 23px;
     letter-spacing: 1px;
       }
@@ -93,6 +96,7 @@ export const Container = styled.div`
       @media screen and (max-width: 960px) {
         clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%);
         width: 100%;
+        padding: 30px 2rem 50px 2rem;
       }
     }
   }
