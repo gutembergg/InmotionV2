@@ -77,8 +77,9 @@ h1{
         z-index:-1;
         transform: skew(-20deg) translateX(-15px);
         @media (max-width:960px){
-          width:35px;
-        height: 35px;
+          width:25px;
+        height: 30px;
+        transform: skew(-20deg) translateX(-9px);
         }
         @media (max-width:640px){
           width: 18px;
@@ -111,6 +112,16 @@ h2{
         z-index:-1;
         transform: skew(-20deg) translateX(-14px);
         bottom: 2px;
+        @media (max-width:960px){
+          width:18px;
+        height: 22px;
+        transform: skew(-20deg) translateX(-9px);
+        }
+        @media (max-width:640px){
+          width:18px;
+        height: 22px;
+        transform: skew(-20deg) translateX(-9px);
+        }
       }
     }
 

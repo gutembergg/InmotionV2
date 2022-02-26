@@ -26,7 +26,7 @@ const SliderModels = ({
       <Swiper
       scrollbar={true}
         direction="horizontal"
-        slidesPerView={1}
+        slidesPerView={2.5}
         spaceBetween={15}
         breakpoints={{
           390: {

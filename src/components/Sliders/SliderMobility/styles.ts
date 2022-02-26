@@ -35,7 +35,7 @@ export const Container = styled.div`
       padding: 30px 40px 50px 100px;
       position: absolute;
       height: auto;
-      background: #0570a6d9;
+      background: #0570a6;
       z-index: 200;
       bottom: 0;
       min-height: 310px;

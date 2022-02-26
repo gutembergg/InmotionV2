@@ -12,7 +12,7 @@ export const Container = styled.div`
   background-position-x: center;
   background-position-y: bottom;
   background-repeat: no-repeat;
-  padding-top: 3rem;
+  padding-top: 22px;
   align-items: flex-start;
   .decouvrez_model {
     margin: auto;
@@ -25,9 +25,15 @@ export const Container = styled.div`
     flex: 0 1 auto;
   }
 h1{
-text-align: center;
+text-align: right;
 width: 100%;
-margin-bottom:20px;
+padding: 0 3rem;
+margin-bottom:0px;
+margin-right: 20px;
+@media screen and (max-width: 768px) {
+  margin-right: 0px;
+  padding: 0 1rem;
+}
 }
 `;
 
@@ -40,13 +46,33 @@ export const Content = styled.div`
   align-items:center;
   flex: 1 1 auto;
   justify-content: center;
+  margin-bottom: 30px;
+  .productFrom{
+      font-weight: bold;
+      color: var(--Black)
+    }
 
   @media (max-width: 1160px) {
-    padding: 0 5rem;
+    padding: 0 3rem;
   }
 
   @media (max-width: 1024px) {
     padding: 0 2rem;
+  }
+  @media only screen and (max-width: 768px) {
+    flex-direction:column;
+    align-items:center;
+    .ProductDescrt{
+      width: 100%;
+      padding: 0 0rem;
+      display: flex;
+      align-items: center;
+    flex-direction: column;
+    .productFrom{
+      text-align: center;
+
+    }
+}
   }
 
   @media (max-width: 416px) {
@@ -63,6 +89,13 @@ align-items: start;
     justify-content: space-around;
     margin: 0 auto;
     width:100%;
+
+    @media only screen and (max-width: 768px) {
+    flex-direction:row;
+    flex-wrap: wrap;
+    display: none;
+    visibility: hidden;
+}
 
     div{
       margin-bottom:5px ;
@@ -93,14 +126,22 @@ align-items: start;
 
 export const ProductImage = styled.div`
      width: 33%;
-    position: relative;
-    height: 35vh;
-    min-height: 240px;
-    min-width: 100px;
-    margin-right: 30px;
-    align-self: center;
-  @media (max-width: 980px) {
-    height: 25vh;
+     position: relative;
+     height: 35vh;
+     min-height: 240px;
+     min-width: 100px;
+     margin-right: 30px;
+     align-self: center;
+     
+     @media (max-width: 980px) {
+       height: 25vh;
+      }
+      @media (max-width: 768px) {
+        width: 250px;
+    height: 250px;
+    min-height: 170px;
+    margin-right: 0px;
+    margin-bottom: 15px;
   }
 
 
@@ -159,11 +200,16 @@ export const ProductMenuModel = styled.div`
 
 export const ProductMenuResponsive = styled.div`
  margin-bottom: 30px ;
- width: 98vw;
-
-  @media (max-width: 1015px) {
-    width: 96vw;
+ width: 100%;
+ 
+ @media (max-width: 1015px) {
+   width: 100%;
     margin-top: 1.4rem;
+  }
+ @media (max-width: 768px) {
+   width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 `;
 
@@ -176,6 +222,9 @@ export const BtnProductDetail = styled.button`
   border: none;
   text-align: center;
   margin: 0 auto;
+  @media (max-width: 768px){
+    margin-top: 10px;
+  }
   &:hover {
     background: var(--BlueHover);
 }
@@ -197,13 +246,35 @@ export const LogoProduct = styled.div`
     font-weight: 600;
     margin-top: 1rem;
     align-items: flex-start;
+
+    @media only screen and (max-width: 768px) {
+    align-items:center;
+    margin-top: 0rem;
+}
+
+    h2{
+      font-size: 2rem;
+      color: var(--Blue);
+      margin-bottom:0;
+      @media only screen and (max-width: 768px) {
+        font-size: 1.5rem;
+        margin: 0 13px;
+    text-align: center;
+}
+      span{ 
+        font-family:"Bitter";
+        font-size:inherit;
+      }
+    }
   }
 
   .price {
     display: flex;
     flex-direction: row;
     margin-bottom: 15px;
-
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 0px;
+}
   }
 
   .regular_price {
@@ -213,7 +284,12 @@ export const LogoProduct = styled.div`
   }
 
   .sale_price {
-    color: red;
+    color: var(--Black);
+  }
+  .promo{
+    margin-left: 10px;
+    color: var(--TxtRed);
+    font-size:1em;
   }
 `;
 
@@ -224,12 +300,25 @@ export const AddToCartSession = styled.div`
   align-items: flex-start;
   margin-top: 20px ;
   align-items:center;
-
   width: 400px;
+  
+  @media (max-width:460px){
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
 
+    a{
+      margin-top:15px;
+      margin-left:0px;
+      
+    }
+  }
   .link {
     text-decoration: none;
     color: var(--Blue);
+    font-weight: bold;
+    margin-left:20px;
 
     &:hover {
       color: ${shade(0.2, "#0570A6")};
@@ -248,7 +337,7 @@ export const AddToCartSession = styled.div`
   .addToCart_button {
     height: 40px;
     width: 100%;
-    max-width: 250px;
+    max-width: 220px;
 
     border: none;
     background-color: var(--Blue);
@@ -259,12 +348,4 @@ export const AddToCartSession = styled.div`
     }
   }
 
-  @media (max-width: 450px) {
-    flex-direction: column;
-    width: 250px;
-
-    a {
-      margin-top: 1.2rem;
-    }
-  }
 `;

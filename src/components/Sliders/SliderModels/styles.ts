@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 90%;
+  width: 100%;
   margin:0 auto;
   margin-top: 20px;
   flex: 0 1 auto;
+  @media (max-width:768px){
+    margin-top: 0px;
+  }
   .swiper-wrapper {
       display: flex;
       justify-content: center;

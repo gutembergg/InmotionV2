@@ -50,6 +50,8 @@ export default function Category({ category, productsByCategory }: Props) {
   const btnAddToCart = t("productDetail:addToCart");
   const linkShowDetails = t("productDetail:showDetails");
   const showVariationTradution = t("productDetail:showVariationTradution");
+  const Promotion = t("productDetail:Promotion");
+  const priceFrom = t("productDetail:priceFrom");
 
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
@@ -138,7 +140,7 @@ console.log(products[productIndex])
               }
             />
           </ProductImage>
-          <div>
+          <div className="ProductDescrt">
             <LogoProduct>
 
               <div className="logo_box">
@@ -168,7 +170,7 @@ console.log(products[productIndex])
                   </div>
                   <div>
                 {products[productIndex]?.on_sale && (
-                  <p>Promotion !</p>
+                  <p className="promo">{Promotion}</p>
                 )}
               </div>
                 </div>
@@ -231,13 +233,16 @@ console.log(products[productIndex])
                   )}
           </ProductInfos>
             {products[productIndex]?.variations.length > 0 ? (
+              <>
+              <p className="productFrom">{priceFrom} {products[productIndex].acf.variation_minimal_price} {currency}</p>
               <BtnProductDetail>
                 <Link
                   href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
-                >
+                  >
                   {showVariationTradution}
                 </Link>
               </BtnProductDetail>
+                  </>
             ) : (
               <AddToCartSession>
                 <button
