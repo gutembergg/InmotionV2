@@ -52,11 +52,10 @@ export default function Contact() {
       formModel.lastName.trim() !== "" ||
       formModel.message.trim() !== ""
     ) {
-      console.log("formModel: ", formModel);
     } else {
       Report.warning(
         "Notiflix Warning",
-        '"Tous les champs doivent être remplis"',
+        '"Vous devez au moins un email ou telephone"',
         "Okay"
       );
     }
