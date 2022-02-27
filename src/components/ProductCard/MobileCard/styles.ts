@@ -8,6 +8,11 @@ export const Container = styled.li`
   justify-content: space-between;
   padding: 1rem 0;
   border-bottom: 1px solid var(--LightGray);
+  .onsale{
+    color: var(--Red);
+    font-weight:bold;
+    font-size:1em;
+  }
 `;
 
 export const ProductBlock = styled.div`
@@ -16,8 +21,9 @@ export const ProductBlock = styled.div`
   align-items: center;
 
   div.image {
-    min-height: 70px;
-    min-width: 70px;
+    height: 100px;
+    width: 100px;
+    position: relative;
   }
 
   div.prod_info {
@@ -33,11 +39,14 @@ export const ProductInfo = styled.div`
   gap: 20px;
 
   h4 {
-    font-size: 0.8rem;
+    font-size: 1rem;
+    color: var(--BlueHover);
   }
 
   span {
-    color: var(--Red);
+    color: var(--Black);
+    font-weight: bold;
+    font-size: 0.95em;
   }
   span.span_currency {
     margin-right: 0.5rem;

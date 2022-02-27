@@ -4,6 +4,7 @@ import Link from "next/link";
 import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
+import StockStatuts from "../../StockStatus";
 
 import {
   Container,
@@ -25,6 +26,7 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
   const showVariationTradution = t("productDetail:showVariationTradution");
+  const sale = t("productDetail:Promotion");
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -48,8 +50,8 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
       <ProductBlock>
         <div className="image">
           <Image
-            width={50}
-            height={50}
+            layout="fill"
+            objectFit="contain"
             src={product.images[0].src}
             placeholder="blur"
             blurDataURL={product?.images[0].src}
@@ -60,14 +62,18 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
         <ProductInfo className="prod_info">
           <div>
             <h4>{product.name}</h4>
-            <span className="span_currency">
-              {currency === "CHF" ? "CHF" : "EUR"}
-            </span>
             <span>
               {currency === "CHF" ? product.price : product.euroPrice}
             </span>
-          </div>
-
+            <span className="span_currency">
+              {" "}{currency === "CHF" ? "CHF" : "EUR"}
+            </span>
+            {product.on_sale && <span className="onsale">{sale} </span>}
+          <StockStatuts
+            stock_quantity={product.stock_quantity}
+            stock_status={product.stock_status}
+            />
+            </div>
           {isEquipement ? (
             <BtnAddToCart>
               <Link href={`/inmotion-mobility/produit/${product.slug}`}>

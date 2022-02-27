@@ -18,6 +18,7 @@ const StockStatuts = ({stock_quantity,stock_status}: Props) => {
   
 
       let stockValue = "";
+      let colorClass = "";
 
       const setQuantity = Number.isInteger(stock_quantity) ? (
 (`: ${stock_quantity} ${Pieces}`)
@@ -28,23 +29,27 @@ const StockStatuts = ({stock_quantity,stock_status}: Props) => {
 switch (stock_status) {
     case "instock":
         stockValue = `${InStock} ${setQuantity}`;
+        colorClass = `green`;
         break;
-    case "onbackorder":
-        stockValue = `${OnOrder}`;
-        break;
-    case "outofstock":
-        stockValue = `${OutOfStock}`;
-        break;
-
-    default:
-        stockValue = `${NoStockInfo}`;
+        case "onbackorder":
+          stockValue = `${OnOrder}`;
+          colorClass = `orange`;
+          break;
+          case "outofstock":
+            stockValue = `${OutOfStock}`;
+            colorClass = `red`;
+            break;
+            
+            default:
+              stockValue = `${NoStockInfo}`;
+              colorClass = `green`;
         break;
 }
 
   
   
   return (
-    <Container>
+    <Container className={colorClass}>
    <FaTruck /> {stockValue}
     </Container>
   );

@@ -31,6 +31,11 @@ export const Container = styled.div`
       color: var(--BlueHover);
     }
   }
+  .onsale{
+    color: var(--Red);
+    font-weight:bold;
+    font-size:1.1em;
+  }
 `;
 
 export const ImageBlock = styled.div`
@@ -39,16 +44,18 @@ export const ImageBlock = styled.div`
 
 export const Name = styled.div`
   text-align: center;
-  color: var(--Blue);
+  color: var(--BlueHover);
   font-size: 1.1rem;
   font-weight: 600;
+  font-family:'Bitter',sans-serif;
+  text-transform: uppercase;
 `;
 
 export const Stock = styled.div``;
 
 export const PriceBlock = styled.div`
   span {
-    color: var(--Red);
+    color: var(--Black);
     font-weight: 600;
   }
 `;

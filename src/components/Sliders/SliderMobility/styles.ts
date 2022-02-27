@@ -4,18 +4,17 @@ export const Container = styled.div`
   width: 100%;
   .swiper-slide {
     width: 100%;
-
+    min-height: 550px;
     .sliderImage1 {
       position: relative;
     }
-
+    
     .sliderImage {
       width: 100%;
       position: relative;
       z-index: 10;
       height: 75vh;
-      min-height: 550px;
-
+      
       @media screen and (max-width: 1024px) {
         height: 50vh;
       }
@@ -27,23 +26,22 @@ export const Container = styled.div`
         height: 30vh;
       }
     }
-
+    
     .content {
-      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
-      width: 53%;
-      right: 0;
-      padding: 30px 40px 50px 100px;
-      position: absolute;
-      height: auto;
-      background: var(--White);
-      z-index: 200;
-      bottom: 0;
-      min-height: 310px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-weight: bold;
-      color: var(--Black);
+    clip-path: polygon(6% 0,100% 0,100% 100%,0% 100%);
+    width: 89%;
+    right: 0;
+    padding: 22px 18px 47px 82px;
+    position: absolute;
+    height: auto;
+    background: var(--White);
+    z-index: 200;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--Black);
       .link {
         margin-top: 21px;
       }
