@@ -10,10 +10,12 @@ import {
   useState,
 } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
+import MobileCardSerach from "../../../components/ProductCard/MobileCardSearch";
 import ProductSmallCard from "../../../components/ProductCard/ProductSmallCard";
-import { IProduct } from "../../../interfaces/IProducts";
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import { filterCategoryVisibility } from "../../../services/woocommerceApi/Products";
 import wcApi from "../../../services/woocommerceApi/wcAxiosConfig";
+import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 
 import {
   Container,
@@ -22,6 +24,8 @@ import {
   MenuSearchBar,
   SearchProductsList,
   ListEmpyt,
+  ResultBlockMobile,
+  SearchProductsListMobile,
 } from "../../../styles/SearchPage";
 
 export default function Search() {
@@ -32,7 +36,7 @@ export default function Search() {
   const inputPlaceholder = t("searchPage:inputPlaceholder");
   const noProduct = t("searchPage:noProduct");
 
-  const [searchValue, setSearchValue] = useState<IProduct[] | undefined>([]);
+  const [searchValue, setSearchValue] = useState<any>([]);
   const [_search, _setSearch] = useState<string | null>(null);
   const [searchLoading, setSearchLoading] = useState(false);
 
@@ -51,6 +55,11 @@ export default function Search() {
         .then((response) => {
           setSearchValue(response.data);
           setSearchLoading(false);
+          addEuroPriceInProducts(response.data).then((res) => {
+            if (Array.isArray(res) && Object.keys(res[0]).length > 0) {
+              setSearchValue(filterCategoryVisibility(res));
+            }
+          });
         })
         .catch((error) => {
           if (axios.isCancel(error)) return;
@@ -99,6 +108,27 @@ export default function Search() {
         </MenuSearchBar>
       </InputBlock>
 
+      <ResultBlockMobile>
+        {searchValue !== undefined && searchValue.length > 0 ? (
+          <>
+            <h2>
+              {resultsText}: {searchValue.length}{" "}
+            </h2>
+
+            <SearchProductsListMobile>
+              {searchValue &&
+                searchValue.map((product: any) => {
+                  return (
+                    <MobileCardSerach key={product.id} product={product} />
+                  );
+                })}
+            </SearchProductsListMobile>
+          </>
+        ) : (
+          <ListEmpyt>{noProduct}</ListEmpyt>
+        )}
+      </ResultBlockMobile>
+
       <ResultBlock>
         {searchValue !== undefined && searchValue.length > 0 ? (
           <>
@@ -108,7 +138,7 @@ export default function Search() {
 
             <SearchProductsList>
               {searchValue &&
-                searchValue.map((product) => {
+                searchValue.map((product: any) => {
                   return (
                     <ProductSmallCard key={product.id} product={product} />
                   );

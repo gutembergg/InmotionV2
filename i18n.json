@@ -70,6 +70,7 @@
       "headerMobility",
       "productDetail",
       "searchPage"
-    ]
+    ],
+    "/inmotion-mobility/contact": ["headerMobility", "productDetail"]
   }
 }

@@ -13,6 +13,7 @@ import {
 } from "../../../../services/woocommerceApi/Categories";
 import {
   getProductByCategory,
+  getProductByCategoryWithoutVisibilityFilter,
   getProduitsByCategoriesSlug,
 } from "../../../../services/woocommerceApi/Products";
 import { IProduct } from "../../../../interfaces/IProducts";
@@ -319,12 +320,15 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     return { name, slug };
   });
 
-  const _mobilityProducts = await getProductByCategory(80, lang as string);
+  //const _mobilityProducts = await getProductByCategory(80, lang as string);
+
+  const mobilityProductslist =
+    await getProductByCategoryWithoutVisibilityFilter(80, lang as string);
 
   const mobilityProducts: Pick<
     IProduct,
     "name" | "slug" | "id" | "categories"
-  >[] = _mobilityProducts.map((category) => {
+  >[] = mobilityProductslist.map((category) => {
     const name = category.name;
     const slug = category.slug;
     const id = category.id;

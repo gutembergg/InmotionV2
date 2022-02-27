@@ -8,11 +8,14 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { Report } from "notiflix";
+import uuid from "react-uuid";
 
 import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
 import RegisterForm from "../../../components/Register";
 import useCart from "../../../hooks/useCart";
+import useTranslation from "next-translate/useTranslation";
 import {
   LineItemsDTO,
   OrderValidation,
@@ -24,23 +27,17 @@ import {
   wc_createOrder,
   _updateOrder,
 } from "../../../services/woocommerceApi/Orders";
-import useTranslation from "next-translate/useTranslation";
-
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import useUser from "../../../hooks/useUser";
 import apiPFinance from "../../../services/postFinanceApi/apiPFinance";
 import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 import Spiner from "../../../components/Spiner";
-
 import useCurrency from "../../../hooks/useCurrency";
 import { ICoupons } from "../../../interfaces/ICoupons";
 import { CouponLines, Order } from "../../../interfaces/Order";
 import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
 import { ShippingMethods } from "../../../interfaces/ShippingMethods";
-import UserInfosView from "../../../components/CheckoutMobility/UserInfosView";
 import { Collapse } from "react-collapse";
-import { Report } from "notiflix";
-import uuid from "react-uuid";
 import { convertSingleNumber } from "../../../utils/addEuroPriceInProducts";
 
 import {
@@ -57,7 +54,6 @@ import {
   ShipMethods,
   ShipItem,
   CouponsList,
-  AddressView,
   PaymentBankTransfert,
   WayPaymentRadio,
 } from "../../../styles/CheckoutMobility";
@@ -96,7 +92,6 @@ export default function CheckoutMobility() {
   const emptyCartMessage = t("checkout-mobility:emptyCartMessage");
   const orderPreview = t("checkout-mobility:orderPreview");
   const vosCoordonnees = t("checkout-mobility:vosCoordonnees");
-  const btnToModify = t("checkout-mobility:btnToModify");
   const chooseMethdPay = t("checkout-mobility:chooseMethdPay");
   const proceedToPayment = t("checkout-mobility:proceedToPayment");
   const commodityValue = t("checkout-mobility:commodityValue");
@@ -108,7 +103,6 @@ export default function CheckoutMobility() {
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
-  const [changeBillinhView, setChangeBillingView] = useState(false);
   const [lineItems, setLineItems] = useState<LineItemsDTO[]>([]);
   const [transactionId, setTransactionId] = useState<number>();
   const [paymentMethodes, setPaymentMethods] = useState<
@@ -400,7 +394,6 @@ export default function CheckoutMobility() {
       isShippingForm,
     });
 
-    setChangeBillingView(true);
     setPaymentSteps(2);
     await getShippingZone(shipping.country);
   };
@@ -744,10 +737,6 @@ export default function CheckoutMobility() {
     setIsPayment(false);
   }, []);
 
-  const updateForm = () => {
-    setChangeBillingView(false);
-  };
-
   const getShippingZone = useCallback(
     async (shippingCountry: string) => {
       setIsSelectedShipping(true);
@@ -863,28 +852,12 @@ export default function CheckoutMobility() {
                     <span className="coordonnes font_responsive">
                       1. {vosCoordonnees}
                     </span>
-                    {changeBillinhView && (
-                      <button
-                        className="btn_update"
-                        onClick={updateForm}
-                        disabled={Object.keys(_order).length > 0}
-                      >
-                        {btnToModify}
-                      </button>
-                    )}
                   </h2>
                 </div>
-                {changeBillinhView ? (
-                  <AddressView>
-                    <UserInfosView
-                      _billingShippingData={_billingShippingData}
-                    />
-                  </AddressView>
-                ) : (
-                  <BillingShippingForm
-                    handleBillingShippingData={_handleBillingShippingData}
-                  />
-                )}
+
+                <BillingShippingForm
+                  handleBillingShippingData={_handleBillingShippingData}
+                />
               </section>
               <section className="shipping">
                 <div className="title">
