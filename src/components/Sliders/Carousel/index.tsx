@@ -41,31 +41,30 @@ export default function CarouselSwiper({ products }: Props) {
         loop={false}
         loopFillGroupWithBlank={false}
         //  freeMode={true}
-        navigation={true}
         breakpoints={{
           // when window width is >= 320px
           320: {
-            slidesPerView: listCount >= 2 ? 2 : listCount,
+            slidesPerView: listCount >= 1 ? 1.5 : listCount,
             spaceBetween: 0,
           },
           // when window width is >= 480px
           480: {
-            slidesPerView: listCount >= 3 ? 3 : listCount,
+            slidesPerView: listCount >= 3 ? 3.5 : listCount,
           },
           // when window width is >= 640px
           640: {
-            slidesPerView: listCount >= 3 ? 3 : listCount,
+            slidesPerView: listCount >= 3 ? 3.5 : listCount,
           },
           // when window width is >= 768px
           768: {
-            slidesPerView: listCount >= 3 ? 3 : listCount,
+            slidesPerView: listCount >= 3 ? 3.5 : listCount,
           },
           // when window width is >= 900px
           1024: {
-            slidesPerView: listCount >= 4 ? 4 : listCount,
+            slidesPerView: listCount >= 4 ? 4.5: listCount,
           },
           1280: {
-            slidesPerView: listCount >= 5 ? 5 : listCount,
+            slidesPerView: listCount >= 5 ? 5.5 : listCount,
           },
         }}
       >

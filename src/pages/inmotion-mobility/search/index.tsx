@@ -44,8 +44,7 @@ export default function Search() {
     const source = axios.CancelToken.source();
     if (_search) {
       setSearchLoading(true);
-      wcApi
-        .get("products", {
+      wcApi.get("products", {
           params: {
             per_page: 40,
             search: _search,

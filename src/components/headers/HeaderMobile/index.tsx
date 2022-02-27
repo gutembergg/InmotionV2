@@ -9,6 +9,7 @@ import Login from "../../Login";
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import CurrencySelector from "../../CurrencySelector";
+import SearchBar from "../../SearchBar";
 
 const HeaderMobile = () => {
   const [loged, setLoged] = useState<boolean>(false);
@@ -108,13 +109,14 @@ const HeaderMobile = () => {
               />
             </div>
             <div className="slogan">
-              <p>{leftTopText}</p>
               <hr />
             </div>
             <div className="settings">
               <LanguageSelector />
               <CurrencySelector />
+              <SearchBar />
             </div>
+              <hr />
             <MobileMobilityHeader>
               <li>
                 <p

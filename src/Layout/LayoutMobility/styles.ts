@@ -29,6 +29,21 @@ position: relative;
     @media (max-width:640px){
       margin-top:40px;
     }
+    @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    margin-top:50px;
+}
+
+/* Portrait */
+@media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    margin-top:50px;
+}
   }
   main {
     padding: 0 0%;

@@ -1,58 +1,52 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  display: flex;
   width: 100%;
-  max-width: 1300px;
+  margin:0 auto;
+  margin-top: 20px;
+  flex: 0 1 auto;
+  @media (max-width:768px){
+    margin-top: 0px;
+  }
+  .swiper-wrapper {
+      display: flex;
+      justify-content: center;
 
+      @media (max-width:980px){
+        justify-content:flex-start;
+      }
+    }
   .swiper {
     width: 100%;
-    overflow-x: hidden;
   }
 
-  .swiper-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-  .swiper-slide {
+  .ImgBox{
+    position: relative;
     width: 100%;
-    max-width: 230px;
+    height: 100px
   }
 
-  @media (max-width: 416px) {
-    .swiper-wrapper {
-      display: flex;
-      justify-content: start;
-    }
-  }
 `;
 
-export const UpSellButton = styled.span`
+export const UpSellButton = styled.div`
   div {
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 240px;
-    height: 40px;
     background: transparent;
     color: var(--Blue);
-    border: 1px solid var(--Blue);
-    border-radius: 3rem;
     text-align: center;
 
     font-size: 0.8rem;
     font-weight: 600;
 
-    span {
-      color: var(--TxtRed);
+    h2 {
+      color: var(--Blue);
       margin-left: 3px;
     }
   }
-
+  
   div.actived {
-    background-color: var(--Blue);
-    color: var(--White);
+    h2{
+      color: var(--TxtRed);
+    }
   }
 `;

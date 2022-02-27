@@ -9,6 +9,11 @@ export const StyledMobileHeader = styled.header`
   .settings{
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-evenly;
+    @media only screen and (max-width: 640px){
+      justify-content: space-between;
+      
+    }
   }
   .mainBlock.open {
     transition: all ease-in 0.3s;
@@ -27,7 +32,21 @@ export const StyledMobileHeader = styled.header`
   @media screen and (max-width: 1024px) {
     display: block;
   }
-
+  @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    display: block;
+  }
+  
+  /* Portrait */
+  @media only screen 
+  and (min-width: 1024px) 
+  and (max-height: 1366px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    display: block;
+}
   .topHeader {
     display: flex;
     align-items: center;
@@ -266,7 +285,6 @@ export const MobileMobilityHeader = styled.header`
     flex: 0 1 auto;
     list-style: none;
     width: 100%;
-    border-bottom: 1px solid var(--LightGray);
     border-collapse:content;
     p{
       width: fit-content;

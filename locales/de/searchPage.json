@@ -1,6 +1,6 @@
 {
-  "search": "Forschung",
+  "search": "Suchen",
   "results": "Ergebnisse",
-  "inputPlaceholder": "forschen",
-  "noProduct": "kein Produkt"
+  "inputPlaceholder": "Ihre Suche",
+  "noProduct": "kein Produkts"
 }

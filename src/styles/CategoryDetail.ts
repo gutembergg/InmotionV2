@@ -5,20 +5,36 @@ import backgroundProduct from "../../public/images/backgrounds/MainBackground.jp
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  /* gap: 20px; */
+  justify-content: flex-end;
   min-height:80vh;
   background-image: url(${backgroundProduct.src});
   background-size: cover;
   background-position-x: center;
   background-position-y: bottom;
   background-repeat: no-repeat;
-  padding-top: 5rem;
+  padding-top: 22px;
   align-items: flex-start;
   .decouvrez_model {
     margin: auto;
     margin-bottom: 1rem;
   }
+
+  .sliderTitle {
+    text-align: center;
+    width: calc(100% - 1rem);
+    flex: 0 1 auto;
+  }
+h1{
+text-align: right;
+width: 100%;
+padding: 0 3rem;
+margin-bottom:0px;
+margin-right: 20px;
+@media screen and (max-width: 768px) {
+  margin-right: 0px;
+  padding: 0 1rem;
+}
+}
 `;
 
 export const Content = styled.div`
@@ -26,16 +42,37 @@ export const Content = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  padding: 0 8rem;
+  padding: 0 5rem;
+  align-items:center;
+  flex: 1 1 auto;
+  justify-content: center;
+  margin-bottom: 30px;
+  .productFrom{
+      font-weight: bold;
+      color: var(--Black)
+    }
 
   @media (max-width: 1160px) {
-    padding: 0 5rem;
+    padding: 0 3rem;
   }
 
-  @media (max-width: 1015px) {
+  @media (max-width: 1024px) {
+    padding: 0 2rem;
+  }
+  @media only screen and (max-width: 768px) {
+    flex-direction:column;
+    align-items:center;
+    .ProductDescrt{
+      width: 100%;
+      padding: 0 0rem;
+      display: flex;
+      align-items: center;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    .productFrom{
+      text-align: center;
+
+    }
+}
   }
 
   @media (max-width: 416px) {
@@ -45,13 +82,31 @@ export const Content = styled.div`
 `;
 
 export const ProductInfos = styled.div`
-    width: 100%;
-    min-width: 301px;
-    align-items: start;
+align-items: start;
     flex-direction: column;
     display: flex;
-    justify-content: space-between;
-    height: 30%;
+    -webkit-box-pack: justify;
+    justify-content: space-around;
+    margin: 0 auto;
+    width:100%;
+
+    @media only screen and (max-width: 768px) {
+    flex-direction:row;
+    flex-wrap: wrap;
+    display: none;
+    visibility: hidden;
+}
+
+    div{
+      margin-bottom:5px ;
+      .iconBox{
+        height: 25px;
+        width: 25px;
+        position:relative;
+        align-self: center;
+        margin-right:5px ;
+      }
+    }
 }
 
   .weight {
@@ -67,53 +122,29 @@ export const ProductInfos = styled.div`
     display: flex;
     align-items: center;
   }
-
-  span + span {
-    margin-left: 1.5rem;
-  }
-
-  @media (max-width: 1160px) {
-    min-width: 200px;
-  }
-
-  @media (max-width: 1015px) {
-    grid-template-columns: repeat(2, 1fr);
-    min-width: 600px;
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 4fr;
-    min-width: 40px;
-  }
-
-  @media (max-width: 416px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 4fr;
-    min-width: 20px;
-  }
 `;
 
 export const ProductImage = styled.div`
-  width: 100%;
-  position: relative;
-  height: 30vh;
-  min-height: 100px;
-  min-width: 100px;
-  /* padding-top:120px */
-
-  @media (max-width: 1015px) {
-    order: -1;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
+     width: 33%;
+     position: relative;
+     height: 35vh;
+     min-height: 240px;
+     min-width: 100px;
+     margin-right: 30px;
+     align-self: center;
+     
+     @media (max-width: 980px) {
+       height: 25vh;
+      }
+      @media (max-width: 768px) {
+        width: 250px;
+    height: 250px;
+    min-height: 170px;
+    margin-right: 0px;
+    margin-bottom: 15px;
   }
 
-  @media (max-width: 416px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 200px;
-  }
+
 `;
 
 export const ProductMenuModel = styled.div`
@@ -122,7 +153,7 @@ export const ProductMenuModel = styled.div`
 
   span.skew {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .category_name {
@@ -168,13 +199,17 @@ export const ProductMenuModel = styled.div`
 `;
 
 export const ProductMenuResponsive = styled.div`
-  display: none;
-
-  @media (max-width: 1015px) {
-    display: flex;
-    width: 100vw;
-    order: -2;
+ margin-bottom: 30px ;
+ width: 100%;
+ 
+ @media (max-width: 1015px) {
+   width: 100%;
     margin-top: 1.4rem;
+  }
+ @media (max-width: 768px) {
+   width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 `;
 
@@ -187,6 +222,9 @@ export const BtnProductDetail = styled.button`
   border: none;
   text-align: center;
   margin: 0 auto;
+  @media (max-width: 768px){
+    margin-top: 10px;
+  }
   &:hover {
     background: var(--BlueHover);
 }
@@ -203,26 +241,55 @@ export const LogoProduct = styled.div`
 
   .logo_box {
     display: flex;
-    align-items: center;
+    flex-direction:column;
     justify-content: center;
     font-weight: 600;
     margin-top: 1rem;
+    align-items: flex-start;
+
+    @media only screen and (max-width: 768px) {
+    align-items:center;
+    margin-top: 0rem;
+}
+
+    h2{
+      font-size: 2rem;
+      color: var(--Blue);
+      margin-bottom:0;
+      @media only screen and (max-width: 768px) {
+        font-size: 1.5rem;
+        margin: 0 13px;
+    text-align: center;
+}
+      span{ 
+        font-family:"Bitter";
+        font-size:inherit;
+      }
+    }
   }
 
   .price {
     display: flex;
-    flex-direction: column;
-
-    margin-left: 0.8rem;
+    flex-direction: row;
+    margin-bottom: 15px;
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 0px;
+}
   }
 
   .regular_price {
     text-decoration: line-through;
     opacity: 0.4;
+    margin-right: 10px
   }
 
   .sale_price {
-    color: red;
+    color: var(--Black);
+  }
+  .promo{
+    margin-left: 10px;
+    color: var(--TxtRed);
+    font-size:1em;
   }
 `;
 
@@ -230,14 +297,28 @@ export const AddToCartSession = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-
+  align-items: flex-start;
+  margin-top: 20px ;
+  align-items:center;
   width: 400px;
+  
+  @media (max-width:460px){
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
 
+    a{
+      margin-top:15px;
+      margin-left:0px;
+      
+    }
+  }
   .link {
     text-decoration: none;
     color: var(--Blue);
+    font-weight: bold;
+    margin-left:20px;
 
     &:hover {
       color: ${shade(0.2, "#0570A6")};
@@ -256,7 +337,7 @@ export const AddToCartSession = styled.div`
   .addToCart_button {
     height: 40px;
     width: 100%;
-    max-width: 250px;
+    max-width: 220px;
 
     border: none;
     background-color: var(--Blue);
@@ -267,12 +348,4 @@ export const AddToCartSession = styled.div`
     }
   }
 
-  @media (max-width: 450px) {
-    flex-direction: column;
-    width: 250px;
-
-    a {
-      margin-top: 1.2rem;
-    }
-  }
 `;

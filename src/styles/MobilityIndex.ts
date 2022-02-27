@@ -1,47 +1,18 @@
 import styled from "styled-components";
-import bgHeader from "../../public/images/homeMobility/HeadHomeBg.webp"
 
 export const Container = styled.div``;
 export const MainContent = styled.div`
   @media (max-width: 1024px) {
     padding-top: 0px;
   }
-  .bgHeader{
-    margin-top:-80px;
-    padding-top: 100px;
-    background-image: url(${bgHeader.src});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    .title {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      margin: 30px 1rem 40px 1rem;
-      h1{
-        margin: 0 1rem;
-        
-        span{
-          text-transform: lowercase;
-          letter-spacing: 0px;
-        }
-        @media (max-width: 450px) {
-          font-size: 1.4em;
-        }
-      }
-      ;
-    }
-  }
 `;
 export const MobilitySlider = styled.div`
   display: flex;
   filter: drop-shadow(-1px 6px 3px rgba(0, 0, 0, 0.5));
   position: relative;
-  transform: translateY(40px);
-  margin: 0 3rem;
+  margin: 0;
   @media (max-width: 1024px) {
-    margin: 0 2rem;
+    margin: 0;
   }
 `;
 
@@ -51,7 +22,7 @@ export const PromotedProducts = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 70px;
+  margin-top: 50px;
 `;
 
 export const PromotedSection = styled.section`
@@ -102,7 +73,7 @@ export const PromotedSection = styled.section`
       flex: 0 1 100%;
       height: auto;
       h1{
-        font-size:1.4em;
+        font-size:1.15em;
         margin-left: 1rem ;
       }
     }
@@ -132,10 +103,12 @@ export const PromotedSection = styled.section`
 export const RentalSection = styled.section`
   box-shadow: -1px 6px 5px rgb(0 0 0 / 23%);
   display: flex;
-  margin-top: 70px;
   margin-bottom: 70px;
   @media (max-width: 960px) {
     flex-direction: column-reverse;
+  }
+  @media (max-width: 640px) {
+    margin-bottom: 70px;
   }
   .content {
     background: var(--BgGrayGradient);
@@ -189,6 +162,7 @@ export const HelpSection = styled.section`
     height:400px;
     @media (max-width: 640px) {
       width: 278px;
+      margin-top: 50px;
     }
   }
   .content {
@@ -224,5 +198,5 @@ export const NewProducts = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 80px;
+  margin-top: 50px;
 `;

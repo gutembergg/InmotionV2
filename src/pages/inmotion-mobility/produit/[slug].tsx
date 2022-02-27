@@ -54,6 +54,7 @@ import { checkIsAcfDescription } from "../../../utils/checkIsAcfDescription";
 import StockStatuts from "../../../components/StockStatus";
 import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
 import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
+import locale from "yup/lib/locale";
 
 interface Props {
   product: IProduct;
@@ -381,9 +382,6 @@ export default function ProductDetail({
           </CardWrapper>
           <ProductInfos>
             <div className="bgcity">
-              <div className="sectionTitle">
-                <p>{InfoComplementaires}</p>
-              </div>
               <Image
                 layout="fill"
                 objectFit="cover"
@@ -392,6 +390,9 @@ export default function ProductDetail({
               />
             </div>
             <DescriptionProduct>
+                  <div className="sectionTitle">
+                    <p>{InfoComplementaires}</p>
+                  </div>
               <Sections>
                 {product?.isAcfDescription &&
                   product.acf.description_du_produit.map((section, index) => {
