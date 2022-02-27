@@ -26,6 +26,7 @@ import {
   ResultBlockMobile,
   SearchProductsListMobile,
 } from "../../../styles/SearchPage";
+import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 
 export default function Search() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function Search() {
   const inputPlaceholder = t("searchPage:inputPlaceholder");
   const noProduct = t("searchPage:noProduct");
 
-  const [searchValue, setSearchValue] = useState<IProduct[] | undefined>([]);
+  const [searchValue, setSearchValue] = useState<any>([]);
   const [_search, _setSearch] = useState<string | null>(null);
   const [searchLoading, setSearchLoading] = useState(false);
 
@@ -46,7 +47,7 @@ export default function Search() {
       wcApi
         .get("products", {
           params: {
-            per_page: 10,
+            per_page: 40,
             search: _search,
             lang: router.locale,
           },
@@ -55,6 +56,9 @@ export default function Search() {
         .then((response) => {
           setSearchValue(response.data);
           setSearchLoading(false);
+          addEuroPriceInProducts(response.data).then((res) =>
+            setSearchValue(res)
+          );
         })
         .catch((error) => {
           if (axios.isCancel(error)) return;
@@ -112,7 +116,7 @@ export default function Search() {
 
             <SearchProductsListMobile>
               {searchValue &&
-                searchValue.map((product) => {
+                searchValue.map((product: any) => {
                   return <MobileCard key={product.id} product={product} />;
                 })}
             </SearchProductsListMobile>
@@ -131,7 +135,7 @@ export default function Search() {
 
             <SearchProductsList>
               {searchValue &&
-                searchValue.map((product) => {
+                searchValue.map((product: any) => {
                   return (
                     <ProductSmallCard key={product.id} product={product} />
                   );

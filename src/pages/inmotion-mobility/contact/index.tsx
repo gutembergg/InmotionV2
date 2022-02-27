@@ -1,10 +1,11 @@
 import Image from "next/image";
-import React, { ChangeEvent, ReactElement, useState } from "react";
+import React, { ChangeEvent, FormEvent, ReactElement, useState } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import dynamic from "next/dynamic";
 const ContactMap = dynamic(() => import("../../../components/ContactMap"), {
   ssr: false,
 });
+import { Report } from "notiflix";
 import IconBlue from "../../../../public/images/icons/iconButton.svg";
 
 import {
@@ -41,8 +42,23 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = () => {
-    console.log("formModel: ", formModel);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (
+      formModel.email.trim() !== "" ||
+      formModel.firstName.trim() !== "" ||
+      formModel.lastName.trim() !== "" ||
+      formModel.message.trim() !== ""
+    ) {
+      console.log("formModel: ", formModel);
+    } else {
+      Report.warning(
+        "Notiflix Warning",
+        '"Tous les champs doivent être remplis"',
+        "Okay"
+      );
+    }
   };
 
   return (
@@ -90,7 +106,7 @@ export default function Contact() {
             onChange={handleOnChangeTextArea}
             placeholder="Message"
           ></textarea>
-          <IconBlock>
+          <IconBlock onSubmit={handleSubmit}>
             <Image
               src={IconBlue}
               alt="icon"
