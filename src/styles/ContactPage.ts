@@ -36,10 +36,17 @@ export const MapBlock = styled.div`
   border: 2px solid var(--Blue);
   width: 400px;
   height: 400px;
+  background: red;
 
   @media (max-width: 444px) {
     width: 380px;
     height: 380px;
+
+    margin: 0 0.5rem;
+  }
+
+  @media (max-width: 360px) {
+    margin: 0 4rem;
   }
 `;
 
@@ -47,6 +54,7 @@ export const Form = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
+
   gap: 29px;
   width: 100%;
   max-width: 550px;
@@ -54,6 +62,11 @@ export const Form = styled.form`
   textarea {
     border: 2px solid var(--Blue);
     padding: 0.4rem;
+  }
+
+  @media (max-width: 560px) {
+    width: 100%;
+    max-width: 400px;
   }
 `;
 
@@ -84,5 +97,29 @@ export const IconBlock = styled.button`
 
   &:hover {
     transform: scale(1.2);
+  }
+
+  @media (max-width: 450px) {
+    display: none;
+  }
+`;
+
+export const ButtonValidateMobile = styled.button`
+  display: none;
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  background: var(--Blue);
+  color: var(--White);
+  border: none;
+  font-size: 1.2rem;
+  transition: 0.2s ease;
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  @media (max-width: 450px) {
+    display: block;
   }
 `;

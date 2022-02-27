@@ -12,7 +12,6 @@ import {
   wc_getSub_categories,
 } from "../../../../services/woocommerceApi/Categories";
 import {
-  getProductByCategory,
   getProductByCategoryWithoutVisibilityFilter,
   getProduitsByCategoriesSlug,
 } from "../../../../services/woocommerceApi/Products";

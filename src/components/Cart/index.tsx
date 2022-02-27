@@ -1,23 +1,26 @@
 import Image from "next/image";
-import cartIcon from "../../../public/images/icons/cart.svg";
-import useCart from "../../hooks/useCart";
-import { StyledCart } from "./styles";
-import placeholder from "../../../public/images/placeholder_woocommerce.webp";
-import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import useCart from "../../hooks/useCart";
+import placeholder from "../../../public/images/placeholder_woocommerce.webp";
 import useCurrency from "../../hooks/useCurrency";
 import { BsCart2 } from "react-icons/bs";
 
+import { StyledCart } from "./styles";
+
 const Cart = () => {
+  const router = useRouter();
   const cartModalRef = useRef<HTMLDivElement>(null);
   const { cart, removeCartItem } = useCart();
   const { currency } = useCurrency();
   const [opencart, setopencart] = useState(false);
 
   const setCartVisibility = () => {
+    if (router.pathname === "/inmotion-mobility/checkout-mobility") {
+      return;
+    }
     setopencart(!opencart);
   };
-  const router = useRouter();
 
   const goToLink = (linkUrl: string) => {
     setopencart(false);

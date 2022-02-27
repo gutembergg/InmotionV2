@@ -8,8 +8,6 @@ export const getProductsUpSells = (
 ) => {
   let upSell: number[] = [];
 
-  console.log("SlugUPSell", categorySlug);
-
   productsList.filter((product: IProduct) =>
     product.upsell_ids.filter((id) => upSell.push(id))
   );
