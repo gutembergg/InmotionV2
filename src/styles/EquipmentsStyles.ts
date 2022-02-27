@@ -8,6 +8,11 @@ export const Container = styled.div`
   margin: auto;
   margin-top: 3rem;
 
+  @media (max-width: 640px) {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
   h1 {
     text-align: center;
   }
@@ -44,12 +49,13 @@ export const ButtonSelect = styled.button`
   align-items: center;
   background: var(--Blue);
   color: var(--White);
-
   height: 40px;
   width: 100%;
   max-width: 300px;
   border: none;
-
+@media (max-width: 640px){
+  max-width:none
+}
   &:hover {
     background: var(--BlueHover);
   }
@@ -127,7 +133,9 @@ export const MenuSubCategoriesMobilie = styled.div`
       box-shadow: 0px 7px 8px 0px #2121211c;
 
       list-style: none;
-
+      @media (max-width: 640px){
+  max-width:none;
+}
       .categoiry_item {
         padding-left: 0.4rem;
         padding-top: 0.4rem;

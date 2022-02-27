@@ -74,6 +74,7 @@ export default function Home({
     _setOnSaleproduct(onSaleProducts);
   }, [onSaleProducts]);
 
+  console.log(sliderHome)
   return (
     <Container>
       <MainContent>

@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 
-import SwiperCore, { EffectFade, Pagination, Navigation, Autoplay } from "swiper";
+import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
 
 import { Container } from "./styles";
 import { IWPPage } from "../../../interfaces/IWPPage";
@@ -17,7 +17,7 @@ import useTranslation from "next-translate/useTranslation";
 interface Props{
   slider:IWPPage[];
 }
-SwiperCore.use([Autoplay, Pagination, Navigation, EffectFade]);
+SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 const SliderMobility = ({slider}:Props) => {
   const { t } = useTranslation();
@@ -30,11 +30,11 @@ const SliderMobility = ({slider}:Props) => {
         slidesPerView={1}
         autoHeight={true}
         spaceBetween={30}
-        effect={"fade"}
         loop={true}
         pagination={{
           clickable: true,
         }}
+        
         autoplay={{
           delay: 4000,
           disableOnInteraction: true,

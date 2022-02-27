@@ -33,7 +33,7 @@ export const ProductInfo = styled.div`
   gap: 20px;
 
   h4 {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   span {

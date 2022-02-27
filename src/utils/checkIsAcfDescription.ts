@@ -8,7 +8,6 @@ export const checkIsAcfDescription = (product: IProduct) => {
   acfKeys.forEach((item) => {
     if (item === "description_du_produit") {
       const acf = product.acf.description_du_produit;
-
       if (Array.isArray(acf)) {
         isDescription = true;
       }

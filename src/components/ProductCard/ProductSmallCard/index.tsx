@@ -26,6 +26,7 @@ const ProductSmallCard = ({ product }: Props) => {
   const { t } = useTranslation();
   const addToCartTradution = t("productDetail:addToCart");
   const showVariationTradution = t("productDetail:showVariationTradution");
+  const sale = t("productDetail:Promotion");
 
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
@@ -60,13 +61,13 @@ const ProductSmallCard = ({ product }: Props) => {
             />
           )}
 
-          {product.on_sale && <ButtonSkew text="Promotion!" />}
+          {product.on_sale && <p className="onsale">{sale} </p>}
 
           <Name>{product.name}</Name>
           <PriceBlock>
             <span>
-              {currency === "CHF" ? "CHF" : "EUR"}{" "}
               {currency === "CHF" ? product?.price : product.euroPrice}
+              {" "}{currency === "CHF" ? "CHF" : "EUR"}
             </span>
           </PriceBlock>
           <StockStatuts
@@ -86,10 +87,10 @@ const ProductSmallCard = ({ product }: Props) => {
           <ButtonAddToCart onClick={() => handleAddToCart(product)}>
             {addToCartTradution}
           </ButtonAddToCart>
-
+{/* 
           <Link href={`/inmotion-mobility/produit/${product.slug}`}>
             <a className="product_detail">Afficher le detail</a>
-          </Link>
+          </Link> */}
         </>
       )}
     </Container>

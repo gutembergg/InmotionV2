@@ -80,6 +80,7 @@ export default function ProductDetail({
 
   const [productQty, setProductQty] = useState(1);
 
+  // console.log(product);
   //----------------------variations--------------------------------
 
   //check if product is variable or not
@@ -393,7 +394,7 @@ export default function ProductDetail({
                 <p>{InfoComplementaires}</p>
               </div>
               <Sections>
-                {product?.isAcfDescription &&
+                {product?.isAcfDescription === true &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>

@@ -27,12 +27,12 @@ export const Content = styled.div`
 export const FiltersBarMobile = styled.div`
   display: none;
 
-  @media (max-width: 888px) {
+  /* @media (max-width: 888px) {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: end;
-  }
+  } */
 `;
 
 export const MenuBlock = styled.div`
@@ -67,7 +67,7 @@ export const UpsellList = styled.ul`
     padding: 0.4rem 1.4rem;
 
     &:hover {
-      background: var(--Blue);
+      background-color: var(--Blue);
       color: var(--White);
     }
   }
@@ -127,8 +127,8 @@ export const FiltersBar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   border-bottom: 1px solid;
-
   width: 90%;
 
   @media (max-width: 1024px) {
@@ -136,13 +136,12 @@ export const FiltersBar = styled.div`
   }
 
   @media (max-width: 888px) {
-    display: none;
+    /* display: none; */
   }
 `;
 
 export const ButtonFilterBlock = styled.div`
   position: relative;
-  width: 100%;
 `;
 
 export const ButtonSelect = styled.button`
@@ -152,7 +151,7 @@ export const ButtonSelect = styled.button`
   align-items: center;
   background: var(--Blue);
   color: var(--White);
-
+  padding: 0 15px;
   height: 35px;
   width: 100%;
   max-width: 300px;
@@ -176,7 +175,6 @@ export const ModelList = styled.ul`
   max-width: 300px;
   opacity: 0;
   background: var(--White);
-  padding: 0.5rem 0.7rem;
   line-height: 200%;
 
   border-top: none;
@@ -189,12 +187,18 @@ export const ModelList = styled.ul`
     color: var(--Blue);
     font-weight: 600;
     list-style: none;
+    padding: 0.2rem 0.7rem;
+
+    &:hover {
+      background: var(--Blue);
+      color: var(--White);
+    }
   }
 `;
 
 export const PaginateBar = styled.div`
+  text-align: right;
   width: 100%;
-  max-width: 100px;
 `;
 
 export const ProductsSection = styled.div`
@@ -221,8 +225,8 @@ export const Products = styled.div`
   margin-bottom: 2rem;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-gap: 35px;
 
   @media (max-width: 1024px) {
     width: 100%;
@@ -239,28 +243,39 @@ export const MenuSubCategoriesMobilie = styled.div`
   @media (max-width: 1024px) {
     display: block;
     position: relative;
-    width: 100%;
+  }
 
     .menu_subcategories {
       position: absolute;
-      z-index: 9999;
-      top: 20;
-      left: 0;
-      width: 100%;
-      max-width: 300px;
-      background: var(--White);
-      padding: 0.5rem 0.7rem;
-      line-height: 200%;
-
+    z-index: 9999;
+    top: 20;
+    right: 0;
+    width: max-content;
+    background: var(--White);
+    line-height: 200%;
+    border-top: none;
+    box-shadow: 0px 7px 8px 0px #2121211c;
+    list-style: none;
       border-top: none;
       box-shadow: 0px 7px 8px 0px #2121211c;
-
       list-style: none;
-    }
-    a {
-      text-decoration: none;
-      color: var(--Blue);
-      font-weight: 600;
+      li{
+        padding: 0.2rem 0.7rem;
+        background: var(--White);
+        &:hover {
+  background: var(--Blue);
+  color: var(--White);
+  font-weight: 600;
+  a{
+    color: var(--White)
+  }
+        }
+  a {
+  text-decoration: none;
+  color: var(--Blue);
+  font-weight: 600;
+}
+
     }
   }
 `;

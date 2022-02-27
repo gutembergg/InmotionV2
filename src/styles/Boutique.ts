@@ -70,7 +70,7 @@ export const MainContent = styled.div`
   .category_name {
     z-index: 999;
     font-weight: 600;
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: var(--Blue);
     text-align: center;
   }

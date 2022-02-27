@@ -127,10 +127,10 @@ const MenuMain = () => {
       <li>
         <p
           onClick={() => {
-            goToLink("/inmotion-mobility/produits/occasions");
+            goToLink("/inmotion-mobility/categories/occasions");
           }}
           className={
-            router.pathname === "/inmotion-mobility/produits/occasions"
+            router.pathname === "/inmotion-mobility/categories/occasions"
               ? "active"
               : ""
           }
