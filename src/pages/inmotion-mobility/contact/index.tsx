@@ -63,7 +63,7 @@ export default function Contact() {
 
   return (
     <Container>
-      <h1>Reston on contact!</h1>
+      <h1>Restons en contact!</h1>
       <Description>
         <p>{"N'hésitez pas à nous contacter si vous avez des questions!"}</p>
       </Description>

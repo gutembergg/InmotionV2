@@ -1,12 +1,29 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+`;
 
 export const MainContent = styled.div`
   padding: 70px 3rem;
+  @media (max-width:960px){
+    padding: 50px 2rem;
+
+  }
+  @media (max-width:640px){
+    padding: 30px 1rem;
+
+  }
   h1 {
     text-align: center;
     margin-bottom:50px;
+    @media (max-width:960px){
+      margin-bottom:40px;
+      
+    }
+    @media (max-width:640px){
+    margin-bottom:30px;
+
+  }
   }
 
   ul {
@@ -18,13 +35,13 @@ export const MainContent = styled.div`
 `;
 
 export const GuidItem = styled.li`
-  flex: 0 1 280px;
+  flex: 0 1 70px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  margin: 40px 20px;
+  margin: 40px 10px;
 
   h2{
     color: var(--Blue);
@@ -57,5 +74,10 @@ export const GuidItem = styled.li`
     width: 200px;
     height: 200px;
     margin-bottom: 10px;
+    @media screen and (max-width: 960px) {
+      width: 150px;
+      height: 150px;
+
+    }
   }
 `;

@@ -29,22 +29,40 @@ export const Container = styled.div`
     align-content: center;
     flex-wrap: wrap;
     justify-content: space-between;
+    @media (max-width: 640px){
+      flex-direction: column;
+      align-content: stretch;
+    }
     .left {
       flex: 0 1 49%;
+      @media (max-width: 640px){
+        flex: 0 1 100%;
+      }
     }
     .right {
       flex: 0 1 49%;
+      @media (max-width: 640px){
+        margin-top: 40px;
+        flex: 0 1 100%;
+        align-content: stretch;
+      }
     }
     .inputcontent {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
     justify-content: space-between;
+    @media (max-width: 960px){
+      flex-direction: column;
+    }
     }
     .input_block {
       display: flex;
       flex-direction: column;
       flex: 0 1 49%;
+      @media (max-width: 640px){
+        flex: 0 1 100%;
+      }
 
       .erros {
         border: 2px solid red;
@@ -55,6 +73,9 @@ export const Container = styled.div`
         margin-bottom: 10px;
       }
 
+      textarea{
+        min-height: 100px;
+      }
       .input_erros {
         font-size: 0.7rem;
         color: red;
