@@ -22,6 +22,11 @@ export const ResultBlockMobile = styled.div`
   @media (max-width: 450px) {
     display: flex;
     flex-direction: column;
+
+    h2 {
+      text-align: center;
+      margin-top: 1.4rem;
+    }
   }
 `;
 

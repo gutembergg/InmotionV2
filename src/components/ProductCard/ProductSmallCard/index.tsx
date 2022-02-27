@@ -49,14 +49,16 @@ const ProductSmallCard = ({ product }: Props) => {
     <Container>
       <Link href={`/inmotion-mobility/produit/${product.slug}`}>
         <a>
-          <Image
-            width={150}
-            height={150}
-            src={product.images[0].src}
-            placeholder="blur"
-            blurDataURL={product?.images[0].src}
-            alt={product.name}
-          />
+          {Array.isArray(product.images) && (
+            <Image
+              width={150}
+              height={150}
+              src={product.images[0].src}
+              placeholder="blur"
+              blurDataURL={product?.images[0].src}
+              alt={product.name}
+            />
+          )}
 
           {product.on_sale && <ButtonSkew text="Promotion!" />}
 
@@ -73,7 +75,7 @@ const ProductSmallCard = ({ product }: Props) => {
           />
         </a>
       </Link>
-      {product.variations.length > 0 ? (
+      {Array.isArray(product.variations) && product.variations.length > 0 ? (
         <BtnProductDetail>
           <Link href={`/inmotion-mobility/produit/${product.slug}`}>
             {showVariationTradution}

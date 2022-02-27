@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  border: 2px solid var(--Blue);
-  padding: 0.4rem;
-`;
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,6 +55,13 @@ export const Form = styled.form`
     border: 2px solid var(--Blue);
     padding: 0.4rem;
   }
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  height: 40px;
+  border: 2px solid var(--Blue);
+  padding: 0.4rem;
 `;
 
 export const FormRow1 = styled.div`

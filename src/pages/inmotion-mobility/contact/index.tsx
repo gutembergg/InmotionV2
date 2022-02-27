@@ -17,7 +17,8 @@ import {
   FormRow1,
   Input,
   IconBlock,
-} from "./styles";
+} from "../../../styles/ContactPage";
+import { GetServerSideProps } from "next";
 
 export default function Contact() {
   const [formModel, setFormModel] = useState({
@@ -123,4 +124,10 @@ export default function Contact() {
 
 Contact.getLayout = function getLayout(page: ReactElement) {
   return <LayoutMobility>{page}</LayoutMobility>;
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {},
+  };
 };

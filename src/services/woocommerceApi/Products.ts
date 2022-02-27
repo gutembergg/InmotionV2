@@ -23,6 +23,19 @@ export const getProductByCategory = async (
   return filterCategoryVisibility(data);
 };
 
+// Get All products without filter visivility/////////////////////
+export const getProductByCategoryWithoutVisibilityFilter = async (
+  id: number,
+  lang: string
+): Promise<IProduct[]> => {
+  const { data } = await wooCommerce.get(`products`, {
+    id,
+    lang: lang,
+    per_page: 100,
+  });
+  return data;
+};
+
 // Get Product by slug //////////////////////////////////////////////
 export const getProductBySlug = async (slug: string) => {
   const { data } = await wooCommerce.get("products", {
@@ -134,7 +147,7 @@ export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
 
 // catalog Visibility filtering -exclude hidden products///////////////////////////
 
-const filterCategoryVisibility = (productList: IProduct[]) => {
+export const filterCategoryVisibility = (productList: IProduct[]) => {
   const filteredProductList = productList.filter(
     (product) => product.catalog_visibility !== "hidden"
   );

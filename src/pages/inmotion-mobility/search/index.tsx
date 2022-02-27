@@ -10,11 +10,12 @@ import {
   useState,
 } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
-import MobileCard from "../../../components/ProductCard/MobileCard";
+import MobileCardSerach from "../../../components/ProductCard/MobileCardSearch";
 import ProductSmallCard from "../../../components/ProductCard/ProductSmallCard";
-import { IProduct } from "../../../interfaces/IProducts";
 import LayoutMobility from "../../../Layout/LayoutMobility";
+import { filterCategoryVisibility } from "../../../services/woocommerceApi/Products";
 import wcApi from "../../../services/woocommerceApi/wcAxiosConfig";
+import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 
 import {
   Container,
@@ -26,7 +27,6 @@ import {
   ResultBlockMobile,
   SearchProductsListMobile,
 } from "../../../styles/SearchPage";
-import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 
 export default function Search() {
   const router = useRouter();
@@ -56,9 +56,11 @@ export default function Search() {
         .then((response) => {
           setSearchValue(response.data);
           setSearchLoading(false);
-          addEuroPriceInProducts(response.data).then((res) =>
-            setSearchValue(res)
-          );
+          addEuroPriceInProducts(response.data).then((res) => {
+            if (Array.isArray(res) && Object.keys(res[0]).length > 0) {
+              setSearchValue(filterCategoryVisibility(res));
+            }
+          });
         })
         .catch((error) => {
           if (axios.isCancel(error)) return;
@@ -117,7 +119,9 @@ export default function Search() {
             <SearchProductsListMobile>
               {searchValue &&
                 searchValue.map((product: any) => {
-                  return <MobileCard key={product.id} product={product} />;
+                  return (
+                    <MobileCardSerach key={product.id} product={product} />
+                  );
                 })}
             </SearchProductsListMobile>
           </>
