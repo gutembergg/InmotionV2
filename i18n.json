@@ -71,6 +71,6 @@
       "productDetail",
       "searchPage"
     ],
-    "/inmotion-mobility/contact": ["headerMobility", "productDetail"]
+    "/inmotion-mobility/contact": ["headerMobility", "forms", "contactPage"]
   }
 }

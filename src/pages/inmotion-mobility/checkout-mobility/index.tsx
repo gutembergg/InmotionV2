@@ -160,6 +160,14 @@ export default function CheckoutMobility() {
   const tvaResult = CHFCurrency ? (cart.totalProductsPrice / 100) * tva : 0;
 
   useEffect(() => {
+    if (Object.keys(cart).length === 0) {
+      if (typeof window !== "undefined") {
+        router.push("/inmotion-mobility");
+      }
+    }
+  }, [cart]);
+
+  useEffect(() => {
     if (Object.keys(cart).length > 0) {
       const _lineItems = cart.products.map((product) => {
         const product_id = product.id;

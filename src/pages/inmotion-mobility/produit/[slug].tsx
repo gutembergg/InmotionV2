@@ -84,8 +84,9 @@ export default function ProductDetail({
   //----------------------variations--------------------------------
 
   //check if product is variable or not
-  const isVariable = product?.variations.length > 0 ? true : false;
   const [selectedVariation, setSelectedVariation] = useState({} as any);
+  const isVariable = product?.variations.length > 0 ? true : false;
+
   const VariationButtons = () => {
     return (
       <>
@@ -389,9 +390,9 @@ export default function ProductDetail({
               />
             </div>
             <DescriptionProduct>
-                  <div className="sectionTitle">
-                    <p>{InfoComplementaires}</p>
-                  </div>
+              <div className="sectionTitle">
+                <p>{InfoComplementaires}</p>
+              </div>
               <Sections>
                 {product?.isAcfDescription === true &&
                   product.acf.description_du_produit.map((section, index) => {

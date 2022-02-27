@@ -1,4 +1,5 @@
 import useTranslation from "next-translate/useTranslation";
+import { Report } from "notiflix";
 import { ChangeEvent, useCallback, useState } from "react";
 import useUser from "../../../hooks/useUser";
 import { User } from "../../../interfaces/User";
@@ -40,7 +41,11 @@ const UserAddress = ({ currentyUser }: Props) => {
 
   const onSubmitPassword = useCallback(async () => {
     if (_password.newPassword !== _password.password) {
-      alert("Not correct password");
+      Report.failure(
+        "Erreur mot de passe invalide",
+        "<p>Mot de passe incorrect</p><br /><br />",
+        "Okay"
+      );
       return;
     }
     console.log("_password: ", _password);

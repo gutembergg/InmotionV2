@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import Image from "next/image";
 import React, { ChangeEvent, FormEvent, ReactElement, useState } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
@@ -7,6 +8,7 @@ const ContactMap = dynamic(() => import("../../../components/ContactMap"), {
 });
 import { Report } from "notiflix";
 import IconBlue from "../../../../public/images/icons/iconButton.svg";
+import useTranslation from "next-translate/useTranslation";
 
 import {
   Container,
@@ -17,10 +19,19 @@ import {
   FormRow1,
   Input,
   IconBlock,
+  ButtonValidateMobile,
 } from "../../../styles/ContactPage";
-import { GetServerSideProps } from "next";
 
 export default function Contact() {
+  const { t } = useTranslation();
+  const firstName = t("forms:firstName");
+  const lastName = t("forms:lastName");
+  const phone = t("forms:phone");
+  const register = t("forms:register");
+  const message = t("contactPage:message");
+  const title = t("contactPage:title");
+  const subTitle = t("contactPage:subTitle");
+
   const [formModel, setFormModel] = useState({
     lastName: "",
     firstName: "",
@@ -63,9 +74,9 @@ export default function Contact() {
 
   return (
     <Container>
-      <h1>Restons en contact!</h1>
+      <h1>{title}</h1>
       <Description>
-        <p>{"N'hésitez pas à nous contacter si vous avez des questions!"}</p>
+        <p>{`${subTitle}`}</p>
       </Description>
       <Content>
         <MapBlock>
@@ -77,13 +88,13 @@ export default function Contact() {
               type="text"
               name="lastName"
               onChange={handleOnChange}
-              placeholder="Nom"
+              placeholder={lastName}
             />
             <Input
               type="text"
               name="firstName"
               onChange={handleOnChange}
-              placeholder="Prenom"
+              placeholder={firstName}
             />
           </FormRow1>
           <Input
@@ -96,7 +107,7 @@ export default function Contact() {
             type="text"
             name="telephone"
             onChange={handleOnChange}
-            placeholder="Telephone"
+            placeholder={phone}
           />
           <textarea
             name="message"
@@ -104,7 +115,7 @@ export default function Contact() {
             cols={30}
             rows={8}
             onChange={handleOnChangeTextArea}
-            placeholder="Message"
+            placeholder={message}
           ></textarea>
           <IconBlock onSubmit={handleSubmit}>
             <Image
@@ -115,6 +126,9 @@ export default function Contact() {
               onClick={handleSubmit}
             />
           </IconBlock>
+          <ButtonValidateMobile onClick={handleSubmit}>
+            {register}
+          </ButtonValidateMobile>
         </Form>
       </Content>
     </Container>

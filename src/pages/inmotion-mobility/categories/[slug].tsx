@@ -102,12 +102,14 @@ export default function Category({ category, productsByCategory }: Props) {
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
-  const colorizeTitle = () =>{
-    const titleColorized = products[productIndex]?.name.replace(/^\s*\w+/, '<span style="color:var(--Red)">$&</span>');
-    return(
-      titleColorized
-    )
-  }
+  const colorizeTitle = () => {
+    const titleColorized = products[productIndex]?.name.replace(
+      /^\s*\w+/,
+      '<span style="color:var(--Red)">$&</span>'
+    );
+    return titleColorized;
+  };
+
   return (
     <>
       <HeaderSeo
@@ -141,10 +143,11 @@ export default function Category({ category, productsByCategory }: Props) {
           </ProductImage>
           <div className="ProductDescrt">
             <LogoProduct>
-
               <div className="logo_box">
-                <h2 className="first_title" dangerouslySetInnerHTML={{__html: colorizeTitle()}}>
-                </h2>
+                <h2
+                  className="first_title"
+                  dangerouslySetInnerHTML={{ __html: colorizeTitle() }}
+                ></h2>
                 <div className="price">
                   <div
                     className={
@@ -168,85 +171,84 @@ export default function Category({ category, productsByCategory }: Props) {
                         products[productIndex]?.euroPrice + " " + currency}
                   </div>
                   <div>
-                {products[productIndex]?.on_sale && (
-                  <p className="promo">{Promotion}</p>
-                )}
-              </div>
+                    {products[productIndex]?.on_sale && (
+                      <p className="promo">{Promotion}</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </LogoProduct>
             <ProductInfos>
-              {vitesse&&(
-
-                <div className="weight">
-            <div className="iconBox">
-                <Image 
-                src={SpeedIcon} 
-                alt="poids" 
-                layout="fill"
-                objectFit="contain"
-                />
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: vitesse?.options[0] as string,
-                }}
-                ></div>
-            </div>
-                )}
-                {autonomie &&(
-            <div className="weight autonomie">
-            <div className="iconBox">
-                <Image 
-                src={AutonomieIcon} 
-                alt="poids" 
-                layout="fill"
-                objectFit="contain"
-                />
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: autonomie?.options[0] as string,
-                }}
-              ></div>
-            </div>
-                )}
-            {autorisationRouler !== undefined && autorisationRouler.options[0].length > 0 && (
-
-              <div className="politic_text autonomie">
-              <div className="iconBox">
-                <Image
-                  layout="fill"
-                  objectFit="contain"
-                  src={RoadIcon}
-                  alt="poids"
-                  className="image"
+              <div className="weight">
+                <div className="iconBox">
+                  <Image
+                    src={SpeedIcon}
+                    alt="poids"
+                    layout="fill"
+                    objectFit="contain"
                   />
+                </div>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: vitesse?.options[0] as string,
+                  }}
+                ></div>
               </div>
-              <div>
-                {autorisationRouler?.options.map((autorisation, key) => {
-                  return (
-                    <div
-                    key={key}
-                    dangerouslySetInnerHTML={{ __html: autorisation }}
-                    ></div>
-                    );
-                  })}
+              <div className="weight autonomie">
+                <div className="iconBox">
+                  <Image
+                    src={AutonomieIcon}
+                    alt="poids"
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                </div>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: autonomie?.options[0] as string,
+                  }}
+                ></div>
               </div>
-            </div>
-                  )}
-          </ProductInfos>
+              {autorisationRouler !== undefined &&
+                autorisationRouler.options[0].length > 0 && (
+                  <div className="politic_text autonomie">
+                    <div className="iconBox">
+                      <Image
+                        layout="fill"
+                        objectFit="contain"
+                        src={RoadIcon}
+                        alt="poids"
+                        className="image"
+                      />
+                    </div>
+                    <div>
+                      {autorisationRouler?.options.map((autorisation, key) => {
+                        return (
+                          <div
+                            key={key}
+                            dangerouslySetInnerHTML={{ __html: autorisation }}
+                          ></div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+            </ProductInfos>
             {products[productIndex]?.variations.length > 0 ? (
               <>
-              <p className="productFrom">{priceFrom} {products[productIndex].acf.variation_minimal_price} {currency}</p>
-              <BtnProductDetail>
-                <Link
-                  href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+                <p className="productFrom">
+                  {priceFrom}{" "}
+                  {products[productIndex].acf.variation_minimal_price}{" "}
+                  {currency}
+                </p>
+                <BtnProductDetail>
+                  <Link
+                    href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
                   >
-                  {showVariationTradution}
-                </Link>
-              </BtnProductDetail>
-                  </>
+                    {showVariationTradution}
+                  </Link>
+                </BtnProductDetail>
+              </>
             ) : (
               <AddToCartSession>
                 <button
