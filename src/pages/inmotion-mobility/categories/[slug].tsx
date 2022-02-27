@@ -102,7 +102,6 @@ export default function Category({ category, productsByCategory }: Props) {
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
-<<<<<<< HEAD
   const colorizeTitle = () => {
     const titleColorized = products[productIndex]?.name.replace(
       /^\s*\w+/,
@@ -111,14 +110,6 @@ export default function Category({ category, productsByCategory }: Props) {
     return titleColorized;
   };
 
-=======
-  const colorizeTitle = () =>{
-    const titleColorized = products[productIndex]?.name.replace(/^\s*\w+/, '<span style="color:var(--Red)">$&</span>');
-    return(
-      titleColorized
-    )
-  }
->>>>>>> 0650ecc5b9fe7f2623645f43a7433caaff234586
   return (
     <>
       <HeaderSeo
@@ -188,7 +179,6 @@ export default function Category({ category, productsByCategory }: Props) {
               </div>
             </LogoProduct>
             <ProductInfos>
-<<<<<<< HEAD
               <div className="weight">
                 <div className="iconBox">
                   <Image
@@ -196,53 +186,6 @@ export default function Category({ category, productsByCategory }: Props) {
                     alt="poids"
                     layout="fill"
                     objectFit="contain"
-=======
-              {vitesse&&(
-
-                <div className="weight">
-            <div className="iconBox">
-                <Image 
-                src={SpeedIcon} 
-                alt="poids" 
-                layout="fill"
-                objectFit="contain"
-                />
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: vitesse?.options[0] as string,
-                }}
-                ></div>
-            </div>
-                )}
-                {autonomie &&(
-            <div className="weight autonomie">
-            <div className="iconBox">
-                <Image 
-                src={AutonomieIcon} 
-                alt="poids" 
-                layout="fill"
-                objectFit="contain"
-                />
-              </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: autonomie?.options[0] as string,
-                }}
-              ></div>
-            </div>
-                )}
-            {autorisationRouler !== undefined && autorisationRouler.options[0].length > 0 && (
-
-              <div className="politic_text autonomie">
-              <div className="iconBox">
-                <Image
-                  layout="fill"
-                  objectFit="contain"
-                  src={RoadIcon}
-                  alt="poids"
-                  className="image"
->>>>>>> 0650ecc5b9fe7f2623645f43a7433caaff234586
                   />
                 </div>
                 <div
