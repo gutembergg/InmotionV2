@@ -177,7 +177,9 @@ console.log(products[productIndex])
               </div>
             </LogoProduct>
             <ProductInfos>
-            <div className="weight">
+              {vitesse&&(
+
+                <div className="weight">
             <div className="iconBox">
                 <Image 
                 src={SpeedIcon} 
@@ -190,8 +192,10 @@ console.log(products[productIndex])
                 dangerouslySetInnerHTML={{
                   __html: vitesse?.options[0] as string,
                 }}
-              ></div>
+                ></div>
             </div>
+                )}
+                {autonomie &&(
             <div className="weight autonomie">
             <div className="iconBox">
                 <Image 
@@ -207,6 +211,7 @@ console.log(products[productIndex])
                 }}
               ></div>
             </div>
+                )}
             {autorisationRouler !== undefined && autorisationRouler.options[0].length > 0 && (
 
               <div className="politic_text autonomie">

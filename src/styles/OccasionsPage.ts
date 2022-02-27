@@ -16,6 +16,6 @@ export const ProductDetail = styled.div`
 `;
 
 export const ProductsFooter = styled.div`
-  width: 100vw;
+  width: 100%;
   margin-top: 3rem;
 `;

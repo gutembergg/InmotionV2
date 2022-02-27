@@ -54,7 +54,6 @@ import { checkIsAcfDescription } from "../../../utils/checkIsAcfDescription";
 import StockStatuts from "../../../components/StockStatus";
 import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
 import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
-import locale from "yup/lib/locale";
 
 interface Props {
   product: IProduct;
@@ -81,12 +80,12 @@ export default function ProductDetail({
 
   const [productQty, setProductQty] = useState(1);
 
+  // console.log(product);
   //----------------------variations--------------------------------
 
   //check if product is variable or not
   const isVariable = product?.variations.length > 0 ? true : false;
   const [selectedVariation, setSelectedVariation] = useState({} as any);
-
   const VariationButtons = () => {
     return (
       <>
@@ -394,7 +393,7 @@ export default function ProductDetail({
                     <p>{InfoComplementaires}</p>
                   </div>
               <Sections>
-                {product?.isAcfDescription &&
+                {product?.isAcfDescription === true &&
                   product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>
