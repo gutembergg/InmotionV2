@@ -108,7 +108,6 @@ export default function Category({ category, productsByCategory }: Props) {
       titleColorized
     )
   }
-console.log(products[productIndex])
   return (
     <>
       <HeaderSeo
