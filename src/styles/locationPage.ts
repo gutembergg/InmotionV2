@@ -88,10 +88,6 @@ export const BlockInfoLocation = styled.div`
   h2{
     text-align: center;
     margin-bottom: 60px;
-    font-size:1.5em;
-    @media (max-width:450px){
-      font-size:1.2em;
-    }
   }
   h3{
     font-size:1.3em;

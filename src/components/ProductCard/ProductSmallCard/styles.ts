@@ -55,7 +55,7 @@ export const Stock = styled.div``;
 
 export const PriceBlock = styled.div`
   span {
-    color: var(--Black);
+    color: var(--Price);
     font-weight: 600;
   }
 `;
