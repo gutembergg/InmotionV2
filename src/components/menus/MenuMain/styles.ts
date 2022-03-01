@@ -9,7 +9,7 @@ export const MainMenu = styled.ul`
   margin: 0 20px;
   cursor: pointer;
   
-  p {
+ a {
     /* font-family: 'Bitter',sans-serif; */
     text-decoration: none;
     color: var(--Blue);
@@ -26,7 +26,7 @@ export const MainMenu = styled.ul`
     list-style: none;
 
     &:hover {
-      p {
+      a {
         color: var(--DarkGray);
         transition: color ease-in-out 0.1s;
       }
@@ -54,14 +54,14 @@ export const MainMenu = styled.ul`
         background-color: var(--White);
         padding: 10px 20px;
 
-        p {
+        a {
           color: var(--Blue);
         }
 
         &:hover {
           background-color: var(--Blue);
 
-          p {
+          a {
             color: var(--White);
           }
         }
@@ -98,10 +98,10 @@ export const MainMenu = styled.ul`
           padding: 0;
           background-color: transparent;
           font-weight: 600;
-          p {
+          a {
             color: var(--DarkGray);
           }
-          p::before {
+          a::before {
             content: "- ";
           }
         }
