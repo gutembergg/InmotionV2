@@ -10,9 +10,8 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import CurrencySelector from "../../CurrencySelector";
 import SearchBar from "../../SearchBar";
-
+import Link from "next/link";
 const HeaderMobile = () => {
-  const [loged, setLoged] = useState<boolean>(false);
   const [menuOpen, setmenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -44,10 +43,9 @@ const HeaderMobile = () => {
   const condGenerales = t("headerMobility:condGenerales");
   const confidentiality = t("headerMobility:confidentiality");
   const rent = t("headerMobility:rent");
-  const coursGyro = t("headerMobility:cours");
   const userManuals = t("headerMobility:userManuals");
   const returnForm = t("headerMobility:returnForm");
-  const leftTopText = t("headerMobility:leftTopText");
+  const cours = t("headerMobility:cours");
 
   const menu = [
     {
@@ -72,10 +70,20 @@ const HeaderMobile = () => {
     },
   ];
 
-  const goToLink = (linkUrl: string) => {
-    router.push(linkUrl);
-    setmenuOpen(false);
+  const getHref = (slug: string) => {
+    let url = `/inmotion-mobility/categories/${slug}`;
+
+    if (slug === "pieces-detachees-mobility") {
+      url = `/inmotion-mobility/categories/pieces-detachees`;
+    }
+
+    if (slug === "equipements") {
+      url = `/inmotion-mobility/categories/equipements`;
+    }
+
+    return url;
   };
+
   return (
     <StyledMobileHeader>
       <div className="topHeader">
@@ -118,143 +126,94 @@ const HeaderMobile = () => {
             </div>
               <hr />
             <MobileMobilityHeader>
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility");
-                  }}
-                >
-                  {menuHome}
-                </p>
-              </li>
-            
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/boutique");
-                  }}
-                >
-                  {menuShop}
-                </p>
-                <ul>
-                  {menu.map((category) => {
-                    return (
-                      <li key={category.slug}>
-                        <p
-                          onClick={() => {
-                            category.slug === "pieces-detachees-mobility"
-                              ? goToLink(
-                                  `/inmotion-mobility/categories/pieces-detachees`
-                                )
-                              : category.slug === "equipements"
-                              ? goToLink(
-                                  `//inmotion-mobility/categories/equipements`
-                                )
-                              : goToLink(
-                                  `/inmotion-mobility/categories/${category.slug}`
-                                );
-                          }}
-                        >
-                          {category.name}
-                        </p>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/produits/occasions");
-                  }}
-                  className={
-                    router.pathname === "/inmotion-mobility/produits/occasions"
-                      ? "active"
-                      : ""
-                  }
-                >
-                  {occasions}
-                </p>
-              </li>
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/services");
-                  }}
-                >
-                  {menuServices}
-                </p>
-                <ul>
-                  <li>
-                    <p
-                      onClick={() => {
-                        goToLink("/inmotion-mobility/services/cours-gyroroue");
-                      }}
-                    >
-                      {coursGyro}
-                    </p>
-                  </li>
-                  <li>
-                    <p
-                      onClick={() => {
-                        goToLink("/inmotion-mobility/services/location");
-                      }}
-                    >
-                      {rent}
-                    </p>
-                  </li>
-                  <li>
-                    <p
-                      onClick={() => {
-                        goToLink(
-                          "/inmotion-mobility/services/guides-utilisateur"
-                        );
-                      }}
-                    >
-                      {userManuals}
-                    </p>
-                  </li>
-                  <li>
-                    <p
-                      onClick={() => {
-                        goToLink(
-                          "/inmotion-mobility/services/autorisation-retour"
-                        );
-                      }}
-                    >
-                      {returnForm}
-                    </p>
-                  </li>
-                </ul>
-              </li>
-              <hr />
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/contact");
-                  }}
-                >
-                  {menuContact}
-                </p>
-              </li>
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/conditions-generales");
-                  }}
-                >
-                  {condGenerales}
-                </p>
-              </li>
-              <li>
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/politique-confidentialite");
-                  }}
-                >
-                  {confidentiality}
-                </p>
-              </li>
+            <li>
+          <Link href="/inmotion-mobility">
+             <a onClick={()=> menuToggle()}
+              className={
+                router.pathname === "/inmotion-mobility" ? "active" : ""
+              }
+            >
+              {menuHome}
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/boutique">
+             <a onClick={ ()=> menuToggle()} className={router.pathname === "/boutique" ? "active" : ""}>
+              {menuShop}
+            </a>
+          </Link>
+          <ul>
+            {menu.map((category) => {
+              return (
+                <li key={category.slug}>
+                  <Link href={getHref(category.slug)}>
+                     <a onClick={ ()=> menuToggle()} className={ router.pathname === "/boutique" ? "active" : "" }>
+                      {category.name}
+                    </a>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/categories/occasions">
+             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/categories/occasions" ? "active" : ""}>
+              {occasions}
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/services">
+             <a onClick={ ()=> menuToggle()} className={ router.pathname === "/inmotion-mobility/services" ? "active" : "" }>
+              {menuServices}
+            </a>
+          </Link>
+          <ul>
+            <li>
+              <Link href="/inmotion-mobility/services/cours-gyroroue">
+                 <a onClick={ ()=> menuToggle()}>{cours}</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/inmotion-mobility/services/location">
+                 <a onClick={ ()=> menuToggle()}>{rent}</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/inmotion-mobility/services/guides-utilisateur">
+                 <a onClick={ ()=> menuToggle()}>{userManuals}</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/inmotion-mobility/services/autorisation-retour">
+                 <a onClick={ ()=> menuToggle()}>{returnForm}</a>
+              </Link>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/contact">
+             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/contact" ? "active" : ""}>
+              {menuContact}
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/conditions-generales">
+             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/conditions-generales" ? "active" : ""}>
+              {condGenerales}
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/inmotion-mobility/politique-confidentialite">
+             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/politique-confidentialite" ? "active" : ""}>
+              {confidentiality}
+            </a>
+          </Link>
+        </li>
             </MobileMobilityHeader>
           </div>
         </div>

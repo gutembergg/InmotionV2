@@ -88,9 +88,8 @@ const MenuMain = () => {
 
     return url;
   };
-  const goToLink = (linkUrl: string) => {
-    router.push(linkUrl);
-  };
+
+  
   return (
     <nav>
       <MainMenu>
