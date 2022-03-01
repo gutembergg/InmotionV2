@@ -15,8 +15,8 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 85%;
-  max-width: 1600px;
+  width: 100%;
+  padding: 0 3rem;
   margin: auto;
 
   h1 {
@@ -65,8 +65,7 @@ export const FormSection = styled.div`
   width: 100%;
   max-width: 800px;
   height: 100%;
-
-  padding: 0.5rem 1rem;
+  padding: 0rem 1rem;
 
   .ReactCollapse--collapse {
     transition: height 500ms;
@@ -90,7 +89,7 @@ export const FormSection = styled.div`
       background-color: var(--BlueSelected);
       color: var(--White);
       font-weight: 600;
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       padding: 1rem;
 
       span {
@@ -100,7 +99,7 @@ export const FormSection = styled.div`
       }
 
       .coordonnes {
-        font-size: 1.7rem;
+        font-size: 1.3rem;
       }
 
       .btn_update {
@@ -153,7 +152,7 @@ export const FormSection = styled.div`
     h2 {
       margin-bottom: 0;
       color: var(--White);
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       padding: 0.7rem;
     }
 
@@ -191,7 +190,7 @@ export const FormSection = styled.div`
       background-color: var(--DarkGray);
       color: var(--White);
       font-weight: 600;
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       padding: 0.7rem;
     }
 
@@ -241,7 +240,7 @@ export const FormSection = styled.div`
       h2 {
         margin-bottom: 0;
         color: var(--White);
-        font-size: 1.7rem;
+        font-size: 1.3rem;
         font-weight: 600;
       }
 
@@ -259,7 +258,7 @@ export const FormSection = styled.div`
         margin-bottom: 0;
         color: var(--White);
         font-weight: 600;
-        font-size: 1.7rem;
+        font-size: 1.3rem;
       }
     }
 
@@ -302,7 +301,7 @@ export const PaymentBankTransfert = styled.button`
       align-items: center;
       color: var(--White);
       font-weight: 600;
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       margin-bottom: 0px;
     }
 
@@ -322,7 +321,7 @@ export const PaymentBankTransfert = styled.button`
       align-items: center;
       color: var(--White);
       font-weight: 600;
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       margin-bottom: 0px;
     }
   }
@@ -336,7 +335,7 @@ export const PaymentBankTransfert = styled.button`
       align-items: center;
       color: var(--White);
       font-weight: 600;
-      font-size: 1.7rem;
+      font-size: 1.3rem;
       margin-bottom: 0px;
     }
   }
@@ -380,11 +379,42 @@ export const OrderSession = styled.div<Props>`
         // width: calc(100% - 17px);
       `}
 
-    ${(props) =>
+
+  }
+
+  display: flex;
+  flex-direction: column;
+
+  width: 40vw;
+  max-width: 600px;
+
+  .products_list {
+    list-style-type: none;
+   
+  }
+
+  h2 {
+    text-align: center;
+    background-color: var(--Blue);
+    color: var(--White);
+    padding: 1rem;
+    font-size: 1.3rem;
+    border: 1px solid var(--Blue);
+    margin-bottom: 0;
+  }
+
+  .cart_products {
+    background-color: white;
+    border: 3px solid var(--Blue);
+    margin-bottom: 0rem;
+
+    .prod_block {
+      padding: 0 1rem;
+      ${(props) =>
       props.qtyCartProducts &&
       css`
-        height: 600px;
-        margin-bottom: 10rem;
+        height: 300px;
+        margin-bottom: 0rem;
         overflow-y: scroll;
         /* width */
         ::-webkit-scrollbar {
@@ -399,7 +429,7 @@ export const OrderSession = styled.div<Props>`
 
         /* Handle */
         ::-webkit-scrollbar-thumb {
-          background: #888;
+          background: var(--Red);
         }
 
         /* Handle on hover */
@@ -407,35 +437,6 @@ export const OrderSession = styled.div<Props>`
           background: #555;
         }
       `}
-  }
-
-  display: flex;
-  flex-direction: column;
-
-  width: 40vw;
-  max-width: 600px;
-
-  .products_list {
-    list-style-type: none;
-  }
-
-  h2 {
-    text-align: center;
-    background-color: var(--Blue);
-    color: var(--White);
-    padding: 1rem;
-    font-size: 1.7rem;
-    border: 1px solid var(--Blue);
-    margin-bottom: 0;
-  }
-
-  .cart_products {
-    background-color: white;
-    border: 3px solid var(--Blue);
-    margin-bottom: 14rem;
-
-    .prod_block {
-      padding: 0 1rem;
 
       div + div {
         border-top: 1px solid;
@@ -463,7 +464,7 @@ export const OrderSession = styled.div<Props>`
   }
 
   .taxe_block {
-    padding: 0.7rem;
+    padding: 0 0.7rem;
   }
 
   .taxes {
@@ -699,12 +700,15 @@ export const ProductCart = styled.div`
     flex-direction: row;
     align-items: center;
     padding-top: 0.4rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
 
     span {
       margin-left: 1rem;
-      font-size: 1.3rem;
-      font-weight: 600;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Bitter",sans-serif;
+    text-transform: uppercase;
+    color: var(--BlueHover);
     }
   }
 
@@ -724,6 +728,7 @@ export const ProductCart = styled.div`
     padding-right: 0.7rem;
     width: 170px;
     font-weight: 600;
+    color: var(--Price)
   }
 `;
 

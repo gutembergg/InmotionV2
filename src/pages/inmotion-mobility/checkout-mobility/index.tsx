@@ -841,9 +841,6 @@ export default function CheckoutMobility() {
     <>
       <Container>
         <h1>{yourOrder}</h1>
-        <Content>
-          <div className="content">
-            <FormSection className="sections">
               <section className="form_users">
                 {" "}
                 {!loged && (
@@ -854,6 +851,9 @@ export default function CheckoutMobility() {
                   </div>
                 )}
               </section>
+        <Content>
+          <div className="content">
+            <FormSection className="sections">
               <section className="sections_title">
                 <div className="title">
                   <h2 className={paymentSteps === 1 ? "active" : ""}>

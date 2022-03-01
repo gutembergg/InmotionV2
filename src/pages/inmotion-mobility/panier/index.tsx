@@ -70,35 +70,40 @@ export default function Panier() {
                         className="closeButton"
                         onClick={() => removeCartItem(product.id)}
                       ></button>
+                      <div className="contentLeft">
+
                       <div className="cartProductThmbnail">
                         {product.isVariation ? (
                           <Image
-                            src={
+                          src={
                               product.image
-                                ? product.image.src
-                                : placeholder.src
+                              ? product.image.src
+                              : placeholder.src
                             }
                             alt={product.name}
                             height={60}
                             width={60}
-                          />
-                        ) : (
-                          <Image
-                            src={
-                              product.images[0]
+                            />
+                            ) : (
+                              <Image
+                              src={
+                                product.images[0]
                                 ? product.images[0].src
                                 : placeholder.src
-                            }
-                            alt={product.name}
-                            height={60}
-                            width={60}
-                          />
-                        )}
+                              }
+                              alt={product.name}
+                              height={60}
+                              width={60}
+                              />
+                              )}
                       </div>
                       <h5>{product.name}</h5>
-                      {product.on_sale && (
-                        <p className="onSaleBadge">Promotion</p>
-                      )}
+                      </div>
+                      <div className="rightContent">
+
+                      {/* {product.on_sale && (
+                        // <p className="onSaleBadge">Promotion</p>
+                        )} */}
                       {product.on_sale && (
                         <>
                           <p className="onSalePrice">
@@ -137,14 +142,15 @@ export default function Panier() {
                         </p>
                       )}
                       <div className="qtyInput">
-                        Qty :{" "}
+                        {"x "}
                         <input
                           type="number"
                           value={product.qty}
                           onChange={(e) => handleChangeQty(e, product)}
                           min="0"
-                        />
+                          />
                       </div>
+              </div>
                     </li>
                   );
                 })

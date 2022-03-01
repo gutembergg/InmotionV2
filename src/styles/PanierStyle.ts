@@ -3,31 +3,74 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   margin: auto;
+  margin-bottom: 4rem;
   width: 100%;
-  max-width: 1300px;
-  margin-top: 1.4rem;
-`;
+padding  : 3rem 3rem ;
+@media (max-width: 1024px) {
+  padding  : 2.5rem 2rem ;
+  }
+@media (max-width: 640px) {
+  padding  : 2rem 1rem ;
+  }
+  
+  h5{}
+  `;
 
 export const StyledCart = styled.div`
   width: inherit;
   span.product_prices {
     margin-right: 0.4rem;
   }
-
+  
   .cartPreview {
     padding-top: 10px;
-
+    
     .cartContainer {
       position: relative;
       border-top: none;
-
+      
       li {
         list-style: none;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         padding: 10px 16px;
-
+        flex-wrap: wrap;
+        
+        .rightContent {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          flex: 1;
+          flex: 0 0 auto;
+          @media (max-width:768px){
+            flex-direction: column;
+            align-items: flex-end;
+          }
+          @media (max-width: 480px) {
+            flex-direction: row;
+            flex: 0 1 100%;
+    justify-content: flex-end;
+    align-items: center;
+            }
+        }
+        .contentLeft {
+          
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          flex: 1;
+          margin-right:10px ;
+          @media (max-width: 480px) {
+            flex: 1 1 80%;
+            }
+        }
+        
+        
+        .cartProductThmbnail {
+          flex: 0 1 77px;
+          min-width: 77px;
+}
         button {
           margin-right: 10px;
         }
@@ -35,9 +78,11 @@ export const StyledCart = styled.div`
         h5 {
           flex: auto;
           margin-left: 0.8rem;
+          color: var(--BlueHover);
         }
         .qtyInput {
-          margin-left: 30px;
+          margin-left:10px;
+          min-width: 64px;
           input {
             width: 50px;
             height: 40px;
@@ -48,7 +93,10 @@ export const StyledCart = styled.div`
           margin-left: 10px;
           flex: 0 1 90px;
           align-items: flex-end;
-          color: var(--Black);
+          color: var(--Price);
+          @media (max-width:768px){
+            flex: 0 1 24px;
+          }
         }
         .onSalePrice {
           margin-left: 30px;
@@ -56,6 +104,12 @@ export const StyledCart = styled.div`
           text-decoration: line-through;
           text-decoration-color: var(--DarkGray);
           color: var(--LightGray);
+          @media (max-width:768px){
+            flex: 0 1 24px;
+          }
+          @media (max-width:480px){
+            margin-left: 13px;
+          }
         }
         .onSaleBadge {
           background-color: var(--Red);
@@ -74,6 +128,7 @@ export const StyledCart = styled.div`
           display: inline-block;
           border: none;
           background-color: transparent;
+          flex: 0 0 20px;
 
           &:before,
           &:after {
@@ -143,9 +198,5 @@ export const StyledCart = styled.div`
         }
       }
     }
-  }
-
-  @media (max-width: 1028px) {
-    margin-top: 3.5rem;
-  }
+  } 
 `;
