@@ -25,6 +25,10 @@ import {
 import useCurrency from "../../../hooks/useCurrency";
 import CarouselSwiper from "../../../components/Sliders/Carousel";
 import { ProductImageCarousel } from "../../../components/Sliders/ProductImageCarousel";
+import { checkIsAcfDescription } from "../../../utils/checkIsAcfDescription";
+import StockStatuts from "../../../components/StockStatus";
+import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
+import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
 
 import {
   Container,
@@ -50,10 +54,6 @@ import {
   VariationDisplay,
   SelectedVariation,
 } from "../../../styles/ProductDetail";
-import { checkIsAcfDescription } from "../../../utils/checkIsAcfDescription";
-import StockStatuts from "../../../components/StockStatus";
-import { switchAttributesToEN } from "../../../utils/switchAttributeToEN";
-import { switchAttributesToDE } from "../../../utils/switchAttributeToDE";
 
 interface Props {
   product: IProduct;
