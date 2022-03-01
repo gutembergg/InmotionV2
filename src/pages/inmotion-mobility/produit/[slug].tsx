@@ -77,6 +77,7 @@ export default function ProductDetail({
   const InfoComplementaires = t("productDetail:InfoComplementaires");
   const ChooseVariation = t("productDetail:ChooseVariation");
   const txtCaracteristiques = t("productDetail:Caracteristiques");
+  const Promotion = t("productDetail:Promotion");
 
   const [productQty, setProductQty] = useState(1);
 
@@ -183,6 +184,24 @@ export default function ProductDetail({
     setProductQty(quantity);
   };
 
+  const showInformationTitle = () => {
+    const title = (
+      <div className="sectionTitle">
+        <h2>{InfoComplementaires}</h2>
+      </div>
+    );
+    if (product.attributes.length > 0) {
+      return title;
+    }
+    if (product?.isAcfDescription === true) {
+      return title;
+    }
+    if (videoUrl.length > 0) {
+      return title;
+    }
+    return;
+  };
+
   return (
     <>
       <HeaderSeo
@@ -226,9 +245,17 @@ export default function ProductDetail({
                   {product.categories[0].name}
                 </span>
                 <h1 className="first_title">{product.name}</h1>
+                {isVariable && (
+                  <div className="priceBox">
+                    <div className="price">
+                      <div>
+                        {product.acf.variation_minimal_price} {currency}
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {!isVariable ? (
                   <div className="priceBox">
-                    {product.on_sale && <p>Promotion !</p>}
                     <div className="price">
                       <div className={product.on_sale ? "regular_price" : ""}>
                         {currency === "CHF"
@@ -245,6 +272,7 @@ export default function ProductDetail({
                           : !!product.sale_price &&
                             product.euroPrice + " " + currency}
                       </div>
+                      {product.on_sale && <p>{Promotion}</p>}
                     </div>
                   </div>
                 ) : (
@@ -390,12 +418,10 @@ export default function ProductDetail({
               />
             </div>
             <DescriptionProduct>
-              <div className="sectionTitle">
-                <p>{InfoComplementaires}</p>
-              </div>
-              <Sections>
-                {product?.isAcfDescription === true &&
-                  product.acf.description_du_produit.map((section, index) => {
+              {showInformationTitle()}
+              {product?.isAcfDescription === true && (
+                <Sections>
+                  {product.acf.description_du_produit.map((section, index) => {
                     return (
                       <section key={index}>
                         <div
@@ -412,7 +438,7 @@ export default function ProductDetail({
                           <div className="image_section">
                             <Image
                               layout="fill"
-                              objectFit="cover"
+                              objectFit="contain"
                               src={section.image_de_la_section}
                               alt={section.titre_section}
                             />
@@ -421,7 +447,8 @@ export default function ProductDetail({
                       </section>
                     );
                   })}
-              </Sections>
+                </Sections>
+              )}
             </DescriptionProduct>
             {videoUrl.length > 0 && (
               <Video className="video_product">
@@ -434,38 +461,40 @@ export default function ProductDetail({
               </Video>
             )}
           </ProductInfos>
-          <Caracteristiques>
-            <table>
-              <caption>{txtCaracteristiques}</caption>
-              <tbody>
-                {product.attributes.map((attribute) => {
-                  return (
-                    <tr key={attribute.id}>
-                      <td>
-                        {router.locale === "fr"
-                          ? attribute.name
-                          : router.locale === "de"
-                          ? switchAttributesToDE(attribute.name)
-                          : switchAttributesToEN(attribute.name)}
-                      </td>
-                      <td>
-                        {attribute.options.map((option, id) => {
-                          return (
-                            <p
-                              key={id}
-                              dangerouslySetInnerHTML={{
-                                __html: option,
-                              }}
-                            ></p>
-                          );
-                        })}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </Caracteristiques>
+          {product.attributes.length > 0 && (
+            <Caracteristiques>
+              <table>
+                <caption>{txtCaracteristiques}</caption>
+                <tbody>
+                  {product.attributes.map((attribute) => {
+                    return (
+                      <tr key={attribute.id}>
+                        <td>
+                          {router.locale === "fr"
+                            ? attribute.name
+                            : router.locale === "de"
+                            ? switchAttributesToDE(attribute.name)
+                            : switchAttributesToEN(attribute.name)}
+                        </td>
+                        <td>
+                          {attribute.options.map((option, id) => {
+                            return (
+                              <p
+                                key={id}
+                                dangerouslySetInnerHTML={{
+                                  __html: option,
+                                }}
+                              ></p>
+                            );
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </Caracteristiques>
+          )}
           {crossSellIDS && Object.keys(crossSellIDS[0]).length > 0 ? (
             <RelatedProduct>
               <h2 className="squared">Complétez votre équipement</h2>

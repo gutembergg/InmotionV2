@@ -1,11 +1,11 @@
 import useTranslation from "next-translate/useTranslation";
 import React, { ReactElement } from "react";
-import { Container } from "../../../../components/HomeMainComponent/styles";
 import ReturnProductForm from "../../../../components/ReturnProductForm";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
 import {
   DirectivesRetour,
   MainContent,
+  Container
 } from "../../../../styles/RetourMarchandise";
 
 export default function AutorisationRetour() {

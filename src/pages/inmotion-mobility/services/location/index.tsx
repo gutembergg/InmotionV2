@@ -31,6 +31,7 @@ export default function ServiceLocation({locations}:Props) {
         <div className="bgContainer">
           <div className="bgImage">
             <Image
+            priority
               src={BgLocation.src}
               layout="fill"
               objectFit="cover"
@@ -38,16 +39,15 @@ export default function ServiceLocation({locations}:Props) {
               alt="Leçon de gyroroue sur une route"
             />
           </div>
-        </div>
         <BlockInfoLocation>
           <div className="block">
             <div className="unskewBlock">
               <h1>{TitleLocation}</h1>
               <p>{TXTLocation}</p>
-              <div></div>
             </div>
           </div>
         </BlockInfoLocation>
+        </div>
         <LocationContainer>
           <h2 className="squared">{nosOffres}</h2>
           <ul>
@@ -63,12 +63,14 @@ export default function ServiceLocation({locations}:Props) {
                       alt="Leçon de gyroroue sur une route"
                     />
                   </div>
-                  <div>
+                  <div className="productContent">
                     <h3 dangerouslySetInnerHTML={{__html: location.title.rendered}}></h3>
                     <div dangerouslySetInnerHTML={{__html: location.acf.description_location}} ></div>
+                    <div className="button">
                     <Link href="/inmotion-mobility/contact">
                       <a>{contact}</a>
                     </Link>
+                    </div>
                   </div>
                 </li>
               );

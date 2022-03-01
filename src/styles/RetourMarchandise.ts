@@ -1,10 +1,18 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+padding: 50px 5rem;
+@media (max-width: 960px) {
+  padding: 30px 2rem;
+  }
+@media (max-width: 640px) {
+  padding: 30px 1rem;
+  }
+`;
+
 export const MainContent = styled.div`
   width: 100%;
-  @media (max-width: 1024px) {
-    padding-top: 100px;
-  }
+
 `;
 
 export const DirectivesRetour = styled.div`

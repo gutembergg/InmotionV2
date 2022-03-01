@@ -6,40 +6,38 @@ export const Container = styled.div`
   flex-direction: column;
 
   h1 {
-    text-align: center;
-    margin-left: 1.5rem;
-    font-size: 2.2em;
-    @media (max-width: 640px) {
-      font-size: 1.7em;
-    }
-    @media (max-width: 460px) {
-      font-size: 1.3em;
-    }
-    @media (max-width: 380px) {
-      font-size: 1.1em;
-    }
+    text-align: left;
+    color: var(--Blue)
   }
 `;
 
 export const Main = styled.div`
   flex-direction: row;
 
-  @media (max-width: 1072px) {
+  @media (max-width: 1024px) {
+    padding-top:3rem;
+
+  }
+  @media (max-width: 960px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top:3rem;
+  }
+  @media (max-width: 640px) {
+    padding-top:2rem;
   }
 `;
 
 export const CardWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
   flex-direction: row;
   gap: 2rem;
-  padding: 3rem 10rem 0 10rem;
+  padding: 3rem 5rem 0 5rem;
   @media (max-width: 1280px) {
-    padding: 3rem 6rem 0 6rem;
+    padding: 3rem 6rem 0 4rem;
   }
   @media (max-width: 1024px) {
     padding: 0rem 3rem 0 3rem;
@@ -50,6 +48,7 @@ export const CardWrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column;
     gap: 0rem;
+    align-items: center;
   }
 `;
 
@@ -63,11 +62,17 @@ export const ProductCard = styled.div`
 `;
 
 export const ImageBlock = styled.div`
-  width: 100%;
-  height: 260px;
-  position: relative;
-  min-width: 200px;
-  margin: 0 auto;
+     width: 100%;
+    height: 340px;
+    position: relative;
+    min-width: 250px;
+    margin: 0 auto;
+    @media (max-width: 960px) {
+      height: 280px;
+  }
+    @media (max-width: 640px) {
+      height: 200px;
+  }
 `;
 
 export const ProductDetaiil = styled.div`
@@ -76,20 +81,21 @@ export const ProductDetaiil = styled.div`
     display: flex;
     p {
       color: var(--TxtRed);
-      font-size: 1.5em;
+      font-size: 1.2em;
+      margin-left:5px;
     }
 
     .price {
       display: flex;
       margin-bottom: 10px;
       div {
-        font-size: 1.5em;
-        color: var(--Blue);
+        font-size: 1.2em;
+        color: var(--Price);
       }
     }
 
     .regular_price {
-      font-size: 1.5em;
+      font-size: 1.2em;
       text-decoration: line-through;
       opacity: 0.4;
       margin-right: 10px;
@@ -107,6 +113,9 @@ export const PriceQuantity = styled.div`
   align-items: flex-end;
   justify-content: flex-start;
   width: 100%;
+@media screen and (max-width:960px){
+  justify-content: center;
+}
 
   input {
     width: 50px;
@@ -143,25 +152,19 @@ export const ProductInfos = styled.div`
   flex-direction: column;
   align-items: flex-end;
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(250, 250, 250, 0) 0%,
-    rgba(250, 250, 250, 0.7) 76px,
-    rgba(250, 250, 250, 1) 127px,
-    rgba(250, 250, 250, 1) 86%,
-    rgba(250, 250, 250, 0) 100%
-  );
+
   div.first_description {
     margin-top: 1rem;
     width: 100%;
   }
   .bgcity {
     width: 100vw;
-    height: 280px;
-    position: relative;
+    height: 276px;
+    position: absolute;
     margin-top: 2rem;
-    transform: translateY(-44px);
+    transform: translateY(-76px);
     z-index: -1;
+    opacity: 0.5;
     @media (max-width: 960px) {
       height: 200px;
     }
@@ -187,11 +190,29 @@ export const ProductLogo = styled.div`
   align-items: start;
   @media (max-width: 960px) {
     align-items: center;
+    margin-top: 20px;
   }
   span.logo_product {
     width: auto;
   }
-
+h1{
+  @media (max-width:960px){
+    font-size: 1.80em;
+    &::before {
+      width: 24px;
+    height: 31px;
+    transform: skew(-20deg) translateX(-11px);
+    }
+  }
+  @media (max-width:960px){
+    font-size: 1.40em;
+    &::before {
+      width: 24px;
+    height: 26px;
+    transform: skew(-20deg) translateX(-11px);
+    }
+  }
+}
   span {
     div.product_category {
       color: var(--DarkGray);
@@ -213,17 +234,22 @@ export const ProductLogo = styled.div`
 export const Video = styled.div`
   margin-top: 1.4rem;
   margin: 1.4rem auto 2.4rem auto;
-  width: 80%;
+  width: calc(100% - 6rem);
   height: 650px;
   background: var(--Blue);
   padding: 1%;
   @media (max-width: 1280px) {
     height: 500px;
   }
+  @media (max-width: 1024px) {
+    height: 400px;
+    width: calc(100% - 4rem);
+  }
   @media (max-width: 960px) {
     height: 400px;
+    width: calc(100% - 4rem);
   }
-  @media (max-width: 760px) {
+  @media (max-width: 960px) {
     margin-top: 0;
     height: 300px;
     margin: 1rem auto;
@@ -235,23 +261,22 @@ export const DescriptionProduct = styled.div`
   display: flex;
   flex-direction: column;
   gap: 27px;
-  margin-top: 2rem;
   width: 100%;
+  margin-top: 4rem;
   .sectionTitle {
       width: 100%;
       padding: 0px;
       text-align: center;
 
-      p {
-        font-size: 2.3em;
+      h2 {
         font-weight: bold;
-        color: var(--DarkGray);
-        @media (max-width: 760px) {
-          font-size: 1.8em;
-        }
-        @media (max-width: 480px) {
-          font-size: 1.3em;
-        }
+        color: var(--Blue);
+        margin-bottom: 5rem;
+        margin-top: 3em;
+
+      @media (max-width:960px){
+        margin-bottom: 0;
+      }
       }
     }
 `;
@@ -265,11 +290,21 @@ const title_description = {
   export const Variations = styled.div`
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
   margin-top:10px;
   margin-bottom:20px;
   `;
   export const SelectedVariation = styled.div`
   display: flex;
+
+  h4{
+    color: var(--Blue);
+  }
+
+  .price{
+    color: var(--Price);
+    font-weight:bold ;
+  }
   `;
   
   export const VariationDisplay = styled.button`
@@ -303,9 +338,9 @@ flex-direction: column;
 `;
 
 export const Sections = styled.div`
-  padding: 0 12rem;
+  padding: 0 6rem;
   @media (max-width: 1280px) {
-    padding: 6rem 3rem;
+    padding: 0rem 3rem;
   }
   @media (max-width: 1024px) {
     padding: 1rem 2rem;
@@ -315,13 +350,11 @@ export const Sections = styled.div`
   }
 
   h3 {
-    font-size: 1.8em;
+    font-size: 1.5em;
     color: var(--TxtRed);
-    @media (max-width: 760px) {
+    @media (max-width: 960px) {
       text-align: center;
-    }
-    @media (max-width: 760px) {
-      font-size: 1.3em;
+      font-size: 1.1em;
     }
   }
   div.section1 {
@@ -333,26 +366,32 @@ export const Sections = styled.div`
       padding: 2rem;
       text-align: right;
     }
-
+    
     .image_section {
       width: 100%;
-      max-width: 500px;
+      /* max-width: 400px; */
       position: relative;
       margin-bottom: 120px;
-      min-height: 300px;
+      min-height: 259px;
+      @media (max-width: 960px) {
+        margin-bottom: 65px;
+      }
     }
   }
   div.section2 {
     display: flex;
     .image_section {
-      width: 100%;
-      max-width: 500px;
       order: -1;
+      width: 100%;
+      /* max-width: 400px; */
       position: relative;
       margin-bottom: 120px;
-      min-height: 300px;
+      min-height: 30vh;
+      @media (max-width: 960px) {
+        margin-bottom: 65px;
+      }
     }
-
+    
     .title_description {
       display: ${title_description.display};
       flex-direction: ${title_description.flexDirection};
@@ -364,7 +403,7 @@ export const Sections = styled.div`
     }
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 960px) {
     div {
       display: flex;
       flex-direction: column;
@@ -375,7 +414,6 @@ export const Sections = styled.div`
     div.section2 {
       .image_section {
         width: 100%;
-        max-width: 320px;
         order: 1;
       }
     }
@@ -398,6 +436,9 @@ width: 100%;
 padding: 0 3rem;
 margin-top: 50px ;
 margin-bottom: 50px ;
+@media (max-width: 1024px) {
+  padding: 0 2rem;
+}
 @media (max-width: 960px) {
   padding: 0 1rem;
 }
@@ -405,12 +446,10 @@ margin-bottom: 50px ;
 table {
   box-shadow: 0 0 12px 0px #00000047;
   background-color: var(--White) ;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
-  transform: skew(-7deg);
   margin: 0 auto;
   @media (max-width: 560px) {
-    transform: skew(0deg);
     width: 100%;
   }
   caption {
@@ -439,9 +478,7 @@ table {
       }
       
       td{
-        transform: skew(7deg);
         @media (max-width: 560px) {
-    transform: skew(0deg)
   }        
   @media (max-width:480px){
           display: flex;

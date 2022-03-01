@@ -4,7 +4,7 @@ import useUser from "../../hooks/useUser";
 import React, { ReactElement, useEffect, useState } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 import useTranslation from "next-translate/useTranslation";
-
+import { motion } from "framer-motion";
 import imageSecurity from "../../../public/images/homeMobility/trott2.webp";
 import imageLocation from "../../../public/images/homeMobility/trott1.webp";
 import imageHelp from "../../../public/images/homeMobility/contactUs.webp";
@@ -74,15 +74,29 @@ export default function Home({
     _setOnSaleproduct(onSaleProducts);
   }, [onSaleProducts]);
 
-  console.log(sliderHome)
+  console.log(sliderHome);
   return (
     <Container>
       <MainContent>
-          <MobilitySlider>
-            <SliderMobility slider={sliderHome} />
-          </MobilitySlider>
+        <MobilitySlider>
+          <SliderMobility slider={sliderHome} />
+        </MobilitySlider>
         <PromotedProducts>
-          <h1 className="squared">{PromotedProductTitle}</h1>
+        <motion.div initial="hidden" animate="visible" variants={{
+  hidden: {
+    scale: .8,
+    opacity: 0
+  },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      delay: .4
+    }
+  },
+}}>
+            <h1 className="squared">{PromotedProductTitle}</h1>
+          </motion.div>
           <CarouselSwiper products={featuredproducts} />
         </PromotedProducts>
         <PromotedSection>

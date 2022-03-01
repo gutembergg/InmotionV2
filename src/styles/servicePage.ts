@@ -2,8 +2,12 @@ import styled from "styled-components";
 
 export const MainContent = styled.div`
   width: 100%;
+  padding-top: 3rem;
   @media (max-width: 1024px) {
-    padding-top: 100px;
+    padding: 2rem;
+  }
+  @media (max-width: 640px) {
+    padding: 2rem 1rem;
   }
 `;
 export const ServicePage = styled.div`
@@ -23,14 +27,23 @@ export const ServicePage = styled.div`
     ul {
       display: flex;    
     justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       margin-top: 80px;
-      margin-bottom: 140px;
+      margin-bottom: 100px;
       flex-direction: row;
-    flex-wrap: wrap;
+      flex-wrap: wrap;
+      @media (max-width: 900px) {
+      margin-top: 20px;
+      margin-bottom: 63px;}
+      @media (max-width: 640px) {
+      margin-top: 20px;
+      margin-bottom: 23px;}
       li {
         list-style-type: none;
         flex: 0 1 200px;
+        @media (max-width: 640px) {
+          flex: 0 1 120px;
+  }
         h2 {
           font-family: "Open Sans", sans-serif;
           text-transform: none;
@@ -62,18 +75,23 @@ export const ServicePage = styled.div`
         }
     ul {
       display: flex;  
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       margin-top: 60px;
       margin-bottom: 60px;
       flex-direction: row;
+      gap: 17px;
     flex-wrap: wrap;
+    @media (max-width:640px){
+      margin-top: 20px;
+    margin-bottom: 40px;
+    }
       li {
         list-style-type: none;
         display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 0 1 220px;
+    flex: 0 1 230px;
     margin: 20px 0;
         h2 {
           font-family: "Open Sans", sans-serif;

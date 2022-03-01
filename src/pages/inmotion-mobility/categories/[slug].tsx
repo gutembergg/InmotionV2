@@ -179,21 +179,25 @@ export default function Category({ category, productsByCategory }: Props) {
               </div>
             </LogoProduct>
             <ProductInfos>
-              <div className="weight">
+              {vitesse && (
+                
+                <div className="weight">
                 <div className="iconBox">
                   <Image
                     src={SpeedIcon}
                     alt="poids"
                     layout="fill"
                     objectFit="contain"
-                  />
+                    />
                 </div>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: vitesse?.options[0] as string,
                   }}
-                ></div>
+                  ></div>
               </div>
+                  )}
+                  {autonomie && (
               <div className="weight autonomie">
                 <div className="iconBox">
                   <Image
@@ -209,6 +213,7 @@ export default function Category({ category, productsByCategory }: Props) {
                   }}
                 ></div>
               </div>
+              )}
               {autorisationRouler !== undefined &&
                 autorisationRouler.options[0].length > 0 && (
                   <div className="politic_text autonomie">
