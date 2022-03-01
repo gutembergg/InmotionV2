@@ -36,7 +36,6 @@ export const MapBlock = styled.div`
   border: 2px solid var(--Blue);
   width: 400px;
   height: 400px;
-  background: red;
 
   @media (max-width: 444px) {
     width: 380px;
