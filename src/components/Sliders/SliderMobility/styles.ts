@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
   .swiper-slide {
     width: 100%;
-    min-height: 550px;
+
     .sliderImage1 {
       position: relative;
     }
@@ -13,18 +13,10 @@ export const Container = styled.div`
       width: 100%;
       position: relative;
       z-index: 10;
-      height: 75vh;
-      
+      height:  75vh;
       @media screen and (max-width: 1024px) {
-        height: 50vh;
-      }
-      @media screen and (max-width: 640px) {
-        height: 40vh;
-        min-height: 300px;
-      }
-      @media screen and (max-width: 480px) {
-        height: 30vh;
-      }
+      height: 45vh;
+    }
     }
     
     .content {

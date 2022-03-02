@@ -27,6 +27,7 @@ const LoginForm = () => {
     }
   );
   const menuRegister = t("headerMobility:register");
+  const createAccounts = t("headerMobility:createAccounts");
 
   const { login, user } = useUser();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -87,8 +88,9 @@ const LoginForm = () => {
             />
             <input id="sendButton" type="submit" value="se connecter" />
           </form>
-          <p>vous n&apos;avez pas de compte?</p>
-          <RegisterForm />
+          <Link href="/inmotion-mobility/create-account">
+            <a className="createAccount" onClick={()=>setShowModal(false)}>{createAccounts}</a>
+          </Link>
         </LoginContainer>
       </Modal>
       {loged ? (
@@ -107,9 +109,7 @@ const LoginForm = () => {
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
           <RiLoginBoxLine size={21} color="#f0f0f0" />
-          {/*   <span>{menuLogin} /</span>
-          <span>{menuRegister}</span> */}
-          <span>{menuLogin}</span>
+            <span>{menuLogin} / {menuRegister}</span>
         </LoginLink>
       )}
     </>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const StyledCheckout = styled.div`
-  display: flex;
 
   Form {
     display: flex;

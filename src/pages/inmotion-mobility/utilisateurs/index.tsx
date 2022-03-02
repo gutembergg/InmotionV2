@@ -117,7 +117,7 @@ export default function UsersPage() {
     mounted && (
       <Container>
         <Welcome>
-          <h1>Bienvenue {currentyUser.first_name}</h1>
+          <h1>Bienvenue {currentyUser.first_name} {currentyUser.last_name}</h1>
         </Welcome>
         <Content>
           <SideBarMenuMobile>

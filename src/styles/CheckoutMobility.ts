@@ -27,6 +27,25 @@ export const Container = styled.div`
   @media (max-width: 416px) {
     margin-top: 40px;
   }
+  .form_users {
+    margin-top: 1rem ;
+    >div >div{
+      width:100%;
+
+      svg{
+        margin-top: 8px ;
+        fill:var(--Blue);
+      }
+      span{
+        margin-top: 8px ;
+        color: var(--Blue);
+        font-weight: 600;
+        @media (max-width: 1024px) {
+          display:flex;
+        }
+      }
+    }
+}
 `;
 
 export const Content = styled.div`

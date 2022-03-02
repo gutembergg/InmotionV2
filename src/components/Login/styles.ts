@@ -13,8 +13,20 @@ export const LoginContainer = styled.div`
     @media (max-width: 540px) {
       transform: none;
     }
+    &.createAccount{
+      text-decoration: none;
+      transform: skew(15deg);
+    font-weight: bold;
+    color: var(--BlueHover);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    &:hover{
+      text-decoration: underline;
+    }
+    }
   }
-
   #sendButton {
     background-color: var(--Blue);
     border: none;
