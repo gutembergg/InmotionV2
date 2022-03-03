@@ -5,13 +5,20 @@ const upSellList = keyframes`
 `;
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 85%;
-  max-width: 1600px;
-  margin: auto;
-  margin-top: 3rem;
-
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1600px;
+    padding: 3rem 3rem;
+    
+    @media (max-width:1024px){
+      padding: 2rem 2rem;
+    }
+    @media (max-width:640px){
+      padding: 2rem 1rem;
+    }
   h1 {
     text-align: center;
     margin-bottom: 1.4rem;
@@ -135,8 +142,12 @@ export const FiltersBar = styled.div`
     width: 100%;
   }
 
-  @media (max-width: 888px) {
-    /* display: none; */
+  @media (max-width: 380px) {
+    flex-direction: column;
+    align-items: stretch;
+    border-bottom: 1px solid;
+    align-content: stretch;
+    gap: 18px;
   }
 `;
 
@@ -156,7 +167,9 @@ export const ButtonSelect = styled.button`
   width: 100%;
   max-width: 300px;
   border: none;
-
+  @media (max-width: 380px) {
+    max-width: none;
+  }
   p {
     margin-right: 0.6rem;
   }
@@ -176,12 +189,13 @@ export const ModelList = styled.ul`
   opacity: 0;
   background: var(--White);
   line-height: 200%;
-
   border-top: none;
   box-shadow: 0px 7px 8px 0px #2121211c;
-
   animation: ${upSellList} 0.5s forwards;
 
+  @media (max-width: 380px) {
+    max-width: none;
+  }
   .upsell_name {
     cursor: pointer;
     color: var(--Blue);
@@ -245,8 +259,8 @@ export const MenuSubCategoriesMobilie = styled.div`
     position: relative;
   }
 
-    .menu_subcategories {
-      position: absolute;
+  .menu_subcategories {
+    position: absolute;
     z-index: 9999;
     top: 20;
     right: 0;
@@ -256,26 +270,29 @@ export const MenuSubCategoriesMobilie = styled.div`
     border-top: none;
     box-shadow: 0px 7px 8px 0px #2121211c;
     list-style: none;
-      border-top: none;
-      box-shadow: 0px 7px 8px 0px #2121211c;
-      list-style: none;
-      li{
-        padding: 0.2rem 0.7rem;
-        background: var(--White);
-        &:hover {
-  background: var(--Blue);
-  color: var(--White);
-  font-weight: 600;
-  a{
-    color: var(--White)
-  }
-        }
-  a {
-  text-decoration: none;
-  color: var(--Blue);
-  font-weight: 600;
-}
+    border-top: none;
+    box-shadow: 0px 7px 8px 0px #2121211c;
+    list-style: none;
 
+    @media (max-width:380px){
+      width: 100%;
+    }
+    li {
+      padding: 0.2rem 0.7rem;
+      background: var(--White);
+      &:hover {
+        background: var(--Blue);
+        color: var(--White);
+        font-weight: 600;
+        a {
+          color: var(--White);
+        }
+      }
+      a {
+        text-decoration: none;
+        color: var(--Blue);
+        font-weight: 600;
+      }
     }
   }
 `;

@@ -24,10 +24,19 @@ export const ProductBlock = styled.div`
     height: 100px;
     width: 100px;
     position: relative;
-  }
 
+    @media (max-width:480px){
+      height: 50px;
+    width: 50px;
+    }
+  }
+  
   div.prod_info {
     margin-left: 0.7rem;
+    @media (max-width:480px){
+margin-left: 0 ;
+gap: 5px;
+    }
   }
 `;
 
