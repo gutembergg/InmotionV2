@@ -44,6 +44,7 @@ export default function UsersPage() {
   const address = t("userAccount:address");
   const myInformations = t("userAccount:myInformations");
   const signOut = t("userAccount:signOut");
+  const welcome = t("userAccount:welcome");
 
   const sideMenu = [
     {
@@ -117,7 +118,7 @@ export default function UsersPage() {
     mounted && (
       <Container>
         <Welcome>
-          <h1>Bienvenue {currentyUser.first_name} {currentyUser.last_name}</h1>
+          <h1>{welcome} {currentyUser.first_name} {currentyUser.last_name}</h1>
         </Welcome>
         <Content>
           <SideBarMenuMobile>

@@ -24,5 +24,8 @@
   "advancePayment": "Vorauszahlung",
   "onlinePayment": "Onlinebezahlung",
   "deliveryAddress": "Lieferadresse",
-  "billingAddress": "Rechnungsadresse"
+  "validateCoupon": "Promo-Code registrieren",
+  "verifier": "check",
+  "billingAddress": "Rechnungsadresse",
+  "totalttc": "Gesamt(inkl. MwSt.):"
 }

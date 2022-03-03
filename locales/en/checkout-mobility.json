@@ -24,5 +24,8 @@
   "advancePayment": "advanced payment",
   "onlinePayment": "online payment",
   "deliveryAddress": "Shipping address",
-  "billingAddress": "Billing address"
+  "billingAddress": "Billing address",
+  "validateCoupon": "Promo-Code validate",
+  "verifier": "check",
+  "totalttc": "Total (incl. tax): "
 }

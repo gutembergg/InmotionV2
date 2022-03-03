@@ -37,7 +37,9 @@ export const MainContent = styled.div`
     transition: transform 0.2s ease;
     margin-top: 2rem;
     .imgBox {
-      width: 20vh;
+      width: 200px;
+      position: relative;
+      height: 200px;
     }
     .care_blue_hover {
       display: none;

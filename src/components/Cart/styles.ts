@@ -77,8 +77,7 @@ display: flex;
         li {
           list-style: none;
           display: flex;
-          justify-content: space-between;
-          /* align-items: center; */
+          justify-content: center;
           padding: 10px 0px;
 
           .closeButton {

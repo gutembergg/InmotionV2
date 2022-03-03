@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/dist/client/link";
-import useUser from "../../hooks/useUser";
 import React, { ReactElement, useEffect, useState } from "react";
 import LayoutMobility from "../../Layout/LayoutMobility";
 import useTranslation from "next-translate/useTranslation";
@@ -42,13 +41,9 @@ export default function Home({
   onSaleProducts,
   sliderHome,
 }: Props) {
-  const { user } = useUser();
-  const [loged] = useState(false);
 
   //translation
   const { t } = useTranslation();
-  const TXT_Welcome = t("home:mobilityWelcomeTitle");
-  const slogan = t("home:slogan");
   const PromotedProductTitle = t("home:PromotedProductTitle");
   const TitlePromotedSection = t("home:TitlePromotedSection");
   const TextPromotedSection = t("home:TextPromotedSection");
