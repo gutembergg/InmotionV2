@@ -52,6 +52,7 @@ export default function Category({ category, productsByCategory }: Props) {
   const showVariationTradution = t("productDetail:showVariationTradution");
   const Promotion = t("productDetail:Promotion");
   const priceFrom = t("productDetail:priceFrom");
+  const ChooseModel = t("productDetail:ChooseModel");
 
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
@@ -271,7 +272,7 @@ export default function Category({ category, productsByCategory }: Props) {
             )}
           </div>
         </Content>
-        <h2 className="squared sliderTitle">Choisissez votre modèle</h2>
+        <h2 className="squared sliderTitle">{ChooseModel}</h2>
         <ProductMenuResponsive className="productMenuResponsive">
           <SliderModels
             products={products}

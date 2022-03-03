@@ -63,7 +63,7 @@ export const ProductInfo = styled.div`
 `;
 
 export const BtnAddToCart = styled.button`
-  width: 200px;
+  width: 220px;
   height: 30px;
   padding: 0 2rem;
 

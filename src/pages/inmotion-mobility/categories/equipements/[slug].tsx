@@ -45,6 +45,8 @@ export default function EquipementsSubCat({
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
   const { t } = useTranslation();
   const menuCategories = t("equipmentsPage:categories");
+  const resultats = t("equipmentsPage:resultats");
+  const equipements = t("equipmentsPage:equipements");
 
   const handleOpenSubCatMenu = () => {
     setOpenMenuCategories(!openMenuCategories);
@@ -90,7 +92,7 @@ export default function EquipementsSubCat({
                 )}
               </MenuSubCategoriesMobilie>
               <PaginateBar>
-                <span>{productsByCategory.length} résultats</span>
+                <span>{productsByCategory.length} {resultats}</span>
               </PaginateBar>
             </FiltersBar>
             <ProductsMobile>
@@ -116,7 +118,7 @@ export default function EquipementsSubCat({
           <MenuSubCategories>
             <ul>
               <div className="skew_button">
-                <ButtonSkew text="Equipements" />
+                <ButtonSkew text={equipements} />
               </div>
               {subCategories.map((category) => {
                 return (

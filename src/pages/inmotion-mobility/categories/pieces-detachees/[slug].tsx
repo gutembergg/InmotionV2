@@ -65,6 +65,9 @@ export default function PiecesDetacheesSubCat({
   const { t } = useTranslation();
   const allArticles = t("equipmentsPage:allArticles");
   const toSourtOut = t("equipmentsPage:toSourtOut");
+  const piecesdetachee = t("equipmentsPage:piecesdetachee");
+  const result = t("equipmentsPage:resultats");
+  const categories = t("equipmentsPage:categories");
 
   const [upSellFilter, setUpSellFilter] = useState(false);
   const [products, setProducts] = useState<IProduct[]>(productsByCategory);
@@ -126,50 +129,6 @@ export default function PiecesDetacheesSubCat({
 
         <Content>
           <ProductsSection>
-            <FiltersBarMobile>
-              <ButtonMenu onClick={handleMenuMobile}>
-                <IoIosArrowDown /> <p>Models / Categories</p>
-              </ButtonMenu>
-              {openMobileMenu && (
-                <MenuBlock>
-                  <UpSellsMenu>
-                    <UpsellTitle>Models </UpsellTitle>
-                    <UpsellList>
-                      {_productsUpSells.map((model) => {
-                        return (
-                          <li
-                            key={model.id}
-                            className="upsell_name"
-                            onClick={() => selectModel(model)}
-                          >
-                            {model.name}
-                          </li>
-                        );
-                      })}
-                    </UpsellList>
-                  </UpSellsMenu>
-                  <CategoriesMenu>
-                    <CategoryTitle>Categories</CategoryTitle>
-                    <CategoryList>
-                      {subCategories.map((category) => {
-                        return (
-                          <li
-                            key={category?.slug}
-                            onClick={handleCategoriesMenu}
-                          >
-                            <Link
-                              href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
-                            >
-                              <a>{category?.name}</a>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </CategoryList>
-                  </CategoriesMenu>
-                </MenuBlock>
-              )}
-            </FiltersBarMobile>
             <FiltersBar>
               <ButtonFilterBlock>
                 <ButtonSelect onClick={handleUpSellFilter}>
@@ -196,7 +155,7 @@ export default function PiecesDetacheesSubCat({
               </ButtonFilterBlock>
               <MenuSubCategoriesMobilie>
                 <ButtonSelect onClick={handleCategoriesMenu}>
-                  <p>Categories</p> <IoIosArrowDown />
+                  <p>{categories}</p> <IoIosArrowDown />
                 </ButtonSelect>
                 {openMenuCategories && (
                   <ul className="menu_subcategories">
@@ -215,7 +174,7 @@ export default function PiecesDetacheesSubCat({
                 )}
               </MenuSubCategoriesMobilie>
               <PaginateBar>
-                <span>{products.length} résultats</span>
+                <span>{products.length} {result}</span>
               </PaginateBar>
             </FiltersBar>
             <ProductsMobile>
@@ -241,7 +200,7 @@ export default function PiecesDetacheesSubCat({
           <MenuSubCategories>
             <ul>
               <div className="skew_button">
-                <ButtonSkew text="Pièces Détachée" />
+                <ButtonSkew text={piecesdetachee} />
               </div>
               {subCategories.map((category) => {
                 return (
