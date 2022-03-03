@@ -11,17 +11,19 @@ import { useRouter } from "next/router";
 import CurrencySelector from "../../CurrencySelector";
 import SearchBar from "../../SearchBar";
 import Link from "next/link";
+import { FiSearch } from "react-icons/fi";
+import { Container } from "../../SearchBar/styles";
 const HeaderMobile = () => {
   const [menuOpen, setmenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
-    }else{
+    } else {
       document.body.style.overflow = "auto";
     }
-  }, [menuOpen])
-  
+  }, [menuOpen]);
+
   //menu button click//
   const menuToggle = () => {
     menuOpen === false ? setmenuOpen(true) : setmenuOpen(false);
@@ -84,6 +86,10 @@ const HeaderMobile = () => {
     return url;
   };
 
+  const closeMobileMenu =()=>{
+    setmenuOpen(false);
+  }
+
   return (
     <StyledMobileHeader>
       <div className="topHeader">
@@ -109,111 +115,166 @@ const HeaderMobile = () => {
         <div className="contentBg">
           <div className="content">
             <div className="logoBox">
-              <Image 
-              src={logo} 
-              alt="logo Inmotion"
-              layout="fill"
-              objectFit="contain"
+              <Image
+                src={logo}
+                alt="logo Inmotion"
+                layout="fill"
+                objectFit="contain"
               />
             </div>
             <div className="slogan">
               <hr />
             </div>
             <div className="settings">
-              <LanguageSelector />
-              <CurrencySelector />
-              <SearchBar />
+              <LanguageSelector  closeMobileMenu={closeMobileMenu} />
+              <CurrencySelector closeMobileMenu={closeMobileMenu} />
+              <Container>
+                <Link href="/inmotion-mobility/search">
+                  <a onClick={()=>setmenuOpen(false)}>
+                    <div className="searchICon">
+                      <FiSearch />
+                    </div>
+                  </a>
+                </Link>
+              </Container>
             </div>
-              <hr />
+            <hr />
             <MobileMobilityHeader>
-            <li>
-          <Link href="/inmotion-mobility">
-             <a onClick={()=> menuToggle()}
-              className={
-                router.pathname === "/inmotion-mobility" ? "active" : ""
-              }
-            >
-              {menuHome}
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/inmotion-mobility/boutique">
-             <a onClick={ ()=> menuToggle()} className={router.pathname === "/boutique" ? "active" : ""}>
-              {menuShop}
-            </a>
-          </Link>
-          <ul>
-            {menu.map((category) => {
-              return (
-                <li key={category.slug}>
-                  <Link href={getHref(category.slug)}>
-                     <a onClick={ ()=> menuToggle()} className={ router.pathname === "/boutique" ? "active" : "" }>
-                      {category.name}
-                    </a>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-        <li>
-          <Link href="/inmotion-mobility/categories/occasions">
-             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/categories/occasions" ? "active" : ""}>
-              {occasions}
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/inmotion-mobility/services">
-             <a onClick={ ()=> menuToggle()} className={ router.pathname === "/inmotion-mobility/services" ? "active" : "" }>
-              {menuServices}
-            </a>
-          </Link>
-          <ul>
-            <li>
-              <Link href="/inmotion-mobility/services/cours-gyroroue">
-                 <a onClick={ ()=> menuToggle()}>{cours}</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/inmotion-mobility/services/location">
-                 <a onClick={ ()=> menuToggle()}>{rent}</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/inmotion-mobility/services/guides-utilisateur">
-                 <a onClick={ ()=> menuToggle()}>{userManuals}</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/inmotion-mobility/services/autorisation-retour">
-                 <a onClick={ ()=> menuToggle()}>{returnForm}</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <Link href="/inmotion-mobility/contact">
-             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/contact" ? "active" : ""}>
-              {menuContact}
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/inmotion-mobility/conditions-generales">
-             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/conditions-generales" ? "active" : ""}>
-              {condGenerales}
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/inmotion-mobility/politique-confidentialite">
-             <a onClick={ ()=> menuToggle()} className={router.pathname === "/inmotion-mobility/politique-confidentialite" ? "active" : ""}>
-              {confidentiality}
-            </a>
-          </Link>
-        </li>
+              <li>
+                <Link href="/inmotion-mobility">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={
+                      router.pathname === "/inmotion-mobility" ? "active" : ""
+                    }
+                  >
+                    {menuHome}
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/inmotion-mobility/boutique">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={router.pathname === "/boutique" ? "active" : ""}
+                  >
+                    {menuShop}
+                  </a>
+                </Link>
+                <ul>
+                  {menu.map((category) => {
+                    return (
+                      <li key={category.slug}>
+                        <Link href={getHref(category.slug)}>
+                          <a
+                            onClick={() => menuToggle()}
+                            className={
+                              router.pathname === "/boutique" ? "active" : ""
+                            }
+                          >
+                            {category.name}
+                          </a>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+              <li>
+                <Link href="/inmotion-mobility/categories/occasions">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={
+                      router.pathname ===
+                      "/inmotion-mobility/categories/occasions"
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {occasions}
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/inmotion-mobility/services">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={
+                      router.pathname === "/inmotion-mobility/services"
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {menuServices}
+                  </a>
+                </Link>
+                <ul>
+                  <li>
+                    <Link href="/inmotion-mobility/services/cours-gyroroue">
+                      <a onClick={() => menuToggle()}>{cours}</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/inmotion-mobility/services/location">
+                      <a onClick={() => menuToggle()}>{rent}</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/inmotion-mobility/services/guides-utilisateur">
+                      <a onClick={() => menuToggle()}>{userManuals}</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/inmotion-mobility/services/autorisation-retour">
+                      <a onClick={() => menuToggle()}>{returnForm}</a>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <Link href="/inmotion-mobility/contact">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={
+                      router.pathname === "/inmotion-mobility/contact"
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {menuContact}
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/inmotion-mobility/conditions-generales">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={
+                      router.pathname ===
+                      "/inmotion-mobility/conditions-generales"
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {condGenerales}
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/inmotion-mobility/politique-confidentialite">
+                  <a
+                    onClick={() => menuToggle()}
+                    className={
+                      router.pathname ===
+                      "/inmotion-mobility/politique-confidentialite"
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {confidentiality}
+                  </a>
+                </Link>
+              </li>
             </MobileMobilityHeader>
           </div>
         </div>
