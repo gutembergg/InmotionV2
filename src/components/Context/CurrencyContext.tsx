@@ -29,6 +29,8 @@ const CurrencyProvider = ({ children }: Children) => {
 
       if (clientCurrency) {
         setData(clientCurrency);
+      } else {
+        setData("CHF");
       }
     }
   }, []);
@@ -39,6 +41,8 @@ const CurrencyProvider = ({ children }: Children) => {
     }
     setData(currency);
   }, []);
+
+  console.log("datacurrency: ", data);
 
   return (
     <CurrencyContext.Provider value={{ setCurrency, currency: data }}>
