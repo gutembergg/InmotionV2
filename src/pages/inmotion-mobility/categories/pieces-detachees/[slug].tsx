@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
 import { IoIosArrowDown } from "react-icons/io";
 import { paths as detachedPiecesPaths } from "../../../../utils/piecesDetacheesPaths";
@@ -26,16 +26,7 @@ import MobileCard from "../../../../components/ProductCard/MobileCard";
 import {
   Container,
   Content,
-  FiltersBarMobile,
-  ButtonMenu,
-  UpSellsMenu,
-  UpsellList,
-  CategoryList,
-  CategoryTitle,
-  CategoriesMenu,
   FiltersBar,
-  MenuBlock,
-  UpsellTitle,
   ProductsSection,
   ProductsMobile,
   Products,
@@ -62,6 +53,8 @@ export default function PiecesDetacheesSubCat({
   currentyCategory,
 }: Props) {
   const router = useRouter();
+  const modelsRef = useRef<HTMLDivElement>(null);
+  const menuCategoriesRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const allArticles = t("equipmentsPage:allArticles");
   const toSourtOut = t("equipmentsPage:toSourtOut");
@@ -77,14 +70,52 @@ export default function PiecesDetacheesSubCat({
     setProducts(productsByCategory);
   }, [router.query, productsByCategory]);
 
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        upSellFilter &&
+        modelsRef.current &&
+        !modelsRef.current.contains(e.target)
+      ) {
+        setUpSellFilter(false);
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [upSellFilter]);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        openMenuCategories &&
+        menuCategoriesRef.current &&
+        !menuCategoriesRef.current.contains(e.target)
+      ) {
+        setOpenMenuCategories(false);
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [openMenuCategories]);
+
   const handleUpSellFilter = () => {
     setUpSellFilter(!upSellFilter);
   };
 
   const selectModel = (model: IProduct | { id: number; name: string }) => {
-    if (model.id === 999999999999) {
+    if (model.id === 123456789) {
       setProducts(productsByCategory);
-      setOpenMobileMenu(!openMobileMenu);
+      setUpSellName(model.name);
+      setOpenMobileMenu(false);
+      setUpSellFilter(false);
       return;
     }
 
@@ -103,13 +134,9 @@ export default function PiecesDetacheesSubCat({
     setOpenMobileMenu(!openMobileMenu);
   };
 
-  const handleMenuMobile = () => {
-    setOpenMobileMenu(!openMobileMenu);
-  };
-
   const _productsUpSells = [
     ...productsUpSells,
-    { id: 999999999999, name: allArticles },
+    { id: 123456789, name: allArticles },
   ];
 
   return (
@@ -126,57 +153,13 @@ export default function PiecesDetacheesSubCat({
 
         <Content>
           <ProductsSection>
-            <FiltersBarMobile>
-              <ButtonMenu onClick={handleMenuMobile}>
-                <IoIosArrowDown /> <p>Models / Categories</p>
-              </ButtonMenu>
-              {openMobileMenu && (
-                <MenuBlock>
-                  <UpSellsMenu>
-                    <UpsellTitle>Models </UpsellTitle>
-                    <UpsellList>
-                      {_productsUpSells.map((model) => {
-                        return (
-                          <li
-                            key={model.id}
-                            className="upsell_name"
-                            onClick={() => selectModel(model)}
-                          >
-                            {model.name}
-                          </li>
-                        );
-                      })}
-                    </UpsellList>
-                  </UpSellsMenu>
-                  <CategoriesMenu>
-                    <CategoryTitle>Categories</CategoryTitle>
-                    <CategoryList>
-                      {subCategories.map((category) => {
-                        return (
-                          <li
-                            key={category?.slug}
-                            onClick={handleCategoriesMenu}
-                          >
-                            <Link
-                              href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
-                            >
-                              <a>{category?.name}</a>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </CategoryList>
-                  </CategoriesMenu>
-                </MenuBlock>
-              )}
-            </FiltersBarMobile>
             <FiltersBar>
               <ButtonFilterBlock>
                 <ButtonSelect onClick={handleUpSellFilter}>
                   <p>{!!upSellName ? upSellName : toSourtOut} </p>{" "}
                   <IoIosArrowDown />
                 </ButtonSelect>
-                <ModelListWrapper>
+                <ModelListWrapper ref={modelsRef}>
                   {upSellFilter && (
                     <ModelList>
                       {_productsUpSells.map((model) => {
@@ -194,7 +177,7 @@ export default function PiecesDetacheesSubCat({
                   )}
                 </ModelListWrapper>
               </ButtonFilterBlock>
-              <MenuSubCategoriesMobilie>
+              <MenuSubCategoriesMobilie ref={menuCategoriesRef}>
                 <ButtonSelect onClick={handleCategoriesMenu}>
                   <p>Categories</p> <IoIosArrowDown />
                 </ButtonSelect>

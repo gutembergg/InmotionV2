@@ -74,7 +74,6 @@ export default function Home({
     _setOnSaleproduct(onSaleProducts);
   }, [onSaleProducts]);
 
-  console.log(sliderHome);
   return (
     <Container>
       <MainContent>
@@ -82,19 +81,23 @@ export default function Home({
           <SliderMobility slider={sliderHome} />
         </MobilitySlider>
         <PromotedProducts>
-        <motion.div initial="hidden" animate="visible" variants={{
-  hidden: {
-    scale: .8,
-    opacity: 0
-  },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    transition: {
-      delay: .4
-    }
-  },
-}}>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {
+                scale: 0.8,
+                opacity: 0,
+              },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: {
+                  delay: 0.4,
+                },
+              },
+            }}
+          >
             <h1 className="squared">{PromotedProductTitle}</h1>
           </motion.div>
           <CarouselSwiper products={featuredproducts} />

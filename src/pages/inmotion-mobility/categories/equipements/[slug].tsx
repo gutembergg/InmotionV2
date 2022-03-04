@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { equipementPaths } from "../../../../utils/equipementPaths";
 import HeaderSeo from "../../../../components/HeaderSeo";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
@@ -42,9 +42,28 @@ export default function EquipementsSubCat({
   currentyCategory,
   subCategories,
 }: Props) {
+  const menuCategoriesRef = useRef<HTMLDivElement>(null);
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
   const { t } = useTranslation();
   const menuCategories = t("equipmentsPage:categories");
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (
+        openMenuCategories &&
+        menuCategoriesRef.current &&
+        !menuCategoriesRef.current.contains(e.target)
+      ) {
+        setOpenMenuCategories(false);
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [openMenuCategories]);
 
   const handleOpenSubCatMenu = () => {
     setOpenMenuCategories(!openMenuCategories);
@@ -65,7 +84,7 @@ export default function EquipementsSubCat({
         <Content>
           <ProductsSection>
             <FiltersBar>
-              <MenuSubCategoriesMobilie>
+              <MenuSubCategoriesMobilie ref={menuCategoriesRef}>
                 <ButtonSelect onClick={handleOpenSubCatMenu}>
                   <p>{menuCategories}</p> <IoIosArrowDown />
                 </ButtonSelect>

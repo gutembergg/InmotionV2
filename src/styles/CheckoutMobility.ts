@@ -325,6 +325,12 @@ export const PaymentBankTransfert = styled.button`
       font-size: 1.7rem;
       margin-bottom: 0px;
     }
+
+    @media (max-width: 416px) {
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
   }
 
   div.completed {
@@ -708,6 +714,14 @@ export const ProductCart = styled.div`
     }
   }
 
+  .product_price {
+    display: flex;
+    justify-content: end;
+    //padding-right: 0.7rem;
+    width: 170px;
+    font-weight: 600;
+  }
+
   @media (max-width: 416px) {
     span {
       font-size: 0.9rem;
@@ -716,14 +730,6 @@ export const ProductCart = styled.div`
     span.product_name_cart {
       font-size: 0.8rem;
     }
-  }
-
-  .product_price {
-    display: flex;
-    justify-content: end;
-    padding-right: 0.7rem;
-    width: 170px;
-    font-weight: 600;
   }
 `;
 

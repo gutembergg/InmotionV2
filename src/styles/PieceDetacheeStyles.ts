@@ -24,83 +24,6 @@ export const Content = styled.div`
   justify-content: center;
 `;
 
-export const FiltersBarMobile = styled.div`
-  display: none;
-
-  /* @media (max-width: 888px) {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-  } */
-`;
-
-export const MenuBlock = styled.div`
-  position: absolute;
-  top: 45px;
-  right: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  max-width: 300px;
-  background: var(--White);
-`;
-
-export const UpSellsMenu = styled.div``;
-
-export const UpsellTitle = styled.div`
-  font-weight: 600;
-  padding: 0.4rem 1rem;
-`;
-
-export const CategoriesMenu = styled.div``;
-
-export const UpsellList = styled.ul`
-  li {
-    cursor: pointer;
-    list-style: none;
-    margin-bottom: 0.4rem;
-    color: var(--Blue);
-    font-weight: 600;
-    padding: 0.4rem 1.4rem;
-
-    &:hover {
-      background-color: var(--Blue);
-      color: var(--White);
-    }
-  }
-`;
-
-export const CategoryList = styled.ul`
-  li {
-    cursor: pointer;
-    list-style: none;
-    margin-bottom: 0.4rem;
-    font-weight: 600;
-    padding: 0.4rem 1.4rem;
-
-    &:hover {
-      background: var(--Blue);
-
-      a {
-        color: var(--White);
-      }
-    }
-  }
-
-  a {
-    text-decoration: none;
-    color: var(--Blue);
-  }
-`;
-
-export const CategoryTitle = styled.div`
-  font-weight: 600;
-  padding: 0.4rem 1rem;
-`;
-
 export const ButtonMenu = styled.button`
   display: flex;
   flex-direction: row;
@@ -245,8 +168,8 @@ export const MenuSubCategoriesMobilie = styled.div`
     position: relative;
   }
 
-    .menu_subcategories {
-      position: absolute;
+  .menu_subcategories {
+    position: absolute;
     z-index: 9999;
     top: 20;
     right: 0;
@@ -256,26 +179,25 @@ export const MenuSubCategoriesMobilie = styled.div`
     border-top: none;
     box-shadow: 0px 7px 8px 0px #2121211c;
     list-style: none;
-      border-top: none;
-      box-shadow: 0px 7px 8px 0px #2121211c;
-      list-style: none;
-      li{
-        padding: 0.2rem 0.7rem;
-        background: var(--White);
-        &:hover {
-  background: var(--Blue);
-  color: var(--White);
-  font-weight: 600;
-  a{
-    color: var(--White)
-  }
+    border-top: none;
+    box-shadow: 0px 7px 8px 0px #2121211c;
+    list-style: none;
+    li {
+      padding: 0.2rem 0.7rem;
+      background: var(--White);
+      &:hover {
+        background: var(--Blue);
+        color: var(--White);
+        font-weight: 600;
+        a {
+          color: var(--White);
         }
-  a {
-  text-decoration: none;
-  color: var(--Blue);
-  font-weight: 600;
-}
-
+      }
+      a {
+        text-decoration: none;
+        color: var(--Blue);
+        font-weight: 600;
+      }
     }
   }
 `;

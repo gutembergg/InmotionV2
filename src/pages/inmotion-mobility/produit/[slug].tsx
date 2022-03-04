@@ -81,7 +81,6 @@ export default function ProductDetail({
 
   const [productQty, setProductQty] = useState(1);
 
-  // console.log(product);
   //----------------------variations--------------------------------
 
   //check if product is variable or not

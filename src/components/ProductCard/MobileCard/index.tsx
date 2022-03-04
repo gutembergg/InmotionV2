@@ -66,14 +66,15 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
               {currency === "CHF" ? product.price : product.euroPrice}
             </span>
             <span className="span_currency">
-              {" "}{currency === "CHF" ? "CHF" : "EUR"}
+              {" "}
+              {currency === "CHF" ? "CHF" : "EUR"}
             </span>
             {product.on_sale && <span className="onsale">{sale} </span>}
-          <StockStatuts
-            stock_quantity={product.stock_quantity}
-            stock_status={product.stock_status}
+            <StockStatuts
+              stock_quantity={product.stock_quantity}
+              stock_status={product.stock_status}
             />
-            </div>
+          </div>
           {isEquipement ? (
             <BtnAddToCart>
               <Link href={`/inmotion-mobility/produit/${product.slug}`}>
@@ -81,20 +82,17 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
               </Link>
             </BtnAddToCart>
           ) : (
-            <BtnAddToCart onClick={() => handleAddToCart(product)}>
-              {btnAddToCart}
-            </BtnAddToCart>
+            <>
+              <BtnAddToCart onClick={() => handleAddToCart(product)}>
+                {btnAddToCart}
+              </BtnAddToCart>
+              <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+                <a className="detail_view">Afficher le detail</a>
+              </Link>
+            </>
           )}
         </ProductInfo>
       </ProductBlock>
-
-      <BtnDetail>
-        <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-          <a>
-            <IconFleche />
-          </a>
-        </Link>
-      </BtnDetail>
     </Container>
   );
 };

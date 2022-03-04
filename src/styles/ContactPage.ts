@@ -49,23 +49,51 @@ export const MapBlock = styled.div`
   }
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 
-  gap: 29px;
+  gap: 28px;
   width: 100%;
   max-width: 550px;
 
-  textarea {
-    border: 2px solid var(--Blue);
-    padding: 0.4rem;
+  input.erros {
+    border: 2px solid red;
+  }
+
+  .input_erros {
+    font-size: 0.7rem;
+    color: red;
+  }
+
+  div.text_area {
+    textarea {
+      width: 100%;
+      border: 2px solid var(--Blue);
+      padding: 0.4rem;
+    }
   }
 
   @media (max-width: 560px) {
     width: 100%;
     max-width: 400px;
+  }
+`;
+
+export const FormBlock = styled.div`
+  width: 100%;
+  max-width: 550px;
+
+  form {
+    display: flex;
+  }
+
+  @media (max-width: 570px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -80,6 +108,10 @@ export const FormRow1 = styled.div`
   display: flex;
   flex-direction: row;
   gap: 5px;
+
+  .input_options {
+    width: 100%;
+  }
 
   input {
     width: 100%;
