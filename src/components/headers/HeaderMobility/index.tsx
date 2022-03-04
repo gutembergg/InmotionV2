@@ -7,11 +7,9 @@ import MenuMain from "../../menus/MenuMain";
 import LanguageSelector from "../../LanguageSelector";
 import Login from "../../Login";
 import CurrencySelector from "../../CurrencySelector";
-
-
+import Link from "next/dist/client/link";
 
 const HeaderComponent = () => {
-
   return (
     <StyledHeader>
       <div className="topBlock">
@@ -19,10 +17,13 @@ const HeaderComponent = () => {
         <CurrencySelector />
         <LanguageSelector />
       </div>
-
       <div className="mainBlock">
         <div className="logoBox">
-          <Image src={logo} alt="logo Inmotion" />
+          <Link href="/inmotion-mobility">
+            <a>
+              <Image src={logo} alt="logo Inmotion" />
+            </a>
+          </Link>
         </div>
         <MenuMain />
         <div className="rightContent">

@@ -123,7 +123,7 @@ const UserForm = ({ currentyUser }: Props) => {
     shipping_country:
       currentyUser.shipping?.country || authorizedCounty[0].code,
   });
-
+console.log("currentuser",currentyUser)
   useEffect(() => {
     if (user.token) {
       setFormValues({

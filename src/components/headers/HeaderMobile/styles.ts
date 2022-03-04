@@ -276,7 +276,7 @@ export const MobileMobilityHeader = styled.header`
   position: relative;
   list-style: none;
   font-weight: bold;
-  p{
+  a{
     cursor: pointer;
   }
   > li {
@@ -286,10 +286,12 @@ export const MobileMobilityHeader = styled.header`
     list-style: none;
     width: 100%;
     border-collapse:content;
-    p{
+    a{
       width: fit-content;
+      text-decoration: none;
+      color: var(--BlueHover)
     }
-    p::before {
+    a::before {
       content: "- ";
     }
     > ul {
@@ -312,11 +314,11 @@ export const MobileMobilityHeader = styled.header`
         padding: 0;
         background-color: transparent;
         font-weight: 600;
-        p {
+        a {
           text-decoration: none;
           color: var(--Blue);
         }
-        p::before {
+        a::before {
           content: "- ";
         }
       }

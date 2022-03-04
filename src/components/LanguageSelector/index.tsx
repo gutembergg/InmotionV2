@@ -8,7 +8,11 @@ import useCart from "../../hooks/useCart";
 
 import { StyledLangSelector2 } from "./styles";
 
-const LanguageSelector = () => {
+interface Props{
+  closeMobileMenu?:() => void;
+  }
+
+const LanguageSelector = ({closeMobileMenu}: Props) => {
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const [openObject, setopenObject] = useState(false);
@@ -17,6 +21,7 @@ const LanguageSelector = () => {
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
     setopenObject(!openObject);
+    closeMobileMenu && closeMobileMenu();
   };
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {

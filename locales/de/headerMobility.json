@@ -17,10 +17,16 @@
   "createAccounts": "Erstelle dein Konto",
   "confidentiality": "Datenschutz-Bestimmungen",
   "condGenerales": "Geschäftsbedingungen",
+  "myaccount": "Meine Konto",
   "rent": "Vermietungen",
   "cours": "E-Rad Kurs",
   "userManuals": "Benutzerhandbuch",
   "returnForm": "Warenrücksendungen",
+  "noproducts": "Kein Produkts",
+  "voirpanier": "Warenkorb ansehen",
+  "voirPaiement": "bestellen",
+  "subtotal": "Zwischensumme:",
   "search": "Suchen"
+
 
 }

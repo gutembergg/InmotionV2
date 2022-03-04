@@ -7,6 +7,7 @@ import useCurrency from "../../hooks/useCurrency";
 import { BsCart2 } from "react-icons/bs";
 
 import { StyledCart } from "./styles";
+import useTranslation from "next-translate/useTranslation";
 
 const Cart = () => {
   const router = useRouter();
@@ -15,6 +16,15 @@ const Cart = () => {
   const { currency } = useCurrency();
   const [opencart, setopencart] = useState(false);
 
+  const { t } = useTranslation();
+  const noproducts = t("headerMobility:noproducts");
+  const voirpanier = t("headerMobility:voirpanier");
+  const voirPaiement = t("headerMobility:voirPaiement");
+  const subtotal = t("headerMobility:subtotal");
+  
+  
+  
+  
   const setCartVisibility = () => {
     if (router.pathname === "/inmotion-mobility/checkout-mobility") {
       return;
@@ -107,18 +117,21 @@ const Cart = () => {
                 })
               ) : (
                 <li>
-                  <p>aucun produit</p>
+                  <p>{noproducts}</p>
                 </li>
               )}
             </ul>
-            <h5 className="sousTotalTxt">
-              Sous total:{" "}
+            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
+
+              <h5 className="sousTotalTxt">
+              {subtotal}{" "}
               <span>
                 {currency === "CHF" ? "CHF" : "EUR"}{" "}
                 {cart.totalProductsPrice?.toFixed(2)}
               </span>
             </h5>
-            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
+              )}
+            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
               <div className="btnVoirPanier">
                 <p
                   onClick={() => {
@@ -126,16 +139,12 @@ const Cart = () => {
                   }}
                   className="btnVoirPanierText"
                 >
-                  Voir le panier
+                  {voirpanier}
                 </p>
                 0
               </div>
-            ) : (
-              <div className="btnVoirPanier disabled">
-                <p>panier non disponible</p>
-              </div>
             )}
-            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 ? (
+            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
               <div className="btnCommander">
                 <p
                   onClick={() => {
@@ -143,12 +152,8 @@ const Cart = () => {
                   }}
                   className="btnVoirCheckoutText"
                 >
-                  Checkout
+                  {voirPaiement}
                 </p>
-              </div>
-            ) : (
-              <div className="btnCommander disabled">
-                <p>checkout non disponible</p>
               </div>
             )}
           </div>

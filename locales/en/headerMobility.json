@@ -14,6 +14,7 @@
   "equipments": "Equipments",
   "detached-pieces": "Detached pieces",
   "occasions": "Bargain",
+  "myaccount": "My account",
   "createAccounts": "Create your account",
   "confidentiality": "privacy policy",
   "condGenerales": "terms and conditions",
@@ -21,5 +22,9 @@
   "cours": "E-Wheel Lessons",
   "userManuals": "User Guides",
   "returnForm": "Return merchandise",
+  "noproducts": "No products",
+  "voirpanier": "View cart",
+  "voirPaiement": "Checkout",
+  "subtotal": "subtotal:",
   "search": "Search"
 }

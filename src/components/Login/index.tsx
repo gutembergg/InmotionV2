@@ -12,7 +12,6 @@ import Input from "../Input";
 import Notiflix from "notiflix";
 import useUser from "../../hooks/useUser";
 import { AuthUser } from "../../interfaces/AuthUser";
-import RegisterForm from "../Register";
 import useTranslation from "next-translate/useTranslation";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { RiAccountCircleFill } from "react-icons/ri";
@@ -26,7 +25,16 @@ const LoginForm = () => {
       fallback: "Login",
     }
   );
+  const myaccount = t(
+    "headerMobility:myaccount",
+    { count: 1 },
+    {
+      fallback: "my account",
+    }
+  );
+  const connect = t("headerMobility:login");
   const menuRegister = t("headerMobility:register");
+  const createAccounts = t("headerMobility:createAccounts");
 
   const { login, user } = useUser();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -74,7 +82,7 @@ const LoginForm = () => {
       <Modal
         onClose={() => setShowModal(false)}
         show={showModal}
-        title="se connecter"
+        title={connect}
       >
         <LoginContainer>
           <form onSubmit={handleSubmit}>
@@ -85,10 +93,11 @@ const LoginForm = () => {
               onChange={handleChange}
               placeholder="password"
             />
-            <input id="sendButton" type="submit" value="se connecter" />
+            <input id="sendButton" type="submit" value={connect} />
           </form>
-          <p>vous n&apos;avez pas de compte?</p>
-          <RegisterForm />
+          <Link href="/inmotion-mobility/create-account">
+            <a className="createAccount" onClick={()=>setShowModal(false)}>{createAccounts}</a>
+          </Link>
         </LoginContainer>
       </Modal>
       {loged ? (
@@ -98,7 +107,7 @@ const LoginForm = () => {
               <a>
                 <div>
                   <RiAccountCircleFill />
-                  <span>Mon compte</span>
+                  <span>{myaccount}</span>
                 </div>
               </a>
             </Link>
@@ -107,9 +116,7 @@ const LoginForm = () => {
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
           <RiLoginBoxLine size={21} color="#f0f0f0" />
-          {/*   <span>{menuLogin} /</span>
-          <span>{menuRegister}</span> */}
-          <span>{menuLogin}</span>
+            <span>{menuLogin} / {menuRegister}</span>
         </LoginLink>
       )}
     </>

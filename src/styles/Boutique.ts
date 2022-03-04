@@ -16,8 +16,10 @@ export const MainContent = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-bottom: 30px;
-  margin-top: 2.5rem;
+  margin: 2.5rem 4rem 30px 4rem;
+
+
+
 
 
   .link {
@@ -35,7 +37,9 @@ export const MainContent = styled.div`
     transition: transform 0.2s ease;
     margin-top: 2rem;
     .imgBox {
-      width: 20vh;
+      width: 200px;
+      position: relative;
+      height: 200px;
     }
     .care_blue_hover {
       display: none;

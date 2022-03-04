@@ -24,5 +24,8 @@
   "advancePayment": "paiement anticipé",
   "onlinePayment": "paiement online",
   "deliveryAddress": "Adresse de livraison",
-  "billingAddress": "Adresse de facturation"
+  "billingAddress": "Adresse de facturation",
+  "validateCoupon": "Valider Code promo",
+  "verifier": "vérifier",
+  "totalttc": "Total (T.T.C):"
 }

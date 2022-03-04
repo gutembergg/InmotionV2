@@ -29,7 +29,7 @@ export const FiltersBar = styled.div`
   justify-content: end;
   align-items: center;
   border-bottom: 1px solid;
-
+  gap: 20px;
   width: 90%;
 
   @media (max-width: 1024px) {
@@ -67,7 +67,7 @@ export const ButtonSelect = styled.button`
 
 export const PaginateBar = styled.div`
   width: 100%;
-  max-width: 100px;
+  max-width: 110px;
 
   @media (max-width: 516px) {
     display: none;

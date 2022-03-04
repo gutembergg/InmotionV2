@@ -14,7 +14,6 @@ import useTranslation from "next-translate/useTranslation";
 
 import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
-import RegisterForm from "../../../components/Register";
 import useCart from "../../../hooks/useCart";
 import {
   LineItemsDTO,
@@ -100,6 +99,8 @@ export default function CheckoutMobility() {
   const yourOrder = t("checkout-mobility:yourOrder");
   const advancePayment = t("checkout-mobility:advancePayment");
   const onlinePayment = t("checkout-mobility:onlinePayment");
+  const totalttc = t("checkout-mobility:totalttc");
+  const validateCoupon = t("checkout-mobility:validateCoupon");
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
@@ -840,19 +841,18 @@ export default function CheckoutMobility() {
     <>
       <Container>
         <h1>{yourOrder}</h1>
-        <Content>
-          <div className="content">
-            <FormSection className="sections">
               <section className="form_users">
                 {" "}
                 {!loged && (
                   <div>
                     <p>{haveAccount}</p>
                     <LoginForm />
-                    <RegisterForm />
                   </div>
                 )}
               </section>
+        <Content>
+          <div className="content">
+            <FormSection className="sections">
               <section className="sections_title">
                 <div className="title">
                   <h2 className={paymentSteps === 1 ? "active" : ""}>
@@ -962,7 +962,7 @@ export default function CheckoutMobility() {
                           : "desatived"
                       }
                     >
-                      <span>Valider ma commande</span>
+                      <span>{validateCoupon}</span>
                       <span>{validateOrder && <Spiner />}</span>
                     </button>
                   </BtnCouponsBlock>
@@ -1227,7 +1227,7 @@ export default function CheckoutMobility() {
                     </div>
                     <div className="total_block">
                       <h5 className="sousTotalTxt">
-                        <span>Total (T.T.C): </span>
+                        <span>{totalttc} </span>
                         <span>
                           {CHFCurrency ? "CHF" : "EUR"}{" "}
                           {Object.keys(_order).length > 0

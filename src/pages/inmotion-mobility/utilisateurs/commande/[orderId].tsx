@@ -82,7 +82,7 @@ export default function UserOrder() {
   return (
     mounted && (
       <Container>
-        <h1>Commande</h1>
+        <h1>{CompletedOrderResumeTitle}</h1>
         <Content>
           {Object.keys(order).length > 0 ? (
             <>
@@ -113,7 +113,7 @@ export default function UserOrder() {
               </OrderInfos>
               <ResumeWrapper>
                 <OrderResume>
-                  <h2>{CompletedOrderResumeTitle}</h2>
+                  
                   <h4>{CompletedOrderProducts}</h4>
                   <ul className="product_list">
                     {order &&

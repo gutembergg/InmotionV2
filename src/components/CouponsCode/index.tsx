@@ -39,6 +39,7 @@ const CouponsCode = ({
 
   const { t } = useTranslation();
   const doYouHaveCodePromo = t("checkout-mobility:doYouHaveCodePromo");
+  const verifier = t("checkout-mobility:verifier");
   const btnSend = t("checkout-mobility:btnSend");
 
   const cartContent = cart.products;
@@ -405,7 +406,7 @@ const CouponsCode = ({
             disabled={inputDisabledStatus}
           />
           <button type="submit" disabled={inputDisabledStatus === true && true}>
-            Vérifier{" "}
+            {verifier}
           </button>
         </div>
       </form>

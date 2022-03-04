@@ -13,6 +13,7 @@
   "e-wheel": "Gyroroues",
   "e-scooter": "Trotinettes",
   "equipments": "Equipements",
+  "myaccount": "Mon compte",
   "detached-pieces": "Pièces détachées",
   "occasions": "Occasions",
   "confidentiality": "Politique de confidentialité",
@@ -21,5 +22,9 @@
   "cours": "Cours Gyroroues",
   "userManuals": "Guides Utilisateurs",
   "returnForm": "Retour marchandise",
+  "noproducts": "Aucun produits",
+  "voirpanier": "Voir le panier",
+  "voirPaiement": "Commander",
+  "subtotal": "Sout-total:",
   "search": "Rechercher"
 }

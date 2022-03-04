@@ -7,7 +7,11 @@ import useCart from "../../hooks/useCart";
 import useCurrency from "../../hooks/useCurrency";
 import { CurrencySelectorStyle } from "./styles";
 
-const CurrencySelector = () => {
+interface Props{
+closeMobileMenu?:() => void;
+}
+
+const CurrencySelector = ({closeMobileMenu}:Props) => {
   const { setCurrency, currency } = useCurrency();
   const { cart } = useCart();
 
@@ -29,6 +33,7 @@ const CurrencySelector = () => {
 
   const handleChange = (currency: string) => {
     setCurrency(currency);
+    closeMobileMenu && closeMobileMenu()
   };
 
   return (

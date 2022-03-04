@@ -23,12 +23,6 @@ export const MainContent = styled.div`
         @media screen and (max-width: 1240px) {
           object-position: center center !important;
         }
-        @media screen and (max-width: 800px) {
-          object-position: center center !important;
-        }
-        @media screen and (max-width: 480px) {
-          object-position: -4rem center !important;
-        }
       }
     }
   }
@@ -95,6 +89,13 @@ export const BlockInfoCours = styled.div`
         &:hover {
           transition: all ease-in 0.1s;
           background-color: var(--BlueHover);
+        }
+        @media screen and (max-width: 480px) {
+          width: 100%;
+          display: flex;
+          justify-content:center;
+          padding: 10px 0px;
+          font-weight: 200;
         }
       }
     }
