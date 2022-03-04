@@ -81,10 +81,10 @@ const Cart = () => {
                       <div className="cartProductInfos">
                         <h5>{product.name}</h5>
                         <p>
-                          {product.qty}x {currency === "CHF" ? "CHF" : "EUR"}{" "}
+                          {product.qty}x {" "}
                           {currency === "CHF"
                             ? product.price
-                            : product.euroPrice}
+                            : product.euroPrice}{" "}{currency === "CHF" ? "CHF" : "EUR"}
                         </p>
                       </div>
                       <div className="cartProductThmbnail">
@@ -126,8 +126,8 @@ const Cart = () => {
               <h5 className="sousTotalTxt">
               {subtotal}{" "}
               <span>
-                {currency === "CHF" ? "CHF" : "EUR"}{" "}
-                {cart.totalProductsPrice?.toFixed(2)}
+                {cart.totalProductsPrice?.toFixed(2)}{" "}
+                {currency === "CHF" ? "CHF" : "EUR"}
               </span>
             </h5>
               )}

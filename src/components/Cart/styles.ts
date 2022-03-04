@@ -3,10 +3,10 @@ import styled from "styled-components";
 export const StyledCart = styled.div`
   flex: 0 0 50px;
 cursor: pointer;
+align-self: center;
   .cartIconElement {
     position: relative;
 display: flex;
-
     .cartIcon {
       margin-right: 0px;
       transition: all ease-in 0.2s;

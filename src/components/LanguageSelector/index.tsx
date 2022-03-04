@@ -7,6 +7,8 @@ import enflag from "../../../public/images/icons/enflag.svg";
 import useCart from "../../hooks/useCart";
 
 import { StyledLangSelector2 } from "./styles";
+import Notiflix from "notiflix";
+import useTranslation from "next-translate/useTranslation";
 
 interface Props{
   closeMobileMenu?:() => void;
@@ -17,6 +19,10 @@ const LanguageSelector = ({closeMobileMenu}: Props) => {
   const { pathname, asPath, query } = router;
   const [openObject, setopenObject] = useState(false);
   const { cart } = useCart();
+  const { t } = useTranslation();
+  const LangBlocked = t("common:LangBlocked");
+  const notavailable = t("common:notavailable");
+
 
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
@@ -26,7 +32,14 @@ const LanguageSelector = ({closeMobileMenu}: Props) => {
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
     console.log("Object.keys(car", Object.keys(cart).length);
-    if (Object.keys(cart).length > 0 && cart.products.length > 0) return;
+    if (Object.keys(cart).length > 0 && cart.products.length > 0){
+      Notiflix.Report.failure(
+        `${notavailable}`,
+        `${LangBlocked}`,
+         'Ok',
+         )
+      return;
+    } 
     setopenObject(!openObject);
   };
 

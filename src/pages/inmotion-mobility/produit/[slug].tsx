@@ -78,6 +78,9 @@ export default function ProductDetail({
   const ChooseVariation = t("productDetail:ChooseVariation");
   const txtCaracteristiques = t("productDetail:Caracteristiques");
   const Promotion = t("productDetail:Promotion");
+  const completEquipement = t("productDetail:completEquipement");
+  const Attention = t("common:Attention");
+  const SelectVariation = t("common:SelectVariation");
 
   const [productQty, setProductQty] = useState(1);
 
@@ -382,9 +385,11 @@ export default function ProductDetail({
                     <Button
                       type="button"
                       onClick={() =>
-                        Notiflix.Notify.warning(
-                          "Choisissez une variation avant de l'ajouter au panier"
-                        )
+                        Notiflix.Report.warning(
+                          `${Attention}`,
+                          `${SelectVariation}`,
+                           'Ok',
+                       )
                       }
                       className="disabled"
                     >
@@ -497,7 +502,7 @@ export default function ProductDetail({
           )}
           {crossSellIDS && Object.keys(crossSellIDS[0]).length > 0 ? (
             <RelatedProduct>
-              <h2 className="squared">Complétez votre équipement</h2>
+              <h2 className="squared">{completEquipement}</h2>
               <CarouselSwiper products={crossSellIDS} />
             </RelatedProduct>
           ) : null}

@@ -198,6 +198,7 @@ export const ProductLogo = styled.div`
 h1{
   @media (max-width:960px){
     font-size: 1.80em;
+    text-align: center;
     &::before {
       width: 24px;
     height: 31px;

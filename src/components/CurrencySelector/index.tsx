@@ -21,6 +21,7 @@ const CurrencySelector = ({closeMobileMenu}:Props) => {
 
   const { t } = useTranslation();
   const CurrencyBlocked = t("common:CurrencyBlocked");
+  const notavailable = t("common:notavailable");
 
 
   useEffect(() => {
@@ -53,7 +54,11 @@ const CurrencySelector = ({closeMobileMenu}:Props) => {
     </select>
       )
       :(
-        <p className="" onClick={()=> Notiflix.Notify.warning(CurrencyBlocked)}>{currency}</p>
+        <p className="" onClick={()=> Notiflix.Report.failure(
+         `${notavailable}`,
+         `${CurrencyBlocked}`,
+          'Ok',
+          )}>{currency}</p>
       )
       }
 
