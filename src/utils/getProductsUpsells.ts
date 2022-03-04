@@ -1,9 +1,10 @@
 import { IProduct } from "../interfaces/IProducts";
+import { getProductsByUpSellIds } from "../services/woocommerceApi/Products";
 import { swicthCategoriesSlug } from "./swicthCategoriesSlug";
 
-export const getProductsUpSells = (
+export const getProductsUpSells = async (
   productsList: IProduct[],
-  modelsList: Pick<IProduct, "name" | "slug" | "id" | "categories">[],
+  lang: string,
   categorySlug: string
 ) => {
   let upSell: number[] = [];
@@ -16,7 +17,17 @@ export const getProductsUpSells = (
     (item, index) => upSell.indexOf(item) === index
   );
 
-  const productsModelsByDefault = uniquesUpSells.map((productId) => {
+  ///////////////////////////////////////
+  const __uniquesUpSells = uniquesUpSells.map((item) => String(item));
+  const listModels = await getProductsByUpSellIds(__uniquesUpSells, lang);
+
+  const productsByCat = listModels.filter((item: any) =>
+    item.categories.find(
+      (cat: any) => cat.slug === swicthCategoriesSlug(categorySlug)
+    )
+  );
+
+  /*  const productsModelsByDefault = uniquesUpSells.map((productId) => {
     const productsMobility = modelsList.filter(
       (product) => product.id === productId
     );
@@ -28,7 +39,7 @@ export const getProductsUpSells = (
     );
 
     return productsByCat;
-  });
+  }); */
 
-  return productsModelsByDefault.flat();
+  return productsByCat;
 };

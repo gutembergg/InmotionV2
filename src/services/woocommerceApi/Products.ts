@@ -64,13 +64,25 @@ export const getProductByID = async (idListe: string[], lang: string) => {
   return data;
 };
 
-export const _getProductByID = async (idListe: string[]) => {
+// Get products by List Ids /////////////////////////////////////////////7
+export const getProductsByUpSellIds = async (
+  idListe: string[],
+  lang: string
+) => {
+  const { data } = await wooCommerce.get(
+    `products/?include=${idListe}&lang=${lang}`
+  );
+
+  return data;
+};
+
+/* export const _getProductByID = async (idListe: string[]) => {
   const { data } = await wooCommerce.get(`products`, {
     includes: idListe,
   });
 
   return data;
-};
+}; */
 
 //  Get Product by slug /////////////////////////////////////////
 export const wc_getProductBySlug = async (

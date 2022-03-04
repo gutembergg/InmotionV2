@@ -201,7 +201,9 @@ export default function PiecesDetacheesSubCat({
                 )}
               </MenuSubCategoriesMobilie>
               <PaginateBar>
-                <span>{products.length} {result}</span>
+                <span>
+                  {products.length} {result}
+                </span>
               </PaginateBar>
             </FiltersBar>
             <ProductsMobile>
@@ -305,26 +307,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     return { name, slug };
   });
 
-  //const _mobilityProducts = await getProductByCategory(80, lang as string);
+  /*  const mobilityProductslist =
+    await getProductByCategoryWithoutVisibilityFilter(80, lang as string); */
 
-  const mobilityProductslist =
-    await getProductByCategoryWithoutVisibilityFilter(80, lang as string);
-
-  const mobilityProducts: Pick<
-    IProduct,
-    "name" | "slug" | "id" | "categories"
-  >[] = mobilityProductslist.map((category) => {
-    const name = category.name;
-    const slug = category.slug;
-    const id = category.id;
-    const categories = category.categories;
-
-    return { name, slug, id, categories };
-  });
-
-  const productsUpSells = getProductsUpSells(
+  const productsUpSells = await getProductsUpSells(
     _productsByCategory,
-    mobilityProducts,
+    lang as string,
     currentyCategory.slug
   );
 
