@@ -10,6 +10,7 @@ import Notiflix, { Report } from "notiflix";
 import useCurrency from "../../hooks/useCurrency";
 import { IProduct } from "../../interfaces/IProducts";
 import { IVariation } from "../../interfaces/IVariation";
+import useTranslation from "next-translate/useTranslation";
 
 interface Children {
   children: ReactNode;
@@ -39,6 +40,10 @@ const CartProvider = ({ children }: Children) => {
   const [cart, setCart] = useState<ICartState>({} as ICartState);
 
   const timestamp = Date.now();
+
+  const { t } = useTranslation();
+  const productAdded = t("common:productAdded");
+  const productRemoved = t("common:productRemoved");
 
   const getLocalStorageData = useCallback(() => {
     if (typeof window !== "undefined") {
@@ -96,11 +101,10 @@ const CartProvider = ({ children }: Children) => {
       totalProductsPrice: price,
       timestamp,
     };
-    // Notiflix.Notify.success("produit ajouté au panier");
     Report.success(
-      "Produit Ajouté au panier",
-      "<p>Pensez à vous protéger! Voici ce que nous vous conseillons:</p><br /><br />",
-      "Okay"
+      `${productAdded}`,
+      "",
+      "Ok"
     );
     if (typeof window !== "undefined") {
       localStorage.setItem("inmotion:cart", JSON.stringify(_cart));
@@ -144,7 +148,11 @@ const CartProvider = ({ children }: Children) => {
       totalProductsPrice: Math.abs(price),
       timestamp,
     };
-    Notiflix.Notify.success("produit retiré du panier");
+    Report.success(
+      `${productRemoved}`,
+      "",
+      "Ok"
+    );
 
     if (typeof window !== "undefined") {
       if (_cart.totalProductsCount === 0) {

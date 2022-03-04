@@ -1,7 +1,7 @@
-import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
+import React, { ChangeEvent, ReactElement, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import router from "next/router";
 import { IProduct } from "../../../interfaces/IProducts";
 import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";
@@ -20,6 +20,17 @@ export default function Panier() {
 
   const { t } = useTranslation();
   const titleText = t("common:cartTitle");
+  const noproducts = t("headerMobility:noproducts");
+  const voirPaiement = t("headerMobility:voirPaiement");
+  const subtotal = t("headerMobility:subtotal");
+
+  useEffect(() => {
+    if (Object.keys(cart).length === 0) {
+      if (typeof window !== "undefined") {
+        router.push("/inmotion-mobility");
+      }
+    }
+  }, [cart]);
 
   const handleAddToCart = useCallback(
     (product: IProduct, productQty: number) => {
@@ -100,10 +111,6 @@ export default function Panier() {
                       <h5>{product.name}</h5>
                       </div>
                       <div className="rightContent">
-
-                      {/* {product.on_sale && (
-                        // <p className="onSaleBadge">Promotion</p>
-                        )} */}
                       {product.on_sale && (
                         <>
                           <p className="onSalePrice">
@@ -156,17 +163,17 @@ export default function Panier() {
                 })
               ) : (
                 <li>
-                  <p>aucun produit</p>
+                  <p>{noproducts}</p>
                 </li>
               )}
             </ul>
             <h5 className="sousTotalTxt">
-              Sous total: <span>{currencyCHF ? "CHF" : "EUR"} </span>
-              {cart.totalProductsPrice?.toFixed(2)}
+              {subtotal} {cart.totalProductsPrice?.toFixed(2)} <span>{currencyCHF ? "CHF" : "EUR"} </span>
+              
             </h5>
             <button className="btnCommander">
               <Link href="/inmotion-mobility/checkout-mobility">
-                <a>Checkout</a>
+                <a>{voirPaiement}</a>
               </Link>
             </button>
           </div>

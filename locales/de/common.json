@@ -12,11 +12,17 @@
   "shopAddressTxt": "Standort Verkaufsstelle",
   "legalMentionsTxt": "Rechtliche Erwähnung",
   "previousPageLink": "Zürück",
-  "CurrencyBlocked": "Sie haben schon Produkte im Warenkorb, entfernen Sie sie, um Ihre Devise zu ändern",
+  "notavailable": "Nicht verfügbar",
+  "LangBlocked": "Sie haben schon Produkte im Warenkorb, entfernen Sie sie, um Ihre spräche werseln",
+  "CurrencyBlocked": "Sie haben schon Produkte im Warenkorb, entfernen Sie sie, um Ihre Devise werseln",
   "shopTitle": "Willkommen in unserem Geschäft",
   "InStock":"Im Stock",
   "OnOrder":"auf Bestellung",
   "Pieces":"Teile",
   "OutOfStock":"Nicht lieferbar",
+  "Attention":"Achtung",
+  "productAdded":"Produkt zum Warenkorb hinzugefügt",
+  "productRemoved":"Produkt vom Warenkorb entfernt",
+  "SelectVariation":"Wählen Sie eine Variation, bevor Sie den Artikel in den Warenkorb legen",
   "NoStockInfo":"Keine informationen"
 }

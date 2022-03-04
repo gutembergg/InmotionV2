@@ -12,11 +12,17 @@
   "shopAddressTxt": "Adresse Magasin",
   "legalMentionsTxt": "Mention légale",
   "previousPageLink": "Précédent",
-  "CurrencyBlocked": "Vous avez déjà selectionner des articles dans le panier, retirez-les si vous soouhaiter changer de devises",
+  "notavailable": "Non disponible",
+  "LangBlocked": "Vous avez déjà selectionner des articles dans le panier, retirez-les si vous souhaitez changer de langues",
+  "CurrencyBlocked": "Vous avez déjà selectionner des articles dans le panier, retirez-les si vous souhaitez changer de devises",
   "shopTitle": "bienvenue dans notre boutique",
   "InStock":"En stock",
   "OnOrder":"sur commande",
   "Pieces":"pièces",
   "OutOfStock":"Non disponible",
+  "Attention":"Attention",
+  "productAdded":"Produit ajouté au panier",
+  "productRemoved":"Produit retiré du panier",
+  "SelectVariation":"Choisissez une variation avant de mettre l'article dans le panier",
   "NoStockInfo":"Aucune information"
 }
