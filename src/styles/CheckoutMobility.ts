@@ -28,24 +28,24 @@ export const Container = styled.div`
     margin-top: 40px;
   }
   .form_users {
-    margin-top: 1rem ;
-    >div >div{
-      width:100%;
+    margin-top: 1rem;
+    > div > div {
+      width: 100%;
 
-      svg{
-        margin-top: 8px ;
-        fill:var(--Blue);
+      svg {
+        margin-top: 8px;
+        fill: var(--Blue);
       }
-      span{
-        margin-top: 8px ;
+      span {
+        margin-top: 8px;
         color: var(--Blue);
         font-weight: 600;
         @media (max-width: 1024px) {
-          display:flex;
+          display: flex;
         }
       }
     }
-}
+  }
 `;
 
 export const Content = styled.div`
@@ -343,6 +343,12 @@ export const PaymentBankTransfert = styled.button`
       font-size: 1.3rem;
       margin-bottom: 0px;
     }
+
+    @media (max-width: 416px) {
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
   }
 
   div.completed {
@@ -397,8 +403,6 @@ export const OrderSession = styled.div<Props>`
         z-index: 5;
         // width: calc(100% - 17px);
       `}
-
-
   }
 
   display: flex;
@@ -409,7 +413,6 @@ export const OrderSession = styled.div<Props>`
 
   .products_list {
     list-style-type: none;
-   
   }
 
   h2 {
@@ -430,32 +433,32 @@ export const OrderSession = styled.div<Props>`
     .prod_block {
       padding: 0 1rem;
       ${(props) =>
-      props.qtyCartProducts &&
-      css`
-        height: 300px;
-        margin-bottom: 0rem;
-        overflow-y: scroll;
-        /* width */
-        ::-webkit-scrollbar {
-          width: 5px;
-          height: 8px;
-        }
+        props.qtyCartProducts &&
+        css`
+          height: 300px;
+          margin-bottom: 0rem;
+          overflow-y: scroll;
+          /* width */
+          ::-webkit-scrollbar {
+            width: 5px;
+            height: 8px;
+          }
 
-        /* Track */
-        ::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
+          /* Track */
+          ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+          }
 
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-          background: var(--Red);
-        }
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: var(--Red);
+          }
 
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-          background: #555;
-        }
-      `}
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+          }
+        `}
 
       div + div {
         border-top: 1px solid;
@@ -723,12 +726,20 @@ export const ProductCart = styled.div`
 
     span {
       margin-left: 1rem;
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: "Bitter",sans-serif;
-    text-transform: uppercase;
-    color: var(--BlueHover);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: "Bitter", sans-serif;
+      text-transform: uppercase;
+      color: var(--BlueHover);
     }
+  }
+
+  .product_price {
+    display: flex;
+    justify-content: end;
+    //padding-right: 0.7rem;
+    width: 170px;
+    font-weight: 600;
   }
 
   @media (max-width: 416px) {
@@ -739,15 +750,6 @@ export const ProductCart = styled.div`
     span.product_name_cart {
       font-size: 0.8rem;
     }
-  }
-
-  .product_price {
-    display: flex;
-    justify-content: end;
-    padding-right: 0.7rem;
-    width: 170px;
-    font-weight: 600;
-    color: var(--Price)
   }
 `;
 

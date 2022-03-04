@@ -6,12 +6,13 @@ export const Container = styled.li`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 0.6rem 0;
   border-bottom: 1px solid var(--LightGray);
-  .onsale{
+
+  .onsale {
     color: var(--Red);
-    font-weight:bold;
-    font-size:1em;
+    font-weight: bold;
+    font-size: 1em;
   }
 `;
 
@@ -60,6 +61,13 @@ export const ProductInfo = styled.div`
   span.span_currency {
     margin-right: 0.5rem;
   }
+
+  a.detail_view {
+    text-decoration: none;
+    color: var(--Blue);
+    font-weight: 600;
+    padding-left: 30px;
+  }
 `;
 
 export const BtnAddToCart = styled.button`
@@ -95,6 +103,4 @@ export const IconFleche = styled(AiFillPlayCircle)`
   }
 `;
 
-export const BtnDetail = styled.div`
-  margin-left: 1rem;
-`;
+export const BtnDetail = styled.div``;

@@ -10,11 +10,11 @@ import React, {
 } from "react";
 import { Report } from "notiflix";
 import uuid from "react-uuid";
+import useTranslation from "next-translate/useTranslation";
 
 import CouponsCode from "../../../components/CouponsCode";
 import LoginForm from "../../../components/Login";
 import useCart from "../../../hooks/useCart";
-import useTranslation from "next-translate/useTranslation";
 import {
   LineItemsDTO,
   OrderValidation,
@@ -130,7 +130,6 @@ export default function CheckoutMobility() {
   const [methodsShippingList, setMethodsShippingList] = useState<
     ShippingMethods[]
   >([]);
-  const [noAllowShipping, setNoAllowShipping] = useState(false);
   const [isSelectedShipping, setIsSelectedShipping] = useState(false);
 
   const [isCoupon, setIsCoupon] = useState(false);
@@ -153,20 +152,13 @@ export default function CheckoutMobility() {
   const [qtyCartProducts, setQtyCartProducts] = useState(false);
   const [wayOfPaymentSelected, setWayOfPaymentSelected] = useState(0);
   const [openWasOfPayments, setOpenWayOfPayments] = useState(false);
+  const [stopTransaction, setStopTransaction] = useState(false);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
   const CHFCurrency = currentyCurrency === "CHF";
   const tva = CHFCurrency ? 7.7 : 0;
   const tvaResult = CHFCurrency ? (cart.totalProductsPrice / 100) * tva : 0;
-
-  useEffect(() => {
-    if (Object.keys(cart).length === 0) {
-      if (typeof window !== "undefined") {
-        router.push("/inmotion-mobility");
-      }
-    }
-  }, [cart]);
 
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
@@ -229,6 +221,10 @@ export default function CheckoutMobility() {
 
   const getShippingPrice = useCallback(
     async (method: ShippingMethods) => {
+      if (Object.keys(cart).length === 0) {
+        alert("Erreur");
+        return;
+      }
       const productsWeight = cart.products.reduce(
         (acc, item) => {
           const weight = (Number(item.weight) + Number(acc.weight)) * item.qty;
@@ -238,7 +234,19 @@ export default function CheckoutMobility() {
         { weight: 0 }
       );
 
+      if (productsWeight.weight > 89 && method.method_id !== "local_pickup") {
+        setStopTransaction(true);
+        Report.failure(
+          "Poids n'est pas authorisé",
+          "<p>Entrez en contact par: ......</p><br /><br />",
+          "Okay"
+        );
+
+        return;
+      }
+
       if (method.method_id === "local_pickup") {
+        setStopTransaction(false);
         setTotalCartPriceConverted(cart.totalProductsPrice);
       }
 
@@ -260,8 +268,8 @@ export default function CheckoutMobility() {
         );
       }
 
-      method.settings.method_rules?.value.map((rule) => {
-        rule.conditions.filter(async (condition) => {
+      method.settings.method_rules?.value.forEach((rule) => {
+        rule.conditions.forEach(async (condition) => {
           if (
             productsWeight?.weight >= condition.min &&
             productsWeight?.weight <= condition.max
@@ -288,19 +296,11 @@ export default function CheckoutMobility() {
 
             setShippingMethod(method);
             console.log("OK livraison", rule);
-            setNoAllowShipping(false);
-
-            return rule;
-          } else {
-            setNoAllowShipping(true);
-            setShippingMethod(method);
           }
         });
-
-        return;
       });
     },
-    [cart.products, CHFCurrency, cart.totalProductsPrice]
+    [CHFCurrency, cart]
   );
 
   const _handleBillingShippingData = async (values: IFormValues) => {
@@ -413,30 +413,13 @@ export default function CheckoutMobility() {
       return { code: coupon.code };
     });
 
-    let shippingLines: any = [];
-    if (!noAllowShipping) {
-      shippingLines = [
-        {
-          method_id: _shippingMethods.method_id,
-          method_title: _shippingMethods.method_title,
-          total: String(shippingPrice),
-        },
-      ];
-    } else if (
-      _shippingMethods.id === 5 ||
-      _shippingMethods.id === 10 ||
-      _shippingMethods.id === 7
-    ) {
-      shippingLines = [
-        {
-          method_id: _shippingMethods.method_id,
-          method_title: _shippingMethods.method_title,
-          total: String(shippingPrice),
-        },
-      ];
-    } else {
-      shippingLines = [];
-    }
+    const shippingLines = [
+      {
+        method_id: _shippingMethods.method_id,
+        method_title: _shippingMethods.method_title,
+        total: String(shippingPrice),
+      },
+    ];
 
     const order = {
       payment_method: "Anticipe",
@@ -509,7 +492,6 @@ export default function CheckoutMobility() {
     _shippingMethods,
     user,
     currentyCurrency,
-    noAllowShipping,
   ]);
 
   const checkout = useCallback(async () => {
@@ -614,6 +596,9 @@ export default function CheckoutMobility() {
     } catch (error) {
       alert("Une erreur est survenue!");
       setErros("Une erreur est survenue!");
+      if (typeof window !== "undefined") {
+        router.push("/inmotion-mobility");
+      }
     }
   }, [
     cart,
@@ -650,6 +635,9 @@ export default function CheckoutMobility() {
     } catch (error) {
       alert("Une erruer est survenue");
       setErros("Une erruer est survenue");
+      if (typeof window !== "undefined") {
+        router.push("/inmotion-mobility");
+      }
     }
   }, [transactionId, orderId, _methodPayment.name, _taxPaymentMethods]);
 
@@ -708,6 +696,9 @@ export default function CheckoutMobility() {
       } catch (error) {
         alert("Une erruer est survenue");
         setErros("Une erruer est survenue");
+        if (typeof window !== "undefined") {
+          router.push("/inmotion-mobility");
+        }
       }
     },
     [orderId, transactionId, shippingPrice]
@@ -807,26 +798,34 @@ export default function CheckoutMobility() {
 
   const formatMethodsShippingList = useCallback(
     (methodsList: ShippingMethods[]) => {
-      let methodeName = "";
+      /*  let methodeName = "";
       const formatedNameMethods = methodsList.map((method) => {
         switch (true) {
           case method.id === 8:
-            methodeName = "Poste";
+            methodeName = "Livraison";
             break;
           case method.id === 2:
             methodeName = "Point de vente";
             break;
-          case method.id === 10 || method.id === 5 || method.id === 7:
+            case method.id === 10 || method.id === 5 || method.id === 7:
             methodeName = "DHL";
-            break;
+            break; 
           default:
             methodeName = "";
         }
 
         return { ...method, methodeName };
+      }); */
+
+      const formatListMethods = methodsList.map((method) => {
+        return {
+          ...method,
+          methodeName: method.id === 2 ? "Point de vente" : "Livraison",
+        };
       });
 
-      setMethodsShippingList(formatedNameMethods);
+      console.log("formatListMethods: ", formatListMethods);
+      setMethodsShippingList(formatListMethods);
     },
     []
   );
@@ -972,7 +971,9 @@ export default function CheckoutMobility() {
               <section className="methods_payment">
                 <PaymentBankTransfert
                   onClick={openWayOfPayments}
-                  disabled={paymentSteps === 3 ? false : true}
+                  disabled={
+                    paymentSteps === 3 && !stopTransaction ? false : true
+                  }
                 >
                   <div
                     className={
@@ -1178,12 +1179,7 @@ export default function CheckoutMobility() {
                             <span>
                               {Object.keys(_order).length > 0
                                 ? _order.total_tax
-                                : _billingShippingData.shipping?.country ===
-                                    "CH" ||
-                                  (_billingShippingData.shipping?.country ===
-                                    "" &&
-                                    _billingShippingData.billing?.country ===
-                                      "CH")
+                                : CHFCurrency
                                 ? tvaResult.toFixed(2)
                                 : "0"}{" "}
                             </span>
