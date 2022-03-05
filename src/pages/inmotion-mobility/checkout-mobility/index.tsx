@@ -101,7 +101,13 @@ export default function CheckoutMobility() {
   const onlinePayment = t("checkout-mobility:onlinePayment");
   const totalttc = t("checkout-mobility:totalttc");
   const validateCoupon = t("checkout-mobility:validateCoupon");
-
+  const weightMaxTitle = t("checkout-mobility:weightMaxTitle");
+  const weightMaxDescr = t("checkout-mobility:weightMaxDescr");
+  const errCoutryCurrencyTitle = t("checkout-mobility:errCoutryCurrencyTitle");
+  const errCoutryCurrencyDescrCHF = t("checkout-mobility:errCoutryCurrencyDescCHF");
+  const errCoutryCurrencyDescrEUR = t("checkout-mobility:errCoutryCurrencyDescEUR");
+  
+  
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
   const [lineItems, setLineItems] = useState<LineItemsDTO[]>([]);
@@ -237,9 +243,11 @@ export default function CheckoutMobility() {
       if (productsWeight.weight > 89 && method.method_id !== "local_pickup") {
         setStopTransaction(true);
         Report.failure(
-          "Poids n'est pas authorisé",
-          "<p>Entrez en contact par: ......</p><br /><br />",
-          "Okay"
+          `${weightMaxTitle}`,
+          `${weightMaxDescr}`,
+          "Ok",() => {
+            router.push("/inmotion-mobility/contact")
+            },
         );
 
         return;
@@ -343,22 +351,20 @@ export default function CheckoutMobility() {
     };
 
     if (
-      (currentyCurrency === "EUR" && shipping.country === "CH") ||
-      (currentyCurrency === "CHF" && shipping.country !== "CH")
+      (currentyCurrency === "EUR" && shipping.country === "CH") 
     ) {
       Report.failure(
-        "Erreur adresse invalide",
-        "<p>Pour livrer le produit en Suisse vous devez avoir la devise en CHF:</p><br /><br />",
+        `${errCoutryCurrencyTitle}`,
+        `${errCoutryCurrencyDescrCHF}`,
         "Okay"
-      );
-      return;
-    } else if (
-      (currentyCurrency === "EUR" && billing.country === "CH") ||
-      (currentyCurrency === "CHF" && billing.country !== "CH")
-    ) {
-      Report.failure(
-        "Erreur adresse invalide",
-        "<p>Pour livrer le produit en Suisse vous devez avoir la devise en CHF:</p><br /><br />",
+        );
+        return;
+      } else if (
+        (currentyCurrency === "CHF" && billing.country !== "CH")
+        ) {
+          Report.failure(
+            `${errCoutryCurrencyTitle}`,
+            `${errCoutryCurrencyDescrEUR}`,
         "Okay"
       );
       return;

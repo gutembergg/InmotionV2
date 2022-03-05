@@ -31,8 +31,8 @@ const LanguageSelector = ({closeMobileMenu}: Props) => {
   };
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
-    console.log("Object.keys(car", Object.keys(cart).length);
-    if (Object.keys(cart).length > 0 && cart.products.length > 0){
+    // console.log("Object.keys(car", Object.keys(cart).length);
+    if (router?.pathname === "/inmotion-mobility/checkout-mobility"){
       Notiflix.Report.failure(
         `${notavailable}`,
         `${LangBlocked}`,

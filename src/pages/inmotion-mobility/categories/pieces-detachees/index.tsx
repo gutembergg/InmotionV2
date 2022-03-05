@@ -49,8 +49,8 @@ export default function PiecesDetachees({ subCategories, category }: IProps) {
                             <Image
                               src={category.image?.src}
                               alt={category.name}
-                              width={300}
-                              height={300}
+                              layout="fill"
+                              objectFit="contain"
                               placeholder="blur"
                               blurDataURL={category.image?.src}
                             />

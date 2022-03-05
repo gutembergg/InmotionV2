@@ -26,6 +26,11 @@
   "deliveryAddress": "Lieferadresse",
   "validateCoupon": "Promo-Code registrieren",
   "verifier": "check",
+  "weightMaxTitle": "Gewicht überschritten",
+  "weightMaxDescr": "Das Gewicht Ihrer Bestellung überschreitet den möglichen Grenzwert. Bitte kontaktieren Sie uns, um die Versandmodalitäten für größere Mengen zu besprechen.",
+  "errCoutryCurrencyTitle": "Währungsfehler",
+  "errCoutryCurrencyDescCHF": "Um das Produkt in die Schweiz zu liefern, müssen Sie die Währung in CHF haben:",
+  "errCoutryCurrencyDescEUR": "Um das Produkt außerhalb der Schweiz zu liefern, müssen Sie die Währung in EUR haben.",
   "billingAddress": "Rechnungsadresse",
   "totalttc": "Gesamt(inkl. MwSt.):"
 }
