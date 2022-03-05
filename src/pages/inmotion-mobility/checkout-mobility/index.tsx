@@ -308,7 +308,7 @@ export default function CheckoutMobility() {
         });
       });
     },
-    [CHFCurrency, cart]
+    [CHFCurrency, cart,weightMaxTitle,weightMaxDescr]
   );
 
   const _handleBillingShippingData = async (values: IFormValues) => {

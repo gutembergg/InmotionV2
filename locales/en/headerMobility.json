@@ -26,6 +26,8 @@
   "voirpanier": "View cart",
   "voirPaiement": "Checkout",
   "subtotal": "subtotal:",
-  "warningCart": "Be careful to check your order, you will not be able to modify it in the checkout",
+  "backToCart": "Back to cart",
+  "cartBlockTitle": "Panier verouillé",
+  "cartBlockDescr": "You can't modify your cart in the order page, go back to the cart page",
   "search": "Search"
 }

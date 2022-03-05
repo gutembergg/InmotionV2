@@ -26,6 +26,9 @@
   "voirpanier": "Voir le panier",
   "voirPaiement": "Commander",
   "subtotal": "Sous-total:",
+  "backToCart": "Retour au panier",
+  "cartBlockTitle": "Panier verouillé",
+  "cartBlockDescr": "Vous ne pouvez pas modifier votre panier dans la page de commande, revenez sur la page panier",
   "warningCart": "Attention à bien vérifier votre commande, vous ne pourrez plus la modifier dans le checkout",
   "search": "Rechercher"
 }

@@ -52,10 +52,13 @@ export const MainMenu = styled.ul`
       width: max-content;
       > li {
         background-color: var(--White);
-        padding: 10px 20px;
-
+        /* padding: 10px 20px; */
         a {
           color: var(--Blue);
+          width: 100%;
+      height: 100%;
+      display: inline-block;
+      padding: 10px 20px;
         }
 
         &:hover {

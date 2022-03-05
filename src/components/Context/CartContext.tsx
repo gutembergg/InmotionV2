@@ -78,12 +78,15 @@ const CartProvider = ({ children }: Children) => {
       currency !== currencyStatut && isCart() === true && 
       switchCartDevise(); 
       setcurrencyStatut(currency);   
-    }, [currency]);
+      // eslint-disable-next-line
+    }, [currency,currencyStatut])
     
     const isCart = () =>{
+      if (Object.keys(cart).length > 0) {
       if(cart.products){
         if(cart.totalProductsCount > 0){return true}
       }
+    }
       return false
     }
     
@@ -158,7 +161,7 @@ const CartProvider = ({ children }: Children) => {
       totalProductsPrice: price,
       timestamp,
     };
-    Report.success(`${productAdded}`, "", "Ok");
+    Notiflix.Notify.success(`${productAdded}`);
     if (typeof window !== "undefined") {
       localStorage.setItem("inmotion:cart", JSON.stringify(_cart));
     }
@@ -201,7 +204,7 @@ const CartProvider = ({ children }: Children) => {
       totalProductsPrice: Math.abs(price),
       timestamp,
     };
-    Report.success(`${productRemoved}`, "", "Ok");
+    Notiflix.Notify.success(`${productRemoved}`);
 
     if (typeof window !== "undefined") {
       if (_cart.totalProductsCount === 0) {
