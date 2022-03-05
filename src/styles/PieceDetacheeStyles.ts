@@ -187,7 +187,7 @@ export const MenuSubCategoriesMobilie = styled.div`
     z-index: 9999;
     top: 20;
     right: 0;
-    width: max-content;
+    width: 100%;
     background: var(--White);
     line-height: 200%;
     border-top: none;

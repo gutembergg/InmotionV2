@@ -25,7 +25,6 @@ const CurrencyProvider = ({ children }: Children) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const clientCurrency = localStorage.getItem("inmotion:currency");
-      console.log("localStorage: ", clientCurrency);
 
       if (clientCurrency) {
         setData(clientCurrency);
@@ -41,8 +40,6 @@ const CurrencyProvider = ({ children }: Children) => {
     }
     setData(currency);
   }, []);
-
-  console.log("datacurrency: ", data);
 
   return (
     <CurrencyContext.Provider value={{ setCurrency, currency: data }}>

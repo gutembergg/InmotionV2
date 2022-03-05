@@ -24,6 +24,7 @@ const MobileCardSerach = ({ product, isEquipement = false }: Props) => {
   const { currency } = useCurrency();
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
+  const showDetails = t("productDetail:showDetails");
   const showVariationTradution = t("productDetail:showVariationTradution");
 
   const handleAddToCart = (product: IProduct) => {
@@ -77,20 +78,17 @@ const MobileCardSerach = ({ product, isEquipement = false }: Props) => {
               </Link>
             </BtnAddToCart>
           ) : (
-            <BtnAddToCart onClick={() => handleAddToCart(product)}>
-              {btnAddToCart}
-            </BtnAddToCart>
+            <>
+              <BtnAddToCart onClick={() => handleAddToCart(product)}>
+                {btnAddToCart}
+              </BtnAddToCart>
+              <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+                <a className="show_detail">{showDetails}</a>
+              </Link>
+            </>
           )}
         </ProductInfo>
       </ProductBlock>
-
-      <BtnDetail>
-        <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-          <a>
-            <IconFleche />
-          </a>
-        </Link>
-      </BtnDetail>
     </Container>
   );
 };

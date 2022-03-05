@@ -42,6 +42,17 @@ export const ProductInfo = styled.div`
   span.span_currency {
     margin-right: 0.5rem;
   }
+
+  a.show_detail {
+    text-decoration: none;
+    color: var(--Blue);
+    font-weight: 600;
+    transition: 0.2s ease;
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
 `;
 
 export const BtnAddToCart = styled.button`

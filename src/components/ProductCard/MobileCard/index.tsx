@@ -6,14 +6,7 @@ import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
 import StockStatuts from "../../StockStatus";
 
-import {
-  Container,
-  ProductBlock,
-  ProductInfo,
-  IconFleche,
-  BtnDetail,
-  BtnAddToCart,
-} from "./styles";
+import { Container, ProductBlock, ProductInfo, BtnAddToCart } from "./styles";
 
 interface Props {
   product: IProduct;
@@ -25,6 +18,7 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
   const { currency } = useCurrency();
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
+  const showDetails = t("productDetail:showDetails");
   const showVariationTradution = t("productDetail:showVariationTradution");
   const sale = t("productDetail:Promotion");
 
@@ -87,7 +81,7 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
                 {btnAddToCart}
               </BtnAddToCart>
               <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-                <a className="detail_view">Afficher le detail</a>
+                <a className="detail_view">{showDetails}</a>
               </Link>
             </>
           )}

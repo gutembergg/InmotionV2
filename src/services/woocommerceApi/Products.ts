@@ -76,14 +76,6 @@ export const getProductsByUpSellIds = async (
   return data;
 };
 
-/* export const _getProductByID = async (idListe: string[]) => {
-  const { data } = await wooCommerce.get(`products`, {
-    includes: idListe,
-  });
-
-  return data;
-}; */
-
 //  Get Product by slug /////////////////////////////////////////
 export const wc_getProductBySlug = async (
   slug: string,

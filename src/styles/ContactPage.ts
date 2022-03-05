@@ -38,10 +38,8 @@ export const MapBlock = styled.div`
   height: 400px;
 
   @media (max-width: 444px) {
-    width: 380px;
-    height: 380px;
-
-    margin: 0 0.5rem;
+    width: 344px;
+    height: 344px;
   }
 
   @media (max-width: 360px) {

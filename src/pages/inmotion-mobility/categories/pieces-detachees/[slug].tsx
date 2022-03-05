@@ -307,9 +307,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     return { name, slug };
   });
 
-  /*  const mobilityProductslist =
-    await getProductByCategoryWithoutVisibilityFilter(80, lang as string); */
-
   const productsUpSells = await getProductsUpSells(
     _productsByCategory,
     lang as string,
