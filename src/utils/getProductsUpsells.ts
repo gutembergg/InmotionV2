@@ -17,7 +17,6 @@ export const getProductsUpSells = async (
     (item, index) => upSell.indexOf(item) === index
   );
 
-  ///////////////////////////////////////
   const __uniquesUpSells = uniquesUpSells.map((item) => String(item));
   const listModels = await getProductsByUpSellIds(__uniquesUpSells, lang);
 
@@ -26,20 +25,6 @@ export const getProductsUpSells = async (
       (cat: any) => cat.slug === swicthCategoriesSlug(categorySlug)
     )
   );
-
-  /*  const productsModelsByDefault = uniquesUpSells.map((productId) => {
-    const productsMobility = modelsList.filter(
-      (product) => product.id === productId
-    );
-
-    const productsByCat = productsMobility.filter((item) =>
-      item.categories.find(
-        (cat) => cat.slug === swicthCategoriesSlug(categorySlug)
-      )
-    );
-
-    return productsByCat;
-  }); */
 
   return productsByCat;
 };

@@ -66,8 +66,8 @@ const ProductSmallCard = ({ product }: Props) => {
           <Name>{product.name}</Name>
           <PriceBlock>
             <span>
-              {currency === "CHF" ? product?.price : product.euroPrice}
-              {" "}{currency === "CHF" ? "CHF" : "EUR"}
+              {currency === "CHF" ? product?.price : product.euroPrice}{" "}
+              {currency === "CHF" ? "CHF" : "EUR"}
             </span>
           </PriceBlock>
           <StockStatuts
@@ -87,10 +87,10 @@ const ProductSmallCard = ({ product }: Props) => {
           <ButtonAddToCart onClick={() => handleAddToCart(product)}>
             {addToCartTradution}
           </ButtonAddToCart>
-{/* 
+
           <Link href={`/inmotion-mobility/produit/${product.slug}`}>
             <a className="product_detail">Afficher le detail</a>
-          </Link> */}
+          </Link>
         </>
       )}
     </Container>

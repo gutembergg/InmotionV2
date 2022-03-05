@@ -258,7 +258,7 @@ export default function CheckoutMobility() {
         setTotalCartPriceConverted(cart.totalProductsPrice);
       }
 
-      if (method.id === 10 || method.id === 5 || method.id === 7) {
+      if (method.id === 5 || method.id === 7) {
         const costPerOrder = method.settings.method_rules.value.filter(
           (item) => item.cost_per_order
         );
@@ -303,7 +303,6 @@ export default function CheckoutMobility() {
             setTotalCartPriceConverted(totalPriceFormated);
 
             setShippingMethod(method);
-            console.log("OK livraison", rule);
           }
         });
       });
@@ -487,8 +486,6 @@ export default function CheckoutMobility() {
       return;
     }
     setValidateOrder(false);
-
-    ///////////////////////////////////////////////////////////////
   }, [
     lineItems,
     _billingShippingData,
@@ -630,8 +627,6 @@ export default function CheckoutMobility() {
         _taxPaymentMethods
       );
 
-      console.log("orederUpdated", orederUpdated);
-
       setTotalOrder(orederUpdated.total);
 
       if (typeof window !== "undefined") {
@@ -727,9 +722,6 @@ export default function CheckoutMobility() {
         setShippingPrice(0);
         setShippingMethod(method);
         getShippingPrice(method);
-      } else if (method.id === 8) {
-        setShippingMethod(method);
-        getShippingPrice(method);
       } else {
         setShippingMethod(method);
         getShippingPrice(method);
@@ -764,6 +756,8 @@ export default function CheckoutMobility() {
       }
 
       const response = await getShippingZoneMethods(selectedCountry);
+
+      console.log("getShippingZoneMethods", response);
 
       if (response) {
         getShippingPrice(response[0]);
@@ -804,25 +798,6 @@ export default function CheckoutMobility() {
 
   const formatMethodsShippingList = useCallback(
     (methodsList: ShippingMethods[]) => {
-      /*  let methodeName = "";
-      const formatedNameMethods = methodsList.map((method) => {
-        switch (true) {
-          case method.id === 8:
-            methodeName = "Livraison";
-            break;
-          case method.id === 2:
-            methodeName = "Point de vente";
-            break;
-            case method.id === 10 || method.id === 5 || method.id === 7:
-            methodeName = "DHL";
-            break; 
-          default:
-            methodeName = "";
-        }
-
-        return { ...method, methodeName };
-      }); */
-
       const formatListMethods = methodsList.map((method) => {
         return {
           ...method,
@@ -830,7 +805,6 @@ export default function CheckoutMobility() {
         };
       });
 
-      console.log("formatListMethods: ", formatListMethods);
       setMethodsShippingList(formatListMethods);
     },
     []
@@ -847,15 +821,15 @@ export default function CheckoutMobility() {
     <>
       <Container>
         <h1>{yourOrder}</h1>
-              <section className="form_users">
-                {" "}
-                {!loged && (
-                  <div>
-                    <p>{haveAccount}</p>
-                    <LoginForm />
-                  </div>
-                )}
-              </section>
+        <section className="form_users">
+          {" "}
+          {!loged && (
+            <div>
+              <p>{haveAccount}</p>
+              <LoginForm />
+            </div>
+          )}
+        </section>
         <Content>
           <div className="content">
             <FormSection className="sections">
