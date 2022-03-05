@@ -247,15 +247,6 @@ export default function ProductDetail({
                   {product.categories[0].name}
                 </span>
                 <h1 className="first_title">{product.name}</h1>
-                {isVariable && (
-                  <div className="priceBox">
-                    <div className="price">
-                      <div>
-                        {product.acf.variation_minimal_price} {currency}
-                      </div>
-                    </div>
-                  </div>
-                )}
                 {!isVariable ? (
                   <div className="priceBox">
                     <div className="price">

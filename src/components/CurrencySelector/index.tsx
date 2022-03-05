@@ -6,6 +6,7 @@ import currencyIcon from "../../../public/images/icons/devise.svg";
 import useCart from "../../hooks/useCart";
 import useCurrency from "../../hooks/useCurrency";
 import { CurrencySelectorStyle } from "./styles";
+import{ useRouter } from "next/router";
 
 interface Props{
 closeMobileMenu?:() => void;
@@ -14,7 +15,7 @@ closeMobileMenu?:() => void;
 const CurrencySelector = ({closeMobileMenu}:Props) => {
   const { setCurrency, currency } = useCurrency();
   const { cart } = useCart();
-
+  const router = useRouter();
   const [isCart, setIsCart] = useState(false);
 
   const isCurrencyCHF = currency === "CHF";
@@ -25,12 +26,12 @@ const CurrencySelector = ({closeMobileMenu}:Props) => {
 
 
   useEffect(() => {
-    if (cart.products?.length > 0) {
-      setIsCart(true);
-    } else {
-      setIsCart(false);
-    }
-  }, [cart.products?.length, cart]);
+      if ( router?.pathname === "/inmotion-mobility/checkout-mobility") {
+          setIsCart(true)
+      }else{
+         setIsCart(false)
+      }
+  }, [router.pathname]);
 
   const handleChange = (currency: string) => {
     setCurrency(currency);

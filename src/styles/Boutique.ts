@@ -18,7 +18,9 @@ export const MainContent = styled.div`
   grid-template-columns: repeat(3, 1fr);
   margin: 2.5rem 4rem 30px 4rem;
 
-
+@media (max-width:640px){
+  margin: 2.5rem 1rem 30px;
+}
 
 
 
@@ -37,9 +39,9 @@ export const MainContent = styled.div`
     transition: transform 0.2s ease;
     margin-top: 2rem;
     .imgBox {
-      width: 200px;
       position: relative;
       height: 200px;
+      width: 100%;
     }
     .care_blue_hover {
       display: none;

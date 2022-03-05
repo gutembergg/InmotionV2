@@ -23,6 +23,7 @@ export default function Panier() {
   const noproducts = t("headerMobility:noproducts");
   const voirPaiement = t("headerMobility:voirPaiement");
   const subtotal = t("headerMobility:subtotal");
+  const warningCart = t("headerMobility:warningCart");
 
   useEffect(() => {
     if (Object.keys(cart).length === 0) {
@@ -178,6 +179,7 @@ export default function Panier() {
             </button>
           </div>
         </div>
+        <p>{warningCart}</p>
       </StyledCart>
     </Container>
   );

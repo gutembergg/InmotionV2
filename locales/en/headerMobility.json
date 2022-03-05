@@ -26,5 +26,6 @@
   "voirpanier": "View cart",
   "voirPaiement": "Checkout",
   "subtotal": "subtotal:",
+  "warningCart": "Be careful to check your order, you will not be able to modify it in the checkout",
   "search": "Search"
 }

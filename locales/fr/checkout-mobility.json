@@ -26,6 +26,11 @@
   "deliveryAddress": "Adresse de livraison",
   "billingAddress": "Adresse de facturation",
   "validateCoupon": "Valider Code promo",
+  "weightMaxTitle": "Poids dépassé",
+  "weightMaxDescr": "Le poids de votre commande dépasse la limite possible, Merci de nous contacter pour des modalitées d'envoi en grossse quantitée",
   "verifier": "vérifier",
+  "errCoutryCurrencyTitle": "Erreur de devises",
+  "errCoutryCurrencyDescCHF": "Pour livrer le produit en Suisse vous devez avoir la devise en CHF:",
+  "errCoutryCurrencyDescEUR": "Pour livrer le produit en dehors de la suisse, vous devez avoir la devise en EUR",
   "totalttc": "Total (T.T.C):"
 }

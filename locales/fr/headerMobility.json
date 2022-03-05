@@ -25,6 +25,7 @@
   "noproducts": "Aucun produits",
   "voirpanier": "Voir le panier",
   "voirPaiement": "Commander",
-  "subtotal": "Sout-total:",
+  "subtotal": "Sous-total:",
+  "warningCart": "Attention à bien vérifier votre commande, vous ne pourrez plus la modifier dans le checkout",
   "search": "Rechercher"
 }

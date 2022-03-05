@@ -48,8 +48,8 @@ export default function Equipements({ subCategories, category }: IProps) {
                           <Image
                             src={category.image?.src}
                             alt={category.name}
-                            width={300}
-                            height={300}
+                            objectFit="contain"
+                            layout="fill"
                             placeholder="blur"
                             blurDataURL={category.image?.src}
                           />

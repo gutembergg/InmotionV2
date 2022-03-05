@@ -27,5 +27,10 @@
   "billingAddress": "Billing address",
   "validateCoupon": "Promo-Code validate",
   "verifier": "check",
+  "weightMaxTitle": "Exceeded weight",
+  "weightMaxDescr": "The weight of your order exceeds the possible limit, thank you to contact us for modalities of sending in big quantity",
+  "errCoutryCurrencyTitle": "Currency error",
+  "errCoutryCurrencyDescCHF": "To deliver the product in Switzerland you must have the currency in CHF:",
+  "errCoutryCurrencyDescEUR": "To deliver the product outside Switzerland, you must have the currency in EUR",
   "totalttc": "Total (incl. tax): "
 }

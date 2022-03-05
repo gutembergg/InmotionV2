@@ -144,18 +144,6 @@ const Cart = () => {
                 0
               </div>
             )}
-            {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
-              <div className="btnCommander">
-                <p
-                  onClick={() => {
-                    goToLink("/inmotion-mobility/checkout-mobility");
-                  }}
-                  className="btnVoirCheckoutText"
-                >
-                  {voirPaiement}
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </div>
