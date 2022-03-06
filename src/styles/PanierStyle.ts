@@ -28,7 +28,10 @@ export const StyledCart = styled.div`
     .cartContainer {
       position: relative;
       border-top: none;
-      
+      display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
       li {
         list-style: none;
         display: flex;
@@ -186,8 +189,7 @@ export const StyledCart = styled.div`
         text-transform: uppercase;
         font-weight: bold;
         transition: all ease-in 0.2s;
-        position: absolute;
-        right: 0;
+        align-self: flex-end;
         a {
           color: var(--White);
           text-decoration: none;

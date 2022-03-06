@@ -179,7 +179,7 @@ export default function Panier() {
             </button>
           </div>
         </div>
-        <p>{warningCart}</p>
+      <p>{warningCart}</p>
       </StyledCart>
     </Container>
   );
