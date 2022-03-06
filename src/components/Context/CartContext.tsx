@@ -6,10 +6,9 @@ import {
   useState,
 } from "react";
 
-import Notiflix, { Report } from "notiflix";
+import { Report } from "notiflix";
 import useCurrency from "../../hooks/useCurrency";
 import { IProduct } from "../../interfaces/IProducts";
-import { IVariation } from "../../interfaces/IVariation";
 import useTranslation from "next-translate/useTranslation";
 
 interface Children {
@@ -39,7 +38,7 @@ const CartProvider = ({ children }: Children) => {
   const [cartItem, setCartItem] = useState<IProduct[]>([]);
   const [cart, setCart] = useState<ICartState>({} as ICartState);
   const timestamp = Date.now();
-  const [currencyStatut, setcurrencyStatut] = useState(currency)
+  const [currencyStatut, setcurrencyStatut] = useState(currency);
   const { t } = useTranslation();
   const productAdded = t("common:productAdded");
   const productRemoved = t("common:productRemoved");
@@ -70,77 +69,77 @@ const CartProvider = ({ children }: Children) => {
     // eslint-disable-next-line
   }, []);
 
-    // ------BEGIN of fatih's function
-    
-    // --------------------------------------------------------------------------------
-    useEffect(() => {
-      // console.log(cart)
-      currency !== currencyStatut && isCart() === true && 
-      switchCartDevise(); 
-      setcurrencyStatut(currency);   
-    }, [currency]);
-    
-    const isCart = () =>{
-      if(cart.products){
-        if(cart.totalProductsCount > 0){return true}
+  // ------BEGIN of fatih's function
+
+  // --------------------------------------------------------------------------------
+  useEffect(() => {
+    // console.log(cart)
+    currency !== currencyStatut && isCart() === true && switchCartDevise();
+    setcurrencyStatut(currency);
+  }, [currency, currencyStatut]);
+
+  const isCart = () => {
+    if (cart.products) {
+      if (cart.totalProductsCount > 0) {
+        return true;
       }
-      return false
     }
-    
-    const switchCartDevise = () => {
-      // console.log("cart.products--->",cart.products);
-      const totalPrice = cart.products.reduce(
-        (acc, item) => {
-          const quantity = acc.qty + item.qty;
-          
-          const total =
+    return false;
+  };
+
+  const switchCartDevise = () => {
+    // console.log("cart.products--->",cart.products);
+    const totalPrice = cart.products.reduce(
+      (acc, item) => {
+        const quantity = acc.qty + item.qty;
+
+        const total =
           acc.price +
           item.qty *
-          parseFloat(
             parseFloat(
-              currency === "CHF" ? item.price : String(item.euroPrice)
-                ).toFixed(2)
-                );
-                
-                return {
-                  qty: quantity,
-                  price: total,
-                };
-              },
-              { qty: 0, price: 0 }
-              );
-              
-              const { qty, price } = totalPrice;
-              
-              
-              // console.log("totalprice--->",totalPrice);
-              const _cart: ICartState = {
-                products: cart.products,
-                totalProductsCount: qty,
-                totalProductsPrice: price,
-                timestamp,
-              };
-              setCart(_cart);
-              
-              setCartItem(cart.products);
-            }; 
-            // ------end of fatih's function
-            // --------------------------------------------------------------------------------
-            
-            const addToCart = (products: IProduct[]) => {
-              console.log(products)
-              const totalPrice = products.reduce(
-                (acc, item) => {
-                  const quantity = acc.qty + item.qty;
-                  
-                  const total =
-                  acc.price +
-                  item.qty *
-                  parseFloat(
-                    parseFloat(
-                      currency === "CHF" ? item.price : String(item.euroPrice)
-                      ).toFixed(2)
-                      );
+              parseFloat(
+                currency === "CHF" ? item.price : String(item.euroPrice)
+              ).toFixed(2)
+            );
+
+        return {
+          qty: quantity,
+          price: total,
+        };
+      },
+      { qty: 0, price: 0 }
+    );
+
+    const { qty, price } = totalPrice;
+
+    // console.log("totalprice--->",totalPrice);
+    const _cart: ICartState = {
+      products: cart.products,
+      totalProductsCount: qty,
+      totalProductsPrice: price,
+      timestamp,
+    };
+    setCart(_cart);
+
+    setCartItem(cart.products);
+  };
+  // ------end of fatih's function
+  // --------------------------------------------------------------------------------
+
+  const addToCart = (products: IProduct[]) => {
+    console.log(products);
+    const totalPrice = products.reduce(
+      (acc, item) => {
+        const quantity = acc.qty + item.qty;
+
+        const total =
+          acc.price +
+          item.qty *
+            parseFloat(
+              parseFloat(
+                currency === "CHF" ? item.price : String(item.euroPrice)
+              ).toFixed(2)
+            );
 
         return {
           qty: quantity,

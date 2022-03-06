@@ -46,7 +46,7 @@ export const updateUsers = async (
 
     return data;
   } catch (error) {
-    console.log("Error: ", error);
+    console.log("Internal error");
   }
 };
 

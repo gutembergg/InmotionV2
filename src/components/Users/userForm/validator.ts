@@ -18,10 +18,7 @@ export const validatorSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  billing_address_2: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  billing_address_2: Yup.string().min(2, "Too Short!").max(50, "Too Long!"),
   billing_postcode: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")

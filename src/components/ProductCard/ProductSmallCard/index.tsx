@@ -25,6 +25,7 @@ const ProductSmallCard = ({ product }: Props) => {
   const { cartItem, addToCart } = useCart();
   const { t } = useTranslation();
   const addToCartTradution = t("productDetail:addToCart");
+  const showDetails = t("productDetail:showDetails");
   const showVariationTradution = t("productDetail:showVariationTradution");
   const sale = t("productDetail:Promotion");
 
@@ -89,7 +90,7 @@ const ProductSmallCard = ({ product }: Props) => {
           </ButtonAddToCart>
 
           <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-            <a className="product_detail">Afficher le detail</a>
+            <a className="product_detail">{showDetails}</a>
           </Link>
         </>
       )}

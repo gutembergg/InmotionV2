@@ -7,6 +7,8 @@ import { updateUsers } from "../../../services/wordpressApi/users";
 import { swissDepartementCode } from "../../../utils/codeCantonsSuisse";
 import { User } from "../../../interfaces/User";
 import { Container, FormSession, ButtonRegiste } from "./styles";
+import { Notify } from "notiflix";
+import Spiner from "../../Spiner";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -123,7 +125,8 @@ const UserForm = ({ currentyUser }: Props) => {
     shipping_country:
       currentyUser.shipping?.country || authorizedCounty[0].code,
   });
-console.log("currentuser",currentyUser)
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (user.token) {
       setFormValues({
@@ -154,7 +157,15 @@ console.log("currentuser",currentyUser)
   }, [currentyUser]);
 
   const _updateUsers = async (value: IFormValues, token: string) => {
-    await updateUsers(value, token);
+    try {
+      setLoading(true);
+      await updateUsers(value, token);
+      setLoading(false);
+      Notify.success("Success");
+    } catch (error) {
+      setLoading(false);
+      Notify.failure("Une erreur est survenue");
+    }
   };
 
   const updateLocalStorage = (values: IFormValues) => {
@@ -563,7 +574,9 @@ console.log("currentuser",currentyUser)
               </div>
 
               <div className="btn_register">
-                <ButtonRegiste type="submit">{btnToModify}</ButtonRegiste>
+                <ButtonRegiste type="submit">
+                  <span>{btnToModify}</span> {loading && <Spiner />}
+                </ButtonRegiste>
               </div>
             </Form>
           )}

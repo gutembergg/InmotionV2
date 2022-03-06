@@ -26,8 +26,8 @@ export const ProductBlock = styled.div`
     position: relative;
 
     @media (max-width: 480px) {
-      height: 50px;
-      width: 50px;
+      height: 65px;
+      width: 65px;
     }
   }
 

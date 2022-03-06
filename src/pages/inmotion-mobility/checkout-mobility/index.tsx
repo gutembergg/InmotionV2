@@ -104,10 +104,13 @@ export default function CheckoutMobility() {
   const weightMaxTitle = t("checkout-mobility:weightMaxTitle");
   const weightMaxDescr = t("checkout-mobility:weightMaxDescr");
   const errCoutryCurrencyTitle = t("checkout-mobility:errCoutryCurrencyTitle");
-  const errCoutryCurrencyDescrCHF = t("checkout-mobility:errCoutryCurrencyDescCHF");
-  const errCoutryCurrencyDescrEUR = t("checkout-mobility:errCoutryCurrencyDescEUR");
-  
-  
+  const errCoutryCurrencyDescrCHF = t(
+    "checkout-mobility:errCoutryCurrencyDescCHF"
+  );
+  const errCoutryCurrencyDescrEUR = t(
+    "checkout-mobility:errCoutryCurrencyDescEUR"
+  );
+
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
   const [lineItems, setLineItems] = useState<LineItemsDTO[]>([]);
@@ -242,13 +245,9 @@ export default function CheckoutMobility() {
 
       if (productsWeight.weight > 89 && method.method_id !== "local_pickup") {
         setStopTransaction(true);
-        Report.failure(
-          `${weightMaxTitle}`,
-          `${weightMaxDescr}`,
-          "Ok",() => {
-            router.push("/inmotion-mobility/contact")
-            },
-        );
+        Report.failure(`${weightMaxTitle}`, `${weightMaxDescr}`, "Ok", () => {
+          router.push("/inmotion-mobility/contact");
+        });
 
         return;
       }
@@ -350,21 +349,17 @@ export default function CheckoutMobility() {
         : values.billing_country,
     };
 
-    if (
-      (currentyCurrency === "EUR" && shipping.country === "CH") 
-    ) {
+    if (currentyCurrency === "EUR" && shipping.country === "CH") {
       Report.failure(
         `${errCoutryCurrencyTitle}`,
         `${errCoutryCurrencyDescrCHF}`,
         "Okay"
-        );
-        return;
-      } else if (
-        (currentyCurrency === "CHF" && billing.country !== "CH")
-        ) {
-          Report.failure(
-            `${errCoutryCurrencyTitle}`,
-            `${errCoutryCurrencyDescrEUR}`,
+      );
+      return;
+    } else if (currentyCurrency === "CHF" && billing.country !== "CH") {
+      Report.failure(
+        `${errCoutryCurrencyTitle}`,
+        `${errCoutryCurrencyDescrEUR}`,
         "Okay"
       );
       return;

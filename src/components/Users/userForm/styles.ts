@@ -128,6 +128,10 @@ export const FormSession = styled.div`
 `;
 
 export const ButtonRegiste = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   height: 45px;
   width: 100%;
   max-width: 300px;
@@ -139,6 +143,10 @@ export const ButtonRegiste = styled.button`
   border: none;
   margin-top: 1rem;
   transition: 0.2s ease;
+
+  span {
+    margin-right: 0.4rem;
+  }
 
   &:hover {
     background: ${shade(0.2, "#0570A6")};
