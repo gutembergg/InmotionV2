@@ -28,7 +28,10 @@ const ProductSmallCard = ({ product }: Props) => {
   const showDetails = t("productDetail:showDetails");
   const showVariationTradution = t("productDetail:showVariationTradution");
   const sale = t("productDetail:Promotion");
-
+  const priceFrom = t("productDetail:priceFrom");
+  const preorder = t("productDetail:preorder");
+  const preorderDate = t("productDetail:preorderDate");
+  
   const handleAddToCart = (product: IProduct) => {
     const productExist = cartItem.find((item) => item.id === product.id);
 
@@ -65,12 +68,52 @@ const ProductSmallCard = ({ product }: Props) => {
           {product.on_sale && <p className="onsale">{sale} </p>}
 
           <Name>{product.name}</Name>
-          <PriceBlock>
-            <span>
-              {currency === "CHF" ? product?.price : product.euroPrice}{" "}
-              {currency === "CHF" ? "CHF" : "EUR"}
-            </span>
-          </PriceBlock>
+          {product.variations.length > 0 ? (
+            
+            <>
+            <PriceBlock>
+              <div className={product?.on_sale ? "regular_price" : ""}>
+               {priceFrom}{" "} 
+             {currency === "CHF"
+                  ? !!product?.price &&
+                    product?.price + " " + currency
+                  : !!product?.euroPrice &&
+                    product?.euroPrice + " " + currency}
+              </div>
+
+              <div className="sale_price">
+                {currency === "CHF"
+                  ? !!product?.sale_price &&
+                    product?.sale_price + " " + currency
+                  : !!product?.sale_price &&
+                    product?.euroPrice + " " + currency}
+              </div>
+            </PriceBlock>
+            </>
+           ) : (
+             <>
+                <PriceBlock>
+               <div className={product?.on_sale ? "regular_price" : ""}>
+                 {currency === "CHF"
+                   ? !!product?.regular_price &&
+                     product?.regular_price + " " + currency
+                   : !!product?.euroRegularPrice &&
+                     product?.euroRegularPrice + " " + currency}
+               </div>
+
+               <div className="sale_price">
+                 {currency === "CHF"
+                   ? !!product?.sale_price &&
+                     product?.sale_price + " " + currency
+                   : !!product?.sale_price &&
+                     product?.euroPrice + " " + currency}
+               </div>
+             </PriceBlock>
+            </>
+           )}
+           {product.acf.precommande === true && (<>
+           <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{product.acf.date_de_sortie}</div>
+           </>)}
           <StockStatuts
             stock_quantity={product.stock_quantity}
             stock_status={product.stock_status}

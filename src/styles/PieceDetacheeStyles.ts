@@ -29,6 +29,9 @@ export const Content = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  .Preorder {
+    color: var(--Red);
+}
 `;
 
 export const ButtonMenu = styled.button`

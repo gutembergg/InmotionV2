@@ -36,13 +36,16 @@ export const Container = styled.div`
     font-weight:bold;
     font-size:1.1em;
   }
+  .Preorder {
+  color: var(--TxtRed);
+}
 `;
 
 export const ImageBlock = styled.div`
   width: 100%;
 `;
 
-export const Name = styled.div`
+export const Name = styled.h4`
   text-align: center;
   color: var(--BlueHover);
   font-size: 1.1rem;
@@ -54,10 +57,11 @@ export const Name = styled.div`
 export const Stock = styled.div``;
 
 export const PriceBlock = styled.div`
-  span {
+  div {
     color: var(--Price);
     font-weight: 600;
   }
+  
 `;
 
 export const ButtonAddToCart = styled.button`

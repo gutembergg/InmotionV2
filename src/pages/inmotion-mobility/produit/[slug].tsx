@@ -81,8 +81,10 @@ export default function ProductDetail({
   const completEquipement = t("productDetail:completEquipement");
   const Attention = t("common:Attention");
   const SelectVariation = t("common:SelectVariation");
-
+  const preorder = t("productDetail:preorder");
+  const preorderDate = t("productDetail:preorderDate");
   const [productQty, setProductQty] = useState(1);
+  const priceFrom = t("productDetail:priceFrom");
 
   //----------------------variations--------------------------------
 
@@ -269,8 +271,29 @@ export default function ProductDetail({
                     </div>
                   </div>
                 ) : (
-                  <></>
+                  <div className="priceBox">
+                  <div className="price">
+                    <div className={product.on_sale ? "" : ""}>
+                    {priceFrom}{" "} 
+                      {currency === "CHF"
+                        ? !!product.price &&
+                          product.price + " " + currency
+                        : !!product.euroPrice &&
+                          product.euroPrice + " " + currency}
+                    </div>
+
+                    <div className="sale_price">
+                      {currency === "CHF"
+                        ? !!product.sale_price &&
+                          product.sale_price + " " + currency
+                        : !!product.sale_price &&
+                          product.euroPrice + " " + currency}
+                    </div>
+                    {product.on_sale && <p>{Promotion}</p>}
+                  </div>
+                </div>
                 )}
+
               </ProductLogo>
               <div className="first_description">
                 <div
@@ -279,6 +302,9 @@ export default function ProductDetail({
                   }}
                 />
               </div>
+              {product.acf.precommande === true && (<>
+            <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{product.acf.date_de_sortie}</div>
+            </>)}
               {isVariable && (
                 <VariationProducts>
                   <h2>{ChooseVariation}</h2>
@@ -344,6 +370,7 @@ export default function ProductDetail({
                                   selectedVariation.euroPrice + " " + currency}
                             </div>
                           </div>
+                          
                           <StockStatuts
                             stock_quantity={selectedVariation.stock_quantity}
                             stock_status={selectedVariation.stock_status}

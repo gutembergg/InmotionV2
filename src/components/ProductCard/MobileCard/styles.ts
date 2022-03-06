@@ -8,7 +8,7 @@ export const Container = styled.li`
   padding: 0.6rem 0;
   border-bottom: 1px solid var(--LightGray);
 
-  .onsale {
+  .promo {
     color: var(--Red);
     font-weight: bold;
     font-size: 1em;
@@ -51,13 +51,15 @@ export const ProductInfo = styled.div`
     font-size: 1rem;
     color: var(--BlueHover);
   }
-
-  span {
-    color: var(--Black);
+  .Preorder {
+    color: var(--Red);
+}
+  div {
+    color: var(--Price);
     font-weight: bold;
     font-size: 0.95em;
   }
-  span.span_currency {
+  div.span_currency {
     margin-right: 0.5rem;
   }
 

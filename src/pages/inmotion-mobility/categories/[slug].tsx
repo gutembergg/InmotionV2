@@ -53,6 +53,8 @@ export default function Category({ category, productsByCategory }: Props) {
   const Promotion = t("productDetail:Promotion");
   const priceFrom = t("productDetail:priceFrom");
   const ChooseModel = t("productDetail:ChooseModel");
+  const preorder = t("productDetail:preorder");
+  const preorderDate = t("productDetail:preorderDate");
 
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
@@ -114,7 +116,7 @@ export default function Category({ category, productsByCategory }: Props) {
   return (
     <>
       <HeaderSeo
-        description="Mobility eletrique produits"
+        description="Mobility electrique produits"
         title={category.yoast_head_json.og_title}
         canonical={category.yoast_head_json.canonical}
         og_locale={category.yoast_head_json.og_locale}
@@ -150,34 +152,56 @@ export default function Category({ category, productsByCategory }: Props) {
                   dangerouslySetInnerHTML={{ __html: colorizeTitle() }}
                 ></h2>
                 <div className="price">
-                  <div
-                    className={
-                      products[productIndex]?.on_sale ? "regular_price" : ""
-                    }
-                  >
-                    {currency === "CHF"
-                      ? !!products[productIndex]?.regular_price &&
-                        products[productIndex]?.regular_price + " " + currency
-                      : !!products[productIndex]?.euroRegularPrice &&
-                        products[productIndex]?.euroRegularPrice +
-                          " " +
-                          currency}
-                  </div>
-
-                  <div className="sale_price">
-                    {currency === "CHF"
-                      ? !!products[productIndex]?.sale_price &&
-                        products[productIndex]?.sale_price + " " + currency
-                      : !!products[productIndex]?.sale_price &&
-                        products[productIndex]?.euroPrice + " " + currency}
-                  </div>
-                  <div>
-                    {products[productIndex]?.on_sale && (
-                      <p className="promo">{Promotion}</p>
-                    )}
-                  </div>
-                </div>
+                {products[productIndex]?.variations.length > 0 ? (
+              
+              <>
+              <div className={products[productIndex]?.on_sale ? "regular_price" : ""}>
+               {priceFrom}{" "} 
+             {currency === "CHF"
+                  ? !!products[productIndex]?.price &&
+                  products[productIndex]?.price + " " + currency
+                  : !!products[productIndex]?.euroPrice &&
+                  products[productIndex]?.euroPrice + " " + currency}
               </div>
+
+              <div className="sale_price">
+                {currency === "CHF"
+                  ? !!products[productIndex]?.sale_price &&
+                  products[productIndex]?.sale_price + " " + currency
+                  : !!products[productIndex]?.sale_price &&
+                  products[productIndex]?.euroPrice + " " + currency}
+              </div>
+              <div>
+                {products[productIndex]?.on_sale && <p className="promo">{Promotion}</p>}
+              </div>
+            </>
+           ) : (
+             <>
+               <div className={products[productIndex]?.on_sale ? "regular_price" : ""}>
+                 {currency === "CHF"
+                   ? !!products[productIndex]?.regular_price &&
+                   products[productIndex]?.regular_price + " " + currency
+                   : !!products[productIndex]?.euroRegularPrice &&
+                   products[productIndex]?.euroRegularPrice + " " + currency}
+               </div>
+
+               <div className="sale_price">
+                 {currency === "CHF"
+                   ? !!products[productIndex]?.sale_price &&
+                   products[productIndex]?.sale_price + " " + currency
+                   : !!products[productIndex]?.sale_price &&
+                   products[productIndex]?.euroPrice + " " + currency}
+               </div>
+               <div>
+                 {products[productIndex]?.on_sale && <p className="promo">{Promotion}</p>}
+               </div>
+             </>
+           )}
+                </div>
+           {products[productIndex].acf.precommande === true && (<>
+           <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{products[productIndex].acf.date_de_sortie}</div>
+           </>)}
+                  </div>
             </LogoProduct>
             <ProductInfos>
               {vitesse && (
@@ -242,11 +266,6 @@ export default function Category({ category, productsByCategory }: Props) {
             </ProductInfos>
             {products[productIndex]?.variations.length > 0 ? (
               <>
-                <p className="productFrom">
-                  {priceFrom}{" "}
-                  {products[productIndex].acf.variation_minimal_price}{" "}
-                  {currency}
-                </p>
                 <BtnProductDetail>
                   <Link
                     href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}

@@ -29,6 +29,7 @@ interface AcfDescriptionProduct {
 }
 
 interface Acf {
+  date_de_sortie: string;
   choixvideoImage: string;
   description_du_produit: AcfDescriptionProduct[];
   marque_du_produit: string;
