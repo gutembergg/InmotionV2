@@ -5,10 +5,9 @@ import useCart from "../../hooks/useCart";
 import placeholder from "../../../public/images/placeholder_woocommerce.webp";
 import useCurrency from "../../hooks/useCurrency";
 import { BsCart2 } from "react-icons/bs";
-
 import { StyledCart } from "./styles";
 import useTranslation from "next-translate/useTranslation";
-
+import Notiflix from "notiflix";
 const Cart = () => {
   const router = useRouter();
   const cartModalRef = useRef<HTMLDivElement>(null);
@@ -21,13 +20,29 @@ const Cart = () => {
   const voirpanier = t("headerMobility:voirpanier");
   const voirPaiement = t("headerMobility:voirPaiement");
   const subtotal = t("headerMobility:subtotal");
+  const cartBlockTitle = t("headerMobility:cartBlockTitle");
+  const cartBlockDescr = t("headerMobility:cartBlockDescr");
+  const backToCart = t("headerMobility:backToCart");
   
   
   
   
   const setCartVisibility = () => {
     if (router.pathname === "/inmotion-mobility/checkout-mobility") {
-      return;
+      Notiflix.Confirm.show(
+        `${cartBlockTitle}`,
+        `${cartBlockDescr}`,
+        'Ok',
+        `${backToCart}`,
+        () => {
+        return 
+        },
+        () => {
+        router.push("/inmotion-mobility/panier")
+        },
+        {width:"500px"}
+        );
+        return
     }
     setopencart(!opencart);
   };

@@ -26,6 +26,9 @@
   "voirpanier": "Warenkorb ansehen",
   "voirPaiement": "bestellen",
   "subtotal": "Zwischensumme:",
+  "backToCart": "Zurück zum Warenkorb",
+  "cartBlockTitle": "Abgesperrter Warenkorb",
+  "cartBlockDescr": "Sie können Ihren Warenkorb auf der Bestellseite nicht bearbeiten, gehen Sie zurück auf die Warenkorbseite.",
   "warningCart": "Achten Sie darauf, Ihre Bestellung zu überprüfen, da Sie sie im Checkout nicht mehr ändern können",
   "search": "Suchen"
 

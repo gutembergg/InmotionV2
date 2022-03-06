@@ -6,10 +6,10 @@ import {
   useState,
 } from "react";
 
-import { Report } from "notiflix";
 import useCurrency from "../../hooks/useCurrency";
 import { IProduct } from "../../interfaces/IProducts";
 import useTranslation from "next-translate/useTranslation";
+import Notiflix from "notiflix";
 
 interface Children {
   children: ReactNode;
@@ -157,7 +157,7 @@ const CartProvider = ({ children }: Children) => {
       totalProductsPrice: price,
       timestamp,
     };
-    Report.success(`${productAdded}`, "", "Ok");
+    Notiflix.Notify.success(`${productAdded}`);
     if (typeof window !== "undefined") {
       localStorage.setItem("inmotion:cart", JSON.stringify(_cart));
     }
@@ -200,7 +200,7 @@ const CartProvider = ({ children }: Children) => {
       totalProductsPrice: Math.abs(price),
       timestamp,
     };
-    Report.success(`${productRemoved}`, "", "Ok");
+    Notiflix.Notify.success(`${productRemoved}`);
 
     if (typeof window !== "undefined") {
       if (_cart.totalProductsCount === 0) {

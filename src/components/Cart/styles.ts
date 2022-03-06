@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const StyledCart = styled.div`
   flex: 0 0 50px;
-cursor: pointer;
-align-self: center;
+  align-self: center;
   .cartIconElement {
     position: relative;
-display: flex;
+    display: flex;
     .cartIcon {
       margin-right: 0px;
       transition: all ease-in 0.2s;
+      cursor: pointer;
       @media (max-width: 1024px) {
         width: 20px;
       }
