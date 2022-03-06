@@ -18,7 +18,12 @@ export const Container = styled.div`
   width: 100%;
   padding: 0 3rem;
   margin: auto;
-
+  @media (max-width: 960px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 640px) {
+    padding: 0 1rem;
+  }
   h1 {
     text-align: center;
     margin-top: 2rem;
@@ -30,7 +35,7 @@ export const Container = styled.div`
   .form_users {
     margin-top: 1rem;
     > div > div {
-      width: 100%;
+      width: fit-content;
 
       svg {
         margin-top: 8px;
@@ -84,7 +89,6 @@ export const FormSection = styled.div`
   width: 100%;
   max-width: 800px;
   height: 100%;
-  padding: 0rem 1rem;
 
   .ReactCollapse--collapse {
     transition: height 500ms;
