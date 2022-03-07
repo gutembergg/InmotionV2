@@ -14,6 +14,8 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   padding-top: 22px;
   align-items: flex-start;
+  overflow-x: hidden;
+
   .decouvrez_model {
     margin: auto;
     margin-bottom: 1rem;
@@ -136,7 +138,11 @@ export const ProductImage = styled.div`
      min-width: 100px;
      margin-right: 30px;
      align-self: center;
-     
+     >div{
+       position: relative;
+       width: 100%;
+       height: 100%;
+     }
      @media (max-width: 980px) {
        height: 25vh;
       }
@@ -218,10 +224,9 @@ export const ProductMenuResponsive = styled.div`
 `;
 
 export const BtnProductDetail = styled.button`
-   height: 40px;
+  
   width: 100%;
   max-width: 200px;
-  background: var(--Blue);
   color: var(--White);
   border: none;
   text-align: center;
@@ -229,15 +234,16 @@ export const BtnProductDetail = styled.button`
   @media (max-width: 768px){
     margin-top: 10px;
   }
-  &:hover {
-    background: var(--BlueHover);
-}
-a {
-    text-decoration: none;
-    color: var(--White);
+  a{
+    padding: 10px 20px;
+    width: 100%; ;
+    height: 100%;
+    display:block ;
     font-weight: 600;
-
   }
+ 
+}
+
 `;
 
 export const LogoProduct = styled.div`
@@ -323,6 +329,7 @@ export const AddToCartSession = styled.div`
     color: var(--Blue);
     font-weight: bold;
     margin-left:20px;
+    cursor: pointer;
 
     &:hover {
       color: ${shade(0.2, "#0570A6")};

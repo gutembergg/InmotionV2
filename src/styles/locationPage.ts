@@ -68,10 +68,9 @@ export const BlockInfoLocation = styled.div`
         color: var(--White);
         font-weight: 600;
         transition: all ease-in 0.1s;
-        &:hover{
-          transition: all ease-in 0.1s;
-          background-color: var(--BlueHover);
-        }
+        display: block;
+        width: 100% ;
+        height: 100% ;
       }
     }
   }
@@ -129,17 +128,22 @@ li{
     align-items: flex-start;
   }
 .button{
-  padding: 0.7rem 1.5rem;
-  background-color: var(--Blue);
   margin-top: 20px;
   width: max-content;
   @media (max-width:640px){
     margin: 20px auto 0 auto;
   }
-  a{
-    color: var(--White);
-    text-decoration: none;
-  }
+    a {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: var(--White);
+        font-weight: 600;
+        transition: all ease-in 0.1s;
+        display: block;
+        width: 100% ;
+        height: 100% ;
+      }
+  
 }
 
 

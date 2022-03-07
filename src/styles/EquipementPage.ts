@@ -46,29 +46,32 @@ export const MenuCategories = styled.div`
   width: 100%;
   max-width: 300px;
   color: var(--DarkGray);
-
   font-size: 1.2rem;
-
+  
+  .category_name {
+    cursor: pointer;
+  }
   .active_menu {
     color: var(--Blue);
   }
-
+  
   .prod_model_marque {
     text-align: end;
     line-height: 200%;
-
+    
     margin-top: 1.5rem;
+    cursor: pointer; 
   }
-
+  
   .prod_model_item {
     list-style: none;
 
     font-weight: 600;
     cursor: pointer;
 
-    &:hover {
+    /* &:hover {
       color: ${shade(0.2, "#0570A6")};
-    }
+    } */
   }
 
   @media (max-width: 1200px) {

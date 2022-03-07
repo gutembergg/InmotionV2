@@ -396,7 +396,18 @@ export default function ProductDetail({
                         handleAddToCart(selectedVariation, product.name)
                       }
                     >
+                      <motion.div initial={{background: "#0570A6" }}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.01 },
+                  background: "#03486b" 
+                }}
+                style={{ originX: 0.5 }}
+                whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                  className="addToCart_button"
+                  >
                       {btnAddToCart}
+                    </motion.div>
                     </Button>
                   ) : (
                     <Button

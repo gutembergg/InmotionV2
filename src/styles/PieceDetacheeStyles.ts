@@ -245,9 +245,6 @@ export const MenuSubCategories = styled.div`
       font-weight: 600;
       font-size: 1.2rem;
 
-      &:hover {
-        color: var(--Blue);
-      }
     }
 
     a.active {

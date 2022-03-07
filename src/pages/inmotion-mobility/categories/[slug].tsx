@@ -21,7 +21,7 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import SliderModels from "../../../components/Sliders/SliderModels";
 import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
-
+import { motion } from "framer-motion";
 import {
   Container,
   ProductInfos,
@@ -126,25 +126,38 @@ export default function Category({ category, productsByCategory }: Props) {
         <h1>{category.name}</h1>
         <Content>
           <ProductImage>
-            <Image
-              objectFit="contain"
-              layout="fill"
-              objectPosition="right"
-              src={
-                products[productIndex]?.images[0]
-                  ? products[productIndex]?.images[0].src
-                  : placeholder.src
-              }
-              alt={products[productIndex]?.name}
-              placeholder="blur"
-              blurDataURL={
-                products[productIndex]?.images[0]
-                  ? products[productIndex]?.images[0].src
-                  : placeholder.src
-              }
-            />
+            <motion.div
+              key={products[productIndex]?.id}
+              initial={{ x: 0, opacity: 0 }}
+              animate={{ x: ["0%", "-100%", "0%"], opacity: [0, 0, 1] }}
+              transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
+            >
+              <Image
+                objectFit="contain"
+                layout="fill"
+                objectPosition="right"
+                src={
+                  products[productIndex]?.images[0]
+                    ? products[productIndex]?.images[0].src
+                    : placeholder.src
+                }
+                alt={products[productIndex]?.name}
+                placeholder="blur"
+                blurDataURL={
+                  products[productIndex]?.images[0]
+                    ? products[productIndex]?.images[0].src
+                    : placeholder.src
+                }
+              />
+            </motion.div>
           </ProductImage>
-          <div className="ProductDescrt">
+          <motion.div
+            className="ProductDescrt"
+            key={products[productIndex]?.id}
+            initial={{ x: 0, opacity: 0 }}
+            animate={{ x: ["0%", "100%", "0%"], opacity: [0, 0, 1] }}
+            transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
+          >
             <LogoProduct>
               <div className="logo_box">
                 <h2
@@ -152,92 +165,111 @@ export default function Category({ category, productsByCategory }: Props) {
                   dangerouslySetInnerHTML={{ __html: colorizeTitle() }}
                 ></h2>
                 <div className="price">
-                {products[productIndex]?.variations.length > 0 ? (
-              
-              <>
-              <div className={products[productIndex]?.on_sale ? "regular_price" : ""}>
-               {priceFrom}{" "} 
-             {currency === "CHF"
-                  ? !!products[productIndex]?.price &&
-                  products[productIndex]?.price + " " + currency
-                  : !!products[productIndex]?.euroPrice &&
-                  products[productIndex]?.euroPrice + " " + currency}
-              </div>
+                  {products[productIndex]?.variations.length > 0 ? (
+                    <>
+                      <div
+                        className={
+                          products[productIndex]?.on_sale ? "regular_price" : ""
+                        }
+                      >
+                        {priceFrom}{" "}
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.price &&
+                            products[productIndex]?.price + " " + currency
+                          : !!products[productIndex]?.euroPrice &&
+                            products[productIndex]?.euroPrice + " " + currency}
+                      </div>
 
-              <div className="sale_price">
-                {currency === "CHF"
-                  ? !!products[productIndex]?.sale_price &&
-                  products[productIndex]?.sale_price + " " + currency
-                  : !!products[productIndex]?.sale_price &&
-                  products[productIndex]?.euroPrice + " " + currency}
-              </div>
-              <div>
-                {products[productIndex]?.on_sale && <p className="promo">{Promotion}</p>}
-              </div>
-            </>
-           ) : (
-             <>
-               <div className={products[productIndex]?.on_sale ? "regular_price" : ""}>
-                 {currency === "CHF"
-                   ? !!products[productIndex]?.regular_price &&
-                   products[productIndex]?.regular_price + " " + currency
-                   : !!products[productIndex]?.euroRegularPrice &&
-                   products[productIndex]?.euroRegularPrice + " " + currency}
-               </div>
+                      <div className="sale_price">
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.sale_price + " " + currency
+                          : !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.euroPrice + " " + currency}
+                      </div>
+                      <div>
+                        {products[productIndex]?.on_sale && (
+                          <p className="promo">{Promotion}</p>
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className={
+                          products[productIndex]?.on_sale ? "regular_price" : ""
+                        }
+                      >
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.regular_price &&
+                            products[productIndex]?.regular_price +
+                              " " +
+                              currency
+                          : !!products[productIndex]?.euroRegularPrice &&
+                            products[productIndex]?.euroRegularPrice +
+                              " " +
+                              currency}
+                      </div>
 
-               <div className="sale_price">
-                 {currency === "CHF"
-                   ? !!products[productIndex]?.sale_price &&
-                   products[productIndex]?.sale_price + " " + currency
-                   : !!products[productIndex]?.sale_price &&
-                   products[productIndex]?.euroPrice + " " + currency}
-               </div>
-               <div>
-                 {products[productIndex]?.on_sale && <p className="promo">{Promotion}</p>}
-               </div>
-             </>
-           )}
+                      <div className="sale_price">
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.sale_price + " " + currency
+                          : !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.euroPrice + " " + currency}
+                      </div>
+                      <div>
+                        {products[productIndex]?.on_sale && (
+                          <p className="promo">{Promotion}</p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
-           {products[productIndex].acf.precommande === true && (<>
-           <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{products[productIndex].acf.date_de_sortie}</div>
-           </>)}
-                  </div>
+                {products[productIndex].acf.precommande === true && (
+                  <>
+                    <div className="Preorder">
+                      {preorder} <br />
+                      {preorderDate} {products[productIndex].acf.date_de_sortie}
+                    </div>
+                  </>
+                )}
+              </div>
             </LogoProduct>
             <ProductInfos>
               {vitesse && (
-                
                 <div className="weight">
-                <div className="iconBox">
-                  <Image
-                    src={SpeedIcon}
-                    alt="poids"
-                    layout="fill"
-                    objectFit="contain"
+                  <div className="iconBox">
+                    <Image
+                      src={SpeedIcon}
+                      alt="poids"
+                      layout="fill"
+                      objectFit="contain"
                     />
-                </div>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: vitesse?.options[0] as string,
-                  }}
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: vitesse?.options[0] as string,
+                    }}
                   ></div>
-              </div>
-                  )}
-                  {autonomie && (
-              <div className="weight autonomie">
-                <div className="iconBox">
-                  <Image
-                    src={AutonomieIcon}
-                    alt="poids"
-                    layout="fill"
-                    objectFit="contain"
-                  />
                 </div>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: autonomie?.options[0] as string,
-                  }}
-                ></div>
-              </div>
+              )}
+              {autonomie && (
+                <div className="weight autonomie">
+                  <div className="iconBox">
+                    <Image
+                      src={AutonomieIcon}
+                      alt="poids"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: autonomie?.options[0] as string,
+                    }}
+                  ></div>
+                </div>
               )}
               {autorisationRouler !== undefined &&
                 autorisationRouler.options[0].length > 0 && (
@@ -270,26 +302,57 @@ export default function Category({ category, productsByCategory }: Props) {
                   <Link
                     href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
                   >
-                    {showVariationTradution}
+                    <motion.a
+                      initial={{ background: "#0570A6" }}
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.01 },
+                        background: "#03486b",
+                      }}
+                      style={{ originX: 0.5 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
+                    >
+                      {showVariationTradution}
+                    </motion.a>
                   </Link>
                 </BtnProductDetail>
               </>
             ) : (
               <AddToCartSession>
-                <button
+                <motion.button
+                  initial={{ background: "#0570A6" }}
+                  whileHover={{
+                    scale: 1.02,
+                    transition: { duration: 0.01 },
+                    background: "#03486b",
+                  }}
+                  style={{ originX: 0.5 }}
+                  whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
                   className="addToCart_button"
                   onClick={() => handleAddToCart(products[productIndex])}
                 >
                   {btnAddToCart}
-                </button>
+                </motion.button>
                 <Link
                   href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
                 >
-                  <a className="link">{linkShowDetails}</a>
+                  <motion.a
+                    className="link"
+                    initial={{ color: "#0570A6" }}
+                    whileHover={{
+                      scale: 1.02,
+                      transition: { duration: 0.01 },
+                      color: "#03486b",
+                    }}
+                    style={{ originX: 0.5 }}
+                    whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
+                  >
+                    {linkShowDetails}
+                  </motion.a>
                 </Link>
               </AddToCartSession>
             )}
-          </div>
+          </motion.div>
         </Content>
         <h2 className="squared sliderTitle">{ChooseModel}</h2>
         <ProductMenuResponsive className="productMenuResponsive">

@@ -30,7 +30,7 @@ width: 100%;
   
   a{
       text-decoration: none;
-
+display:block;
       .product_name {
     color: var(--Blue);
 }

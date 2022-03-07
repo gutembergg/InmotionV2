@@ -167,12 +167,14 @@ export const MenuSubCategories = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0.3rem;
+    cursor: pointer;
 
     a {
       text-decoration: none;
       color: var(--DarkGray);
       font-weight: 600;
       font-size: 1.2rem;
+      cursor: pointer;
     }
 
     a.active {

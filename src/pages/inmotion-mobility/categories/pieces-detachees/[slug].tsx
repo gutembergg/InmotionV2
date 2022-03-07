@@ -22,7 +22,7 @@ import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts
 import { ICategories } from "../../../../interfaces/ICategories";
 import { getProductsUpSells } from "../../../../utils/getProductsUpsells";
 import MobileCard from "../../../../components/ProductCard/MobileCard";
-
+import { motion } from "framer-motion";
 import {
   Container,
   Content,
@@ -237,7 +237,14 @@ export default function PiecesDetacheesSubCat({
                     <Link
                       href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
                     >
-                      <a
+                      <motion.a
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.05 },
+                        color: "#414141" 
+                      }}
+                      style={{ originX: 0.5 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
                         className={
                           currentyCategory.slug === category?.slug
                             ? "active"
@@ -245,7 +252,7 @@ export default function PiecesDetacheesSubCat({
                         }
                       >
                         {category?.name}
-                      </a>
+                      </motion.a>
                     </Link>
                   </li>
                 );

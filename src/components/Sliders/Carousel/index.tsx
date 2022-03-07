@@ -101,7 +101,12 @@ export default function CarouselSwiper({ products }: Props) {
             <SwiperSlide key={product.id}>
               <motion.div className="slide_block" variants={item}>
                 <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-                  <a className="link">
+                  <motion.a className="link" whileHover={{
+                    scale: 1.04,
+                    transition: { duration: 0.07 },
+                  }}
+                  style={{ originX: 0.5 }}
+                  whileTap={{ scale: 0.98, transition: { duration: 0.02 } }}>
                     <Image
                       width={150}
                       height={150}
@@ -118,7 +123,7 @@ export default function CarouselSwiper({ products }: Props) {
                       {currency === "CHF" ? product.price : product.euroPrice}.-
                     </div>
                     <div className="ButtonViewProduct"></div>
-                  </a>
+                  </motion.a>
                 </Link>
               </motion.div>
             </SwiperSlide>

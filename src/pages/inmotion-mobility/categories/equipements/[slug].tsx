@@ -17,6 +17,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 import MobileCard from "../../../../components/ProductCard/MobileCard";
+import { motion } from "framer-motion";
 
 import {
   Container,
@@ -145,7 +146,14 @@ export default function EquipementsSubCat({
                     <Link
                       href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
                     >
-                      <a
+                      <motion.a 
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.05 },
+                color: "#414141" 
+              }}
+              style={{ originX: 0.5 }}
+              whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
                         className={
                           currentyCategory.slug === category?.slug
                             ? "active"
@@ -153,7 +161,7 @@ export default function EquipementsSubCat({
                         }
                       >
                         {category?.name}
-                      </a>
+                      </motion.a>
                     </Link>
                   </li>
                 );

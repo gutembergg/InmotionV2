@@ -180,24 +180,23 @@ export const StyledCart = styled.div`
 
       .btnCommander {
         font-size: 0.8em;
-        padding: 12px 60px;
         margin-left: 12px;
         margin-bottom: 25px;
         border: none;
-        background-color: var(--Blue);
         color: var(--White);
         text-transform: uppercase;
         font-weight: bold;
         transition: all ease-in 0.2s;
         align-self: flex-end;
         a {
+          padding: 12px 60px;
           color: var(--White);
           text-decoration: none;
+          display: block;
+          width: 100% ;
+          height: 100% ;
         }
-        &:hover {
-          transition: all ease-in 0.1s;
-          background-color: #1186c0;
-        }
+
       }
     }
   } 
