@@ -4,7 +4,7 @@ import { validatorSchema } from "./validator";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { updateUsers } from "../../../services/wordpressApi/users";
-import { swissDepartementCode } from "../../../utils/codeCantonsSuisse";
+//import { swissDepartementCode } from "../../../utils/codeCantonsSuisse";
 import { User } from "../../../interfaces/User";
 import { Container, FormSession, ButtonRegiste } from "./styles";
 import { Notify } from "notiflix";
@@ -101,7 +101,7 @@ const UserForm = ({ currentyUser }: Props) => {
     },
   ];
 
-  const { user } = useUser();
+  const { user, updateStateUser } = useUser();
   const [formValues, setFormValues] = useState<IFormValues>({
     billing_last_name: currentyUser.billing?.last_name || "",
     billing_first_name: currentyUser.billing?.first_name || "",
@@ -217,6 +217,7 @@ const UserForm = ({ currentyUser }: Props) => {
                   "inmotion:user",
                   JSON.stringify(newDataLocalstorage)
                 );
+                updateStateUser();
               }
             }
           }}
@@ -374,7 +375,7 @@ const UserForm = ({ currentyUser }: Props) => {
                     ) : null}
                   </div>
 
-                  <div>
+                  {/*   <div>
                     <Field
                       as="select"
                       name="billing_state"
@@ -386,7 +387,7 @@ const UserForm = ({ currentyUser }: Props) => {
                         </option>
                       ))}
                     </Field>
-                  </div>
+                  </div> */}
                   <div>
                     <Field
                       as="select"
@@ -546,7 +547,7 @@ const UserForm = ({ currentyUser }: Props) => {
                       ) : null}
                     </div>
 
-                    <Field
+                    {/*      <Field
                       as="select"
                       name="shipping_state"
                       className="input_selects"
@@ -556,7 +557,7 @@ const UserForm = ({ currentyUser }: Props) => {
                           {state.nom}
                         </option>
                       ))}
-                    </Field>
+                    </Field> */}
 
                     <Field
                       as="select"

@@ -20,6 +20,7 @@ interface IUserContext {
   user: IUserState;
   login: (authUser: AuthUser) => void;
   logout: () => void;
+  updateStateUser: () => void;
 }
 export interface IUserState {
   token: string;
@@ -80,6 +81,16 @@ const UserProvider = ({ children }: Children) => {
     return {} as IUserState;
   });
 
+  const updateStateUser = () => {
+    if (typeof window !== "undefined") {
+      const userAuthenticated = localStorage.getItem("inmotion:user");
+
+      if (userAuthenticated) {
+        setData(JSON.parse(userAuthenticated));
+      }
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const userAuthenticated = localStorage.getItem("inmotion:user");
@@ -123,7 +134,9 @@ const UserProvider = ({ children }: Children) => {
     Notiflix.Notify.success("Vous êtes déconnecté");
   }, []);
   return (
-    <UserContext.Provider value={{ user: data, login, logout }}>
+    <UserContext.Provider
+      value={{ user: data, login, logout, updateStateUser }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -16,7 +16,7 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  padding: 0 3rem;
+  padding: 0 1rem;
   margin: auto;
   @media (max-width: 960px) {
     padding: 0 2rem;
@@ -196,25 +196,34 @@ export const FormSection = styled.div`
     cursor: pointer;
     margin-top: 1.4rem;
 
-    h2.active3 {
-      background-color: var(--Blue);
-    }
+    button {
+      width: 100%;
+      border: none;
+      background: transparent;
 
-    h2.disabled3 {
-      cursor: not-allowed;
-      background-color: var(--DarkGray);
-    }
+      h2.active3 {
+        background-color: var(--Blue);
+      }
 
-    h2.completed {
-      background-color: var(--BlueSelected);
-    }
+      h2.disabled3 {
+        cursor: not-allowed;
+        background-color: var(--DarkGray);
+      }
 
-    h2 {
-      background-color: var(--DarkGray);
-      color: var(--White);
-      font-weight: 600;
-      font-size: 1.3rem;
-      padding: 0.7rem;
+      h2.completed {
+        background-color: var(--BlueSelected);
+      }
+
+      h2 {
+        display: flex;
+        justify-content: start;
+        width: 100%;
+        background-color: var(--DarkGray);
+        color: var(--White);
+        font-weight: 600;
+        font-size: 1.3rem;
+        padding: 0.7rem;
+      }
     }
 
     .coupon_code_block {
@@ -336,6 +345,7 @@ export const PaymentBankTransfert = styled.button`
   }
 
   div.disable {
+    cursor: not-allowed;
     background-color: var(--DarkGray);
     padding: 0.7rem;
 

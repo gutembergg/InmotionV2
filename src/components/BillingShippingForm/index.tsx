@@ -7,7 +7,6 @@ import { IUserState } from "../Context/UserContext";
 
 import { Container, FormSession, ButtonRegiste } from "./styles";
 import { updateUsers } from "../../services/wordpressApi/users";
-import { swissDepartementCode } from "../../utils/codeCantonsSuisse";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -333,7 +332,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                     ) : null}
                   </div>
 
-                  <div>
+                  {/*   <div>
                     <Field
                       as="select"
                       name="billing_state"
@@ -346,7 +345,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                         </option>
                       ))}
                     </Field>
-                  </div>
+                  </div> */}
                   <div>
                     <Field
                       as="select"
@@ -507,7 +506,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       ) : null}
                     </div>
 
-                    <Field
+                    {/*      <Field
                       as="select"
                       name="shipping_state"
                       className="input_selects"
@@ -517,7 +516,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                           {state.nom}
                         </option>
                       ))}
-                    </Field>
+                    </Field> */}
 
                     <Field
                       as="select"

@@ -63,8 +63,8 @@ export const ProductInfo = styled.div`
     margin-right: 0.5rem;
   }
 
-  a.detail_view {
-    text-decoration: none;
+  p.detail_view {
+    cursor: pointer;
     color: var(--Blue);
     font-weight: 600;
     padding-left: 30px;
@@ -78,6 +78,9 @@ export const ProductInfo = styled.div`
 `;
 
 export const BtnAddToCart = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 220px;
   height: 30px;
   padding: 0 2rem;
@@ -91,8 +94,8 @@ export const BtnAddToCart = styled.button`
     transform: scale(0.9);
   }
 
-  a {
-    text-decoration: none;
+  p {
+    cursor: pointer;
     color: var(--White);
   }
 

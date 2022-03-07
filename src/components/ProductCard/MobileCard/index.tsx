@@ -1,6 +1,7 @@
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import Notiflix from "notiflix";
 import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -10,10 +11,10 @@ import { Container, ProductBlock, ProductInfo, BtnAddToCart } from "./styles";
 
 interface Props {
   product: IProduct;
-  isEquipement?: boolean;
 }
 
-const MobileCard = ({ product, isEquipement = false }: Props) => {
+const MobileCard = ({ product }: Props) => {
+  const router = useRouter();
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
   const { t } = useTranslation();
@@ -41,6 +42,28 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
       addToCart([...cartItem, { ...product, qty: 1 }]);
     }
   };
+
+  const handleShowDetails = (slug: string) => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();
+    router
+      .push(`/inmotion-mobility/produit/${slug}`)
+      .then((res) => handleStop());
+  };
+
   return (
     <Container>
       <ProductBlock>
@@ -114,18 +137,19 @@ const MobileCard = ({ product, isEquipement = false }: Props) => {
           {Array.isArray(product.variations) &&
           product.variations.length > 0 ? (
             <BtnAddToCart>
-              <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+              <p onClick={() => handleShowDetails(product.slug)}>
+                {" "}
                 {showVariationTradution}
-              </Link>
+              </p>
             </BtnAddToCart>
           ) : (
             <>
               <BtnAddToCart onClick={() => handleAddToCart(product)}>
                 {btnAddToCart}
               </BtnAddToCart>
-              <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-                <a className="detail_view">{showDetails}</a>
-              </Link>
+              <div onClick={() => handleShowDetails(product.slug)}>
+                <p className="detail_view">{showDetails}</p>
+              </div>
             </>
           )}
         </ProductInfo>
