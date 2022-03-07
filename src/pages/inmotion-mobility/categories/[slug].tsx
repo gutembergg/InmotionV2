@@ -300,7 +300,7 @@ export default function Category({ category, productsByCategory }: Props) {
               <>
                 <BtnProductDetail>
                   <Link
-                    href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+                    href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`} passHref
                   >
                     <motion.a
                       initial={{ background: "#0570A6" }}
@@ -334,7 +334,7 @@ export default function Category({ category, productsByCategory }: Props) {
                   {btnAddToCart}
                 </motion.button>
                 <Link
-                  href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+                  href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}  passHref
                 >
                   <motion.a
                     className="link"

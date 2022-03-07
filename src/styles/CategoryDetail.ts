@@ -226,7 +226,7 @@ export const ProductMenuResponsive = styled.div`
 export const BtnProductDetail = styled.button`
   
   width: 100%;
-  max-width: 200px;
+  max-width: 220px;
   color: var(--White);
   border: none;
   text-align: center;
@@ -240,6 +240,8 @@ export const BtnProductDetail = styled.button`
     height: 100%;
     display:block ;
     font-weight: 600;
+    text-decoration: none;
+    color: var(--White) ;
   }
  
 }

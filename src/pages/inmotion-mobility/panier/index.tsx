@@ -173,7 +173,7 @@ export default function Panier() {
               
             </h5>
             <button className="btnCommander">
-              <Link href="/inmotion-mobility/checkout-mobility">
+              <Link href="/inmotion-mobility/checkout-mobility" passHref>
                 <motion.a initial={{background: "#0570A6" }}
                       whileHover={{
                         scale: 1.02,

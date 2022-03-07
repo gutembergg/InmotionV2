@@ -100,8 +100,7 @@ export default function EquipementsSubCat({
                           className="categoiry_item"
                           onClick={handleOpenSubCatMenu}
                         >
-                          <Link
-                            href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                          <Link href={`/inmotion-mobility/categories/equipements/${category?.slug}`} passHref
                           >
                             <a>{category?.name}</a>
                           </Link>
@@ -143,8 +142,7 @@ export default function EquipementsSubCat({
               {subCategories.map((category) => {
                 return (
                   <li key={category?.slug} className="category_name">
-                    <Link
-                      href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                    <Link href={`/inmotion-mobility/categories/equipements/${category?.slug}`} passHref
                     >
                       <motion.a 
               whileHover={{

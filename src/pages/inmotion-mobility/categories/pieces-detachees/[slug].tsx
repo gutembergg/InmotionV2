@@ -235,7 +235,7 @@ export default function PiecesDetacheesSubCat({
                 return (
                   <li key={category?.slug} className="category_name">
                     <Link
-                      href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
+                      href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`} passHref
                     >
                       <motion.a
                       whileHover={{
