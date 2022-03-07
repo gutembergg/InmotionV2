@@ -10,11 +10,11 @@ import { StyledLangSelector2 } from "./styles";
 import Notiflix from "notiflix";
 import useTranslation from "next-translate/useTranslation";
 
-interface Props{
-  closeMobileMenu?:() => void;
-  }
+interface Props {
+  closeMobileMenu?: () => void;
+}
 
-const LanguageSelector = ({closeMobileMenu}: Props) => {
+const LanguageSelector = ({ closeMobileMenu }: Props) => {
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const [openObject, setopenObject] = useState(false);
@@ -23,7 +23,6 @@ const LanguageSelector = ({closeMobileMenu}: Props) => {
   const LangBlocked = t("common:LangBlocked");
   const notavailable = t("common:notavailable");
 
-
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
     setopenObject(!openObject);
@@ -31,15 +30,10 @@ const LanguageSelector = ({closeMobileMenu}: Props) => {
   };
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
-    // console.log("Object.keys(car", Object.keys(cart).length);
-    if (router?.pathname === "/inmotion-mobility/checkout-mobility"){
-      Notiflix.Report.failure(
-        `${notavailable}`,
-        `${LangBlocked}`,
-         'Ok',
-         )
+    if (router?.pathname === "/inmotion-mobility/checkout-mobility") {
+      Notiflix.Report.failure(`${notavailable}`, `${LangBlocked}`, "Ok");
       return;
-    } 
+    }
     setopenObject(!openObject);
   };
 

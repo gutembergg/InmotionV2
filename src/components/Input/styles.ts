@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components";
 
 interface IProps {
-  isFocused: boolean
-  isFilled: boolean
+  isFocused: boolean;
+  isFilled: boolean;
 }
 
 export const Container = styled.div<IProps>`
@@ -23,7 +23,7 @@ export const Container = styled.div<IProps>`
     margin-right: 5px;
     color: var(--Blue);
   }
-  ${props =>
+  ${(props) =>
     props.isFocused &&
     css`
       svg {
@@ -31,7 +31,7 @@ export const Container = styled.div<IProps>`
       }
       border-color: var(--Blue);
     `}
-  ${props =>
+  ${(props) =>
     props.isFilled &&
     css`
       svg {
@@ -51,4 +51,4 @@ export const Container = styled.div<IProps>`
   .display_password {
     cursor: pointer;
   }
-`
+`;

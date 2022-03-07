@@ -27,7 +27,8 @@
   "voirPaiement": "Checkout",
   "subtotal": "subtotal:",
   "backToCart": "Back to cart",
-  "cartBlockTitle": "Panier verouillé",
+  "cartBlockTitle": "Cart is Blocked",
+  "warningCart": "Be sure to check your order as you will not be able to change it in checkout",
   "cartBlockDescr": "You can't modify your cart in the order page, go back to the cart page",
   "search": "Search"
 }

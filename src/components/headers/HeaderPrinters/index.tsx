@@ -8,7 +8,6 @@ import LanguageSelector from "../../LanguageSelector";
 import MenuMainPrinter from "../../menus/MenuMainPrinter";
 import LoginForm from "../../Login";
 import Link from "next/link";
-import { LinkMobility } from "../HeaderAdmin/styles";
 import escooter from "../../../../public/images/icons/electric-scooter.svg";
 
 interface ILanguages {}
@@ -25,7 +24,7 @@ const HeaderPrinter = (icon: any) => {
       <div className="topBlock">
         <Link href="/inmotion-mobility">
           <a>
-            <LinkMobility>
+            {/* <LinkMobility>
               <div className="iconLink">
                 <Image
                   width={30}
@@ -36,7 +35,7 @@ const HeaderPrinter = (icon: any) => {
                 ></Image>
               </div>
               <p>Boutique Inmotion-Mobility</p>
-            </LinkMobility>
+            </LinkMobility> */}
           </a>
         </Link>
         <LoginForm />

@@ -9,11 +9,11 @@ interface Children {
 
 const AppProvider = ({ children }: Children) => {
   return (
-      <UserProvider>
-        <CurrencyProvider>
+    <UserProvider>
+      <CurrencyProvider>
         <CartProvider>{children}</CartProvider>
-        </CurrencyProvider>
-      </UserProvider>
+      </CurrencyProvider>
+    </UserProvider>
   );
 };
 

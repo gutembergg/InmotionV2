@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-position: fixed;
-width: 100%;
-z-index:8000;
+  position: fixed;
+  width: 100%;
+  z-index: 8000;
 
   .topBlock {
     display: flex;
@@ -46,23 +46,15 @@ z-index:8000;
     }
   }
 
-
-    @media only screen and (max-width: 1024px) {
-      display: none;
-    }
-    @media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (max-width: 1024px) {
     display: none;
   }
-  
-  /* Portrait */
-  @media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (orientation: portrait) 
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
     display: none;
-}
+  }
+
+  /* Portrait */
+  @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+    display: none;
+  }
 `;

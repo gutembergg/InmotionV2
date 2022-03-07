@@ -136,7 +136,14 @@ export const Button = styled.button`
   margin-top: 1.3rem;
   color: #fff;
   border: none;
-
+>div{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+    align-items: center;
+  
+}
   &.disabled{
     background-color: var(--LightGray)
   }

@@ -24,32 +24,43 @@ const CartResume = () => {
                     ></button>
                     <div className="cartProductThmbnail">
                       <Image
-                        src={product.images[0] ? product.images[0].src : placeholder.src}
+                        src={
+                          product.images[0]
+                            ? product.images[0].src
+                            : placeholder.src
+                        }
                         alt={product.name}
                         height={60}
                         width={60}
                       />
                     </div>
                     <h5>{product.name}</h5>
-                    {product.on_sale &&(
+                    {product.on_sale && (
                       <p className="onSaleBadge">Promotion</p>
                     )}
                     {product.on_sale && (
                       <>
-                        <p className="onSalePrice">CHF <strong>{product.regular_price}</strong></p>
+                        <p className="onSalePrice">
+                          CHF <strong>{product.regular_price}</strong>
+                        </p>
                         <p className="productPrice">
-                        CHF <strong>{product.sale_price}</strong>
+                          CHF <strong>{product.sale_price}</strong>
                         </p>
                       </>
                     )}
                     {!product.on_sale && (
-                        <p className="productPrice">
-                           CHF <strong>{product.regular_price} </strong>
-                        </p>
+                      <p className="productPrice">
+                        CHF <strong>{product.regular_price} </strong>
+                      </p>
                     )}
                     <div className="qtyInput">
-                      Qty : <input type="number" defaultValue={product.qty.toString()} min="0" />
-                      </div>
+                      Qty :{" "}
+                      <input
+                        type="number"
+                        defaultValue={product.qty.toString()}
+                        min="0"
+                      />
+                    </div>
                   </li>
                 );
               })

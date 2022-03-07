@@ -7,9 +7,9 @@ export const ProductsCards = styled.div`
   padding-top: 60px;
 
   display: grid;
-grid-template-columns: repeat(5, 1fr);
-grid-column-gap: 20px;
-grid-row-gap: 30px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 30px;
   align-items: end;
   justify-items: center;
 

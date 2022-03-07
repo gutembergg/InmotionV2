@@ -6,13 +6,12 @@ interface Props {
 export const StyledMobileHeader = styled.header`
   display: none;
 
-  .settings{
+  .settings {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-evenly;
-    @media only screen and (max-width: 640px){
+    @media only screen and (max-width: 640px) {
       justify-content: space-between;
-      
     }
   }
   .mainBlock.open {
@@ -32,21 +31,14 @@ export const StyledMobileHeader = styled.header`
   @media screen and (max-width: 1024px) {
     display: block;
   }
-  @media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
     display: block;
   }
-  
+
   /* Portrait */
-  @media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (orientation: portrait) 
-  and (-webkit-min-device-pixel-ratio: 2) {
+  @media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
     display: block;
-}
+  }
   .topHeader {
     display: flex;
     align-items: center;
@@ -162,7 +154,7 @@ export const StyledMobileHeader = styled.header`
         height: 25px;
       }
     }
-    
+
     #nav-icon2 span {
       display: block;
       position: absolute;
@@ -276,20 +268,19 @@ export const MobileMobilityHeader = styled.header`
   position: relative;
   list-style: none;
   font-weight: bold;
-  a{
+  a {
     cursor: pointer;
   }
   > li {
-
-    padding: 10px;    
+    padding: 10px;
     flex: 0 1 auto;
     list-style: none;
     width: 100%;
-    border-collapse:content;
-    a{
+    border-collapse: content;
+    a {
       width: fit-content;
       text-decoration: none;
-      color: var(--BlueHover)
+      color: var(--BlueHover);
     }
     a::before {
       content: "- ";

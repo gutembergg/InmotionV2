@@ -16,6 +16,8 @@
   "signature": "Ihr Inmotion-Team",
   "TvaWarningTxt": "Achtung: Der Zoll kann Ihnen beim Versand die in Ihrem Land geltende Mehrwertsteuer in Rechnung stellen.",
   "IncludeTxt": "Inklusive",
+  "CompletedBankData": "Bankdaten" ,
+  "CompletedBankTitle": "Bank: " ,
   "TVATxt": "MwSt. :"
 
   

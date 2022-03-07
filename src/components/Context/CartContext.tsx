@@ -69,11 +69,7 @@ const CartProvider = ({ children }: Children) => {
     // eslint-disable-next-line
   }, []);
 
-  // ------BEGIN of fatih's function
-
-  // --------------------------------------------------------------------------------
   useEffect(() => {
-    // console.log(cart)
     currency !== currencyStatut && isCart() === true && switchCartDevise();
     setcurrencyStatut(currency);
   }, [currency, currencyStatut]);
@@ -88,7 +84,6 @@ const CartProvider = ({ children }: Children) => {
   };
 
   const switchCartDevise = () => {
-    // console.log("cart.products--->",cart.products);
     const totalPrice = cart.products.reduce(
       (acc, item) => {
         const quantity = acc.qty + item.qty;
@@ -112,7 +107,6 @@ const CartProvider = ({ children }: Children) => {
 
     const { qty, price } = totalPrice;
 
-    // console.log("totalprice--->",totalPrice);
     const _cart: ICartState = {
       products: cart.products,
       totalProductsCount: qty,
@@ -123,11 +117,8 @@ const CartProvider = ({ children }: Children) => {
 
     setCartItem(cart.products);
   };
-  // ------end of fatih's function
-  // --------------------------------------------------------------------------------
 
   const addToCart = (products: IProduct[]) => {
-    console.log(products);
     const totalPrice = products.reduce(
       (acc, item) => {
         const quantity = acc.qty + item.qty;

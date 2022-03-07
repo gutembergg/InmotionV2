@@ -17,7 +17,6 @@ interface Imodal {
 
 const Modal: React.FC<Imodal> = ({ show, onClose, children, title }) => {
   const [isBrowser, setIsBrowser] = useState(false);
-  // console.log(isBrowser)
   const [openModal, setopenModal] = useState(false)
   useEffect(() => {
     setIsBrowser(true);

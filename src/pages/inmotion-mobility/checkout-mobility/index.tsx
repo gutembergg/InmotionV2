@@ -476,7 +476,6 @@ export default function CheckoutMobility() {
       setDiscountCupons(response.coupon_lines);
       setIsPayment(true);
 
-      console.log("responseOrder", response);
     } else {
       return;
     }
@@ -752,7 +751,6 @@ export default function CheckoutMobility() {
 
       const response = await getShippingZoneMethods(selectedCountry);
 
-      console.log("getShippingZoneMethods", response);
 
       if (response) {
         getShippingPrice(response[0]);

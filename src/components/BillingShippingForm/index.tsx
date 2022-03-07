@@ -339,7 +339,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       name="billing_state"
                       className="input_selects"
                       required
-                      >
+                    >
                       {swissDepartementCode.map((state) => (
                         <option key={state.code} value={state.code}>
                           {state.nom}
@@ -352,8 +352,8 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       as="select"
                       name="billing_country"
                       className="input_selects"
-                        required
-                      >
+                      required
+                    >
                       {authorizedCounty.map((country) => (
                         <option
                           key={country.code}

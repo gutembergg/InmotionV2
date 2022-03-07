@@ -5,7 +5,7 @@ import ReactPlayer from "react-player";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import useTranslation from "next-translate/useTranslation";
-
+import { motion } from "framer-motion";
 import cityBG from "../../../../public/images/backgrounds/productCity.svg";
 
 import useCart from "../../../hooks/useCart";
@@ -418,7 +418,18 @@ export default function ProductDetail({
                     type="button"
                     onClick={() => handleAddToCart(product)}
                   >
+                  <motion.div
+                    initial={{background: "#0570A6" }}
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.01 },
+                        background: "#03486b" 
+                      }}
+                      style={{ originX: 0.5 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                    >
                     {btnAddToCart}
+                  </motion.div>
                   </Button>
                 )}
               </PriceQuantity>
