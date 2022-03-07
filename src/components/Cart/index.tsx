@@ -153,12 +153,11 @@ const Cart = () => {
                   className="btnVoirPanierText"
                   initial={{background: "#0570A6" }}
                       whileHover={{
-                        scale: 1.02,
                         transition: { duration: 0.01 },
                         background: "#03486b" 
                       }}
-                      style={{ originX: 0.5 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                      style={{ originX: 0 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },originX: 0}}
                 >
                   {voirpanier}
                 </motion.p>

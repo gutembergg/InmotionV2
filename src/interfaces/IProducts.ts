@@ -1,7 +1,7 @@
 import { IImage } from "./IImages";
 import { IVariation } from "./IVariation";
 
-interface ProductCategory {
+export interface ProductCategory {
   id: number;
   name: string;
   slug: string;

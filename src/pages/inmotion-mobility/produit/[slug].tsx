@@ -10,6 +10,7 @@ import cityBG from "../../../../public/images/backgrounds/productCity.svg";
 
 import useCart from "../../../hooks/useCart";
 import { IProduct } from "../../../interfaces/IProducts";
+import { ProductCategory } from "../../../interfaces/IProducts";
 import {
   getProductByID,
   getVariations,
@@ -54,6 +55,7 @@ import {
   VariationDisplay,
   SelectedVariation,
 } from "../../../styles/ProductDetail";
+import { ICategories } from "../../../interfaces/ICategories";
 
 interface Props {
   product: IProduct;
@@ -87,7 +89,6 @@ export default function ProductDetail({
   const priceFrom = t("productDetail:priceFrom");
 
   //----------------------variations--------------------------------
-
   //check if product is variable or not
   const [selectedVariation, setSelectedVariation] = useState({} as any);
   const isVariable = product?.variations.length > 0 ? true : false;
@@ -151,9 +152,8 @@ export default function ProductDetail({
     }
   });
 
-  const handleAddToCart = (product: IProduct, originProductName = "") => {
+  const handleAddToCart = (product: IProduct, originProductName = "", categoriesParent?: ProductCategory[]) => {
     const hasSelectedVariation = Object.keys(selectedVariation).length > 0;
-
     const productExist = cartItem.find((item) => item.id === product.id);
 
     if (productExist) {
@@ -175,6 +175,7 @@ export default function ProductDetail({
             qty: productQty,
             isVariation: true,
             name: `${originProductName} - ${selectedVariation.attributes[0].option}`,
+            categories: categoriesParent || []
           },
         ]);
       } else {
@@ -393,7 +394,7 @@ export default function ProductDetail({
                     <Button
                       type="button"
                       onClick={() =>
-                        handleAddToCart(selectedVariation, product.name)
+                        handleAddToCart(selectedVariation, product.name, product.categories)
                       }
                     >
                       <motion.div initial={{background: "#0570A6" }}

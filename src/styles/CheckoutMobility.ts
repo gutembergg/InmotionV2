@@ -788,20 +788,20 @@ export const BtnCouponsBlock = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-bottom: 1.6rem;
+  background-color: var(--DarkGray);
 
   button {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background: var(--DarkGray);
+    background-color: var(--DarkGray);
     height: 45px;
     width: 100%;
     max-width: 300px;
     padding: 0.7rem;
     border: none;
     font-weight: 600;
-
     border: none;
 
     span + span {
