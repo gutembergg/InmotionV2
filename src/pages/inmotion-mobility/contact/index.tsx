@@ -69,7 +69,6 @@ export default function Contact() {
   });
 
   const handleSubmit = (values: Props) => {
-    console.log("formValues: ", values);
   };
 
   return (

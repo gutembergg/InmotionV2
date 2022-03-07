@@ -14,17 +14,16 @@ const MobilityFooter = () => {
   return (
     <StyledFooter>
       <div>
-
-      <p>© Inmotion-suisse.ch</p>
-      <div className="footerLinks">
-        <Link href="/inmotion-mobility/conditions-generales">
-          <a>{condGenerales}</a>
-        </Link>{" "}
-        |{" "}
-        <Link href="/inmotion-mobility/politique-confidentialite">
-          <a>{confidentiality}</a>
-        </Link>{" "}
-      </div>
+        <p>© Inmotion-suisse.ch</p>
+        <div className="footerLinks">
+          <Link href="/inmotion-mobility/conditions-generales">
+            <a>{condGenerales}</a>
+          </Link>{" "}
+          |{" "}
+          <Link href="/inmotion-mobility/politique-confidentialite">
+            <a>{confidentiality}</a>
+          </Link>{" "}
+        </div>
       </div>
       <div className="socialLinks">
         <Link href={facebookLink}>
@@ -34,7 +33,12 @@ const MobilityFooter = () => {
         </Link>
         <Link href={InstaLink}>
           <a target="_blank">
-            <Image src={InstaIcon} alt="logo instagram" width={25} height={25} />
+            <Image
+              src={InstaIcon}
+              alt="logo instagram"
+              width={25}
+              height={25}
+            />
           </a>
         </Link>
       </div>

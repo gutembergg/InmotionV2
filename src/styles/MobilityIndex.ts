@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div``;
 export const MainContent = styled.div`
+    overflow-x: hidden;
   @media (max-width: 1024px) {
     padding-top: 0px;
+
   }
 `;
 export const MobilitySlider = styled.div`

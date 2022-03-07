@@ -18,15 +18,6 @@ export const MainContent = styled.div`
   grid-template-columns: repeat(3, 1fr);
   margin: 2.5rem 4rem 30px 4rem;
 
-<<<<<<< HEAD
-=======
-@media (max-width:640px){
-  margin: 2.5rem 1rem 30px;
-}
-
-
-
->>>>>>> 809247f9ba88866e7ca87b07ec31037d1c65c245
   .link {
     text-decoration: none;
     color: var(--Black);

@@ -19,7 +19,6 @@ export default function GuidesUtilisateur({ guides }: Props) {
   const { t } = useTranslation();
   const Title = t("guide-user:Title");
 
-  console.log("guide: ", guides);
   return (
     <Container>
       <MainContent>

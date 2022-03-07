@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { transporter } from "../../../config/nodeMailConfig";
 
 export default function async(req: NextApiRequest, res: NextApiResponse) {
-  console.log("Req", req);
-  console.log("Res", res);
+
   const {
     address,
     city,

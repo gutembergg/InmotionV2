@@ -17,7 +17,6 @@ export default async function returnProducthandlers(
 ) {
   await cors(req, res);
   const { method } = req;
-console.log("req--->",req)
   //si methode post : 
   if (method === "POST") {
     const { name, email, message } = req.body;

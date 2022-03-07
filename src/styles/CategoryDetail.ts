@@ -51,7 +51,11 @@ export const Content = styled.div`
       font-weight: bold;
       color: var(--Black)
     }
-
+    .Preorder {
+    color: var(--TxtRed);
+    margin-bottom:10px;
+    /* font-weight: normal; */
+}
   @media (max-width: 1160px) {
     padding: 0 3rem;
   }

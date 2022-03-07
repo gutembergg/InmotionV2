@@ -23,26 +23,23 @@ const Cart = () => {
   const cartBlockTitle = t("headerMobility:cartBlockTitle");
   const cartBlockDescr = t("headerMobility:cartBlockDescr");
   const backToCart = t("headerMobility:backToCart");
-  
-  
-  
-  
+
   const setCartVisibility = () => {
     if (router.pathname === "/inmotion-mobility/checkout-mobility") {
       Notiflix.Confirm.show(
         `${cartBlockTitle}`,
         `${cartBlockDescr}`,
-        'Ok',
+        "Ok",
         `${backToCart}`,
         () => {
-        return 
+          return;
         },
         () => {
-        router.push("/inmotion-mobility/panier")
+          router.push("/inmotion-mobility/panier");
         },
-        {width:"500px"}
-        );
-        return
+        { width: "500px" }
+      );
+      return;
     }
     setopencart(!opencart);
   };
@@ -96,10 +93,11 @@ const Cart = () => {
                       <div className="cartProductInfos">
                         <h5>{product.name}</h5>
                         <p>
-                          {product.qty}x {" "}
+                          {product.qty}x{" "}
                           {currency === "CHF"
                             ? product.price
-                            : product.euroPrice}{" "}{currency === "CHF" ? "CHF" : "EUR"}
+                            : product.euroPrice}{" "}
+                          {currency === "CHF" ? "CHF" : "EUR"}
                         </p>
                       </div>
                       <div className="cartProductThmbnail">
@@ -137,15 +135,14 @@ const Cart = () => {
               )}
             </ul>
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
-
               <h5 className="sousTotalTxt">
-              {subtotal}{" "}
-              <span>
-                {cart.totalProductsPrice?.toFixed(2)}{" "}
-                {currency === "CHF" ? "CHF" : "EUR"}
-              </span>
-            </h5>
-              )}
+                {subtotal}{" "}
+                <span>
+                  {cart.totalProductsPrice?.toFixed(2)}{" "}
+                  {currency === "CHF" ? "CHF" : "EUR"}
+                </span>
+              </h5>
+            )}
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
               <div className="btnVoirPanier">
                 <p

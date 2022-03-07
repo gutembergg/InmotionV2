@@ -7,7 +7,6 @@ import { IUserState } from "../Context/UserContext";
 
 import { Container, FormSession, ButtonRegiste } from "./styles";
 import { updateUsers } from "../../services/wordpressApi/users";
-import { swissDepartementCode } from "../../utils/codeCantonsSuisse";
 
 export interface IFormValues {
   billing_first_name: string;
@@ -339,7 +338,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       name="billing_state"
                       className="input_selects"
                       required
-                      >
+                    >
                       {swissDepartementCode.map((state) => (
                         <option key={state.code} value={state.code}>
                           {state.nom}

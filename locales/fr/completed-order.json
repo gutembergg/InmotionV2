@@ -16,6 +16,8 @@
     "signature": "Votre team Inmotion" ,
     "TvaWarningTxt": "Attention, la douane risque de vous facturer la tva en vigeur dans votre pays lors de l'envoi" ,
     "IncludeTxt": "Inclus:" ,
+    "CompletedBankData": "Données Bancaires" ,
+    "CompletedBankTitle": "Banque: " ,
     "TVATxt": "TVA :" 
   }
   

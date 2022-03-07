@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/dist/client/image";
 import Link from "next/dist/client/link";
+import {motion } from "framer-motion";
 
 // Import Swiper styles
 import "swiper/css";
@@ -32,8 +33,35 @@ export default function CarouselSwiper({ products }: Props) {
     setProductList(products);
   }, [products]);
 
+
+  // ----------------------------------------------------------------
+  // <ANIMATION>
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      delay: 1,
+      transition: {
+        staggerChildren: 0.2,
+        duration: 0.5
+      }
+    }
+  }
+  
+  const item = {
+    hidden: { opacity: 0, y:-10, scale:0.2 },
+    show: { opacity: 1, y:0, duration: 0.5, scale:1}
+  }
+
+  
   return (
     <CarouselBox>
+      <motion.div variants={container}
+    initial="hidden"
+    whileInView= "show" 
+    viewport={{once:true}}
+    >
+
       <Swiper
         slidesPerView={listCount >= 5 ? 5 : listCount}
         spaceBetween={30}
@@ -67,11 +95,11 @@ export default function CarouselSwiper({ products }: Props) {
             slidesPerView: listCount >= 5 ? 5.5 : listCount,
           },
         }}
-      >
+        >
         {productList.map((product) => {
           return (
             <SwiperSlide key={product.id}>
-              <div className="slide_block">
+              <motion.div className="slide_block" variants={item}>
                 <Link href={`/inmotion-mobility/produit/${product.slug}`}>
                   <a className="link">
                     <Image
@@ -81,7 +109,7 @@ export default function CarouselSwiper({ products }: Props) {
                       alt="product"
                       placeholder="blur"
                       blurDataURL={product.images[0]?.src}
-                    />
+                      />
                     <div className="product_name">
                       <strong>{product.name}</strong>
                     </div>
@@ -92,11 +120,12 @@ export default function CarouselSwiper({ products }: Props) {
                     <div className="ButtonViewProduct"></div>
                   </a>
                 </Link>
-              </div>
+              </motion.div>
             </SwiperSlide>
           );
         })}
       </Swiper>
+        </motion.div>
     </CarouselBox>
   );
 }

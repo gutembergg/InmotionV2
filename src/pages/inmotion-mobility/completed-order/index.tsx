@@ -35,6 +35,8 @@ export default function CompletedOrder() {
   const CompletedOrderSousTotal = t("completed-order:CompletedOrderSousTotal");
   const CompletedOrderShipping = t("completed-order:CompletedOrderShipping");
   const CompletedOrderTVA = t("completed-order:CompletedOrderTVA");
+  const CompletedBankData = t("completed-order:CompletedBankData");
+  const CompletedBankTitle = t("completed-order:CompletedBankTitle");
   const TVATxt = t("completed-order:TVATxt");
   const IncludeTxt = t("completed-order:IncludeTxt");
   const TvaWarningTxt = t("completed-order:TvaWarningTxt");
@@ -65,8 +67,9 @@ export default function CompletedOrder() {
       <OrderContent>
         <div>
           <h1>{CompletedOrderTitle}</h1>
-          <p>{CompletedOrderthanks}</p>
+          <p className="descr">{CompletedOrderthanks}</p>
 
+          <div className="container">
           <div className="orderInfos">
             <OrderInfos>
               <h4>{CompletedOrderOrdernumber}</h4>
@@ -90,7 +93,22 @@ export default function CompletedOrder() {
               <h4>{CompletedOrderPaiementMethod}</h4>
               <p>{order.payment_method_title}</p>
             </OrderInfos>
+            <h2>{CompletedBankData}</h2>
+          <OrderInfos>
+            <h4>{CompletedBankTitle}</h4>
+<p>Postfinance</p>
+            </OrderInfos>
+            <OrderInfos>
+            <h4>IBAN:</h4>
+<p>CH72 0900 0000 1576 8476 6</p>
+            </OrderInfos>
+            <OrderInfos>
+            <h4>BIC:</h4>
+<p>POFICHBEXX</p>
+            </OrderInfos>
           </div>
+          <div className="restContent">
+           
           <div className="orderDetails">
             <h2>{CompletedOrderResumeTitle}</h2>
             <h4 className="title">{CompletedOrderProducts}</h4>
@@ -173,6 +191,7 @@ export default function CompletedOrder() {
               </address>
             </div>
           </div>
+         
           <div className="imageThank">
             <Image
               src={ThankULogo}
@@ -182,6 +201,8 @@ export default function CompletedOrder() {
             />
             <p>{signature}</p>
           </div>
+        </div> 
+        </div>
         </div>
       </OrderContent>
     );

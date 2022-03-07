@@ -41,7 +41,6 @@ const ProductCardAdmin = ({ product }: IProps) => {
       addToCart([...cartItem, { ...product, qty: productQty }]);
     }
   };
-console.log(product)
   return (
     <div>
       <Container>

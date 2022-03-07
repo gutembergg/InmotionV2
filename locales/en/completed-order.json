@@ -16,5 +16,7 @@
   "signature": "Your Inmotion team", 
   "TvaWarningTxt": "Be careful, the customs may charge you the vat in force in your country when sending",
   "IncludeTxt": "Included :", 
+  "CompletedBankData": "Bank Data" ,
+  "CompletedBankTitle": "Bank: " ,
   "TVATxt": "VAT :" 
 }

@@ -6,6 +6,10 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  @media (max-width: 480px) {
+    align-items: stretch;
+    padding: 0 1rem ;
+  }
   `;
 
   export const Content = styled.div`
@@ -36,7 +40,7 @@ export const FormBox = styled.div`
 
   @media (max-width: 560px) {
     width: 100%;
-    max-width: 400px;
+    /* max-width: 400px; */
   }
 `;
 
@@ -44,11 +48,14 @@ export const FormBox = styled.div`
 export const FormRow1 = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  gap: 15px;
   margin-bottom: 15px ;
 
   input {
     width: 100%;
+  }
+  @media (max-width: 480px) {
+    flex-direction: column;
   }
 `;
 
@@ -64,7 +71,7 @@ export const IconBlock = styled.button`
     transform: scale(1.2);
   }
 
-  @media (max-width: 450px) {
+  @media (max-width: 480px) {
     display: none;
   }
 `;
@@ -79,12 +86,12 @@ export const ButtonValidateMobile = styled.button`
   border: none;
   font-size: 1.2rem;
   transition: 0.2s ease;
-
+  margin-top: 20px ;
   &:active {
     transform: scale(0.9);
   }
 
-  @media (max-width: 450px) {
+  @media (max-width: 480px) {
     display: block;
   }
 `;

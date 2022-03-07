@@ -32,7 +32,12 @@ const PrinterFooter = () => {
         </Link>
         <Link href={InstaLink}>
           <a target="_blank">
-            <Image src={InstaIcon} alt="logo instagram" width={25} height={25} />
+            <Image
+              src={InstaIcon}
+              alt="logo instagram"
+              width={25}
+              height={25}
+            />
           </a>
         </Link>
       </div>

@@ -86,9 +86,9 @@ const HeaderMobile = () => {
     return url;
   };
 
-  const closeMobileMenu =()=>{
+  const closeMobileMenu = () => {
     setmenuOpen(false);
-  }
+  };
 
   return (
     <StyledMobileHeader>
@@ -126,11 +126,11 @@ const HeaderMobile = () => {
               <hr />
             </div>
             <div className="settings">
-              <LanguageSelector  closeMobileMenu={closeMobileMenu} />
+              <LanguageSelector closeMobileMenu={closeMobileMenu} />
               <CurrencySelector closeMobileMenu={closeMobileMenu} />
               <Container>
                 <Link href="/inmotion-mobility/search">
-                  <a onClick={()=>setmenuOpen(false)}>
+                  <a onClick={() => setmenuOpen(false)}>
                     <div className="searchICon">
                       <FiSearch />
                     </div>
