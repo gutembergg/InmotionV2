@@ -67,11 +67,14 @@ export const Container = styled.div`
         margin-top: 20px;
         text-decoration: none;
         transition: all ease-in 0.1s;
-
-        &:hover {
+        width: fit-content;
+    height: 100%;
+    display: block;
+    cursor: pointer;
+        /* &:hover {
           background-color: var(--BlueHover);
           transition: all ease-in 0.1s;
-        }
+        } */
       }
 
       @media screen and (max-width: 1024px) {
