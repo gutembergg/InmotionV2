@@ -1,6 +1,8 @@
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Notiflix from "notiflix";
 import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const ProductSmallCard = ({ product }: Props) => {
+  const router = useRouter();
   const { currency } = useCurrency();
   const { cartItem, addToCart } = useCart();
   const { t } = useTranslation();
@@ -47,9 +50,30 @@ const ProductSmallCard = ({ product }: Props) => {
     }
   };
 
+  const handleShowDetails = (slug: string) => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();
+    router
+      .push(`/inmotion-mobility/produit/${slug}`)
+      .then((res) => handleStop());
+  };
+
   return (
     <Container>
-      <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+      <div>
         <a>
           {Array.isArray(product.images) && (
             <Image
@@ -76,12 +100,10 @@ const ProductSmallCard = ({ product }: Props) => {
             stock_status={product.stock_status}
           />
         </a>
-      </Link>
+      </div>
       {Array.isArray(product.variations) && product.variations.length > 0 ? (
-        <BtnProductDetail>
-          <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-            {showVariationTradution}
-          </Link>
+        <BtnProductDetail onClick={() => handleShowDetails(product.slug)}>
+          {showVariationTradution}
         </BtnProductDetail>
       ) : (
         <>
@@ -89,9 +111,9 @@ const ProductSmallCard = ({ product }: Props) => {
             {addToCartTradution}
           </ButtonAddToCart>
 
-          <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+          <div onClick={() => handleShowDetails(product.slug)}>
             <a className="product_detail">{showDetails}</a>
-          </Link>
+          </div>
         </>
       )}
     </Container>

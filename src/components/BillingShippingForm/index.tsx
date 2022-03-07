@@ -333,7 +333,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                     ) : null}
                   </div>
 
-                  <div>
+                  {/*   <div>
                     <Field
                       as="select"
                       name="billing_state"
@@ -346,14 +346,14 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                         </option>
                       ))}
                     </Field>
-                  </div>
+                  </div> */}
                   <div>
                     <Field
                       as="select"
                       name="billing_country"
                       className="input_selects"
-                        required
-                      >
+                      required
+                    >
                       {authorizedCounty.map((country) => (
                         <option
                           key={country.code}
@@ -507,7 +507,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                       ) : null}
                     </div>
 
-                    <Field
+                    {/*      <Field
                       as="select"
                       name="shipping_state"
                       className="input_selects"
@@ -517,7 +517,7 @@ const BillingShippingForm = ({ handleBillingShippingData }: Props) => {
                           {state.nom}
                         </option>
                       ))}
-                    </Field>
+                    </Field> */}
 
                     <Field
                       as="select"

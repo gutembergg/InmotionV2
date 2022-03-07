@@ -14,6 +14,7 @@ export const Container = styled.div`
   }
 
   a {
+    cursor: pointer;
     text-decoration: none;
     text-align: center;
     display: flex;
@@ -31,10 +32,10 @@ export const Container = styled.div`
       color: var(--BlueHover);
     }
   }
-  .onsale{
+  .onsale {
     color: var(--Red);
-    font-weight:bold;
-    font-size:1.1em;
+    font-weight: bold;
+    font-size: 1.1em;
   }
 `;
 
@@ -47,7 +48,7 @@ export const Name = styled.div`
   color: var(--BlueHover);
   font-size: 1.1rem;
   font-weight: 600;
-  font-family:'Bitter',sans-serif;
+  font-family: "Bitter", sans-serif;
   text-transform: uppercase;
 `;
 
@@ -81,9 +82,11 @@ export const BtnProductDetail = styled.button`
   background: var(--Blue);
   color: var(--White);
   border: none;
+
   &:hover {
     background: var(--BlueHover);
   }
+
   a {
     text-decoration: none;
     color: var(--White);

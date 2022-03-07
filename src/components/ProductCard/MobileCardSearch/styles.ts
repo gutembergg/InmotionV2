@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { AiFillPlayCircle } from "react-icons/ai";
 
 export const Container = styled.li`
   display: flex;
@@ -43,8 +42,8 @@ export const ProductInfo = styled.div`
     margin-right: 0.5rem;
   }
 
-  a.show_detail {
-    text-decoration: none;
+  p.show_detail {
+    cursor: pointer;
     color: var(--Blue);
     font-weight: 600;
     transition: 0.2s ease;
@@ -56,6 +55,9 @@ export const ProductInfo = styled.div`
 `;
 
 export const BtnAddToCart = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 200px;
   height: 30px;
   padding: 0 2rem;
@@ -69,25 +71,12 @@ export const BtnAddToCart = styled.button`
     transform: scale(0.9);
   }
 
-  a {
-    text-decoration: none;
+  p {
+    cursor: pointer;
     color: var(--White);
   }
 
   &:hover {
     background: var(--BlueHover);
   }
-`;
-
-export const IconFleche = styled(AiFillPlayCircle)`
-  color: var(--Blue);
-  font-size: 24px;
-
-  &:active {
-    transform: scale(0.9);
-  }
-`;
-
-export const BtnDetail = styled.div`
-  margin-left: 1rem;
 `;

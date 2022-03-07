@@ -231,7 +231,7 @@ export default function CheckoutMobility() {
   const getShippingPrice = useCallback(
     async (method: ShippingMethods) => {
       if (Object.keys(cart).length === 0) {
-        alert("Erreur");
+        alert("Une erreur est survenue, votre panier est vide");
         return;
       }
       const productsWeight = cart.products.reduce(
@@ -306,7 +306,7 @@ export default function CheckoutMobility() {
         });
       });
     },
-    [CHFCurrency, cart,weightMaxTitle,weightMaxDescr]
+    [CHFCurrency, cart, weightMaxTitle, weightMaxDescr]
   );
 
   const _handleBillingShippingData = async (values: IFormValues) => {
@@ -475,8 +475,6 @@ export default function CheckoutMobility() {
       setOrderId(response.id);
       setDiscountCupons(response.coupon_lines);
       setIsPayment(true);
-
-      console.log("responseOrder", response);
     } else {
       return;
     }
@@ -702,7 +700,7 @@ export default function CheckoutMobility() {
 
   const openCodePromo = () => {
     setOpenedCodePromo(!openedCodePromo);
-    setPaymentSteps(3);
+    //setPaymentSteps(3);
   };
 
   const selectSHPmethod = useCallback(
@@ -751,8 +749,6 @@ export default function CheckoutMobility() {
       }
 
       const response = await getShippingZoneMethods(selectedCountry);
-
-      console.log("getShippingZoneMethods", response);
 
       if (response) {
         getShippingPrice(response[0]);
@@ -885,7 +881,7 @@ export default function CheckoutMobility() {
               </section>
 
               <section className="code_promo">
-                <div className="title" onClick={openCodePromo}>
+                <button onClick={openCodePromo} disabled={paymentSteps === 1}>
                   <h2
                     className={
                       paymentSteps === 3
@@ -897,7 +893,7 @@ export default function CheckoutMobility() {
                   >
                     3. Code Promo
                   </h2>
-                </div>
+                </button>
 
                 <Collapse isOpened={openedCodePromo}>
                   <div className="coupon_code_block">
