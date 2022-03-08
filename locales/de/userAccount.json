@@ -12,5 +12,16 @@
   "changePassword": "Passwort ändern",
   "newPassword": "Neues Kennwort",
   "confirmPassword": "Bestätige das Passwort",
+  "wrongPasswordTitle": "Fehler !",
+  "wrongPasswordTxt": "Die Bestätigung des Passworts ist nicht identisch",
+  "GoodPasswordTitle": "Erfolg",
+  "GoodPasswordTxt": "Ihr Passwort wurde richtig geändert",
+  "ChangeErrorTitle": "Fehler !",
+  "ChangeErrorTxt": "Bei der Bearbeitung ist ein Fehler aufgetreten. Wenn dies erneut vorkommt, kontaktieren Sie uns bitte.",
   "register": "bestätigen"
 }
+
+
+
+
+

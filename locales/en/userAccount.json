@@ -12,5 +12,11 @@
   "changePassword": "change password",
   "newPassword": "new password",
   "confirmPassword": "confirm password",
+  "wrongPasswordTitle": "Error !",
+  "wrongPasswordTxt": "The password validation is not identical",
+  "GoodPasswordTitle": "Success",
+  "GoodPasswordTxt": "Your password has been changed",
+  "ChangeErrorTitle": "Error !",
+  "ChangeErrorTxt": "an error occurred during the modification, if it happens again please contact us",
   "register": "Register"
 }

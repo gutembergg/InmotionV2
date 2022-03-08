@@ -27,6 +27,12 @@ const UserAddress = ({ currentyUser }: Props) => {
   const newPassword = t("userAccount:newPassword");
   const confirmPassword = t("userAccount:confirmPassword");
   const register = t("userAccount:register");
+  const wrongPasswordTitle = t("userAccount:wrongPasswordTitle");
+  const wrongPasswordTxt = t("userAccount:wrongPasswordTxt");
+  const GoodPasswordTitle = t("userAccount:GoodPasswordTitle");
+  const GoodPasswordTxt = t("userAccount:GoodPasswordTxt");
+  const ChangeErrorTitle = t("userAccount:ChangeErrorTitle");
+  const ChangeErrorTxt = t("userAccount:ChangeErrorTxt");
 
   const onChangePassword = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,16 +47,18 @@ const UserAddress = ({ currentyUser }: Props) => {
 
   const onSubmitPassword = useCallback(async () => {
     if (_password.newPassword !== _password.password) {
-      Report.failure(
-        "Erreur mot de passe invalide",
-        "<p>Mot de passe incorrect</p><br /><br />",
-        "Okay"
-      );
+      Report.failure(`${wrongPasswordTitle}`, `${wrongPasswordTxt}`, "Okay");
       return;
     }
-    console.log("_password: ", _password);
-    alert("Correct Password !!!!");
-    //await updateUsersPassword(_password);
+
+    const UpdateResp = await updateUsersPassword(_password);
+
+    if (UpdateResp && UpdateResp?.ID && UpdateResp?.user_pass) {
+      Report.success(`${GoodPasswordTitle}`, `${GoodPasswordTxt}`, "Okay");
+    } else {
+      Report.failure(`${ChangeErrorTitle}`, `${ChangeErrorTxt}`, "Okay");
+    }
+    
   }, [_password]);
 
   return (
@@ -65,14 +73,14 @@ const UserAddress = ({ currentyUser }: Props) => {
             name="newPassword"
             onChange={onChangePassword}
             placeholder={newPassword}
-          />
+            />
           <div>
             <input
               type="password"
               name="password"
               onChange={onChangePassword}
               placeholder={confirmPassword}
-            />
+              />
             <button type="button" onClick={onSubmitPassword}>
               {register}
             </button>

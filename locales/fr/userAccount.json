@@ -12,5 +12,11 @@
   "changePassword": "changer mot de passe",
   "newPassword": "nouveau mot de passe",
   "confirmPassword": "confirmer mot de passe",
+  "wrongPasswordTitle": "Erreur !",
+  "wrongPasswordTxt": "La validation du mot de passe n'est pas identique",
+  "GoodPasswordTitle": "Succès",
+  "GoodPasswordTxt": "Votre mot de passe à été bien modifié",
+  "ChangeErrorTitle": "Erreur !",
+  "ChangeErrorTxt": "une erreure s'est produite durant la modification, si cela se reproduit merci de nous contacter",
   "register": "Valider"
 }
