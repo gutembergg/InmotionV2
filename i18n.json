@@ -57,7 +57,8 @@
     "/inmotion-mobility/checkout-mobility": [
       "headerMobility",
       "checkout-mobility",
-      "forms"
+      "forms",
+      "couponsErrors"
     ],
     "/inmotion-mobility/completed-order": ["headerMobility", "completed-order"],
     "/inmotion-mobility/utilisateurs": [

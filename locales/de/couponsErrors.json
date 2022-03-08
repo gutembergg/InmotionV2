@@ -1,0 +1,25 @@
+{
+    "InputHasntValue": "Geben Sie einen Code in das Feld ein",
+    "CartIsEmpty": "Ihr Warenkorb ist leer",
+    "couponNotValable": "Dieser Code existiert nicht",
+    "couponDateExpired": "Gültigkeit des Codes abgelaufen ",
+    "couponWrongUser": "Ihr Konto ist nicht gültig ",
+    "couponLimitReached": "Nutzungslimit erreicht",
+    "soldedItemInCart": "Aktion Produckts sind nicht gültig",
+    "minCartAmount": "Warenkorbbetrag nicht ausreichend für diesen Code",
+    "maxCartAmount": "Warenkorbbetrag überschreitet den zulässigen Betrag",
+    "validCoupon": "Der Gutscheincode wurde erfolgreich hinzugefügt ",
+    "singleCouponOnly": "Dieser Code ist nicht kombinierbar, entfernen Sie den/die anderen Gutscheincode(s)",
+    "singleCouponUsed": "Sie haben bereits einen nicht kumulierbaren Gutscheincode eingegeben",
+    "warningNoMoreAvailableCoupon": "Sie können keinen anderen Gutschein einlösen, Feld deaktiviert",
+    "alreadyUsedCoupon": "wurde bereits verwendet",
+    "groupNotValid":" Ihr Konto hat nicht die erforderlichen Berechtigungen für diesen Gutschein",
+    "noAvaillableProduct": "Sie haben das Produkt, das diesem Gutschein entspricht, nicht bestellt",
+    "unhautorizedProduct": "Sie haben ein nicht berechtigtes Produkt in Ihrem Warenkorb",
+    "availableCatInCart": "Sie haben kein Produkt der Kategorie in Ihrem Warenkorb",
+    "excludedCatInCart": "Sie haben eine nicht in Frage kommende Kategorie im Warenkorb",
+    "soldedProduct": "Das Produkt ist derzeit ausverkauft, Gutschein nicht gültig",
+    "goodCoupon" :"Gutschein gültig",
+    "errorCoupon" :"Error"
+}
+

@@ -40,7 +40,29 @@ const CouponsCode = ({
   const { t } = useTranslation();
   const doYouHaveCodePromo = t("checkout-mobility:doYouHaveCodePromo");
   const verifier = t("checkout-mobility:verifier");
-  const btnSend = t("checkout-mobility:btnSend");
+  const InputHasntValue = t("couponsErrors:InputHasntValue");
+  const CartIsEmpty = t("couponsErrors:CartIsEmpty");
+  const couponNotValable = t("couponsErrors:couponNotValable");
+  const couponDateExpired = t("couponsErrors:couponDateExpired");
+  const couponWrongUser = t("couponsErrors:couponWrongUser");
+  const couponLimitReached = t("couponsErrors:couponLimitReached");
+  const soldedItemInCart = t("couponsErrors:soldedItemInCart");
+  const minCartAmount = t("couponsErrors:minCartAmount");
+  const maxCartAmount = t("couponsErrors:maxCartAmount");
+  const validCoupon = t("couponsErrors:validCoupon");
+  const singleCouponOnly = t("couponsErrors:singleCouponOnly");
+  const singleCouponUsed = t("couponsErrors:singleCouponUsed");
+  const warningNoMoreAvailableCoupon = t("couponsErrors:warningNoMoreAvailableCoupon");
+  const alreadyUsedCoupon = t("couponsErrors:alreadyUsedCoupon");
+  const groupNotValid = t("couponsErrors:groupNotValid");
+  const noAvaillableProduct = t("couponsErrors:noAvaillableProduct");
+  const unhautorizedProduct = t("couponsErrors:unhautorizedProduct");
+  const availableCatInCart = t("couponsErrors:availableCatInCart");
+  const excludedCatInCart = t("couponsErrors:excludedCatInCart");
+  const soldedProduct = t("couponsErrors:soldedProduct");
+  const errorCoupon = t("couponsErrors:errorCoupon");
+  const goodCoupon = t("couponsErrors:goodCoupon");
+  
 
   const cartContent = cart.products;
   const cartValue = cart.totalProductsPrice;
@@ -59,8 +81,8 @@ const CouponsCode = ({
     //if disabled because single use code   tested
     if (inputDisabledStatus === true) {
       Report.failure(
-        "Coupon invalide",
-        `${CouponsMessages.singleCouponUsed}`,
+        `${errorCoupon}`,
+        `${singleCouponUsed}`,
         "Okay"
         );
         return;
@@ -68,8 +90,8 @@ const CouponsCode = ({
       //if no code in value   tested
       if (inputValue.length === 0) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.InputHasntValue}`,
+          `${errorCoupon}`,
+          `${InputHasntValue}`,
           "Okay"
           );
           return;
@@ -85,8 +107,8 @@ const CouponsCode = ({
     //CHECK CODE AVAILABILITY  tested
     if (!coupon) {
       Report.failure(
-        "Coupon invalide",
-        `${CouponsMessages.couponNotValable}`,
+        `${errorCoupon}`,
+        `${couponNotValable}`,
         "Okay"
       );
       return;
@@ -94,11 +116,12 @@ const CouponsCode = ({
 
     // CHECK CODE DUPLICATION tested
     const couponID = coupon.id;
+    const couponDescr = coupon.description;
     const checkUsedCoupon = usedCoupons.find((item) => item.id === couponID);
     if (checkUsedCoupon) {
       Report.failure(
-        "Coupon invalide",
-        `${couponID} à déja été utilisé`,
+        `${errorCoupon}`,
+        `${couponDescr} ${alreadyUsedCoupon}`,
         "Okay"
       );
       return;
@@ -114,8 +137,8 @@ const CouponsCode = ({
 
       if (ExpDateMs < date) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.couponDateExpired}`,
+          `${errorCoupon}`,
+          `${couponDateExpired}`,
           "Okay"
         );
 
@@ -129,8 +152,8 @@ const CouponsCode = ({
 
     if (usageLimit && usageCount >= usageLimit) {
       Report.failure(
-        "Coupon invalide",
-        `${CouponsMessages.couponLimitReached}`,
+        `${errorCoupon}`,
+        `${couponLimitReached}`,
         "Okay"
       );
       return;
@@ -141,14 +164,14 @@ const CouponsCode = ({
       if (usedCoupons.length === 0) {
         setInputDisabledStatus(true);
         Report.info(
-          "Coupon invalide",
-          `${CouponsMessages.warningNoMoreAvailableCoupon}`,
+          `${errorCoupon}`,
+          `${warningNoMoreAvailableCoupon}`,
           "Okay"
         );
       } else {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.singleCouponOnly}`,
+          `${errorCoupon}`,
+          `${singleCouponOnly}`,
           "Okay"
         );
         return;
@@ -167,8 +190,8 @@ const CouponsCode = ({
 
       if (searchAuthorizedEmail.length === 0) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.couponWrongUser}`,
+          `${errorCoupon}`,
+          `${couponWrongUser}`,
           "Okay"
         );
         return;
@@ -187,8 +210,8 @@ const CouponsCode = ({
       // with email
       if (visitor && visitor.length >= usageLimitPerUser) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.couponLimitReached}`,
+          `${errorCoupon}`,
+          `${couponLimitReached}`,
           "Okay"
         );
         return;
@@ -197,8 +220,8 @@ const CouponsCode = ({
       const client = usedByClient.filter((key) => key === userID?.toString());
       if (client && client.length >= usageLimitPerUser) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.couponLimitReached}`,
+          `${errorCoupon}`,
+          `${couponLimitReached}`,
           "Okay"
         );
         return;
@@ -210,8 +233,8 @@ const CouponsCode = ({
     if (groupRestriction) {
       if (groupRestriction !== userGrp) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.groupNotValid}`,
+          `${errorCoupon}`,
+          `${groupNotValid}`,
           "Okay"
         );
         return;
@@ -222,30 +245,30 @@ const CouponsCode = ({
     // CHECK CART LENGTH
     if (!cartContent) {
       Report.failure(
-        "Coupon invalide",
-        `${CouponsMessages.CartIsEmpty}`,
+        `${errorCoupon}`,
+        `${CartIsEmpty}`,
         "Okay"
       );
       return;
     }
 
     //CHECK CART MIN / MAX VALUE
-    const minCartAmount = parseFloat(coupon.minimum_amount);
-    const maxCartAmount = parseFloat(coupon.maximum_amount);
+    const _minCartAmount = parseFloat(coupon.minimum_amount);
+    const _maxCartAmount = parseFloat(coupon.maximum_amount);
 
-    if (minCartAmount && cartValue < minCartAmount) {
+    if (_minCartAmount && cartValue < _minCartAmount) {
       Report.failure(
-        "Coupon invalide",
-        `${CouponsMessages.minCartAmount}`,
+        `${errorCoupon}`,
+        `${minCartAmount}`,
         "Okay"
       );
       return;
     }
 
-    if (maxCartAmount && cartValue > maxCartAmount) {
+    if (_maxCartAmount && cartValue > _maxCartAmount) {
       Report.failure(
-        "Coupon invalide",
-        `${CouponsMessages.maxCartAmount}`,
+        `${errorCoupon}`,
+        `${maxCartAmount}`,
         "Okay"
       );
       return;
@@ -266,8 +289,8 @@ const CouponsCode = ({
 
       if (findCommonElements(availableProducts, cartProductIDS) === false) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.noAvaillableProduct}`,
+          `${errorCoupon}`,
+          `${noAvaillableProduct}`,
           "Okay"
         );
         return;
@@ -282,8 +305,8 @@ const CouponsCode = ({
       });
       if (findCommonElements(excludedProducts, cartProductIDS) === true) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.unhautorizedProduct}`,
+          `${errorCoupon}`,
+          `${unhautorizedProduct}`,
           "Okay"
         );
         return;
@@ -306,8 +329,8 @@ const CouponsCode = ({
       const flatCatList = cartProductCategory.flat();
       if (findCommonElements(availableCategory, flatCatList) === false) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.availableCatInCart}`,
+          `${errorCoupon}`,
+          `${availableCatInCart}`,
           "Okay"
         );
         return;
@@ -330,8 +353,8 @@ const CouponsCode = ({
       const flatCatList = cartProductCategory.flat();
       if (findCommonElements(excludedCategory, flatCatList) === true) {
         Report.failure(
-          "Coupon invalide",
-          `${CouponsMessages.excludedCatInCart}`,
+          `${errorCoupon}`,
+          `${excludedCatInCart}`,
           "Okay"
         );
         return;
@@ -359,8 +382,8 @@ const CouponsCode = ({
           findCommonElements(cartsoldedProductIDS, onsaleProductsIDs) === true
         ) {
           Report.failure(
-            "Coupon invalide",
-            `${CouponsMessages.soldedProduct}`,
+            `${errorCoupon}`,
+            `${soldedProduct}`,
             "Okay"
           );
           return;
@@ -374,8 +397,8 @@ const CouponsCode = ({
         );
         if (listCartOnSaleStatut.length > 0) {
           Report.failure(
-            "Coupon invalide",
-            `${CouponsMessages.soldedItemInCart}`,
+            `${errorCoupon}`,
+            `${soldedItemInCart}`,
             "Okay"
           );
           return;
@@ -386,8 +409,8 @@ const CouponsCode = ({
     //
 
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
-
-    Report.success("Coupon valide", `${CouponsMessages.validCoupon}`, "Okay");
+    
+    Report.success(`${goodCoupon}`, `${validCoupon}`, "Okay");
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
     codePromoSteps();
   };
