@@ -86,10 +86,10 @@ export const BlockInfoCours = styled.div`
         color: var(--White);
         font-weight: 600;
         transition: all ease-in 0.1s;
-        &:hover {
-          transition: all ease-in 0.1s;
-          background-color: var(--BlueHover);
-        }
+        display: block ;
+        width: fit-content ;
+        cursor: pointer;
+    
         @media screen and (max-width: 480px) {
           width: 100%;
           display: flex;

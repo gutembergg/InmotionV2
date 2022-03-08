@@ -11,7 +11,7 @@ import { Container, StyledCart } from "../../../styles/PanierStyle";
 import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import useCurrency from "../../../hooks/useCurrency";
-
+import  {motion} from "framer-motion"
 export default function Panier() {
   const { cart, cartItem, addToCart, removeCartItem } = useCart();
   const { currency } = useCurrency();
@@ -173,8 +173,15 @@ export default function Panier() {
               
             </h5>
             <button className="btnCommander">
-              <Link href="/inmotion-mobility/checkout-mobility">
-                <a>{voirPaiement}</a>
+              <Link href="/inmotion-mobility/checkout-mobility" passHref>
+                <motion.a initial={{background: "#0570A6" }}
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.01 },
+                        background: "#03486b" 
+                      }}
+                      style={{ originX: 0.5 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}>{voirPaiement}</motion.a>
               </Link>
             </button>
           </div>

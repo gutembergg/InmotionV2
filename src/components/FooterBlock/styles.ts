@@ -48,4 +48,12 @@ export const StyledFooterBlock = styled.section`
       height: 100px;
     }
   }
+  a{
+    text-decoration: none;
+    color: var(--Blue);
+    &:hover{
+      color: var(--BlueHover);
+      text-decoration: underline ;
+    }
+  }
 `;

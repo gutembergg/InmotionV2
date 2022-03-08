@@ -8,6 +8,7 @@ import { BsCart2 } from "react-icons/bs";
 import { StyledCart } from "./styles";
 import useTranslation from "next-translate/useTranslation";
 import Notiflix from "notiflix";
+import { motion } from "framer-motion";
 const Cart = () => {
   const router = useRouter();
   const cartModalRef = useRef<HTMLDivElement>(null);
@@ -145,15 +146,21 @@ const Cart = () => {
             )}
             {Object.keys(cart).length > 0 && cart.totalProductsCount > 0 && (
               <div className="btnVoirPanier">
-                <p
+                <motion.p
                   onClick={() => {
                     goToLink("/inmotion-mobility/panier");
                   }}
                   className="btnVoirPanierText"
+                  initial={{background: "#0570A6" }}
+                      whileHover={{
+                        transition: { duration: 0.01 },
+                        background: "#03486b" 
+                      }}
+                      style={{ originX: 0 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },originX: 0}}
                 >
                   {voirpanier}
-                </p>
-                0
+                </motion.p>
               </div>
             )}
           </div>

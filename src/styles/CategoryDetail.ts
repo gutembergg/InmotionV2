@@ -14,6 +14,8 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   padding-top: 22px;
   align-items: flex-start;
+  overflow-x: hidden;
+
   .decouvrez_model {
     margin: auto;
     margin-bottom: 1rem;
@@ -216,8 +218,7 @@ export const ProductMenuResponsive = styled.div`
 export const BtnProductDetail = styled.button`
   height: 40px;
   width: 100%;
-  max-width: 200px;
-  background: var(--Blue);
+  max-width: 220px;
   color: var(--White);
   border: none;
   text-align: center;

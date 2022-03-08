@@ -13,6 +13,7 @@ import useTranslation from "next-translate/useTranslation";
 import { GetStaticProps } from "next";
 import { getLocationsVehicles } from "../../../../services/wordpressApi/locationsVehicles";
 import { IWPPage } from "../../../../interfaces/IWPPage";
+import {motion} from "framer-motion";
 
 interface Props {
   locations:IWPPage[];
@@ -40,12 +41,15 @@ export default function ServiceLocation({locations}:Props) {
             />
           </div>
         <BlockInfoLocation>
+          <motion.div animate={{ x: ["100%", "0%"], opacity: [0, 1] }}
+              transition={{ type: "spring", stiffness: 100, duration: 0.5 }}>
           <div className="block">
             <div className="unskewBlock">
               <h1>{TitleLocation}</h1>
               <p>{TXTLocation}</p>
             </div>
           </div>
+          </motion.div>
         </BlockInfoLocation>
         </div>
         <LocationContainer>
@@ -53,7 +57,20 @@ export default function ServiceLocation({locations}:Props) {
           <ul>
             {locations.map((location) => {
               return (
-                <li key={location.id}>
+                <motion.li 
+                key={location.id} 
+                whileInView="visible"
+                initial={{y:"100%"}}
+            viewport={{ once: true }}
+            variants={{
+              visible: {
+                y: "0%",
+                transition: {
+                  duration: 0.3
+                },
+              },
+            }}
+                >
                   <div className="locationImg">
                     <Image
                       src={location.acf.image_location.url}
@@ -68,11 +85,20 @@ export default function ServiceLocation({locations}:Props) {
                     <div dangerouslySetInnerHTML={{__html: location.acf.description_location}} ></div>
                     <div className="button">
                     <Link href="/inmotion-mobility/contact">
-                      <a>{contact}</a>
+                    <motion.a initial={{background: "#0570A6" }}
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.01 },
+                        background: "#03486b" 
+                      }}
+                      style={{ originX: 0.5 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}>
+                      {contact}
+                      </motion.a>
                     </Link>
                     </div>
                   </div>
-                </li>
+                </motion.li>
               );
             })}
           </ul>

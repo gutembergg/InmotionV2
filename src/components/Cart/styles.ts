@@ -162,22 +162,14 @@ export const StyledCart = styled.div`
           margin-bottom: 20px;
           height: 40px;
           border: none;
-          background-color: var(--Blue);
-          color: var(--White);
+cursor: pointer;
           text-transform: uppercase;
           font-weight: bold;
           transition: all ease-in 0.2s;
           @media (max-width: 760px) {
             width: calc(100% - 24px);
           }
-          &:hover {
-            transition: all ease-in 0.1s;
-            background-color: var(--DarkGray);
-          }
-          &.disabled {
-            background-color: var(--LightGray);
-            cursor: not-allowed;
-          }
+
           p {
             display: flex;
             justify-content: center;

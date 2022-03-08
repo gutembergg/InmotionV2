@@ -24,6 +24,7 @@ import SliderModels from "../../../components/Sliders/SliderModels";
 import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 import useCurrency from "../../../hooks/useCurrency";
 
+import { motion } from "framer-motion";
 import {
   Container,
   ProductInfos,
@@ -147,6 +148,12 @@ export default function Category({ category, productsByCategory }: Props) {
         <h1>{category.name}</h1>
         <Content>
           <ProductImage>
+            {/*  <motion.div
+              key={products[productIndex]?.id}
+              initial={{ x: 0, opacity: 0 }}
+              animate={{ x: ["0%", "-100%", "0%"], opacity: [0, 0, 1] }}
+              transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
+            > */}
             <Image
               objectFit="contain"
               layout="fill"
@@ -164,8 +171,15 @@ export default function Category({ category, productsByCategory }: Props) {
                   : placeholder.src
               }
             />
+            {/*    </motion.div> */}
           </ProductImage>
-          <div className="ProductDescrt">
+          <motion.div
+            className="ProductDescrt"
+            key={products[productIndex]?.id}
+            initial={{ x: 0, opacity: 0 }}
+            animate={{ x: ["0%", "100%", "0%"], opacity: [0, 0, 1] }}
+            transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
+          >
             <LogoProduct>
               <div className="logo_box">
                 <h2
@@ -316,12 +330,20 @@ export default function Category({ category, productsByCategory }: Props) {
               </>
             ) : (
               <AddToCartSession>
-                <button
+                <motion.button
+                  initial={{ background: "#0570A6" }}
+                  whileHover={{
+                    scale: 1.02,
+                    transition: { duration: 0.01 },
+                    background: "#03486b",
+                  }}
+                  style={{ originX: 0.5 }}
+                  whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
                   className="addToCart_button"
                   onClick={() => handleAddToCart(products[productIndex])}
                 >
                   {btnAddToCart}
-                </button>
+                </motion.button>
 
                 <div
                   onClick={() =>
@@ -332,7 +354,7 @@ export default function Category({ category, productsByCategory }: Props) {
                 </div>
               </AddToCartSession>
             )}
-          </div>
+          </motion.div>
         </Content>
         <h2 className="squared sliderTitle">{ChooseModel}</h2>
         <ProductMenuResponsive className="productMenuResponsive">

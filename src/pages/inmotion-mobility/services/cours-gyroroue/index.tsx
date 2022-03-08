@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { motion } from "framer-motion";
 import {
   BlockInfoCours,
   Container,
@@ -33,6 +34,9 @@ export default function ServiceCours() {
           </div>
         </div>
         <BlockInfoCours>
+          <motion.div 
+              animate={{ x: ["-100%", "0%"], opacity: [0, 1] }}
+              transition={{ type: "spring", stiffness: 100, duration: 0.5 }}>
           <div className="block">
             <div className="unskewBlock">
               <h1>{TitleCours}</h1>
@@ -44,11 +48,21 @@ export default function ServiceCours() {
               <p className="promo">{offre}</p>
               <div>
               <Link href="/inmotion-mobility/contact">
-                <a>{contact}</a>
+                <motion.a initial={{background: "#0570A6" }}
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.01 },
+                        background: "#03486b" 
+                      }}
+                      style={{ originX: 0.5 }}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}>
+                        {contact}
+                      </motion.a>
               </Link>
               </div>
             </div>
           </div>
+</motion.div>
         </BlockInfoCours>
       </MainContent>
     </Container>

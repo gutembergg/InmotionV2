@@ -1,0 +1,25 @@
+{
+    "InputHasntValue" : "Insert a code in the field",
+    "CartIsEmpty" : "Your cart is empty",
+    "couponNotValable" : "This code does not exist",
+    "couponDateExpired": "Validity of the code expired",
+    "couponWrongUser": "Your account is ineligible",
+    "couponLimitReached": "Usage limit reached",
+    "soldedItemInCart": "Sold out products are not eligible",
+    "minCartAmount": "Insufficient cart amount for this code",
+    "maxCartAmount": "Cart amount exceeds the allowed amount",
+    "validCoupon" : "The coupon code has been added",
+    "singleCouponOnly": "This code is not cumulative, remove the other promo code(s)",
+    "singleCouponUsed": "You have already entered a non-cumulative coupon code",
+    "warningNoMoreAvailableCoupon" : "you can't use another coupon, field disabled",
+    "alreadyUsedCoupon" : "has already been used",
+    "groupNotValid" : "your account does not have the required privileges for this coupon",
+    "noAvaillableProduct" : "You have not ordered the product that matches this coupon",
+    "unhautorizedProduct" : "You have an ineligible product in your cart",
+    "availableCatInCart" : "You do not have a product of the category in your cart",
+    "excludedCatInCart" : "You have an ineligible category in your cart",
+    "soldedProduct" : "The product is currently sold out, coupon not valid",
+    "goodCoupon" :"coupon accepted",
+    "errorCoupon" :"Error"
+}
+
