@@ -14,6 +14,7 @@ import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Pr
 
 import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
 
+import Notiflix from "notiflix";
 import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
@@ -21,19 +22,18 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import SliderModels from "../../../components/Sliders/SliderModels";
 import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
+import useCurrency from "../../../hooks/useCurrency";
 
 import {
   Container,
   ProductInfos,
   ProductImage,
-  ProductMenuModel,
   Content,
   LogoProduct,
   AddToCartSession,
   ProductMenuResponsive,
   BtnProductDetail,
 } from "../../../styles/CategoryDetail";
-import useCurrency from "../../../hooks/useCurrency";
 
 interface Props {
   category: ICategories;
@@ -113,6 +113,27 @@ export default function Category({ category, productsByCategory }: Props) {
     return titleColorized;
   };
 
+  const handleShowDetails = (slug: string) => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();
+    router
+      .push(`/inmotion-mobility/produit/${slug}`)
+      .then((res) => handleStop());
+  };
+
   return (
     <>
       <HeaderSeo
@@ -152,92 +173,111 @@ export default function Category({ category, productsByCategory }: Props) {
                   dangerouslySetInnerHTML={{ __html: colorizeTitle() }}
                 ></h2>
                 <div className="price">
-                {products[productIndex]?.variations.length > 0 ? (
-              
-              <>
-              <div className={products[productIndex]?.on_sale ? "regular_price" : ""}>
-               {priceFrom}{" "} 
-             {currency === "CHF"
-                  ? !!products[productIndex]?.price &&
-                  products[productIndex]?.price + " " + currency
-                  : !!products[productIndex]?.euroPrice &&
-                  products[productIndex]?.euroPrice + " " + currency}
-              </div>
+                  {products[productIndex]?.variations.length > 0 ? (
+                    <>
+                      <div
+                        className={
+                          products[productIndex]?.on_sale ? "regular_price" : ""
+                        }
+                      >
+                        {priceFrom}{" "}
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.price &&
+                            products[productIndex]?.price + " " + currency
+                          : !!products[productIndex]?.euroPrice &&
+                            products[productIndex]?.euroPrice + " " + currency}
+                      </div>
 
-              <div className="sale_price">
-                {currency === "CHF"
-                  ? !!products[productIndex]?.sale_price &&
-                  products[productIndex]?.sale_price + " " + currency
-                  : !!products[productIndex]?.sale_price &&
-                  products[productIndex]?.euroPrice + " " + currency}
-              </div>
-              <div>
-                {products[productIndex]?.on_sale && <p className="promo">{Promotion}</p>}
-              </div>
-            </>
-           ) : (
-             <>
-               <div className={products[productIndex]?.on_sale ? "regular_price" : ""}>
-                 {currency === "CHF"
-                   ? !!products[productIndex]?.regular_price &&
-                   products[productIndex]?.regular_price + " " + currency
-                   : !!products[productIndex]?.euroRegularPrice &&
-                   products[productIndex]?.euroRegularPrice + " " + currency}
-               </div>
+                      <div className="sale_price">
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.sale_price + " " + currency
+                          : !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.euroPrice + " " + currency}
+                      </div>
+                      <div>
+                        {products[productIndex]?.on_sale && (
+                          <p className="promo">{Promotion}</p>
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className={
+                          products[productIndex]?.on_sale ? "regular_price" : ""
+                        }
+                      >
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.regular_price &&
+                            products[productIndex]?.regular_price +
+                              " " +
+                              currency
+                          : !!products[productIndex]?.euroRegularPrice &&
+                            products[productIndex]?.euroRegularPrice +
+                              " " +
+                              currency}
+                      </div>
 
-               <div className="sale_price">
-                 {currency === "CHF"
-                   ? !!products[productIndex]?.sale_price &&
-                   products[productIndex]?.sale_price + " " + currency
-                   : !!products[productIndex]?.sale_price &&
-                   products[productIndex]?.euroPrice + " " + currency}
-               </div>
-               <div>
-                 {products[productIndex]?.on_sale && <p className="promo">{Promotion}</p>}
-               </div>
-             </>
-           )}
+                      <div className="sale_price">
+                        {currency === "CHF"
+                          ? !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.sale_price + " " + currency
+                          : !!products[productIndex]?.sale_price &&
+                            products[productIndex]?.euroPrice + " " + currency}
+                      </div>
+                      <div>
+                        {products[productIndex]?.on_sale && (
+                          <p className="promo">{Promotion}</p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
-           {products[productIndex].acf.precommande === true && (<>
-           <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{products[productIndex].acf.date_de_sortie}</div>
-           </>)}
-                  </div>
+                {products[productIndex].acf.precommande === true && (
+                  <>
+                    <div className="Preorder">
+                      {preorder} <br />
+                      {preorderDate} {products[productIndex].acf.date_de_sortie}
+                    </div>
+                  </>
+                )}
+              </div>
             </LogoProduct>
             <ProductInfos>
               {vitesse && (
-                
                 <div className="weight">
-                <div className="iconBox">
-                  <Image
-                    src={SpeedIcon}
-                    alt="poids"
-                    layout="fill"
-                    objectFit="contain"
+                  <div className="iconBox">
+                    <Image
+                      src={SpeedIcon}
+                      alt="poids"
+                      layout="fill"
+                      objectFit="contain"
                     />
-                </div>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: vitesse?.options[0] as string,
-                  }}
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: vitesse?.options[0] as string,
+                    }}
                   ></div>
-              </div>
-                  )}
-                  {autonomie && (
-              <div className="weight autonomie">
-                <div className="iconBox">
-                  <Image
-                    src={AutonomieIcon}
-                    alt="poids"
-                    layout="fill"
-                    objectFit="contain"
-                  />
                 </div>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: autonomie?.options[0] as string,
-                  }}
-                ></div>
-              </div>
+              )}
+              {autonomie && (
+                <div className="weight autonomie">
+                  <div className="iconBox">
+                    <Image
+                      src={AutonomieIcon}
+                      alt="poids"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: autonomie?.options[0] as string,
+                    }}
+                  ></div>
+                </div>
               )}
               {autorisationRouler !== undefined &&
                 autorisationRouler.options[0].length > 0 && (
@@ -266,12 +306,12 @@ export default function Category({ category, productsByCategory }: Props) {
             </ProductInfos>
             {products[productIndex]?.variations.length > 0 ? (
               <>
-                <BtnProductDetail>
-                  <Link
-                    href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
-                  >
-                    {showVariationTradution}
-                  </Link>
+                <BtnProductDetail
+                  onClick={() =>
+                    handleShowDetails(products[productIndex]?.slug)
+                  }
+                >
+                  {showVariationTradution}
                 </BtnProductDetail>
               </>
             ) : (
@@ -282,11 +322,14 @@ export default function Category({ category, productsByCategory }: Props) {
                 >
                   {btnAddToCart}
                 </button>
-                <Link
-                  href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}
+
+                <div
+                  onClick={() =>
+                    handleShowDetails(products[productIndex]?.slug)
+                  }
                 >
-                  <a className="link">{linkShowDetails}</a>
-                </Link>
+                  <p className="product_detail">showDetails</p>
+                </div>
               </AddToCartSession>
             )}
           </div>

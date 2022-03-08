@@ -29,6 +29,7 @@ import {
   PromotedSection,
   HelpSection,
 } from "../../styles/MobilityIndex";
+import HeaderSeo from "../../components/HeaderSeo";
 
 interface Props {
   featuredProducts: IProduct[];
@@ -69,135 +70,148 @@ export default function Home({
   }, [onSaleProducts]);
 
   return (
-    <Container>
-      <MainContent>
-        <MobilitySlider>
-          <SliderMobility slider={sliderHome} />
-        </MobilitySlider>
-        <PromotedProducts>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: {
-                scale: 0.8,
-                opacity: 0,
-              },
-              visible: {
-                scale: 1,
-                opacity: 1,
-                transition: {
-                  delay: 0.4,
+    <>
+      <HeaderSeo
+        description={"Inmotion-suisse, produits mobilité eletriques"}
+        title={"Inmotion-suisse"}
+        canonical={
+          "https://dx7l6anesh.preview.infomaniak.website/categorie-produit/boutique/"
+        }
+        og_locale={"fr_FR"}
+        og_title={"article"}
+      />
+
+      <Container>
+        <MainContent>
+          <MobilitySlider>
+            <SliderMobility slider={sliderHome} />
+          </MobilitySlider>
+          <PromotedProducts>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {
+                  scale: 0.8,
+                  opacity: 0,
                 },
-              },
-            }}
-          >
-            <h1 className="squared">{PromotedProductTitle}</h1>
-          </motion.div>
-          <CarouselSwiper products={featuredproducts} />
-        </PromotedProducts>
-        <PromotedSection>
-          <motion.div
-            className="clipPathShadow"
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1 , x:0}}
-            transition={{ duration: 0.5, delay: 0.2}}
-            viewport={{ once: true }}
-          >
-            <div className="promotedSectionImage">
+                visible: {
+                  scale: 1,
+                  opacity: 1,
+                  transition: {
+                    delay: 0.4,
+                  },
+                },
+              }}
+            >
+              <h1 className="squared">{PromotedProductTitle}</h1>
+            </motion.div>
+            <CarouselSwiper products={featuredproducts} />
+          </PromotedProducts>
+          <PromotedSection>
+            <motion.div
+              className="clipPathShadow"
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="promotedSectionImage">
+                <Image
+                  src={imageSecurity}
+                  alt="protection rour trottinette,vélo et gyroroues "
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+            </motion.div>
+            <motion.div
+              className="content"
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h1>{TitlePromotedSection}</h1>
+              <p>{TextPromotedSection}</p>
+              <Link href="/inmotion-mobility/categories/equipements">
+                <a>{LinkTxtPromotedSection}</a>
+              </Link>
+            </motion.div>
+          </PromotedSection>
+          <NewProducts>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {
+                  scale: 0.8,
+                  opacity: 0,
+                },
+                visible: {
+                  scale: 1,
+                  opacity: 1,
+                  transition: {
+                    delay: 0.4,
+                  },
+                },
+              }}
+            >
+              <h1 className="squared">{NewProductTitle}</h1>
+            </motion.div>
+            <CarouselSwiper products={onSaleProduct} />
+          </NewProducts>
+          <RentalSection>
+            <motion.div
+              className="content"
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h1>{locationTitle}</h1>
+              <p>{locationTxt}</p>
+              <Link href="/inmotion-mobility/services/location">
+                <a>{LocationLink}</a>
+              </Link>
+            </motion.div>
+            <motion.div
+              className="rentalImg"
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               <Image
-                src={imageSecurity}
-                alt="protection rour trottinette,vélo et gyroroues "
+                src={imageLocation}
+                alt="location de trottinettes,vélos et gyroroues "
                 layout="fill"
                 objectFit="cover"
               />
+            </motion.div>
+          </RentalSection>
+          <HelpSection>
+            <div className="content">
+              <h1 className="squared">{contactTitle}</h1>
+              <p>{contactTxt}</p>
+              <Link href="/inmotion-mobility/contact">
+                <a>{contactLink}</a>
+              </Link>
             </div>
-          </motion.div>
-          <motion.div className="content"             
-            initial={{ opacity: 0, x: 100 }}
-            whileInView={{ opacity: 1 , x:0}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            >
-            <h1>{TitlePromotedSection}</h1>
-            <p>{TextPromotedSection}</p>
-            <Link href="/inmotion-mobility/categories/equipements">
-              <a>{LinkTxtPromotedSection}</a>
-            </Link>
-          </motion.div>
-        </PromotedSection>
-        <NewProducts>
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: {
-                scale: 0.8,
-                opacity: 0,
-              },
-              visible: {
-                scale: 1,
-                opacity: 1,
-                transition: {
-                  delay: 0.4,
-                },
-              },
-            }}
-          >
-          <h1 className="squared">{NewProductTitle}</h1>
-          </motion.div>
-          <CarouselSwiper products={onSaleProduct} />
-        </NewProducts>
-        <RentalSection>
-          <motion.div
-          className="content"
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1 , x:0}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          >
-            <h1>{locationTitle}</h1>
-            <p>{locationTxt}</p>
-            <Link href="/inmotion-mobility/services/location">
-              <a>{LocationLink}</a>
-            </Link>
-          </motion.div>
-          <motion.div 
-          className="rentalImg"
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1 , x:0}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          >
-            <Image
-              src={imageLocation}
-              alt="location de trottinettes,vélos et gyroroues "
-              layout="fill"
-              objectFit="cover"
-            />
-          </motion.div>
-        </RentalSection>
-        <HelpSection>
-          <div className="content">
-            <h1 className="squared">{contactTitle}</h1>
-            <p>{contactTxt}</p>
-            <Link href="/inmotion-mobility/contact">
-              <a>{contactLink}</a>
-            </Link>
-          </div>
-          <div className="helpImg">
-            <Image
-              src={imageHelp}
-              alt="contact inmotion, service et conseils de professionels "
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-        </HelpSection>
-      </MainContent>
-    </Container>
+            <div className="helpImg">
+              <Image
+                src={imageHelp}
+                alt="contact inmotion, service et conseils de professionels "
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
+          </HelpSection>
+        </MainContent>
+      </Container>
+    </>
   );
 }
 

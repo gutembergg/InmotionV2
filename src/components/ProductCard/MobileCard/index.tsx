@@ -82,28 +82,26 @@ const MobileCard = ({ product }: Props) => {
           <div>
             <h4>{product.name}</h4>
             {product.variations.length > 0 ? (
-              
-               <>
-               <div className={product?.on_sale ? "regular_price" : ""}>
-                {priceFrom}{" "} 
-              {currency === "CHF"
-                   ? !!product?.price &&
-                     product?.price + " " + currency
-                   : !!product?.euroPrice &&
-                     product?.euroPrice + " " + currency}
-               </div>
+              <>
+                <div className={product?.on_sale ? "regular_price" : ""}>
+                  {priceFrom}{" "}
+                  {currency === "CHF"
+                    ? !!product?.price && product?.price + " " + currency
+                    : !!product?.euroPrice &&
+                      product?.euroPrice + " " + currency}
+                </div>
 
-               <div className="sale_price">
-                 {currency === "CHF"
-                   ? !!product?.sale_price &&
-                     product?.sale_price + " " + currency
-                   : !!product?.sale_price &&
-                     product?.euroPrice + " " + currency}
-               </div>
-               <div>
-                 {product?.on_sale && <p className="promo">{Promotion}</p>}
-               </div>
-             </>
+                <div className="sale_price">
+                  {currency === "CHF"
+                    ? !!product?.sale_price &&
+                      product?.sale_price + " " + currency
+                    : !!product?.sale_price &&
+                      product?.euroPrice + " " + currency}
+                </div>
+                <div>
+                  {product?.on_sale && <p className="promo">{Promotion}</p>}
+                </div>
+              </>
             ) : (
               <>
                 <div className={product?.on_sale ? "regular_price" : ""}>
@@ -126,9 +124,14 @@ const MobileCard = ({ product }: Props) => {
                 </div>
               </>
             )}
-            {product.acf.precommande === true && (<>
-            <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{product.acf.date_de_sortie}</div>
-            </>)}
+            {product.acf.precommande === true && (
+              <>
+                <div className="Preorder">
+                  {preorder} <br />
+                  {preorderDate} {product.acf.date_de_sortie}
+                </div>
+              </>
+            )}
             <StockStatuts
               stock_quantity={product.stock_quantity}
               stock_status={product.stock_status}

@@ -110,6 +110,8 @@ export default function CheckoutMobility() {
   const errCoutryCurrencyDescrEUR = t(
     "checkout-mobility:errCoutryCurrencyDescEUR"
   );
+  const pointOfSale = t("checkout-mobility:pointOfSale");
+  const deliveryTraduction = t("checkout-mobility:delivery");
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
@@ -169,6 +171,7 @@ export default function CheckoutMobility() {
   const tva = CHFCurrency ? 7.7 : 0;
   const tvaResult = CHFCurrency ? (cart.totalProductsPrice / 100) * tva : 0;
 
+  console.log("usedCoupons: ", usedCoupons);
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
       const _lineItems = cart.products.map((product) => {
@@ -450,7 +453,7 @@ export default function CheckoutMobility() {
         country: _billingShippingData.shipping?.country,
       },
       line_items: lineItems,
-      coupon_lines: couponsCodeArray,
+      coupon_lines: [{ code: "depasse" }],
       shipping_lines: shippingLines,
 
       customer_id: Object.keys(user).length > 0 ? user.profile.id : 0,
@@ -460,21 +463,31 @@ export default function CheckoutMobility() {
       setIsCoupon(true);
     }
 
+    console.log("isCoupon: ", isCoupon);
     if (isCoupon === false) {
-      const response = await wc_createOrder(order);
-      _setOrder(response);
-      setCodePromoState(false);
+      try {
+        const response = await wc_createOrder(order);
+        console.log("RESPONSE", response);
+        _setOrder(response);
+        setCodePromoState(false);
 
-      setTotalOrder(Number(response.total));
+        setTotalOrder(Number(response.total));
 
-      orderIdRef.current = response.id;
-      lineItemsRef.current = response.line_items as ILineItems[];
-      const shippinResult = response.shipping_total;
-      shippingPriceRef.current = Number(shippinResult);
+        orderIdRef.current = response.id;
+        lineItemsRef.current = response.line_items as ILineItems[];
+        const shippinResult = response.shipping_total;
+        shippingPriceRef.current = Number(shippinResult);
 
-      setOrderId(response.id);
-      setDiscountCupons(response.coupon_lines);
-      setIsPayment(true);
+        setOrderId(response.id);
+        setDiscountCupons(response.coupon_lines);
+        setIsPayment(true);
+      } catch (error: any) {
+        alert("Error coupons");
+        setErros("Error order fails");
+        console.log("Error: ", error.headers);
+
+        return;
+      }
     } else {
       return;
     }
@@ -499,13 +512,9 @@ export default function CheckoutMobility() {
       if (wayOfPaymentSelected === 0) {
         await _sendOrder();
 
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("inmotion:cart");
-        }
-
-        router.push(
+        /*  router.push(
           `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
-        );
+        ); */
 
         return;
       }
@@ -792,13 +801,13 @@ export default function CheckoutMobility() {
       const formatListMethods = methodsList.map((method) => {
         return {
           ...method,
-          methodeName: method.id === 2 ? "Point de vente" : "Livraison",
+          methodeName: method.id === 2 ? pointOfSale : deliveryTraduction,
         };
       });
 
       setMethodsShippingList(formatListMethods);
     },
-    []
+    [deliveryTraduction, pointOfSale]
   );
 
   const formatPrice = useCallback((price1: number, price2: number) => {
@@ -807,6 +816,9 @@ export default function CheckoutMobility() {
 
     return formatedTotal;
   }, []);
+
+  console.log("_order: ", _order);
+  console.log("orederRef: ", orderIdRef.current);
 
   return (
     <>
@@ -914,6 +926,7 @@ export default function CheckoutMobility() {
                           <button
                             className="closeButton"
                             onClick={() => deleteCoupons(coupon.id)}
+                            /*  disabled={orderIdRef.current} */
                           ></button>
                           <div>{coupon.description}</div>
                         </div>

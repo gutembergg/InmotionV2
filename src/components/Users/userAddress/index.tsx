@@ -48,7 +48,6 @@ const UserAddress = ({ currentyUser }: Props) => {
       );
       return;
     }
-    console.log("_password: ", _password);
     alert("Correct Password !!!!");
     //await updateUsersPassword(_password);
   }, [_password]);

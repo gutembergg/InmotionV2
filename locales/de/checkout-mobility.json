@@ -32,5 +32,7 @@
   "errCoutryCurrencyDescCHF": "Um das Produkt in die Schweiz zu liefern, müssen Sie die Währung in CHF haben:",
   "errCoutryCurrencyDescEUR": "Um das Produkt außerhalb der Schweiz zu liefern, müssen Sie die Währung in EUR haben.",
   "billingAddress": "Rechnungsadresse",
-  "totalttc": "Gesamt(inkl. MwSt.):"
+  "totalttc": "Gesamt(inkl. MwSt.):",
+  "pointOfSale": "Point of sale",
+  "delivery": "Delivery"
 }

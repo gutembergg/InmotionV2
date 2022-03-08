@@ -32,5 +32,7 @@
   "errCoutryCurrencyTitle": "Erreur de devises",
   "errCoutryCurrencyDescCHF": "Pour livrer le produit en Suisse vous devez avoir la devise en CHF:",
   "errCoutryCurrencyDescEUR": "Pour livrer le produit en dehors de la suisse, vous devez avoir la devise en EUR",
-  "totalttc": "Total (T.T.C):"
+  "totalttc": "Total (T.T.C):",
+  "pointOfSale": "Point de vente",
+  "delivery": "Livraison"
 }
