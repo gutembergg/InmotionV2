@@ -130,7 +130,7 @@ const CouponsCode = ({
     //--------------COUPONS RESTRICTIONS ----------------------//
 
     //CHECK DATE EXPIRATION tested
-    const couponExpDate = coupon.date_expires;
+    /*    const couponExpDate = coupon.date_expires;
     const date = Date.now();
     if (couponExpDate) {
       const ExpDateMs = Date.parse(couponExpDate);
@@ -144,7 +144,7 @@ const CouponsCode = ({
 
         return;
       }
-    }
+    } */
 
     //CHECK COUPON USAGE LIMIT tested
     const usageLimit = coupon.usage_limit;

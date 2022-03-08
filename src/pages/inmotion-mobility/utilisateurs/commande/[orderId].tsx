@@ -25,6 +25,7 @@ export default function UserOrder() {
   const [order, setOrder] = useState<Order>({} as Order);
   const [orderDate, setOrderDate] = useState("");
   const [orderResponse, setOrderResponse] = useState(false);
+  const [errors, setErrors] = useState("");
 
   //translation
   const { t } = useTranslation();
@@ -70,7 +71,7 @@ export default function UserOrder() {
         setOrderDate(orderDate);
         setOrderResponse(true);
       })
-      .catch((error) => console.log("Error: ", error));
+      .catch((error) => setErrors("Error loading orders"));
   }, [router.query.orderId]);
 
   useEffect(() => {
@@ -113,7 +114,6 @@ export default function UserOrder() {
               </OrderInfos>
               <ResumeWrapper>
                 <OrderResume>
-                  
                   <h4>{CompletedOrderProducts}</h4>
                   <ul className="product_list">
                     {order &&

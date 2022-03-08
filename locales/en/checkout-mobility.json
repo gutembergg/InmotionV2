@@ -32,5 +32,7 @@
   "errCoutryCurrencyTitle": "Currency error",
   "errCoutryCurrencyDescCHF": "To deliver the product in Switzerland you must have the currency in CHF:",
   "errCoutryCurrencyDescEUR": "To deliver the product outside Switzerland, you must have the currency in EUR",
-  "totalttc": "Total (incl. tax): "
+  "totalttc": "Total (incl. tax): ",
+  "pointOfSale": "Point of sale",
+  "delivery": "Delivery"
 }

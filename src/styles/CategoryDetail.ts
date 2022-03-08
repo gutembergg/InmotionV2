@@ -1,12 +1,12 @@
 import { shade } from "polished";
 import styled from "styled-components";
-import backgroundProduct from "../../public/images/backgrounds/MainBackground.jpg"
+import backgroundProduct from "../../public/images/backgrounds/MainBackground.jpg";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height:80vh;
+  min-height: 80vh;
   background-image: url(${backgroundProduct.src});
   background-size: cover;
   background-position-x: center;
@@ -26,17 +26,17 @@ export const Container = styled.div`
     width: calc(100% - 1rem);
     flex: 0 1 auto;
   }
-h1{
-text-align: right;
-width: 100%;
-padding: 0 3rem;
-margin-bottom:0px;
-margin-right: 20px;
-@media screen and (max-width: 768px) {
-  margin-right: 0px;
-  padding: 0 1rem;
-}
-}
+  h1 {
+    text-align: right;
+    width: 100%;
+    padding: 0 3rem;
+    margin-bottom: 0px;
+    margin-right: 20px;
+    @media screen and (max-width: 768px) {
+      margin-right: 0px;
+      padding: 0 1rem;
+    }
+  }
 `;
 
 export const Content = styled.div`
@@ -45,19 +45,19 @@ export const Content = styled.div`
   justify-content: center;
   width: 100%;
   padding: 0 5rem;
-  align-items:center;
+  align-items: center;
   flex: 1 1 auto;
   justify-content: center;
   margin-bottom: 30px;
-  .productFrom{
-      font-weight: bold;
-      color: var(--Black)
-    }
-    .Preorder {
+  .productFrom {
+    font-weight: bold;
+    color: var(--Black);
+  }
+  .Preorder {
     color: var(--TxtRed);
-    margin-bottom:10px;
+    margin-bottom: 10px;
     /* font-weight: normal; */
-}
+  }
   @media (max-width: 1160px) {
     padding: 0 3rem;
   }
@@ -66,19 +66,18 @@ export const Content = styled.div`
     padding: 0 2rem;
   }
   @media only screen and (max-width: 768px) {
-    flex-direction:column;
-    align-items:center;
-    .ProductDescrt{
+    flex-direction: column;
+    align-items: center;
+    .ProductDescrt {
       width: 100%;
       padding: 0 0rem;
       display: flex;
       align-items: center;
-    flex-direction: column;
-    .productFrom{
-      text-align: center;
-
+      flex-direction: column;
+      .productFrom {
+        text-align: center;
+      }
     }
-}
   }
 
   @media (max-width: 416px) {
@@ -88,32 +87,31 @@ export const Content = styled.div`
 `;
 
 export const ProductInfos = styled.div`
-align-items: start;
-    flex-direction: column;
-    display: flex;
-    -webkit-box-pack: justify;
-    justify-content: space-around;
-    margin: 0 auto;
-    width:100%;
+  align-items: start;
+  flex-direction: column;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 100%;
 
-    @media only screen and (max-width: 768px) {
-    flex-direction:row;
+  @media only screen and (max-width: 768px) {
+    flex-direction: row;
     flex-wrap: wrap;
     display: none;
     visibility: hidden;
-}
+  }
 
-    div{
-      margin-bottom:5px ;
-      .iconBox{
-        height: 25px;
-        width: 25px;
-        position:relative;
-        align-self: center;
-        margin-right:5px ;
-      }
+  div {
+    margin-bottom: 5px;
+    .iconBox {
+      height: 25px;
+      width: 25px;
+      position: relative;
+      align-self: center;
+      margin-right: 5px;
     }
-}
+  }
 
   .weight {
     display: flex;
@@ -131,30 +129,24 @@ align-items: start;
 `;
 
 export const ProductImage = styled.div`
-     width: 33%;
-     position: relative;
-     height: 35vh;
-     min-height: 240px;
-     min-width: 100px;
-     margin-right: 30px;
-     align-self: center;
-     >div{
-       position: relative;
-       width: 100%;
-       height: 100%;
-     }
-     @media (max-width: 980px) {
-       height: 25vh;
-      }
-      @media (max-width: 768px) {
-        width: 250px;
+  width: 33%;
+  position: relative;
+  height: 35vh;
+  min-height: 240px;
+  min-width: 100px;
+  margin-right: 30px;
+  align-self: center;
+
+  @media (max-width: 980px) {
+    height: 25vh;
+  }
+  @media (max-width: 768px) {
+    width: 250px;
     height: 250px;
     min-height: 170px;
     margin-right: 0px;
     margin-bottom: 15px;
   }
-
-
 `;
 
 export const ProductMenuModel = styled.div`
@@ -209,73 +201,69 @@ export const ProductMenuModel = styled.div`
 `;
 
 export const ProductMenuResponsive = styled.div`
- margin-bottom: 30px ;
- width: 100%;
- 
- @media (max-width: 1015px) {
-   width: 100%;
+  margin-bottom: 30px;
+  width: 100%;
+
+  @media (max-width: 1015px) {
+    width: 100%;
     margin-top: 1.4rem;
   }
- @media (max-width: 768px) {
-   width: 100%;
+  @media (max-width: 768px) {
+    width: 100%;
     margin-top: 0;
     margin-bottom: 20px;
   }
 `;
 
 export const BtnProductDetail = styled.button`
-  
+  height: 40px;
   width: 100%;
   max-width: 220px;
   color: var(--White);
   border: none;
   text-align: center;
   margin: 0 auto;
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     margin-top: 10px;
   }
-  a{
-    padding: 10px 20px;
-    width: 100%; ;
-    height: 100%;
-    display:block ;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--White) ;
+  &:hover {
+    background: var(--BlueHover);
   }
- 
-}
-
+  a {
+    text-decoration: none;
+    color: var(--White);
+    font-weight: 600;
+  }
 `;
 
 export const LogoProduct = styled.div`
-  margin:0 auto;
+  margin: 0 auto;
 
   .logo_box {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: center;
     font-weight: 600;
     margin-top: 1rem;
     align-items: flex-start;
 
     @media only screen and (max-width: 768px) {
-    align-items:center;
-    margin-top: 0rem;
-}
+      align-items: center;
+      margin-top: 0rem;
+    }
 
-    h2{
+    h2 {
       font-size: 2rem;
       color: var(--Blue);
-      margin-bottom:0;
+      margin-bottom: 0;
       @media only screen and (max-width: 768px) {
         font-size: 1.5rem;
         margin: 0 13px;
-    text-align: center;
-}
-      span{ 
-        font-family:"Bitter";
-        font-size:inherit;
+        text-align: center;
+      }
+      span {
+        font-family: "Bitter";
+        font-size: inherit;
       }
     }
   }
@@ -286,22 +274,22 @@ export const LogoProduct = styled.div`
     margin-bottom: 15px;
     @media only screen and (max-width: 768px) {
       margin-bottom: 0px;
-}
+    }
   }
 
   .regular_price {
     text-decoration: line-through;
     opacity: 0.4;
-    margin-right: 10px
+    margin-right: 10px;
   }
 
   .sale_price {
     color: var(--Black);
   }
-  .promo{
+  .promo {
     margin-left: 10px;
     color: var(--TxtRed);
-    font-size:1em;
+    font-size: 1em;
   }
 `;
 
@@ -310,28 +298,27 @@ export const AddToCartSession = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 20px ;
-  align-items:center;
+  margin-top: 20px;
+  align-items: center;
   width: 400px;
-  
-  @media (max-width:460px){
+
+  @media (max-width: 460px) {
     justify-content: center;
     width: 100%;
     align-items: center;
     flex-direction: column;
 
-    a{
-      margin-top:15px;
-      margin-left:0px;
-      
+    a {
+      margin-top: 15px;
+      margin-left: 0px;
     }
   }
-  .link {
+  .product_detail {
+    cursor: pointer;
     text-decoration: none;
     color: var(--Blue);
     font-weight: bold;
-    margin-left:20px;
-    cursor: pointer;
+    margin-left: 20px;
 
     &:hover {
       color: ${shade(0.2, "#0570A6")};
@@ -360,5 +347,4 @@ export const AddToCartSession = styled.div`
       background-color: ${shade(0.2, "#0570A6")};
     }
   }
-
 `;

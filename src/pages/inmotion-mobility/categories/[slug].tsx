@@ -14,6 +14,7 @@ import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Pr
 
 import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
 
+import Notiflix from "notiflix";
 import useCart from "../../../hooks/useCart";
 import ButtonSkew from "../../../components/ButtonSkew";
 import useTranslation from "next-translate/useTranslation";
@@ -21,19 +22,19 @@ import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import SliderModels from "../../../components/Sliders/SliderModels";
 import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
+import useCurrency from "../../../hooks/useCurrency";
+
 import { motion } from "framer-motion";
 import {
   Container,
   ProductInfos,
   ProductImage,
-  ProductMenuModel,
   Content,
   LogoProduct,
   AddToCartSession,
   ProductMenuResponsive,
   BtnProductDetail,
 } from "../../../styles/CategoryDetail";
-import useCurrency from "../../../hooks/useCurrency";
 
 interface Props {
   category: ICategories;
@@ -113,6 +114,27 @@ export default function Category({ category, productsByCategory }: Props) {
     return titleColorized;
   };
 
+  const handleShowDetails = (slug: string) => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();
+    router
+      .push(`/inmotion-mobility/produit/${slug}`)
+      .then((res) => handleStop());
+  };
+
   return (
     <>
       <HeaderSeo
@@ -126,30 +148,30 @@ export default function Category({ category, productsByCategory }: Props) {
         <h1>{category.name}</h1>
         <Content>
           <ProductImage>
-            <motion.div
+            {/*  <motion.div
               key={products[productIndex]?.id}
               initial={{ x: 0, opacity: 0 }}
               animate={{ x: ["0%", "-100%", "0%"], opacity: [0, 0, 1] }}
               transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
-            >
-              <Image
-                objectFit="contain"
-                layout="fill"
-                objectPosition="right"
-                src={
-                  products[productIndex]?.images[0]
-                    ? products[productIndex]?.images[0].src
-                    : placeholder.src
-                }
-                alt={products[productIndex]?.name}
-                placeholder="blur"
-                blurDataURL={
-                  products[productIndex]?.images[0]
-                    ? products[productIndex]?.images[0].src
-                    : placeholder.src
-                }
-              />
-            </motion.div>
+            > */}
+            <Image
+              objectFit="contain"
+              layout="fill"
+              objectPosition="right"
+              src={
+                products[productIndex]?.images[0]
+                  ? products[productIndex]?.images[0].src
+                  : placeholder.src
+              }
+              alt={products[productIndex]?.name}
+              placeholder="blur"
+              blurDataURL={
+                products[productIndex]?.images[0]
+                  ? products[productIndex]?.images[0].src
+                  : placeholder.src
+              }
+            />
+            {/*    </motion.div> */}
           </ProductImage>
           <motion.div
             className="ProductDescrt"
@@ -298,23 +320,12 @@ export default function Category({ category, productsByCategory }: Props) {
             </ProductInfos>
             {products[productIndex]?.variations.length > 0 ? (
               <>
-                <BtnProductDetail>
-                  <Link
-                    href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`} passHref
-                  >
-                    <motion.a
-                      initial={{ background: "#0570A6" }}
-                      whileHover={{
-                        scale: 1.02,
-                        transition: { duration: 0.01 },
-                        background: "#03486b",
-                      }}
-                      style={{ originX: 0.5 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
-                    >
-                      {showVariationTradution}
-                    </motion.a>
-                  </Link>
+                <BtnProductDetail
+                  onClick={() =>
+                    handleShowDetails(products[productIndex]?.slug)
+                  }
+                >
+                  {showVariationTradution}
                 </BtnProductDetail>
               </>
             ) : (
@@ -333,23 +344,14 @@ export default function Category({ category, productsByCategory }: Props) {
                 >
                   {btnAddToCart}
                 </motion.button>
-                <Link
-                  href={`/inmotion-mobility/produit/${products[productIndex]?.slug}`}  passHref
+
+                <div
+                  onClick={() =>
+                    handleShowDetails(products[productIndex]?.slug)
+                  }
                 >
-                  <motion.a
-                    className="link"
-                    initial={{ color: "#0570A6" }}
-                    whileHover={{
-                      scale: 1.02,
-                      transition: { duration: 0.01 },
-                      color: "#03486b",
-                    }}
-                    style={{ originX: 0.5 }}
-                    whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
-                  >
-                    {linkShowDetails}
-                  </motion.a>
-                </Link>
+                  <p className="product_detail">showDetails</p>
+                </div>
               </AddToCartSession>
             )}
           </motion.div>

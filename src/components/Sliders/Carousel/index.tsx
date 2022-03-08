@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/dist/client/image";
 import Link from "next/dist/client/link";
-import {motion } from "framer-motion";
+import { IProduct } from "../../../interfaces/IProducts";
+import useCurrency from "../../../hooks/useCurrency";
 
 // Import Swiper styles
 import "swiper/css";
@@ -15,10 +16,7 @@ import SwiperCore, { FreeMode, Navigation } from "swiper";
 SwiperCore.use([FreeMode, Navigation]);
 
 import "./styles.ts";
-import { IProduct } from "../../../interfaces/IProducts";
 import { CarouselBox } from "./styles";
-import { useEffect, useState } from "react";
-import useCurrency from "../../../hooks/useCurrency";
 
 interface Props {
   products: IProduct[];
@@ -26,42 +24,12 @@ interface Props {
 
 export default function CarouselSwiper({ products }: Props) {
   const { currency } = useCurrency();
-  const [productList, setProductList] = useState(products as IProduct[]);
-  const listCount = productList.length;
-
-  useEffect(() => {
-    setProductList(products);
-  }, [products]);
-
+  const listCount = products.length;
 
   // ----------------------------------------------------------------
-  // <ANIMATION>
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      delay: 1,
-      transition: {
-        staggerChildren: 0.2,
-        duration: 0.5
-      }
-    }
-  }
-  
-  const item = {
-    hidden: { opacity: 0, y:-10, scale:0.2 },
-    show: { opacity: 1, y:0, duration: 0.5, scale:1}
-  }
 
-  
   return (
     <CarouselBox>
-      <motion.div variants={container}
-    initial="hidden"
-    whileInView= "show" 
-    viewport={{once:true}}
-    >
-
       <Swiper
         slidesPerView={listCount >= 5 ? 5 : listCount}
         spaceBetween={30}
@@ -89,48 +57,42 @@ export default function CarouselSwiper({ products }: Props) {
           },
           // when window width is >= 900px
           1024: {
-            slidesPerView: listCount >= 4 ? 4.5: listCount,
+            slidesPerView: listCount >= 4 ? 4.5 : listCount,
           },
           1280: {
             slidesPerView: listCount >= 5 ? 5.5 : listCount,
           },
         }}
-        >
-        {productList.map((product) => {
+      >
+        {products.map((product) => {
           return (
             <SwiperSlide key={product.id}>
-              <motion.div className="slide_block" variants={item}>
-                <Link href={`/inmotion-mobility/produit/${product.slug}`}>
-                  <motion.a className="link" whileHover={{
-                    scale: 1.04,
-                    transition: { duration: 0.07 },
-                  }}
-                  style={{ originX: 0.5 }}
-                  whileTap={{ scale: 0.98, transition: { duration: 0.02 } }}>
-                    <Image
-                      width={150}
-                      height={150}
-                      src={product.images[0]?.src}
-                      alt="product"
-                      placeholder="blur"
-                      blurDataURL={product.images[0]?.src}
-                      />
-                    <div className="product_name">
-                      <strong>{product.name}</strong>
-                    </div>
-                    <div className="product_price">
-                      {currency === "CHF" ? "CHF" : "EUR"}{" "}
-                      {currency === "CHF" ? product.price : product.euroPrice}.-
-                    </div>
-                    <div className="ButtonViewProduct"></div>
-                  </motion.a>
-                </Link>
-              </motion.div>
+              {/*  <motion.div className="slide_block" variants={item}> */}
+              <Link href={`/inmotion-mobility/produit/${product.slug}`}>
+                <a className="link">
+                  <Image
+                    width={150}
+                    height={150}
+                    src={product.images[0]?.src}
+                    alt="product"
+                    placeholder="blur"
+                    blurDataURL={product.images[0]?.src}
+                  />
+                  <div className="product_name">
+                    <strong>{product.name}</strong>
+                  </div>
+                  <div className="product_price">
+                    {currency === "CHF" ? "CHF" : "EUR"}{" "}
+                    {currency === "CHF" ? product.price : product.euroPrice}
+                    .-
+                  </div>
+                  <div className="ButtonViewProduct"></div>
+                </a>
+              </Link>
             </SwiperSlide>
           );
         })}
       </Swiper>
-        </motion.div>
     </CarouselBox>
   );
 }

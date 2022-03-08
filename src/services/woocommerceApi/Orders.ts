@@ -11,6 +11,8 @@ export const createOrder = async (order: any) => {
 export const wc_createOrder = async (order: any): Promise<Order> => {
   const { data } = await wcApi.post("orders", order);
 
+  console.log("respOrder: ", data);
+
   return data;
 };
 
