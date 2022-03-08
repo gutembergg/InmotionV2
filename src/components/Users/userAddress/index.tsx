@@ -59,7 +59,7 @@ const UserAddress = ({ currentyUser }: Props) => {
       Report.failure(`${ChangeErrorTitle}`, `${ChangeErrorTxt}`, "Okay");
     }
     
-  }, [_password]);
+  }, [_password,ChangeErrorTitle,ChangeErrorTxt,GoodPasswordTitle,GoodPasswordTxt,wrongPasswordTitle,wrongPasswordTxt]);
 
   return (
     <Container>
