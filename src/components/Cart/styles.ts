@@ -134,7 +134,9 @@ export const StyledCart = styled.div`
             }
 }
           .cartProductThmbnail {
-             /* flex: 1; */
+             position:relative ;
+             width:50px ;
+             height:50px ;
              margin-right: 10px;
              @media (max-width:760px){
                margin-right: 30px;

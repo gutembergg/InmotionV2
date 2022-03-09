@@ -148,7 +148,7 @@ export default function Category({ category, productsByCategory }: Props) {
         <h1>{category.name}</h1>
         <Content>
           <ProductImage>
-            {/*  <motion.div
+             {/* <motion.div
               key={products[productIndex]?.id}
               initial={{ x: 0, opacity: 0 }}
               animate={{ x: ["0%", "-100%", "0%"], opacity: [0, 0, 1] }}
@@ -176,8 +176,8 @@ export default function Category({ category, productsByCategory }: Props) {
           <motion.div
             className="ProductDescrt"
             key={products[productIndex]?.id}
-            initial={{ x: 0, opacity: 0 }}
-            animate={{ x: ["0%", "100%", "0%"], opacity: [0, 0, 1] }}
+            initial={{  opacity: 0 }}
+            animate={{  opacity: [ 0, 1] }}
             transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
           >
             <LogoProduct>
@@ -300,6 +300,7 @@ export default function Category({ category, productsByCategory }: Props) {
                       <Image
                         layout="fill"
                         objectFit="contain"
+                        sizes="40vh"
                         src={RoadIcon}
                         alt="poids"
                         className="image"
@@ -320,12 +321,22 @@ export default function Category({ category, productsByCategory }: Props) {
             </ProductInfos>
             {products[productIndex]?.variations.length > 0 ? (
               <>
-                <BtnProductDetail
-                  onClick={() =>
-                    handleShowDetails(products[productIndex]?.slug)
-                  }
-                >
+                <BtnProductDetail>
+              <motion.button className="buttonProductDetail"
+               onClick={() =>
+                handleShowDetails(products[productIndex]?.slug)
+              }
+              initial={{ background: "#0570A6" }}
+              whileHover={{
+                scale: 1.02,
+                transition: { duration: 0.01 },
+                background: "#03486b",
+              }}
+              style={{ originX: 0.5 }}
+              whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
+              >
                   {showVariationTradution}
+                </motion.button>
                 </BtnProductDetail>
               </>
             ) : (
