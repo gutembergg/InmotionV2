@@ -268,6 +268,9 @@ export const MobileMobilityHeader = styled.header`
   position: relative;
   list-style: none;
   font-weight: bold;
+  ul{
+
+  
   a {
     cursor: pointer;
   }
@@ -315,4 +318,5 @@ export const MobileMobilityHeader = styled.header`
       }
     }
   }
+}
 `;

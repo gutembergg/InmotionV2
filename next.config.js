@@ -9,6 +9,7 @@ module.exports = nextTranslate({
       "dx7l6anesh.preview.infomaniak.website",
       "checkout.postfinance.ch",
     ],
+    minimumCacheTTL: 60,
   },
   typescript: {
     ignoreBuildErrors: true,

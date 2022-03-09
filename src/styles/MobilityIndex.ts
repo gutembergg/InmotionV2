@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`a{
+  cursor: pointer;
+}
+`;
 export const MainContent = styled.div`
     overflow-x: hidden;
   @media (max-width: 1024px) {
@@ -159,11 +162,8 @@ export const HelpSection = styled.section`
     flex-direction: column;
   }
   .helpImg {
-    width: 278px;
-    position: relative;
-    height:400px;
+
     @media (max-width: 640px) {
-      width: 278px;
       margin-top: 50px;
     }
   }

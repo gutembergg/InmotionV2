@@ -65,7 +65,7 @@ const SliderMobility = ({ slider }: Props) => {
                     alt="corporate"
                     layout="fill"
                     objectFit="cover"
-                    priority
+                    // priority
                   />
                 )}
               </div>
@@ -82,7 +82,7 @@ const SliderMobility = ({ slider }: Props) => {
                   }}
                 ></div>
                 <div className="link">
-                  <Link href={sliderItem.acf.lien}>
+                  <Link href={sliderItem.acf.lien} passHref>
                     <motion.a
                     initial={{background: "#0570A6" }}
                       whileHover={{
@@ -91,7 +91,7 @@ const SliderMobility = ({ slider }: Props) => {
                         background: "#03486b" 
                       }}
                       style={{ originX: 0.5 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                      whileTap={{ scale: 0.88, transition: { duration: 0.01 },}}
                     >
                       {sliderItem.acf.texte_du_lien}
                     </motion.a>

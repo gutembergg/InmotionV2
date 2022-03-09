@@ -8,8 +8,8 @@ const SearchBar = () => {
 
   return (
     <Container>
-      <Link  href="/inmotion-mobility/search">
-      <a>
+      <Link  href="/inmotion-mobility/search"  >
+      <a className="search">
        <div className="searchICon">
           <FiSearch />
         </div>

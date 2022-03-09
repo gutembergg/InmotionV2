@@ -34,6 +34,7 @@ export const Container = styled.div`
     justify-content: center;
     font-weight: bold;
     color: var(--Black);
+    max-width: 1000px;
       .link {
         margin-top: 21px;
       }

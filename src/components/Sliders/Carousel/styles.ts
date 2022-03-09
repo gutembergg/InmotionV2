@@ -31,6 +31,12 @@ width: 100%;
   a{
       text-decoration: none;
 display:block;
+.imgBox{
+
+  position:relative ;
+  width:150px ;
+  height:150px ;
+}
       .product_name {
     color: var(--Blue);
 }
