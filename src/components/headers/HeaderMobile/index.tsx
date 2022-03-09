@@ -94,7 +94,11 @@ const HeaderMobile = () => {
     <StyledMobileHeader>
       <div className="topHeader">
         <div className="logoBox">
-          <Image src={logo} alt="logo Inmotion" />
+        <Link href="/inmotion-mobility">
+            <a>
+              <Image src={logo} alt="logo Inmotion" />
+            </a>
+          </Link>
         </div>
         <div className="rightContent">
           <Login />
