@@ -41,7 +41,7 @@ export default function ServiceLocation({locations}:Props) {
             />
           </div>
         <BlockInfoLocation>
-          <motion.div animate={{ x: ["100%", "0%"], opacity: [0, 1] }}
+          <motion.div animate={{ x: ["50%", "0%"], opacity: [0, 1] }}
               transition={{ type: "spring", stiffness: 100, duration: 0.5 }}>
           <div className="block">
             <div className="unskewBlock">
@@ -60,13 +60,14 @@ export default function ServiceLocation({locations}:Props) {
                 <motion.li 
                 key={location.id} 
                 whileInView="visible"
-                initial={{y:"100%"}}
+                initial={{opacity:"0%"}}
             viewport={{ once: true }}
             variants={{
               visible: {
-                y: "0%",
+                opacity:"100%",
                 transition: {
-                  duration: 0.3
+                  duration: 0.6,
+                  delay:0.2
                 },
               },
             }}
