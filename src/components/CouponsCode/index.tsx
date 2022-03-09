@@ -52,7 +52,9 @@ const CouponsCode = ({
   const validCoupon = t("couponsErrors:validCoupon");
   const singleCouponOnly = t("couponsErrors:singleCouponOnly");
   const singleCouponUsed = t("couponsErrors:singleCouponUsed");
-  const warningNoMoreAvailableCoupon = t("couponsErrors:warningNoMoreAvailableCoupon");
+  const warningNoMoreAvailableCoupon = t(
+    "couponsErrors:warningNoMoreAvailableCoupon"
+  );
   const alreadyUsedCoupon = t("couponsErrors:alreadyUsedCoupon");
   const groupNotValid = t("couponsErrors:groupNotValid");
   const noAvaillableProduct = t("couponsErrors:noAvaillableProduct");
@@ -62,7 +64,6 @@ const CouponsCode = ({
   const soldedProduct = t("couponsErrors:soldedProduct");
   const errorCoupon = t("couponsErrors:errorCoupon");
   const goodCoupon = t("couponsErrors:goodCoupon");
-  
 
   const cartContent = cart.products;
   const cartValue = cart.totalProductsPrice;
@@ -70,47 +71,35 @@ const CouponsCode = ({
   //HANDLE INPUT CHANGES
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTxt = event.target.value;
-    
+
     setInputValue(inputTxt);
   };
-  
+
   //HANDLE INPUT SUBMIT
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    
+
     //if disabled because single use code   tested
     if (inputDisabledStatus === true) {
-      Report.failure(
-        `${errorCoupon}`,
-        `${singleCouponUsed}`,
-        "Okay"
-        );
-        return;
-      }
-      //if no code in value   tested
-      if (inputValue.length === 0) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${InputHasntValue}`,
-          "Okay"
-          );
-          return;
-        }
-        // setInputValue("");
-        checkCoupons();
-      };
-      
-      const checkCoupons = async () => {
-        const { data } = await searchCoupons(inputValue);
-        const coupon: ICoupons = data[0];
-        
+      Report.failure(`${errorCoupon}`, `${singleCouponUsed}`, "Okay");
+      return;
+    }
+    //if no code in value   tested
+    if (inputValue.length === 0) {
+      Report.failure(`${errorCoupon}`, `${InputHasntValue}`, "Okay");
+      return;
+    }
+    setInputValue("");
+    checkCoupons();
+  };
+
+  const checkCoupons = async () => {
+    const { data } = await searchCoupons(inputValue);
+    const coupon: ICoupons = data[0];
+
     //CHECK CODE AVAILABILITY  tested
     if (!coupon) {
-      Report.failure(
-        `${errorCoupon}`,
-        `${couponNotValable}`,
-        "Okay"
-      );
+      Report.failure(`${errorCoupon}`, `${couponNotValable}`, "Okay");
       return;
     }
 
@@ -127,289 +116,8 @@ const CouponsCode = ({
       return;
     }
 
-    //--------------COUPONS RESTRICTIONS ----------------------//
-
-    //CHECK DATE EXPIRATION tested
-    /*    const couponExpDate = coupon.date_expires;
-    const date = Date.now();
-    if (couponExpDate) {
-      const ExpDateMs = Date.parse(couponExpDate);
-
-      if (ExpDateMs < date) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${couponDateExpired}`,
-          "Okay"
-        );
-
-        return;
-      }
-    } */
-
-    //CHECK COUPON USAGE LIMIT tested
-    const usageLimit = coupon.usage_limit;
-    const usageCount = coupon.usage_count;
-
-    if (usageLimit && usageCount >= usageLimit) {
-      Report.failure(
-        `${errorCoupon}`,
-        `${couponLimitReached}`,
-        "Okay"
-      );
-      return;
-    }
-
-    //CHECK INDIVIDUAL USE ----tested
-    if (coupon.individual_use) {
-      if (usedCoupons.length === 0) {
-        setInputDisabledStatus(true);
-        Report.info(
-          `${errorCoupon}`,
-          `${warningNoMoreAvailableCoupon}`,
-          "Okay"
-        );
-      } else {
-        Report.failure(
-          `${errorCoupon}`,
-          `${singleCouponOnly}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //----------------------USERS RESTRICTIONS----------------------//
-
-    //CHECK EMAIL RESTRICTION tested
-    const AuthorizedEmails = coupon.email_restrictions;
-
-    if (AuthorizedEmails.length !== 0) {
-      const searchAuthorizedEmail = AuthorizedEmails.filter(
-        (key) => key === userMail
-      );
-
-      if (searchAuthorizedEmail.length === 0) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${couponWrongUser}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //CHECK  USAGE LIMIT PER USER | EMAIL  tested
-    const usageLimitPerUser = coupon.usage_limit_per_user;
-    const usedBy = coupon.used_by;
-    const usedByVisitor = usedBy.filter((key) => key.includes("@"));
-    const usedByClient = usedBy.filter((key) => !key.includes("@"));
-
-    if (usageLimitPerUser) {
-      const visitor = usedByVisitor.filter((key) => key === userMail);
-
-      // with email
-      if (visitor && visitor.length >= usageLimitPerUser) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${couponLimitReached}`,
-          "Okay"
-        );
-        return;
-      }
-      // with userID
-      const client = usedByClient.filter((key) => key === userID?.toString());
-      if (client && client.length >= usageLimitPerUser) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${couponLimitReached}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //CHECK GROUP RESTRICTION ----TODO!!!!!
-    const groupRestriction = coupon.meta_data[0].value.toString();
-    if (groupRestriction) {
-      if (groupRestriction !== userGrp) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${groupNotValid}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-    //CART RESTRICTIONS ----------------------//
-
-    // CHECK CART LENGTH
-    if (!cartContent) {
-      Report.failure(
-        `${errorCoupon}`,
-        `${CartIsEmpty}`,
-        "Okay"
-      );
-      return;
-    }
-
-    //CHECK CART MIN / MAX VALUE
-    const _minCartAmount = parseFloat(coupon.minimum_amount);
-    const _maxCartAmount = parseFloat(coupon.maximum_amount);
-
-    if (_minCartAmount && cartValue < _minCartAmount) {
-      Report.failure(
-        `${errorCoupon}`,
-        `${minCartAmount}`,
-        "Okay"
-      );
-      return;
-    }
-
-    if (_maxCartAmount && cartValue > _maxCartAmount) {
-      Report.failure(
-        `${errorCoupon}`,
-        `${maxCartAmount}`,
-        "Okay"
-      );
-      return;
-    }
-
-    //PRODUCT RESTRICTION----------------------------//
-    //check matching element between 2 array
-    const findCommonElements = (arr1: number[], arr2: number[]) => {
-      return arr1.some((item) => arr2.includes(item));
-    };
-
-    //AVAILABLE PRODUCT  tested
-    const availableProducts = coupon.product_ids;
-    if (availableProducts.length > 0) {
-      const cartProductIDS = cartProducts.map((cartProduct) => {
-        return cartProduct.id;
-      });
-
-      if (findCommonElements(availableProducts, cartProductIDS) === false) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${noAvaillableProduct}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //EXCLUDED PRODUCT tested
-    const excludedProducts = coupon.excluded_product_ids;
-    if (excludedProducts.length > 0) {
-      const cartProductIDS = cartProducts.map((cartProduct) => {
-        return cartProduct.id;
-      });
-      if (findCommonElements(excludedProducts, cartProductIDS) === true) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${unhautorizedProduct}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //AVAILABLE CATEGORY
-    const availableCategory = coupon.product_categories;
-
-    if (availableCategory.length > 0) {
-      const cartProductCategory = cartProducts
-        .map((cartProduct) => {
-          return cartProduct.categories;
-        })
-        .map((cartProductCat) => {
-          return cartProductCat.map((cartProductcatid) => {
-            return cartProductcatid.id;
-          });
-        });
-      const flatCatList = cartProductCategory.flat();
-      if (findCommonElements(availableCategory, flatCatList) === false) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${availableCatInCart}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //EXCLUDED CATEGORY tested
-    const excludedCategory = coupon.excluded_product_categories;
-    if (excludedCategory.length > 0) {
-      const cartProductCategory = cartProducts
-      .map((cartProduct) => {
-        return cartProduct.categories;
-
-      })
-        .map((cartProductCat) => {
-          return cartProductCat.map((cartProductcatid) => {
-            return cartProductcatid.id;
-          });
-        });
-      const flatCatList = cartProductCategory.flat();
-      if (findCommonElements(excludedCategory, flatCatList) === true) {
-        Report.failure(
-          `${errorCoupon}`,
-          `${excludedCatInCart}`,
-          "Okay"
-        );
-        return;
-      }
-    }
-
-    //----------- SOLDED PRODUCTS RESTRICTIONS ----------------------//
-    const discountType = coupon.discount_type;
-    const couponSaleStatut = coupon.exclude_sale_items;
-
-    if (couponSaleStatut && cartContent) {
-      //when fixed product coupon
-      if (discountType === "fixed_product") {
-        const onsaleProductsIDs = coupon.product_ids;
-
-        const soldedProductInCart = cartContent.filter(
-          (product) => product.on_sale === true
-        );
-
-        const cartsoldedProductIDS = soldedProductInCart.map((cartProduct) => {
-          return cartProduct.id;
-        });
-
-        if (
-          findCommonElements(cartsoldedProductIDS, onsaleProductsIDs) === true
-        ) {
-          Report.failure(
-            `${errorCoupon}`,
-            `${soldedProduct}`,
-            "Okay"
-          );
-          return;
-        }
-      }
-
-      //when fixed cart and percent
-      if (discountType === "fixed_cart" || discountType === "percent") {
-        const listCartOnSaleStatut = cartContent.filter(
-          (product) => product.on_sale === true
-        );
-        if (listCartOnSaleStatut.length > 0) {
-          Report.failure(
-            `${errorCoupon}`,
-            `${soldedItemInCart}`,
-            "Okay"
-          );
-          return;
-        }
-      }
-    }
-
-    //
-
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
-    
+    console.log("coupons: ", coupon);
     Report.success(`${goodCoupon}`, `${validCoupon}`, "Okay");
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
     codePromoSteps();
@@ -428,17 +136,17 @@ const CouponsCode = ({
             value={inputValue}
             disabled={inputDisabledStatus}
           />
-          <motion.button 
-          type="submit" 
-          disabled={inputDisabledStatus === true && true}
-          initial={{background: "#0570A6" }}
-                      whileHover={{
-                        scale: 1.02,
-                        transition: { duration: 0.01 },
-                        background: "#03486b" 
-                      }}
-                      style={{ originX: 0.5 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+          <motion.button
+            type="submit"
+            disabled={inputDisabledStatus === true && true}
+            initial={{ background: "#0570A6" }}
+            whileHover={{
+              scale: 1.02,
+              transition: { duration: 0.01 },
+              background: "#03486b",
+            }}
+            style={{ originX: 0.5 }}
+            whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
           >
             {verifier}
           </motion.button>

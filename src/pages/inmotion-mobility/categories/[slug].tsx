@@ -56,6 +56,7 @@ export default function Category({ category, productsByCategory }: Props) {
   const ChooseModel = t("productDetail:ChooseModel");
   const preorder = t("productDetail:preorder");
   const preorderDate = t("productDetail:preorderDate");
+  const showDetails = t("productDetail:showDetails");
 
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
@@ -350,7 +351,7 @@ export default function Category({ category, productsByCategory }: Props) {
                     handleShowDetails(products[productIndex]?.slug)
                   }
                 >
-                  <p className="product_detail">showDetails</p>
+                  <p className="product_detail">{showDetails}</p>
                 </div>
               </AddToCartSession>
             )}

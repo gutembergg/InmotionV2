@@ -25,6 +25,7 @@ import BillingShippingForm, {
 import {
   wc_createOrder,
   _updateOrder,
+  createOrder,
 } from "../../../services/woocommerceApi/Orders";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import useUser from "../../../hooks/useUser";
@@ -32,7 +33,7 @@ import apiPFinance from "../../../services/postFinanceApi/apiPFinance";
 import { PostFinancePaymentMethods } from "../../../interfaces/PostFinance";
 import Spiner from "../../../components/Spiner";
 import useCurrency from "../../../hooks/useCurrency";
-import { ICoupons } from "../../../interfaces/ICoupons";
+import { CouponOrderError, ICoupons } from "../../../interfaces/ICoupons";
 import { CouponLines, Order } from "../../../interfaces/Order";
 import { getShippingZoneMethods } from "../../../services/woocommerceApi/ShippingMethods";
 import { ShippingMethods } from "../../../interfaces/ShippingMethods";
@@ -164,6 +165,7 @@ export default function CheckoutMobility() {
   const [wayOfPaymentSelected, setWayOfPaymentSelected] = useState(0);
   const [openWasOfPayments, setOpenWayOfPayments] = useState(false);
   const [stopTransaction, setStopTransaction] = useState(false);
+  const [orderError, setOrderError] = useState<CouponOrderError | null>(null);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
@@ -171,7 +173,6 @@ export default function CheckoutMobility() {
   const tva = CHFCurrency ? 7.7 : 0;
   const tvaResult = CHFCurrency ? (cart.totalProductsPrice / 100) * tva : 0;
 
-  console.log("usedCoupons: ", usedCoupons);
   useEffect(() => {
     if (Object.keys(cart).length > 0) {
       const _lineItems = cart.products.map((product) => {
@@ -453,7 +454,7 @@ export default function CheckoutMobility() {
         country: _billingShippingData.shipping?.country,
       },
       line_items: lineItems,
-      coupon_lines: [{ code: "depasse" }],
+      coupon_lines: couponsCodeArray,
       shipping_lines: shippingLines,
 
       customer_id: Object.keys(user).length > 0 ? user.profile.id : 0,
@@ -463,33 +464,37 @@ export default function CheckoutMobility() {
       setIsCoupon(true);
     }
 
-    console.log("isCoupon: ", isCoupon);
     if (isCoupon === false) {
       try {
         const response = await wc_createOrder(order);
-        console.log("RESPONSE", response);
-        _setOrder(response);
-        setCodePromoState(false);
 
-        setTotalOrder(Number(response.total));
+        if (response.id) {
+          _setOrder(response);
+          setCodePromoState(false);
 
-        orderIdRef.current = response.id;
-        lineItemsRef.current = response.line_items as ILineItems[];
-        const shippinResult = response.shipping_total;
-        shippingPriceRef.current = Number(shippinResult);
+          setTotalOrder(Number(response.total));
 
-        setOrderId(response.id);
-        setDiscountCupons(response.coupon_lines);
-        setIsPayment(true);
-      } catch (error: any) {
+          orderIdRef.current = response.id;
+          lineItemsRef.current = response.line_items as ILineItems[];
+          const shippinResult = response.shipping_total;
+          shippingPriceRef.current = Number(shippinResult);
+
+          setOrderId(response.id);
+          setDiscountCupons(response.coupon_lines);
+          setIsPayment(true);
+          setOrderError(null);
+        } else {
+          Report.failure(`Error Coupons`, `${response.message}`, "Okay");
+          setIsCoupon(false);
+          setValidateOrder(false);
+
+          setOrderError(response);
+
+          return;
+        }
+      } catch (error) {
         alert("Error coupons");
-        setErros("Error order fails");
-        console.log("Error: ", error.headers);
-
-        return;
       }
-    } else {
-      return;
     }
     setValidateOrder(false);
   }, [
@@ -509,9 +514,18 @@ export default function CheckoutMobility() {
         return;
       }
 
-      if (wayOfPaymentSelected === 0) {
+      if (wayOfPaymentSelected === 0 && isCoupon === false) {
         await _sendOrder();
 
+        /*  router.push(
+          `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
+        ); */
+
+        return;
+      }
+
+      if (wayOfPaymentSelected === 0 && isCoupon) {
+        alert("IsCoupon true");
         /*  router.push(
           `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
         ); */
@@ -601,9 +615,6 @@ export default function CheckoutMobility() {
     } catch (error) {
       alert("Une erreur est survenue!");
       setErros("Une erreur est survenue!");
-      if (typeof window !== "undefined") {
-        router.push("/inmotion-mobility");
-      }
     }
   }, [
     cart,
@@ -614,6 +625,7 @@ export default function CheckoutMobility() {
     paymentSteps,
     currentyCurrency,
     wayOfPaymentSelected,
+    isCoupon,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -632,15 +644,11 @@ export default function CheckoutMobility() {
       setTotalOrder(orederUpdated.total);
 
       if (typeof window !== "undefined") {
-        localStorage.removeItem("inmotion:cart");
         window.location.href = data;
       }
     } catch (error) {
       alert("Une erruer est survenue");
       setErros("Une erruer est survenue");
-      if (typeof window !== "undefined") {
-        router.push("/inmotion-mobility");
-      }
     }
   }, [transactionId, orderId, _methodPayment.name, _taxPaymentMethods]);
 
@@ -699,9 +707,6 @@ export default function CheckoutMobility() {
       } catch (error) {
         alert("Une erruer est survenue");
         setErros("Une erruer est survenue");
-        if (typeof window !== "undefined") {
-          router.push("/inmotion-mobility");
-        }
       }
     },
     [orderId, transactionId, shippingPrice]
@@ -817,9 +822,6 @@ export default function CheckoutMobility() {
     return formatedTotal;
   }, []);
 
-  console.log("_order: ", _order);
-  console.log("orederRef: ", orderIdRef.current);
-
   return (
     <>
       <Container>
@@ -926,7 +928,7 @@ export default function CheckoutMobility() {
                           <button
                             className="closeButton"
                             onClick={() => deleteCoupons(coupon.id)}
-                            /*  disabled={orderIdRef.current} */
+                            disabled={isPayment}
                           ></button>
                           <div>{coupon.description}</div>
                         </div>
@@ -1189,23 +1191,24 @@ export default function CheckoutMobility() {
                           </div>
                         </div>
                         <div>
-                          {discountCupons.map((coupon) => {
-                            return (
-                              <div key={coupon.id} className="coupons_block">
-                                <div className="coupons">
-                                  <div className="coupon_text">
-                                    Code Promo {coupon.code}
-                                  </div>
-                                  <div>
-                                    -{" "}
-                                    {Number(coupon.discount) +
-                                      Number(coupon.discount_tax)}{" "}
-                                    {CHFCurrency ? "CHF" : "EUR"}
+                          {discountCupons &&
+                            discountCupons.map((coupon) => {
+                              return (
+                                <div key={coupon.id} className="coupons_block">
+                                  <div className="coupons">
+                                    <div className="coupon_text">
+                                      Code Promo {coupon.code}
+                                    </div>
+                                    <div>
+                                      -{" "}
+                                      {Number(coupon.discount) +
+                                        Number(coupon.discount_tax)}{" "}
+                                      {CHFCurrency ? "CHF" : "EUR"}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            })}
                         </div>
                       </div>
                     </div>

@@ -1,17 +1,31 @@
+import axios from "axios";
 import { ICoupons } from "../../interfaces/ICoupons";
 import { Order } from "../../interfaces/Order";
 import wcApi from "./wcAxiosConfig";
 import { wooCommerce } from "./woocommerceConfig";
 
 export const createOrder = async (order: any) => {
-  const { data } = await wooCommerce.post("orders", order);
+  const { data } = await wcApi.post("orders", order);
   return data;
 };
 
-export const wc_createOrder = async (order: any): Promise<Order> => {
+export const _wc_createOrder = async (order: any) => {
   const { data } = await wcApi.post("orders", order);
+  return data;
+};
 
-  console.log("respOrder: ", data);
+export const wc_createOrder = async (order: any) => {
+  const response = await fetch(
+    `https://dx7l6anesh.preview.infomaniak.website/wp-json/wc/v3/orders?consumer_key=${process.env.NEXT_PUBLIC_CONSUMER_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_CONSUMER_SECRET}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    }
+  );
+  const data = await response.json();
 
   return data;
 };
