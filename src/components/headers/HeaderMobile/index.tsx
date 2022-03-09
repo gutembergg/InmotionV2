@@ -140,6 +140,7 @@ const HeaderMobile = () => {
             </div>
             <hr />
             <MobileMobilityHeader>
+              <ul>
               <li>
                 <Link href="/inmotion-mobility">
                   <a
@@ -275,6 +276,7 @@ const HeaderMobile = () => {
                   </a>
                 </Link>
               </li>
+              </ul>
             </MobileMobilityHeader>
           </div>
         </div>

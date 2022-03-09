@@ -110,8 +110,9 @@ const Cart = () => {
                                 : placeholder.src
                             }
                             alt={product.name}
-                            height={50}
-                            width={50}
+                            layout="fill"
+                            objectFit="contain"
+                            sizes="10vh"
                           />
                         ) : (
                           <Image
@@ -121,8 +122,9 @@ const Cart = () => {
                                 : placeholder.src
                             }
                             alt={product.name}
-                            height={50}
-                            width={50}
+                            layout="fill"
+                            objectFit="contain"
+                            sizes="10vh"
                           />
                         )}
                       </div>

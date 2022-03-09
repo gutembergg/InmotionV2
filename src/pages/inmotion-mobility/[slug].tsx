@@ -63,11 +63,11 @@ export default function MobiliteEletrique({ subCategories, category }: IProps) {
                             layout="fill"
                             objectFit="contain"
                             placeholder="blur"
+                            sizes="30vw"
                             blurDataURL={category.image?.src}
                           />
                         </div>
                       )}
-
                       <div className="category_name">{category.name}</div>
                     </div>
                   </a>

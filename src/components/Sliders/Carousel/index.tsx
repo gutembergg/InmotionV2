@@ -67,17 +67,19 @@ export default function CarouselSwiper({ products }: Props) {
         {products.map((product) => {
           return (
             <SwiperSlide key={product.id}>
-              {/*  <motion.div className="slide_block" variants={item}> */}
               <Link href={`/inmotion-mobility/produit/${product.slug}`}>
                 <a className="link">
+                  <div className="imgBox">
                   <Image
-                    width={150}
-                    height={150}
+                    layout="fill"
+                    objectFit="contain"
+                    objectPosition="center"
                     src={product.images[0]?.src}
                     alt="product"
                     placeholder="blur"
                     blurDataURL={product.images[0]?.src}
-                  />
+                    />
+                    </div>
                   <div className="product_name">
                     <strong>{product.name}</strong>
                   </div>

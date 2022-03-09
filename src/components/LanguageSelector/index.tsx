@@ -68,7 +68,7 @@ const LanguageSelector = ({ closeMobileMenu }: Props) => {
                 <div id={locale} onClick={getSelectedLanguage}>
                   <Image
                     width={35}
-                    height={22}
+                    height={27}
                     src={
                       (locale === "en" && enflag) ||
                       (locale === "de" && deflag) ||

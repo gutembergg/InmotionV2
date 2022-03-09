@@ -215,7 +215,8 @@ export const ProductMenuResponsive = styled.div`
   }
 `;
 
-export const BtnProductDetail = styled.button`
+export const BtnProductDetail = styled.div`
+.buttonProductDetail{
   height: 40px;
   width: 100%;
   max-width: 220px;
@@ -226,14 +227,12 @@ export const BtnProductDetail = styled.button`
   @media (max-width: 768px) {
     margin-top: 10px;
   }
-  &:hover {
-    background: var(--BlueHover);
-  }
   a {
     text-decoration: none;
     color: var(--White);
     font-weight: 600;
   }
+}
 `;
 
 export const LogoProduct = styled.div`
@@ -296,7 +295,7 @@ export const LogoProduct = styled.div`
 export const AddToCartSession = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   margin-top: 20px;
   align-items: center;
