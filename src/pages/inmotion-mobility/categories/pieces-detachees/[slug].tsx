@@ -207,22 +207,24 @@ export default function PiecesDetacheesSubCat({
               </PaginateBar>
             </FiltersBar>
             <ProductsMobile>
-              {products.map((product) => {
-                return (
-                  <div key={product.id}>
-                    <MobileCard product={product} />
-                  </div>
-                );
-              })}
+              {products.length > 0 &&
+                products.map((product) => {
+                  return (
+                    <div key={product.id}>
+                      <MobileCard product={product} />
+                    </div>
+                  );
+                })}
             </ProductsMobile>
             <Products>
-              {products.map((product) => {
-                return (
-                  <div key={product.id}>
-                    <ProductSmallCard product={product} />
-                  </div>
-                );
-              })}
+              {products.length > 0 &&
+                products.map((product) => {
+                  return (
+                    <div key={product.id}>
+                      <ProductSmallCard product={product} />
+                    </div>
+                  );
+                })}
             </Products>
           </ProductsSection>
 
@@ -235,16 +237,20 @@ export default function PiecesDetacheesSubCat({
                 return (
                   <li key={category?.slug} className="category_name">
                     <Link
-                      href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`} passHref
+                      href={`/inmotion-mobility/categories/pieces-detachees/${category?.slug}`}
+                      passHref
                     >
                       <motion.a
-                      whileHover={{
-                        scale: 1.05,
-                        transition: { duration: 0.05 },
-                        color: "#414141" 
-                      }}
-                      style={{ originX: 0.5 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.05 },
+                          color: "#414141",
+                        }}
+                        style={{ originX: 0.5 }}
+                        whileTap={{
+                          scale: 0.98,
+                          transition: { duration: 0.01 },
+                        }}
                         className={
                           currentyCategory.slug === category?.slug
                             ? "active"
