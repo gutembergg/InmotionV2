@@ -77,7 +77,7 @@ export default function EquipementsSubCat({
       <HeaderSeo
         description={currentyCategory.yoast_head_json.og_title}
         title={currentyCategory.yoast_head_json.og_title}
-        canonical={currentyCategory.yoast_head_json.canonical}
+        canonical={`https://inmotion-suisse.ch/inmotion-mobility/categories/equipements/${currentyCategory.name.toLowerCase()}`}
         og_locale={currentyCategory.yoast_head_json.og_locale}
         og_title={currentyCategory.yoast_head_json.og_title}
       />
@@ -118,7 +118,7 @@ export default function EquipementsSubCat({
               {productsByCategory.map((product) => {
                 return (
                   <div key={product.id}>
-                    <MobileCard product={product} isEquipement={true} />
+                    <MobileCard product={product} />
                   </div>
                 );
               })}

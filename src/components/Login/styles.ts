@@ -86,21 +86,28 @@ export const MyAccountLink = styled.div`
   transition: all ease-in 0.1s;
   &:hover {
     transition: all ease-in 0.1s;
-
-    a {
-      color: var(--LightGray);
-    }
   }
   a {
     text-decoration: none;
     color: var(--White);
+    @media screen and (max-width: 1024px) {
+      color: var(--Blue);
+    }
     div {
       display: flex;
       align-items: center;
-
+      @media screen and (max-width: 1024px) {
+        svg{font-size:30px ;}
+        margin: 0 25px ;
+      }
+      
       span {
         margin-left: 12px;
         margin-right: 20px;
+        @media screen and (max-width: 1024px) {
+          display:none;
+        }
+        
       }
     }
   }

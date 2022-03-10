@@ -72,12 +72,12 @@ const UserOrders = ({ orders }: Props) => {
                       <span className="eyesIcon">{preview}</span>
                     </td>
 
-                    <td className="btn_table_invoice">
+                    {/* <td className="btn_table_invoice">
                       <BtnTable className="btn_invoice" btnColor="#868686">
                         <FaFileInvoice color="white" />
                         <span className="invoiceIcon">{invoice}</span>
                       </BtnTable>
-                    </td>
+                    </td> */}
                   </tr>
                 </tbody>
               );

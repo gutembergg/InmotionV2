@@ -10,7 +10,11 @@ import BgGyro from "../../../../../public/images/coursGyro.jpg";
 import Image from "next/dist/client/image";
 import Link from "next/dist/client/link";
 import useTranslation from "next-translate/useTranslation";
+import {useRouter} from "next/router";
+import HeaderSeo from "../../../../components/HeaderSeo";
+
 export default function ServiceCours() {
+  const router = useRouter();
   const { t } = useTranslation();
   const TitleCours = t("cours-gyro:TitleCours");
   const TXTCours = t("cours-gyro:TXTCours");
@@ -20,6 +24,14 @@ export default function ServiceCours() {
   const contact = t("cours-gyro:contact");
 
   return (
+    <>
+    <HeaderSeo
+    description="inmotion.suisse vous propose une scéance de cours où vous pourrez apprendre avec un professionel les bases pour bien débuter."
+    title="Cours de gyroroues"
+    canonical={`https://inmotion-suisse.ch/services/cours-gyroroue`}
+    og_locale={router.locale ||""}
+    og_title="Cours de gyroroues"
+    />
     <Container>
       <MainContent>
         <div className="bgContainer">
@@ -30,7 +42,7 @@ export default function ServiceCours() {
               objectFit="cover"
               objectPosition="right"
               alt="Leçon de gyroroue sur une route"
-            />
+              />
           </div>
         </div>
         <BlockInfoCours>
@@ -66,6 +78,7 @@ export default function ServiceCours() {
         </BlockInfoCours>
       </MainContent>
     </Container>
+</>
   );
 }
 

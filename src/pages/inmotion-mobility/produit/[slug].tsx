@@ -210,9 +210,9 @@ export default function ProductDetail({
   return (
     <>
       <HeaderSeo
-        description="Mobilité eletrique produits"
+        description={product.short_description}
         title={product.yoast_head_json.og_title}
-        canonical={product.yoast_head_json.canonical}
+        canonical={`https://inmotion-suisse.ch/inmotion-mobility/produit/${product.slug}`}
         og_locale={product.yoast_head_json.og_locale}
         og_title={product.yoast_head_json.og_title}
         og_image={product.yoast_head_json.og_image}
