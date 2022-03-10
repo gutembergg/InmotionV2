@@ -72,10 +72,10 @@ export default function Home({
   return (
     <>
       <HeaderSeo
-        description={"Inmotion-suisse, produits mobilité eletriques"}
-        title={"Inmotion-suisse"}
+        description={"Spécialiste en Trottinettes électrique, vélos électriques et gyroroue. Location de véhicules flexible. Cours gyroroue."}
+        title={"Inmotion-suisse, vélos électriques, trottinettes, gyroroues"}
         canonical={
-          "https://dx7l6anesh.preview.infomaniak.website/categorie-produit/boutique/"
+          "https://inmotion-suisse.ch/inmotion-mobility/"
         }
         og_locale={"fr_FR"}
         og_title={"article"}

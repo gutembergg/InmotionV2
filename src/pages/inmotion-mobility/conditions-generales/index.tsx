@@ -3,9 +3,20 @@ import { MainContent } from "../../../styles/condGenPage";
 import React, { ReactElement } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import Link from "next/link";
+import {useRouter} from "next/router";
+import HeaderSeo from "../../../components/HeaderSeo";
 
 export default function ConditionsGenerales() {
+  const router= useRouter();
   return (
+    <>
+    <HeaderSeo
+    description="inmotion.suisse condition générales de ventes en détail"
+    title="condition générales de ventes"
+    canonical={`https://inmotion-suisse.ch/inmotion-mobility/conditions-generales`}
+    og_locale={router.locale ||""}
+    og_title="condition générales de ventes"
+    />
     <Container>
       <MainContent>
         <h1>Conditions générales de ventes</h1>
@@ -221,6 +232,7 @@ export default function ConditionsGenerales() {
         </div>
       </MainContent>
     </Container>
+</>
   );
 }
 

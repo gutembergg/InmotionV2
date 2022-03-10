@@ -26,7 +26,7 @@ export default function Equipements({ subCategories, category }: IProps) {
       <HeaderSeo
         description={"Equipements mobility"}
         title={category.yoast_head_json.og_title}
-        canonical={category.yoast_head_json.canonical}
+        canonical={`https://inmotion-suisse.ch/inmotion-mobility/categories/equipements`}
         og_locale={category.yoast_head_json.og_locale}
         og_title={category.yoast_head_json.og_title}
       />

@@ -139,9 +139,9 @@ export default function Category({ category, productsByCategory }: Props) {
   return (
     <>
       <HeaderSeo
-        description="Mobility electrique produits"
+        description={category.yoast_head_json.og_title}
         title={category.yoast_head_json.og_title}
-        canonical={category.yoast_head_json.canonical}
+        canonical={`https://inmotion-suisse.ch/inmotion-mobility/${category.name.toLowerCase()}`}
         og_locale={category.yoast_head_json.og_locale}
         og_title={category.yoast_head_json.og_title}
       />

@@ -147,7 +147,7 @@ export default function PiecesDetacheesSubCat({
       <HeaderSeo
         description={currentyCategory.yoast_head_json.og_title}
         title={currentyCategory.yoast_head_json.og_title}
-        canonical={currentyCategory.yoast_head_json.canonical}
+        canonical={`https://inmotion-suisse.ch/inmotion-mobility/categories/pieces-detachees/${currentyCategory.name.toLowerCase()}`}
         og_locale={currentyCategory.yoast_head_json.og_locale}
         og_title={currentyCategory.yoast_head_json.og_title}
       />

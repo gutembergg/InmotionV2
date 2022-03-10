@@ -3,8 +3,20 @@ import { MainContent } from "../../../styles/politiqueConfident";
 import React, { ReactElement } from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import Link from "next/link";
+import HeaderSeo from "../../../components/HeaderSeo";
+import {useRouter} from "next/router";
+
 export default function PolitiqueConfidentialite() {
+  const router= useRouter();
   return (
+    <>
+    <HeaderSeo
+    description="inmotion.suisse politique de confidentialité"
+    title="politique de confidentialités"
+    canonical={`https://inmotion-suisse.ch/inmotion-mobility/politique-confidentialite`}
+    og_locale={router.locale ||""}
+    og_title="politique de confidentialité"
+    />
     <Container>
       <MainContent>
         <h1>Politique de confidentialité</h1>
@@ -111,6 +123,7 @@ export default function PolitiqueConfidentialite() {
 </div>
       </MainContent>
     </Container>
+</>
   );
 }
 

@@ -14,7 +14,8 @@ import { GetStaticProps } from "next";
 import { getLocationsVehicles } from "../../../../services/wordpressApi/locationsVehicles";
 import { IWPPage } from "../../../../interfaces/IWPPage";
 import {motion} from "framer-motion";
-
+import {useRouter} from "next/router";
+import HeaderSeo from "../../../../components/HeaderSeo";
 interface Props {
   locations:IWPPage[];
 }
@@ -25,19 +26,27 @@ export default function ServiceLocation({locations}:Props) {
   const TXTLocation = t("location-page:TXTLocation");
   const contact = t("location-page:contact");
   const nosOffres = t("location-page:nosOffres");
-
+const router = useRouter(); 
   return (
+    <>
+    <HeaderSeo
+    description="inmotion-suisse vous propose de louer vélo électriques et trottinettes à la journée! "
+    title="inmotion-suisse service de location de vélo électrique et trottinettes"
+    canonical={`https://inmotion-suisse.ch/services/location`}
+    og_locale={router.locale ||""}
+    og_title="inmotion-suisse service de location de vélo électrique et trottinettes"
+    />
     <Container>
       <MainContent>
         <div className="bgContainer">
           <div className="bgImage">
             <Image
             priority
-              src={BgLocation.src}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="right"
-              alt="Leçon de gyroroue sur une route"
+            src={BgLocation.src}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="right"
+            alt="Leçon de gyroroue sur une route"
             />
           </div>
         <BlockInfoLocation>
@@ -61,16 +70,16 @@ export default function ServiceLocation({locations}:Props) {
                 key={location.id} 
                 whileInView="visible"
                 initial={{opacity:"0%"}}
-            viewport={{ once: true }}
-            variants={{
-              visible: {
-                opacity:"100%",
-                transition: {
-                  duration: 0.6,
-                  delay:0.2
-                },
-              },
-            }}
+                viewport={{ once: true }}
+                variants={{
+                  visible: {
+                    opacity:"100%",
+                    transition: {
+                      duration: 0.6,
+                      delay:0.2
+                    },
+                  },
+                }}
                 >
                   <div className="locationImg">
                     <Image
@@ -79,7 +88,7 @@ export default function ServiceLocation({locations}:Props) {
                       objectFit="contain"
                       objectPosition="right"
                       alt="Leçon de gyroroue sur une route"
-                    />
+                      />
                   </div>
                   <div className="productContent">
                     <h3 dangerouslySetInnerHTML={{__html: location.title.rendered}}></h3>
@@ -106,6 +115,7 @@ export default function ServiceLocation({locations}:Props) {
         </LocationContainer>
       </MainContent>
     </Container>
+            </>
   );
 }
 

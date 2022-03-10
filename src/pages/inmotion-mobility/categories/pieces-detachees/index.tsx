@@ -26,7 +26,7 @@ export default function PiecesDetachees({ subCategories, category }: IProps) {
       <HeaderSeo
         description={category.yoast_head_json.og_title}
         title={category.yoast_head_json.og_title}
-        canonical={category.yoast_head_json.canonical}
+        canonical={`https://inmotion-suisse.ch/inmotion-mobility/categories/pieces-detachees`}
         og_locale={category.yoast_head_json.og_locale}
         og_title={category.yoast_head_json.og_title}
       />
