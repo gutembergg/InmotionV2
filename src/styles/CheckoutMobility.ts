@@ -681,7 +681,7 @@ export const Payment = styled.div`
   }
 `;
 
-export const PaymentMethods = styled.div`
+export const PaymentMethods = styled.li`
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -789,9 +789,9 @@ export const BtnCouponsBlock = styled.div`
   justify-content: center;
   margin-bottom: 1.6rem;
   background-color: var(--DarkGray);
-    width: fit-content;
-    align-content: center;
-    margin: 0 auto;
+  width: fit-content;
+  align-content: center;
+  margin: 0 auto;
   button {
     display: flex;
     flex-direction: row;
@@ -812,7 +812,7 @@ export const BtnCouponsBlock = styled.div`
   }
 
   button.active {
-    background: var(--Blue)!important;
+    background: var(--Blue) !important;
     color: var(--White);
   }
 
@@ -854,7 +854,7 @@ export const CouponsList = styled.div`
   padding: 1.8rem 0.3rem;
   font-size: 0.8rem;
   display: flex;
-    gap: 36px;
+  gap: 36px;
 
   .couponsList_block {
     display: flex;
@@ -871,7 +871,7 @@ export const CouponsList = styled.div`
 
   .closeButton {
     height: 20px;
-    width: 20px!important;
+    width: 20px !important;
     position: relative;
     box-sizing: border-box;
     line-height: 20px;

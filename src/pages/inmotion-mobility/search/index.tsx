@@ -2,13 +2,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import MobileCardSerach from "../../../components/ProductCard/MobileCardSearch";
 import ProductSmallCard from "../../../components/ProductCard/ProductSmallCard";
@@ -44,7 +38,8 @@ export default function Search() {
     const source = axios.CancelToken.source();
     if (_search) {
       setSearchLoading(true);
-      wcApi.get("products", {
+      wcApi
+        .get("products", {
           params: {
             per_page: 40,
             search: _search,

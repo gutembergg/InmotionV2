@@ -34,5 +34,7 @@
   "errCoutryCurrencyDescEUR": "To deliver the product outside Switzerland, you must have the currency in EUR",
   "totalttc": "Total (incl. tax): ",
   "pointOfSale": "Point of sale",
-  "delivery": "Delivery"
+  "delivery": "Delivery",
+  "orderCompletedTitle": "Order saved successfully",
+  "orderCompletedMessage": "You will be transferred"
 }

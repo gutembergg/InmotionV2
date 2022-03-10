@@ -34,5 +34,7 @@
   "billingAddress": "Rechnungsadresse",
   "totalttc": "Gesamt(inkl. MwSt.):",
   "pointOfSale": "Point of sale",
-  "delivery": "Delivery"
+  "delivery": "Delivery",
+  "orderCompletedTitle": "Commande enregistré avec succès",
+  "orderCompletedMessage": "Vous allez être transféré"
 }

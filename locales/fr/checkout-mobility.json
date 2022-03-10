@@ -34,5 +34,7 @@
   "errCoutryCurrencyDescEUR": "Pour livrer le produit en dehors de la suisse, vous devez avoir la devise en EUR",
   "totalttc": "Total (T.T.C):",
   "pointOfSale": "Point de vente",
-  "delivery": "Livraison"
+  "delivery": "Livraison",
+  "orderCompletedTitle": "Commande enregistré avec succès",
+  "orderCompletedMessage": "Vous allez être transféré"
 }

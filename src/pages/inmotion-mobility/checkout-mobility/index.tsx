@@ -113,6 +113,8 @@ export default function CheckoutMobility() {
   );
   const pointOfSale = t("checkout-mobility:pointOfSale");
   const deliveryTraduction = t("checkout-mobility:delivery");
+  const orderCompletedTitle = t("checkout-mobility:orderCompletedTitle");
+  const orderCompletedMessage = t("checkout-mobility:orderCompletedMessage");
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
@@ -467,6 +469,7 @@ export default function CheckoutMobility() {
     if (isCoupon === false) {
       try {
         const response = await wc_createOrder(order);
+        console.log("orderRep: ", response);
 
         if (response.id) {
           _setOrder(response);
@@ -484,7 +487,7 @@ export default function CheckoutMobility() {
           setIsPayment(true);
           setOrderError(null);
         } else {
-          Report.failure(`Error Coupons`, `${response.message}`, "Okay");
+          Report.failure(`Error`, `${response.message}`, "Okay");
           setIsCoupon(false);
           setValidateOrder(false);
 
@@ -515,20 +518,35 @@ export default function CheckoutMobility() {
       }
 
       if (wayOfPaymentSelected === 0 && isCoupon === false) {
+        setIsOrder(false);
         await _sendOrder();
+        setIsOrder(true);
 
-        /*  router.push(
-          `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
-        ); */
+        Report.success(
+          `${orderCompletedTitle}`,
+          `${orderCompletedMessage}`,
+          "Okay",
+          () => {
+            router.push(
+              `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
+            );
+          }
+        );
 
         return;
       }
 
       if (wayOfPaymentSelected === 0 && isCoupon) {
-        alert("IsCoupon true");
-        /*  router.push(
-          `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
-        ); */
+        Report.success(
+          `${orderCompletedTitle}`,
+          `${orderCompletedMessage}`,
+          "Okay",
+          () => {
+            router.push(
+              `/inmotion-mobility/completed-order?order=${orderIdRef.current}&pf_ts=0`
+            );
+          }
+        );
 
         return;
       }
@@ -626,6 +644,8 @@ export default function CheckoutMobility() {
     currentyCurrency,
     wayOfPaymentSelected,
     isCoupon,
+    orderCompletedMessage,
+    orderCompletedTitle,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -1030,7 +1050,7 @@ export default function CheckoutMobility() {
                       }
                     >
                       <div className="payment_list">
-                        <div className="payments_block">
+                        <ul className="payments_block">
                           {paymentMethodes.length > 0 &&
                             paymentMethodes.map((method, index) => {
                               return (
@@ -1063,7 +1083,7 @@ export default function CheckoutMobility() {
                                 </PaymentMethods>
                               );
                             })}
-                        </div>
+                        </ul>
 
                         {paymentMethodes.length > 0 && (
                           <div className="button_block btn_payment">

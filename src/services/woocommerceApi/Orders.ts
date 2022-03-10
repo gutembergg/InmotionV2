@@ -1,4 +1,3 @@
-import axios from "axios";
 import { ICoupons } from "../../interfaces/ICoupons";
 import { Order } from "../../interfaces/Order";
 import wcApi from "./wcAxiosConfig";
@@ -16,7 +15,7 @@ export const _wc_createOrder = async (order: any) => {
 
 export const wc_createOrder = async (order: any) => {
   const response = await fetch(
-    `https://dx7l6anesh.preview.infomaniak.website/wp-json/wc/v3/orders?consumer_key=${process.env.NEXT_PUBLIC_CONSUMER_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_CONSUMER_SECRET}`,
+    `https://${process.env.NEXT_PUBLIC_BACKEND_URL}/wp-json/wc/v3/orders?consumer_key=${process.env.NEXT_PUBLIC_CONSUMER_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_CONSUMER_SECRET}`,
     {
       method: "POST",
       headers: {

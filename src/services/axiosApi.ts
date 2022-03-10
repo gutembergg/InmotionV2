@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://dx7l6anesh.preview.infomaniak.website/wp-json/api/inmotion",
+  baseURL: `https://${process.env.NEXT_PUBLIC_BACKEND_URL}/wp-json/api/inmotion`,
 });
 
 export default api;
