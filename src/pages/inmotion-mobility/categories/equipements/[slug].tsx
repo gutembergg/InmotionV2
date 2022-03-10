@@ -144,14 +144,7 @@ export default function EquipementsSubCat({
                   <li key={category?.slug} className="category_name">
                     <Link href={`/inmotion-mobility/categories/equipements/${category?.slug}`} passHref
                     >
-                      <motion.a 
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.05 },
-                color: "#414141" 
-              }}
-              style={{ originX: 0.5 }}
-              whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                      <a 
                         className={
                           currentyCategory.slug === category?.slug
                             ? "active"
@@ -159,7 +152,7 @@ export default function EquipementsSubCat({
                         }
                       >
                         {category?.name}
-                      </motion.a>
+                      </a>
                     </Link>
                   </li>
                 );

@@ -87,7 +87,7 @@ export const ProductsSection = styled.div`
 export const Products = styled.div`
   width: 95%;
   margin-top: 2rem;
-
+  align-items: end;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 25px;
