@@ -1,10 +1,11 @@
 import type { AppProps } from "next/app";
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode, useEffect } from "react";
 import AppProvider from "../components/Context";
 import GlobalStyles from "../styles/globalStyles";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { NextPage } from "next";
+import { Report } from "notiflix";
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -16,6 +17,14 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps, router }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
+  useEffect(() => {
+    Report.failure(
+      'BOUTIQUE EN MODE TEST / TEST MODE / TEST MODUS',
+      'COMMANDES NON VALIDES CE SOIR, NO ORDER AVAILABLE TONIGHT, ',
+      'Ok see you tomorow, à demain',
+      );
+  }, [router.route])
+  
   return (
     <AppProvider>
       {getLayout(
