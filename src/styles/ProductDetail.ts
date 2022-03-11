@@ -7,7 +7,7 @@ export const Container = styled.div`
 
   h1 {
     text-align: left;
-    color: var(--Blue)
+    color: var(--Blue);
   }
 `;
 
@@ -15,17 +15,16 @@ export const Main = styled.div`
   flex-direction: row;
 
   @media (max-width: 1024px) {
-    padding-top:3rem;
-
+    padding-top: 3rem;
   }
   @media (max-width: 960px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top:3rem;
+    padding-top: 3rem;
   }
   @media (max-width: 640px) {
-    padding-top:2rem;
+    padding-top: 2rem;
   }
 `;
 
@@ -62,16 +61,16 @@ export const ProductCard = styled.div`
 `;
 
 export const ImageBlock = styled.div`
-     width: 100%;
-    height: 340px;
-    position: relative;
-    min-width: 250px;
-    margin: 0 auto;
-    @media (max-width: 960px) {
-      height: 280px;
+  width: 100%;
+  height: 340px;
+  position: relative;
+  min-width: 250px;
+  margin: 0 auto;
+  @media (max-width: 960px) {
+    height: 280px;
   }
-    @media (max-width: 640px) {
-      height: 200px;
+  @media (max-width: 640px) {
+    height: 200px;
   }
 `;
 
@@ -82,7 +81,7 @@ export const ProductDetaiil = styled.div`
     p {
       color: var(--TxtRed);
       font-size: 1.2em;
-      margin-left:5px;
+      margin-left: 5px;
     }
 
     .price {
@@ -113,9 +112,9 @@ export const PriceQuantity = styled.div`
   align-items: flex-end;
   justify-content: flex-start;
   width: 100%;
-@media screen and (max-width:960px){
-  justify-content: center;
-}
+  @media screen and (max-width: 960px) {
+    justify-content: center;
+  }
 
   input {
     width: 50px;
@@ -136,16 +135,23 @@ export const Button = styled.button`
   margin-top: 1.3rem;
   color: #fff;
   border: none;
->div{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
+
+  > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
-  
-}
-  &.disabled{
-    background-color: var(--LightGray)
+  }
+  &.disabled {
+    background-color: var(--LightGray);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    div {
+      background: var(--LightGray) !important;
+    }
   }
 `;
 
@@ -175,7 +181,6 @@ export const ProductInfos = styled.div`
     @media (max-width: 960px) {
       height: 200px;
     }
-   
   }
 `;
 
@@ -202,25 +207,25 @@ export const ProductLogo = styled.div`
   span.logo_product {
     width: auto;
   }
-h1{
-  @media (max-width:960px){
-    font-size: 1.80em;
-    text-align: center;
-    &::before {
-      width: 24px;
-    height: 31px;
-    transform: skew(-20deg) translateX(-11px);
+  h1 {
+    @media (max-width: 960px) {
+      font-size: 1.8em;
+      text-align: center;
+      &::before {
+        width: 24px;
+        height: 31px;
+        transform: skew(-20deg) translateX(-11px);
+      }
+    }
+    @media (max-width: 960px) {
+      font-size: 1.4em;
+      &::before {
+        width: 24px;
+        height: 26px;
+        transform: skew(-20deg) translateX(-11px);
+      }
     }
   }
-  @media (max-width:960px){
-    font-size: 1.40em;
-    &::before {
-      width: 24px;
-    height: 26px;
-    transform: skew(-20deg) translateX(-11px);
-    }
-  }
-}
   span {
     div.product_category {
       color: var(--DarkGray);
@@ -272,21 +277,21 @@ export const DescriptionProduct = styled.div`
   width: 100%;
   margin-top: 4rem;
   .sectionTitle {
-      width: 100%;
-      padding: 0px;
-      text-align: center;
+    width: 100%;
+    padding: 0px;
+    text-align: center;
 
-      h2 {
-        font-weight: bold;
-        color: var(--Blue);
-        margin-bottom: 5rem;
-        margin-top: 3em;
+    h2 {
+      font-weight: bold;
+      color: var(--Blue);
+      margin-bottom: 5rem;
+      margin-top: 3em;
 
-      @media (max-width:960px){
+      @media (max-width: 960px) {
         margin-bottom: 0;
       }
-      }
     }
+  }
 `;
 
 const title_description = {
@@ -295,54 +300,54 @@ const title_description = {
   width: "100%",
 };
 
-  export const Variations = styled.div`
+export const Variations = styled.div`
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  margin-top:10px;
-  margin-bottom:20px;
-  `;
-  export const SelectedVariation = styled.div`
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
+export const SelectedVariation = styled.div`
   display: flex;
 
-  h4{
+  h4 {
     color: var(--Blue);
   }
 
-  .price{
+  .price {
     color: var(--Price);
-    font-weight:bold ;
+    font-weight: bold;
   }
-  `;
-  
-  export const VariationDisplay = styled.button`
-  display:flex;
+`;
+
+export const VariationDisplay = styled.button`
+  display: flex;
   border: 1px solid var(--Blue);
-  border-radius:5px;
-  padding:5px;
+  border-radius: 5px;
+  padding: 5px;
 
   background-color: transparent;
-  
-  &:hover{
-    background-color: var(--LightGray)
+
+  &:hover {
+    background-color: var(--LightGray);
   }
 
-  &.active{
+  &.active {
     background-color: var(--Blue);
   }
-  `;
+`;
 
 export const VariationImage = styled.div`
-div{
-  position: relative;
-  width: 150px;
-  height: 150px;
-}
+  div {
+    position: relative;
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 export const VariationData = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Sections = styled.div`
@@ -374,7 +379,7 @@ export const Sections = styled.div`
       padding: 2rem;
       text-align: right;
     }
-    
+
     .image_section {
       width: 100%;
       /* max-width: 400px; */
@@ -399,7 +404,7 @@ export const Sections = styled.div`
         margin-bottom: 65px;
       }
     }
-    
+
     .title_description {
       display: ${title_description.display};
       flex-direction: ${title_description.flexDirection};

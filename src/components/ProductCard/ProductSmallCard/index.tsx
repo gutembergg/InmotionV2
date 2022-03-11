@@ -1,18 +1,14 @@
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import Notiflix from "notiflix";
 import useCart from "../../../hooks/useCart";
 import useCurrency from "../../../hooks/useCurrency";
 import { IProduct } from "../../../interfaces/IProducts";
-import ButtonSkew from "../../ButtonSkew";
 import StockStatuts from "../../StockStatus";
 import {
   Container,
-  ImageBlock,
   Name,
-  Stock,
   PriceBlock,
   ButtonAddToCart,
   BtnProductDetail,
@@ -74,21 +70,21 @@ const ProductSmallCard = ({ product }: Props) => {
       .then((res) => handleStop());
   };
 
-  // console.log("product===>", product.stock_status);
-
   return (
     <Container>
       <div onClick={() => handleShowDetails(product.slug)}>
         <a>
           {Array.isArray(product.images) && (
-            <Image
-              width={150}
-              height={150}
-              src={product.images[0].src}
-              placeholder="blur"
-              blurDataURL={product?.images[0].src}
-              alt={product.name}
-            />
+            <div className="imgBlock">
+              <Image
+                layout="fill"
+                objectFit="contain"
+                src={product.images[0].src}
+                placeholder="blur"
+                blurDataURL={product?.images[0].src}
+                alt={product.name}
+              />
+            </div>
           )}
 
           {product.on_sale && <p className="onsale">{sale} </p>}
@@ -156,7 +152,7 @@ const ProductSmallCard = ({ product }: Props) => {
       ) : (
         <>
           <ButtonAddToCart
-            disabled={false}
+            disabled={product.stock_status === "outofstock"}
             onClick={() => handleAddToCart(product)}
           >
             {addToCartTradution}

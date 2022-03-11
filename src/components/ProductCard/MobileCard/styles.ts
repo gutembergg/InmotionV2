@@ -53,7 +53,7 @@ export const ProductInfo = styled.div`
   }
   .Preorder {
     color: var(--Red);
-}
+  }
   div {
     color: var(--Price);
     font-weight: bold;
@@ -92,6 +92,11 @@ export const BtnAddToCart = styled.button`
 
   &:active {
     transform: scale(0.9);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: var(--LightGray) !important;
   }
 
   p {

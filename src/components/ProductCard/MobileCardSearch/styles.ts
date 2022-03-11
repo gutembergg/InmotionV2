@@ -71,6 +71,11 @@ export const BtnAddToCart = styled.button`
     transform: scale(0.9);
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    background: var(--LightGray) !important;
+  }
+
   p {
     cursor: pointer;
     color: var(--White);

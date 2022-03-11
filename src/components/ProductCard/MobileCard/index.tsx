@@ -147,7 +147,10 @@ const MobileCard = ({ product }: Props) => {
             </BtnAddToCart>
           ) : (
             <>
-              <BtnAddToCart onClick={() => handleAddToCart(product)}>
+              <BtnAddToCart
+                disabled={product.stock_status === "outofstock"}
+                onClick={() => handleAddToCart(product)}
+              >
                 {btnAddToCart}
               </BtnAddToCart>
               <div onClick={() => handleShowDetails(product.slug)}>

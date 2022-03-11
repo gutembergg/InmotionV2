@@ -216,23 +216,23 @@ export const ProductMenuResponsive = styled.div`
 `;
 
 export const BtnProductDetail = styled.div`
-.buttonProductDetail{
-  height: 40px;
-  width: 100%;
-  max-width: 220px;
-  color: var(--White);
-  border: none;
-  text-align: center;
-  margin: 0 auto;
-  @media (max-width: 768px) {
-    margin-top: 10px;
-  }
-  a {
-    text-decoration: none;
+  .buttonProductDetail {
+    height: 40px;
+    width: 100%;
+    max-width: 220px;
     color: var(--White);
-    font-weight: 600;
+    border: none;
+    text-align: center;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+      margin-top: 10px;
+    }
+    a {
+      text-decoration: none;
+      color: var(--White);
+      font-weight: 600;
+    }
   }
-}
 `;
 
 export const LogoProduct = styled.div`
@@ -300,6 +300,13 @@ export const AddToCartSession = styled.div`
   margin-top: 20px;
   align-items: center;
   width: 400px;
+
+  button {
+    &:disabled {
+      cursor: not-allowed;
+      background: var(--LightGray) !important;
+    }
+  }
 
   @media (max-width: 460px) {
     justify-content: center;

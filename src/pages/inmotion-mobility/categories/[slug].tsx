@@ -342,6 +342,9 @@ export default function Category({ category, productsByCategory }: Props) {
                   whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
                   className="addToCart_button"
                   onClick={() => handleAddToCart(products[productIndex])}
+                  disabled={
+                    products[productIndex]?.stock_status === "outofstock"
+                  }
                 >
                   {btnAddToCart}
                 </motion.button>

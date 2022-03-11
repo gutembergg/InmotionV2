@@ -8,6 +8,12 @@ export const Container = styled.div`
   transform: scale(0.96);
   transition: all ease-in 0.1s;
 
+  .imgBlock {
+    position: relative;
+    width: 100%;
+    height: 150px;
+  }
+
   &:hover {
     transform: scale(1);
     transition: all ease-in 0.1s;
@@ -38,8 +44,8 @@ export const Container = styled.div`
     font-size: 1.1em;
   }
   .Preorder {
-  color: var(--TxtRed);
-}
+    color: var(--TxtRed);
+  }
 `;
 
 export const ImageBlock = styled.div`
@@ -62,7 +68,6 @@ export const PriceBlock = styled.div`
     color: var(--Price);
     font-weight: 600;
   }
-  
 `;
 
 export const ButtonAddToCart = styled.button`
@@ -73,6 +78,11 @@ export const ButtonAddToCart = styled.button`
   color: var(--White);
   border: none;
   font-weight: 600;
+
+  &:disabled {
+    cursor: not-allowed;
+    background: var(--LightGray) !important;
+  }
 
   &:hover {
     background: var(--BlueHover);

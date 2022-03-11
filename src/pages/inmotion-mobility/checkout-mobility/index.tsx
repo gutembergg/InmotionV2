@@ -306,7 +306,6 @@ export default function CheckoutMobility() {
 
             setTotalCartPriceConverted(totalPriceFormated);
 
-            console.log("shiping===>", method);
             setShippingMethod(method);
           }
         });
@@ -428,10 +427,9 @@ export default function CheckoutMobility() {
     ];
 
     if (!_shippingMethods.method_id) {
-      alert("Error shipping!");
+      alert("Une erreur est survenue, recommencer la procédure");
       return;
     }
-    console.log("_shippingMethods.method_id:", _shippingMethods.method_id);
 
     const order = {
       payment_method: "Anticipe",
@@ -475,7 +473,6 @@ export default function CheckoutMobility() {
     if (isCoupon === false) {
       try {
         const response = await wc_createOrder(order);
-        console.log("orderRep: ", response);
 
         if (response.id) {
           _setOrder(response);

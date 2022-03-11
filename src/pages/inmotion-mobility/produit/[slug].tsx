@@ -36,7 +36,6 @@ import {
   ImageBlock,
   PriceQuantity,
   Button,
-  StockProduct,
   Main,
   ProductCard,
   ProductInfos,
@@ -55,7 +54,6 @@ import {
   VariationDisplay,
   SelectedVariation,
 } from "../../../styles/ProductDetail";
-import { ICategories } from "../../../interfaces/ICategories";
 
 interface Props {
   product: IProduct;
@@ -152,7 +150,11 @@ export default function ProductDetail({
     }
   });
 
-  const handleAddToCart = (product: IProduct, originProductName = "", categoriesParent?: ProductCategory[]) => {
+  const handleAddToCart = (
+    product: IProduct,
+    originProductName = "",
+    categoriesParent?: ProductCategory[]
+  ) => {
     const hasSelectedVariation = Object.keys(selectedVariation).length > 0;
     const productExist = cartItem.find((item) => item.id === product.id);
 
@@ -175,7 +177,7 @@ export default function ProductDetail({
             qty: productQty,
             isVariation: true,
             name: `${originProductName} - ${selectedVariation.attributes[0].option}`,
-            categories: categoriesParent || []
+            categories: categoriesParent || [],
           },
         ]);
       } else {
@@ -273,28 +275,26 @@ export default function ProductDetail({
                   </div>
                 ) : (
                   <div className="priceBox">
-                  <div className="price">
-                    <div className={product.on_sale ? "" : ""}>
-                    {priceFrom}{" "} 
-                      {currency === "CHF"
-                        ? !!product.price &&
-                          product.price + " " + currency
-                        : !!product.euroPrice &&
-                          product.euroPrice + " " + currency}
-                    </div>
+                    <div className="price">
+                      <div className={product.on_sale ? "" : ""}>
+                        {priceFrom}{" "}
+                        {currency === "CHF"
+                          ? !!product.price && product.price + " " + currency
+                          : !!product.euroPrice &&
+                            product.euroPrice + " " + currency}
+                      </div>
 
-                    <div className="sale_price">
-                      {currency === "CHF"
-                        ? !!product.sale_price &&
-                          product.sale_price + " " + currency
-                        : !!product.sale_price &&
-                          product.euroPrice + " " + currency}
+                      <div className="sale_price">
+                        {currency === "CHF"
+                          ? !!product.sale_price &&
+                            product.sale_price + " " + currency
+                          : !!product.sale_price &&
+                            product.euroPrice + " " + currency}
+                      </div>
+                      {product.on_sale && <p>{Promotion}</p>}
                     </div>
-                    {product.on_sale && <p>{Promotion}</p>}
                   </div>
-                </div>
                 )}
-
               </ProductLogo>
               <div className="first_description">
                 <div
@@ -303,9 +303,14 @@ export default function ProductDetail({
                   }}
                 />
               </div>
-              {product.acf.precommande === true && (<>
-            <div className="Preorder">{preorder}{" "}<br />{preorderDate}{" "}{product.acf.date_de_sortie}</div>
-            </>)}
+              {product.acf.precommande === true && (
+                <>
+                  <div className="Preorder">
+                    {preorder} <br />
+                    {preorderDate} {product.acf.date_de_sortie}
+                  </div>
+                </>
+              )}
               {isVariable && (
                 <VariationProducts>
                   <h2>{ChooseVariation}</h2>
@@ -371,7 +376,7 @@ export default function ProductDetail({
                                   selectedVariation.euroPrice + " " + currency}
                             </div>
                           </div>
-                          
+
                           <StockStatuts
                             stock_quantity={selectedVariation.stock_quantity}
                             stock_status={selectedVariation.stock_status}
@@ -394,21 +399,30 @@ export default function ProductDetail({
                     <Button
                       type="button"
                       onClick={() =>
-                        handleAddToCart(selectedVariation, product.name, product.categories)
+                        handleAddToCart(
+                          selectedVariation,
+                          product.name,
+                          product.categories
+                        )
                       }
+                      disabled={selectedVariation.stock_status === "outofstock"}
                     >
-                      <motion.div initial={{background: "#0570A6" }}
-                whileHover={{
-                  scale: 1.02,
-                  transition: { duration: 0.01 },
-                  background: "#03486b" 
-                }}
-                style={{ originX: 0.5 }}
-                whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
-                  className="addToCart_button"
-                  >
-                      {btnAddToCart}
-                    </motion.div>
+                      <motion.div
+                        initial={{ background: "#0570A6" }}
+                        whileHover={{
+                          scale: 1.02,
+                          transition: { duration: 0.01 },
+                          background: "#03486b",
+                        }}
+                        style={{ originX: 0.5 }}
+                        whileTap={{
+                          scale: 0.98,
+                          transition: { duration: 0.01 },
+                        }}
+                        className="addToCart_button"
+                      >
+                        {btnAddToCart}
+                      </motion.div>
                     </Button>
                   ) : (
                     <Button
@@ -417,8 +431,8 @@ export default function ProductDetail({
                         Notiflix.Report.warning(
                           `${Attention}`,
                           `${SelectVariation}`,
-                           'Ok',
-                       )
+                          "Ok"
+                        )
                       }
                       className="disabled"
                     >
@@ -429,19 +443,20 @@ export default function ProductDetail({
                   <Button
                     type="button"
                     onClick={() => handleAddToCart(product)}
+                    disabled={selectedVariation.stock_status === "outofstock"}
                   >
-                  <motion.div
-                    initial={{background: "#0570A6" }}
+                    <motion.div
+                      initial={{ background: "#0570A6" }}
                       whileHover={{
                         scale: 1.02,
                         transition: { duration: 0.01 },
-                        background: "#03486b" 
+                        background: "#03486b",
                       }}
                       style={{ originX: 0.5 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                      whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
                     >
-                    {btnAddToCart}
-                  </motion.div>
+                      {btnAddToCart}
+                    </motion.div>
                   </Button>
                 )}
               </PriceQuantity>
