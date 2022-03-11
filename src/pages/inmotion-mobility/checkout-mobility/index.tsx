@@ -413,8 +413,6 @@ export default function CheckoutMobility() {
     await getShippingZone(shipping.country);
   };
 
-  console.log("_shippingMethods:222", _shippingMethods);
-
   const _sendOrder = useCallback(async () => {
     setValidateOrder(true);
     const couponsCodeArray = usedCoupons.map((coupon) => {
@@ -429,7 +427,11 @@ export default function CheckoutMobility() {
       },
     ];
 
-    console.log("shippingLines:::::::", shippingLines);
+    if (!_shippingMethods.method_id) {
+      alert("Error shipping!");
+      return;
+    }
+    console.log("_shippingMethods.method_id:", _shippingMethods.method_id);
 
     const order = {
       payment_method: "Anticipe",
@@ -606,7 +608,7 @@ export default function CheckoutMobility() {
               case "PostFinance e-finance":
                 taxState = { ...item, taxMethodsPayments: 1.3 };
                 break;
-              case "Carte PostFinance":
+              case "PostFinance Card":
                 taxState = { ...item, taxMethodsPayments: 1.3 };
                 break;
               case "PayPal":

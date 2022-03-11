@@ -74,7 +74,7 @@ const ProductSmallCard = ({ product }: Props) => {
       .then((res) => handleStop());
   };
 
-  console.log("product===>", product.stock_status);
+  // console.log("product===>", product.stock_status);
 
   return (
     <Container>

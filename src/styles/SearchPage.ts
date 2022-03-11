@@ -6,7 +6,7 @@ export const Container = styled.div`
   align-items: center;
   margin-top: 50px;
   margin-bottom: 3rem;
-  @media only screen and (max-width: 640px){
+  @media only screen and (max-width: 640px) {
     padding: 0 2rem;
     margin-top: 30px;
   }
@@ -78,7 +78,7 @@ export const MenuSearchBar = styled.div`
 
 export const SearchProductsList = styled.div`
   width: 95%;
-  margin-top: 2rem;
+  margin-top: 2rem auto 0 auto;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
