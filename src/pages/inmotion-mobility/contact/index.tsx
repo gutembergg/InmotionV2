@@ -69,6 +69,7 @@ export default function Contact() {
   });
 
   const handleSubmit = (values: Props) => {
+    console.log("Submit", values);
   };
 
   return (
@@ -182,7 +183,7 @@ export default function Contact() {
                     ) : null}
                   </div>
 
-                  <IconBlock>
+                  <IconBlock type="submit">
                     <Image src={IconBlue} alt="icon" width={40} height={40} />
                   </IconBlock>
                   <ButtonValidateMobile type="submit">

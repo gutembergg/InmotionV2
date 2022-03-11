@@ -107,6 +107,7 @@ export default async function handler(
               transactionId: transactionCreate.id,
               paymentMethods: response.body,
             };
+            console.log("response===>", responseQuery);
             res.status(200).json(responseQuery);
           })
           .catch((error) => {

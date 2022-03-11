@@ -21,7 +21,7 @@ export const createInmotionUsers = async (user: UserDto) => {
 export const userLogin = async (authUser: AuthUser) => {
   try {
     const response = await axios.post(
-      "https://dx7l6anesh.preview.infomaniak.website/wp-json/jwt-auth/v1/token",
+      `https://${process.env.NEXT_PUBLIC_BACKEND_URL}/wp-json/jwt-auth/v1/token`,
       {
         username: authUser.email,
         password: authUser.password,
@@ -59,10 +59,10 @@ export const updateUsersPassword = async (password: {
     const { data } = await api.put("password", password, {
       headers: { Authorization: `Bearer ${password.token}` },
     });
-    console.log("success::", data);
+
     return data;
   } catch (error) {
-    console.log("Error: ", error);
+    console.log("Error: Internal error");
   }
 };
 
@@ -76,7 +76,7 @@ export const getUserById = async (id: number): Promise<User> => {
 export const validateUserToken = async (token: any) => {
   try {
     const response = await axios.post(
-      "https://dx7l6anesh.preview.infomaniak.website/wp-json/jwt-auth/v1/token/validate",
+      `https://${process.env.NEXT_PUBLIC_BACKEND_URL}/wp-json/jwt-auth/v1/token/validate`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

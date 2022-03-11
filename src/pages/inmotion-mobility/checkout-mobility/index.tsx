@@ -25,7 +25,6 @@ import BillingShippingForm, {
 import {
   wc_createOrder,
   _updateOrder,
-  createOrder,
 } from "../../../services/woocommerceApi/Orders";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import useUser from "../../../hooks/useUser";
@@ -307,6 +306,7 @@ export default function CheckoutMobility() {
 
             setTotalCartPriceConverted(totalPriceFormated);
 
+            console.log("shiping===>", method);
             setShippingMethod(method);
           }
         });
@@ -413,6 +413,8 @@ export default function CheckoutMobility() {
     await getShippingZone(shipping.country);
   };
 
+  console.log("_shippingMethods:222", _shippingMethods);
+
   const _sendOrder = useCallback(async () => {
     setValidateOrder(true);
     const couponsCodeArray = usedCoupons.map((coupon) => {
@@ -426,6 +428,8 @@ export default function CheckoutMobility() {
         total: String(shippingPrice),
       },
     ];
+
+    console.log("shippingLines:::::::", shippingLines);
 
     const order = {
       payment_method: "Anticipe",
@@ -932,9 +936,6 @@ export default function CheckoutMobility() {
                 <Collapse isOpened={openedCodePromo}>
                   <div className="coupon_code_block">
                     <CouponsCode
-                      userMail={_billingShippingData.billing?.email}
-                      userID={user.profile?.id}
-                      userGrp={user.profile?.wcb2b_group}
                       setusedCoupons={setusedCoupons}
                       usedCoupons={usedCoupons}
                       codePromoSteps={codePromoSteps}

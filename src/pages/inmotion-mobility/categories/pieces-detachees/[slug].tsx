@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
+import { motion } from "framer-motion";
+
 import { IoIosArrowDown } from "react-icons/io";
 import { paths as detachedPiecesPaths } from "../../../../utils/piecesDetacheesPaths";
 import HeaderSeo from "../../../../components/HeaderSeo";
@@ -11,10 +13,7 @@ import {
   wc_getCategoriesBySlug,
   wc_getSub_categories,
 } from "../../../../services/woocommerceApi/Categories";
-import {
-  getProductByCategoryWithoutVisibilityFilter,
-  getProduitsByCategoriesSlug,
-} from "../../../../services/woocommerceApi/Products";
+import { getProduitsByCategoriesSlug } from "../../../../services/woocommerceApi/Products";
 import { IProduct } from "../../../../interfaces/IProducts";
 import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
 import ButtonSkew from "../../../../components/ButtonSkew";
@@ -22,7 +21,7 @@ import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts
 import { ICategories } from "../../../../interfaces/ICategories";
 import { getProductsUpSells } from "../../../../utils/getProductsUpsells";
 import MobileCard from "../../../../components/ProductCard/MobileCard";
-import { motion } from "framer-motion";
+
 import {
   Container,
   Content,

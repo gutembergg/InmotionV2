@@ -5,34 +5,25 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { Notify, Report } from "notiflix";
+import { Report } from "notiflix";
 import { searchCoupons } from "../../services/woocommerceApi/Coupons";
-import { CouponsMessages } from "../../enums/coupon";
 import { ICoupons } from "../../interfaces/ICoupons";
-import useCart from "../../hooks/useCart";
 import useTranslation from "next-translate/useTranslation";
 import { motion } from "framer-motion";
+
 import { Container } from "./styles";
-import Notiflix from "notiflix";
 
 interface IProps {
-  userMail: string;
-  userID: number | null;
-  userGrp: string;
   usedCoupons: ICoupons[];
   setusedCoupons: Dispatch<SetStateAction<ICoupons[]>>;
   codePromoSteps: () => void;
 }
 
 const CouponsCode = ({
-  userMail,
-  userID,
-  userGrp,
   setusedCoupons,
   usedCoupons,
   codePromoSteps,
 }: IProps) => {
-  const { cart } = useCart();
   const [inputValue, setInputValue] = useState<string>("");
   const [inputDisabledStatus, setInputDisabledStatus] =
     useState<boolean>(false);
@@ -41,33 +32,13 @@ const CouponsCode = ({
   const doYouHaveCodePromo = t("checkout-mobility:doYouHaveCodePromo");
   const verifier = t("checkout-mobility:verifier");
   const InputHasntValue = t("couponsErrors:InputHasntValue");
-  const CartIsEmpty = t("couponsErrors:CartIsEmpty");
   const couponNotValable = t("couponsErrors:couponNotValable");
-  const couponDateExpired = t("couponsErrors:couponDateExpired");
-  const couponWrongUser = t("couponsErrors:couponWrongUser");
-  const couponLimitReached = t("couponsErrors:couponLimitReached");
-  const soldedItemInCart = t("couponsErrors:soldedItemInCart");
-  const minCartAmount = t("couponsErrors:minCartAmount");
-  const maxCartAmount = t("couponsErrors:maxCartAmount");
   const validCoupon = t("couponsErrors:validCoupon");
-  const singleCouponOnly = t("couponsErrors:singleCouponOnly");
   const singleCouponUsed = t("couponsErrors:singleCouponUsed");
-  const warningNoMoreAvailableCoupon = t(
-    "couponsErrors:warningNoMoreAvailableCoupon"
-  );
   const alreadyUsedCoupon = t("couponsErrors:alreadyUsedCoupon");
-  const groupNotValid = t("couponsErrors:groupNotValid");
-  const noAvaillableProduct = t("couponsErrors:noAvaillableProduct");
-  const unhautorizedProduct = t("couponsErrors:unhautorizedProduct");
-  const availableCatInCart = t("couponsErrors:availableCatInCart");
-  const excludedCatInCart = t("couponsErrors:excludedCatInCart");
-  const soldedProduct = t("couponsErrors:soldedProduct");
   const errorCoupon = t("couponsErrors:errorCoupon");
   const goodCoupon = t("couponsErrors:goodCoupon");
 
-  const cartContent = cart.products;
-  const cartValue = cart.totalProductsPrice;
-  const cartProducts = cart.products;
   //HANDLE INPUT CHANGES
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTxt = event.target.value;
@@ -117,7 +88,6 @@ const CouponsCode = ({
     }
 
     //---------------------- CASE COUPON IS AVAILABLE ------------------------------//
-    console.log("coupons: ", coupon);
     Report.success(`${goodCoupon}`, `${validCoupon}`, "Okay");
     setusedCoupons((usedCoupons) => [...usedCoupons, coupon]);
     codePromoSteps();

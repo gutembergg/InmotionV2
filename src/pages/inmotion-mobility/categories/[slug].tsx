@@ -1,30 +1,26 @@
+import { GetStaticPaths, GetStaticProps } from "next";
 import React, { ReactElement, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { motion } from "framer-motion";
+import Notiflix from "notiflix";
+import useTranslation from "next-translate/useTranslation";
+
 import { ICategories } from "../../../interfaces/ICategories";
 import { IProduct } from "../../../interfaces/IProducts";
 import RoadIcon from "../../../../public/images/icons/road.svg";
 import SpeedIcon from "../../../../public/images/icons/speed.svg";
 import AutonomieIcon from "../../../../public/images/icons/autonomie-icon.svg";
-
 import { wc_getCategoriesBySlug } from "../../../services/woocommerceApi/Categories";
 import { getProduitsByCategoriesSlug } from "../../../services/woocommerceApi/Products";
-
 import placeholder from "../../../../public/images/placeholder_woocommerce.webp";
-
-import Notiflix from "notiflix";
 import useCart from "../../../hooks/useCart";
-import ButtonSkew from "../../../components/ButtonSkew";
-import useTranslation from "next-translate/useTranslation";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import HeaderSeo from "../../../components/HeaderSeo";
 import SliderModels from "../../../components/Sliders/SliderModels";
 import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
 import useCurrency from "../../../hooks/useCurrency";
 
-import { motion } from "framer-motion";
 import {
   Container,
   ProductInfos,
@@ -49,7 +45,6 @@ export default function Category({ category, productsByCategory }: Props) {
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
-  const linkShowDetails = t("productDetail:showDetails");
   const showVariationTradution = t("productDetail:showVariationTradution");
   const Promotion = t("productDetail:Promotion");
   const priceFrom = t("productDetail:priceFrom");
@@ -149,12 +144,6 @@ export default function Category({ category, productsByCategory }: Props) {
         <h1>{category.name}</h1>
         <Content>
           <ProductImage>
-             {/* <motion.div
-              key={products[productIndex]?.id}
-              initial={{ x: 0, opacity: 0 }}
-              animate={{ x: ["0%", "-100%", "0%"], opacity: [0, 0, 1] }}
-              transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
-            > */}
             <Image
               objectFit="contain"
               layout="fill"
@@ -172,13 +161,12 @@ export default function Category({ category, productsByCategory }: Props) {
                   : placeholder.src
               }
             />
-            {/*    </motion.div> */}
           </ProductImage>
           <motion.div
             className="ProductDescrt"
             key={products[productIndex]?.id}
-            initial={{  opacity: 0 }}
-            animate={{  opacity: [ 0, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1] }}
             transition={{ type: "spring", stiffness: 100, duration: 0.41 }}
           >
             <LogoProduct>
@@ -323,21 +311,22 @@ export default function Category({ category, productsByCategory }: Props) {
             {products[productIndex]?.variations.length > 0 ? (
               <>
                 <BtnProductDetail>
-              <motion.button className="buttonProductDetail"
-               onClick={() =>
-                handleShowDetails(products[productIndex]?.slug)
-              }
-              initial={{ background: "#0570A6" }}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.01 },
-                background: "#03486b",
-              }}
-              style={{ originX: 0.5 }}
-              whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
-              >
-                  {showVariationTradution}
-                </motion.button>
+                  <motion.button
+                    className="buttonProductDetail"
+                    onClick={() =>
+                      handleShowDetails(products[productIndex]?.slug)
+                    }
+                    initial={{ background: "#0570A6" }}
+                    whileHover={{
+                      scale: 1.02,
+                      transition: { duration: 0.01 },
+                      background: "#03486b",
+                    }}
+                    style={{ originX: 0.5 }}
+                    whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
+                  >
+                    {showVariationTradution}
+                  </motion.button>
                 </BtnProductDetail>
               </>
             ) : (

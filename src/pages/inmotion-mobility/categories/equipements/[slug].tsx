@@ -2,6 +2,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { ReactElement, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
 import { equipementPaths } from "../../../../utils/equipementPaths";
 import HeaderSeo from "../../../../components/HeaderSeo";
 import LayoutMobility from "../../../../Layout/LayoutMobility";
@@ -17,7 +19,6 @@ import { IoIosArrowDown } from "react-icons/io";
 import ProductSmallCard from "../../../../components/ProductCard/ProductSmallCard";
 import { addEuroPriceInProducts } from "../../../../utils/addEuroPriceInProducts";
 import MobileCard from "../../../../components/ProductCard/MobileCard";
-import { motion } from "framer-motion";
 
 import {
   Container,
@@ -100,7 +101,9 @@ export default function EquipementsSubCat({
                           className="categoiry_item"
                           onClick={handleOpenSubCatMenu}
                         >
-                          <Link href={`/inmotion-mobility/categories/equipements/${category?.slug}`} passHref
+                          <Link
+                            href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                            passHref
                           >
                             <a>{category?.name}</a>
                           </Link>
@@ -111,7 +114,9 @@ export default function EquipementsSubCat({
                 )}
               </MenuSubCategoriesMobilie>
               <PaginateBar>
-                <span>{productsByCategory.length} {resultats}</span>
+                <span>
+                  {productsByCategory.length} {resultats}
+                </span>
               </PaginateBar>
             </FiltersBar>
             <ProductsMobile>
@@ -142,16 +147,21 @@ export default function EquipementsSubCat({
               {subCategories.map((category) => {
                 return (
                   <li key={category?.slug} className="category_name">
-                    <Link href={`/inmotion-mobility/categories/equipements/${category?.slug}`} passHref
+                    <Link
+                      href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                      passHref
                     >
-                      <motion.a 
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.05 },
-                color: "#414141" 
-              }}
-              style={{ originX: 0.5 }}
-              whileTap={{ scale: 0.98, transition: { duration: 0.01 },}}
+                      <motion.a
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.05 },
+                          color: "#414141",
+                        }}
+                        style={{ originX: 0.5 }}
+                        whileTap={{
+                          scale: 0.98,
+                          transition: { duration: 0.01 },
+                        }}
                         className={
                           currentyCategory.slug === category?.slug
                             ? "active"

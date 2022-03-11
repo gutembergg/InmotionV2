@@ -13,7 +13,7 @@ export const getUserToken = async (username: string, password: string) => {
 
   try {
     const { data } = await axios.post(
-      "https://dx7l6anesh.preview.infomaniak.website/wp-json/jwt-auth/v1/token",
+      `https://${process.env.NEXT_PUBLIC_BACKEND_URL}/wp-json/jwt-auth/v1/token`,
       loginData
     );
 
