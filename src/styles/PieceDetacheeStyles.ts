@@ -163,7 +163,7 @@ export const Products = styled.div`
   width: 95%;
   margin-top: 2rem;
   margin-bottom: 2rem;
-
+  align-items: end;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   grid-gap: 35px;
