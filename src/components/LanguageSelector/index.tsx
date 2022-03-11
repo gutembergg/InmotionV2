@@ -22,6 +22,7 @@ const LanguageSelector = ({ closeMobileMenu }: Props) => {
   const { t } = useTranslation();
   const LangBlocked = t("common:LangBlocked");
   const notavailable = t("common:notavailable");
+  const backToCart = t("headerMobility:backToCart");
 
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
     router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
@@ -31,7 +32,24 @@ const LanguageSelector = ({ closeMobileMenu }: Props) => {
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
     if (router?.pathname === "/inmotion-mobility/checkout-mobility") {
-      Notiflix.Report.failure(`${notavailable}`, `${LangBlocked}`, "Ok");
+      Notiflix.Confirm.show(
+        `${notavailable}`,
+        `${LangBlocked}`,
+        "Ok",
+        `${backToCart}`,
+        () => {
+          return;
+        },
+        () => {
+          router.push("/inmotion-mobility/panier");
+        },
+        { width: "500px",
+        titleColor:"#e40b0b", 
+        backOverlay:true, 
+        backOverlayColor:"rgba(80, 15, 15, 0.411)",
+        okButtonBackground:"#0570A6",
+        cancelButtonBackground:"#6797B0"}
+      );
       return;
     }
     setopenObject(!openObject);

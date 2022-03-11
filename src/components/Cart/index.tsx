@@ -38,7 +38,14 @@ const Cart = () => {
         () => {
           router.push("/inmotion-mobility/panier");
         },
-        { width: "500px" }
+        {
+          width: "500px",
+          titleColor: "#e40b0b",
+          backOverlay: true,
+          backOverlayColor: "rgba(80, 15, 15, 0.411)",
+          okButtonBackground: "#0570A6",
+          cancelButtonBackground: "#6797B0",
+        }
       );
       return;
     }
@@ -153,13 +160,17 @@ const Cart = () => {
                     goToLink("/inmotion-mobility/panier");
                   }}
                   className="btnVoirPanierText"
-                  initial={{background: "#0570A6" }}
-                      whileHover={{
-                        transition: { duration: 0.01 },
-                        background: "#03486b" 
-                      }}
-                      style={{ originX: 0 }}
-                      whileTap={{ scale: 0.98, transition: { duration: 0.01 },originX: 0}}
+                  initial={{ background: "#0570A6" }}
+                  whileHover={{
+                    transition: { duration: 0.01 },
+                    background: "#03486b",
+                  }}
+                  style={{ originX: 0 }}
+                  whileTap={{
+                    scale: 0.98,
+                    transition: { duration: 0.01 },
+                    originX: 0,
+                  }}
                 >
                   {voirpanier}
                 </motion.p>

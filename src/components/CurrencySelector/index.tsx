@@ -17,13 +17,14 @@ const CurrencySelector = ({ closeMobileMenu }: Props) => {
   const { cart } = useCart();
   const router = useRouter();
   const [isCart, setIsCart] = useState(false);
-
+  
   const isCurrencyCHF = currency === "CHF";
-
+  
   const { t } = useTranslation();
   const CurrencyBlocked = t("common:CurrencyBlocked");
   const notavailable = t("common:notavailable");
-
+  const backToCart = t("headerMobility:backToCart");
+  
   useEffect(() => {
     if (router?.pathname === "/inmotion-mobility/checkout-mobility") {
       setIsCart(true);
@@ -55,10 +56,23 @@ const CurrencySelector = ({ closeMobileMenu }: Props) => {
         <p
           className=""
           onClick={() =>
-            Notiflix.Report.failure(
+            Notiflix.Confirm.show(
               `${notavailable}`,
               `${CurrencyBlocked}`,
-              "Ok"
+              "Ok",
+              `${backToCart}`,
+              () => {
+                return;
+              },
+              () => {
+                router.push("/inmotion-mobility/panier");
+              },
+              { width: "500px",
+        titleColor:"#e40b0b", 
+        backOverlay:true, 
+        backOverlayColor:"rgba(80, 15, 15, 0.411)",
+        okButtonBackground:"#0570A6",
+        cancelButtonBackground:"#6797B0"}
             )
           }
         >
