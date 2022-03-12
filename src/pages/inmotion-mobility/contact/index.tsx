@@ -75,6 +75,7 @@ export default function Contact() {
   return (
     <Container>
       <h1>{title}</h1>
+      <p>Non disponible pour le moment</p>
       <Description>
         <p>{`${subTitle}`}</p>
       </Description>

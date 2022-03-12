@@ -224,9 +224,12 @@ export const BtnProductDetail = styled.div`
     border: none;
     text-align: center;
     margin: 0 auto;
+    padding: 0.5rem;
+
     @media (max-width: 768px) {
       margin-top: 10px;
     }
+
     a {
       text-decoration: none;
       color: var(--White);
