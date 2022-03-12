@@ -653,6 +653,7 @@ export default function CheckoutMobility() {
 
   const validateCheckout = useCallback(async () => {
     try {
+      setIsCheckMethod(true);
       const query = { id: transactionId, orderId: orderId };
       const { data } = await apiPFinance.post("transaction-validate", query);
       setIsValidate(true);
@@ -668,6 +669,7 @@ export default function CheckoutMobility() {
 
       if (typeof window !== "undefined") {
         window.location.href = data;
+        setIsCheckMethod(false);
       }
     } catch (error) {
       alert("Une erruer est survenue");
@@ -698,6 +700,8 @@ export default function CheckoutMobility() {
           (totalPriceWithTaxMethodsPayment / 100) *
           method.taxMethodsPayments
         ).toFixed(2);
+
+        console.log("taxPaymentMethods: ", taxPaymentMethods);
 
         setTaxPaymentMethods(taxPaymentMethods);
         _setMethodPayment(method);
