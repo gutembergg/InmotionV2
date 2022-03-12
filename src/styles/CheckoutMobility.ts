@@ -324,6 +324,10 @@ export const FormSection = styled.div`
 `;
 
 export const PaymentBankTransfert = styled.button`
+  span {
+    margin-left: 0.6rem;
+  }
+
   div.way_payment_block {
     background-color: var(--Blue);
     padding: 0.7rem;
@@ -636,7 +640,15 @@ export const Payment = styled.div`
       .btn_end_payment {
         width: 100%;
         display: flex;
+        flex-direction: row;
         justify-content: center;
+
+        h2 {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        }
       }
 
       .disabled {

@@ -32,8 +32,15 @@ const LoginForm = () => {
       fallback: "my account",
     }
   );
+
+  const menuRegister = t(
+    "headerMobility:register",
+    { count: 1 },
+    {
+      fallback: "register",
+    }
+  );
   const connect = t("headerMobility:login");
-  const menuRegister = t("headerMobility:register");
   const createAccounts = t("headerMobility:createAccounts");
 
   const { login, user } = useUser();
@@ -77,13 +84,12 @@ const LoginForm = () => {
     }
   }, [user]);
 
-
   useEffect(() => {
     Notiflix.Notify.init({
-      zindex:9999,
-      position: 'center-bottom' 
-      })
-    }, []);
+      zindex: 9999,
+      position: "center-bottom",
+    });
+  }, []);
 
   return (
     <>
@@ -94,7 +100,12 @@ const LoginForm = () => {
       >
         <LoginContainer>
           <form onSubmit={handleSubmit}>
-            <Input name="email" onChange={handleChange} placeholder="email" required />
+            <Input
+              name="email"
+              onChange={handleChange}
+              placeholder="email"
+              required
+            />
             <Input
               isPassword
               name="password"
@@ -102,10 +113,12 @@ const LoginForm = () => {
               placeholder="password"
               required
             />
-            <input  id="sendButton" type="submit" value={connect} />
+            <input id="sendButton" type="submit" value={connect} />
           </form>
           <Link href="/inmotion-mobility/create-account">
-            <a className="createAccount" onClick={()=>setShowModal(false)}>{createAccounts}</a>
+            <a className="createAccount" onClick={() => setShowModal(false)}>
+              {createAccounts}
+            </a>
           </Link>
         </LoginContainer>
       </Modal>
@@ -125,7 +138,9 @@ const LoginForm = () => {
       ) : (
         <LoginLink onClick={() => setShowModal(true)}>
           <RiLoginBoxLine size={21} color="#f0f0f0" />
-            <span>{menuLogin} / {menuRegister}</span>
+          <span>
+            {menuLogin} / {menuRegister}
+          </span>
         </LoginLink>
       )}
     </>

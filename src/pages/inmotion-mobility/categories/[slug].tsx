@@ -30,6 +30,7 @@ import {
   AddToCartSession,
   ProductMenuResponsive,
   BtnProductDetail,
+  NoProducts,
 } from "../../../styles/CategoryDetail";
 
 interface Props {
@@ -52,6 +53,7 @@ export default function Category({ category, productsByCategory }: Props) {
   const preorder = t("productDetail:preorder");
   const preorderDate = t("productDetail:preorderDate");
   const showDetails = t("productDetail:showDetails");
+  const noproducts = t("headerMobility:noproducts");
 
   const [productIndex, setProductIndex] = useState(0);
   const [products, _setProducts] = useState<IProduct[]>(productsByCategory);
@@ -73,6 +75,10 @@ export default function Category({ category, productsByCategory }: Props) {
       return prod.id === id;
     });
   };
+
+  if (Object.keys(products[0]).length === 0) {
+    return <NoProducts>{noproducts}</NoProducts>;
+  }
 
   const autonomie = products[productIndex]?.attributes.find(
     (item) => item.name === "Autonomie"

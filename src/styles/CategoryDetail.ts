@@ -354,3 +354,11 @@ export const AddToCartSession = styled.div`
     }
   }
 `;
+
+export const NoProducts = styled.div`
+  text-align: center;
+  color: var(--TxtRed);
+  margin-top: 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+`;

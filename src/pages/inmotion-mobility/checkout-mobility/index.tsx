@@ -167,6 +167,7 @@ export default function CheckoutMobility() {
   const [openWasOfPayments, setOpenWayOfPayments] = useState(false);
   const [stopTransaction, setStopTransaction] = useState(false);
   const [orderError, setOrderError] = useState<CouponOrderError | null>(null);
+  const [isShippingPrice, setIsShippingPrice] = useState(false);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
@@ -310,9 +311,12 @@ export default function CheckoutMobility() {
           }
         });
       });
+      // setIsShippingPrice(true);
     },
     [CHFCurrency, cart, weightMaxTitle, weightMaxDescr]
   );
+
+  //console.log("isShippingPrice: ", isShippingPrice, shippingPrice);
 
   const _handleBillingShippingData = async (values: IFormValues) => {
     const billing = {
@@ -701,8 +705,6 @@ export default function CheckoutMobility() {
           method.taxMethodsPayments
         ).toFixed(2);
 
-        console.log("taxPaymentMethods: ", taxPaymentMethods);
-
         setTaxPaymentMethods(taxPaymentMethods);
         _setMethodPayment(method);
 
@@ -849,6 +851,8 @@ export default function CheckoutMobility() {
     return formatedTotal;
   }, []);
 
+  console.log("_shippingMethods.method_id: ", _shippingMethods.method_id);
+
   return (
     <>
       <Container>
@@ -982,7 +986,11 @@ export default function CheckoutMobility() {
                 <PaymentBankTransfert
                   onClick={openWayOfPayments}
                   disabled={
-                    paymentSteps === 3 && !stopTransaction ? false : true
+                    paymentSteps === 3 &&
+                    !stopTransaction &&
+                    _shippingMethods.method_id !== undefined
+                      ? false
+                      : true
                   }
                 >
                   <div
@@ -994,7 +1002,13 @@ export default function CheckoutMobility() {
                         : "disable"
                     }
                   >
-                    <h2>4. {chooseMethdPay}</h2>
+                    <h2>
+                      4. {chooseMethdPay}{" "}
+                      <span>
+                        {_shippingMethods.method_id === undefined &&
+                          paymentSteps === 3 && <Spiner />}
+                      </span>
+                    </h2>{" "}
                   </div>
                 </PaymentBankTransfert>
 
@@ -1108,9 +1122,11 @@ export default function CheckoutMobility() {
                                 }
                               >
                                 <span className="btn_end_payment">
-                                  <h2>{payment}</h2>
+                                  <h2>
+                                    {payment}{" "}
+                                    <span>{isCheckMethod && <Spiner />}</span>
+                                  </h2>
                                 </span>
-                                <span>{isCheckMethod && <Spiner />}</span>
                               </div>
                             </button>
                           </div>
