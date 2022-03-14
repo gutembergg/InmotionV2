@@ -75,9 +75,15 @@ export const ImageBlock = styled.div`
 `;
 
 export const ProductDetaiil = styled.div`
+  
+  strong{
+    color: var(--Black);
+  }
+  
   .priceBox {
     font-weight: 600;
     display: flex;
+
     p {
       color: var(--TxtRed);
       font-size: 1.2em;
@@ -310,6 +316,9 @@ export const Variations = styled.div`
 export const SelectedVariation = styled.div`
   display: flex;
 
+  strong{
+    color: var(--Black);
+  }
   h4 {
     color: var(--Blue);
   }

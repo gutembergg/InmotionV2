@@ -10,6 +10,8 @@
   "ChooseModel": "wählen Sie ein Modell",
   "preorder": "In Vorbestellung",
   "preorderDate": "geplante am",
+  "productWeight": "Gewicht",
+  "productSize": "Maße(mm)",
   "priceFrom": "Ab"
 
 }

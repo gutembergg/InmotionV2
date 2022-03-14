@@ -10,5 +10,7 @@
   "ChooseModel": "choisissez un modèle",
   "preorder": "En Précommande",
   "preorderDate": "sortie prévue le",
+  "productWeight": "Poids",
+  "productSize": "Dimensions(mm)",
   "priceFrom": "Dès"
 }

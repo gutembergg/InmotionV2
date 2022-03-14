@@ -85,6 +85,8 @@ export default function ProductDetail({
   const preorderDate = t("productDetail:preorderDate");
   const [productQty, setProductQty] = useState(1);
   const priceFrom = t("productDetail:priceFrom");
+  const productWeight = t("productDetail:productWeight");
+  const productSize = t("productDetail:productSize");
 
   //----------------------variations--------------------------------
   //check if product is variable or not
@@ -208,7 +210,6 @@ export default function ProductDetail({
     }
     return;
   };
-
   return (
     <>
       <HeaderSeo
@@ -303,6 +304,17 @@ export default function ProductDetail({
                   }}
                 />
               </div>
+              {!isVariable && (
+                <>
+                  <p>
+                    {productWeight}: {product.weight} Kg
+                  </p>
+                  <p>
+                    {productSize}: {product.dimensions.length}{" "}
+                    X {product.dimensions.width} X {product.dimensions.height}
+                  </p>
+                </>
+              )}
               {product.acf.precommande === true && (
                 <>
                   <div className="Preorder">
@@ -350,6 +362,16 @@ export default function ProductDetail({
                               __html: selectedVariation.description,
                             }}
                           />
+                          <p>
+                            {productWeight}:{" "}
+                            {selectedVariation.weight} Kg
+                          </p>
+                          <p>
+                            {productSize}:{" "}
+                            {selectedVariation.dimensions.length} X{" "}
+                            {selectedVariation.dimensions.width} X{" "}
+                            {selectedVariation.dimensions.height}
+                          </p>
                           <div className="price">
                             {selectedVariation.on_sale && <p>Promotion !</p>}
                             <div
