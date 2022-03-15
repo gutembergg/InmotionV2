@@ -9,22 +9,18 @@ const cors = initMiddleware(
 );
 
 export default async function contactHandler(
-    req: NextApiRequest,
-    res: NextApiResponse
-  ) { 
-    await cors(req, res);
-    const { method } = req;
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  await cors(req, res);
+  const { method } = req;
 
-    if (method === "POST") {
-      const {name,email,message} = req.body;
-      
-
-    }else{
-      return res.status(400).json({error:"erreure envoie email"})
-    }
+  if (method === "POST") {
+    const { name, email, message } = req.body;
+  } else {
+    return res.status(400).json({ error: "erreure envoie email" });
   }
-
-
+}
 
 //   let data = {
 //     name,
