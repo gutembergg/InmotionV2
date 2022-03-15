@@ -26,7 +26,7 @@ export default function Panier() {
   const warningCart = t("headerMobility:warningCart");
 
   useEffect(() => {
-    if (Object.keys(cart).length === 0) {
+    if (Object.keys(cart).length === 0 || cart.totalProductsCount === 0) {
       if (typeof window !== "undefined") {
         router.push("/inmotion-mobility");
       }
