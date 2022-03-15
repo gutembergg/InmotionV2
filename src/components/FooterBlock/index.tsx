@@ -42,8 +42,8 @@ const FooterBlock = () => {
             <br />
             1741 Cottens FR
             <br />
-            <Link href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;%69%6E%66%6F%40%69%6E%6D%6F%74%69%6F%6E%2D%73%75%69%73%73%65%2E%63%68">
-              <a>info@inmotion-suisse.ch</a>
+            <Link href="mailto:&#99;%6fnt%61%63%74&#64;%69%6e&#109;o&#116;%69%6f%6e&#45;&#115;u%69&#115;%73&#101;%2e&#99;h">
+              <a>contact@inmotion-suisse.ch</a>
             </Link>
           </address>
         </div>
@@ -58,8 +58,8 @@ const FooterBlock = () => {
             <br />
             3011 Bern
             <br />
-            <Link href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;%69%6E%66%6F%40%69%6E%6D%6F%74%69%6F%6E%2D%73%75%69%73%73%65%2E%63%68">
-              <a>info@inmotion-suisse.ch</a>
+            <Link href="mailto:&#99;%6fnt%61%63%74&#64;%69%6e&#109;o&#116;%69%6f%6e&#45;&#115;u%69&#115;%73&#101;%2e&#99;h">
+              <a>contact@inmotion-suisse.ch</a>
             </Link>
           </address>
         </div>

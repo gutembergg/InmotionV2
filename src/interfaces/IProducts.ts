@@ -40,6 +40,11 @@ interface Acf {
 }
 
 export interface IProduct {
+  dimensions: {
+    height: string;
+    width: string;
+    length: string;
+  };
   id: number;
   name: string;
   images: IImage[];
