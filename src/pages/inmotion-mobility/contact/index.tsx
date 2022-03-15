@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 const ContactMap = dynamic(() => import("../../../components/ContactMap"), {
   ssr: false,
 });
-import { Report } from "notiflix";
 import * as Yup from "yup";
 import IconBlue from "../../../../public/images/icons/iconButton.svg";
 import useTranslation from "next-translate/useTranslation";
@@ -24,6 +23,10 @@ import {
   IconBlock,
   ButtonValidateMobile,
 } from "../../../styles/ContactPage";
+import axios from "axios";
+import Notiflix from "notiflix";
+import { useRouter } from "next/router";
+import RecaptchaDisplay from "../../../components/RecaptchaDisplay";
 
 interface Props {
   lastName: string;
@@ -43,6 +46,7 @@ export default function Contact() {
   const title = t("contactPage:title");
   const subTitle = t("contactPage:subTitle");
 
+  const router = useRouter();
   const [formModel, setFormModel] = useState({
     lastName: "",
     firstName: "",
@@ -68,14 +72,31 @@ export default function Contact() {
       .required("Required"),
   });
 
-  const handleSubmit = (values: Props) => {
-    console.log("Submit", values);
+  const handleSubmit = async (values: Props) => {
+    try {
+      let res = await axios.post("/api/node-mail/contactMail", values);
+      console.log("Success!",res);
+      Notiflix.Report.success(
+        'Succès !',
+        'Votre message nous a été transmis. Nous vous contacterons dans les plus brefs délais',
+        'Ok',
+        () => {
+          router.reload()
+        }
+        );
+    } catch (error) {
+      Notiflix.Report.failure(
+        'Ooops !',
+        "Une erreure s'est produite lors de l'envoi du formulaire, veuillez réessayer ou nous contacter si cela se reproduit",
+        'Ok',
+        );
+    }
   };
+ 
 
   return (
     <Container>
       <h1>{title}</h1>
-      <p>Non disponible pour le moment</p>
       <Description>
         <p>{`${subTitle}`}</p>
       </Description>
@@ -183,7 +204,6 @@ export default function Contact() {
                       <div className="input_erros">{props.errors.message}</div>
                     ) : null}
                   </div>
-
                   <IconBlock type="submit">
                     <Image src={IconBlue} alt="icon" width={40} height={40} />
                   </IconBlock>
@@ -196,6 +216,7 @@ export default function Contact() {
           </Formik>
         </FormBlock>
       </Content>
+            <RecaptchaDisplay />
     </Container>
   );
 }

@@ -36,6 +36,7 @@ export default createGlobalStyle`
   place-content: center;
 }
 
+.grecaptcha-badge { visibility: hidden; }
 
 input[type="checkbox"]::before {
   content: "";

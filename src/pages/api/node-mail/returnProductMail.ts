@@ -20,9 +20,10 @@ export default function async(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     let options = {
-      from: `${email}`,
-      to: "fatih@fat-e.ch",
-      subject: `demande de retour marchandise`,
+      from: `${process.env.NEXT_PUBLIC_EMAIL_SENDER}`,
+      to: `${process.env.NEXT_PUBLIC_EMAIL_SENDER}`,
+      subject: `${first_name} ${last_name} - demande retour marchandise`,
+      replyTo:`${email}`,
       html: `
 <h2>Demande de retour marchandise pour:</h2>
 <b>modèle</b>: ${nom_produit}
@@ -39,7 +40,6 @@ ${message}
 <br />
 <br />           
 <h2>coordonnées du client:</h2>
-<br />
 <br />
 <b>${first_name} ${last_name}</b>
 <br />
