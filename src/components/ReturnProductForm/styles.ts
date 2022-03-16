@@ -142,9 +142,8 @@ export const ButtonRegiste = styled.button`
   height: 30px;
   width: 100%;
   max-width: 300px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  margin-bottom:20px;
 
   background: var(--Blue);
   color: var(--White);

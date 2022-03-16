@@ -41,7 +41,6 @@ export default function AutorisationRetour() {
           </ul>
           <h2 className="squared">{FormTitle}</h2>
         </DirectivesRetour>
-        <p>Non disponible pour le moment</p>
         <ReturnProductForm />
       </MainContent>
     </Container>

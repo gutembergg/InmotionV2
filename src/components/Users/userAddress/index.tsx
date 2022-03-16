@@ -4,6 +4,7 @@ import { ChangeEvent, useCallback, useState } from "react";
 import useUser from "../../../hooks/useUser";
 import { User } from "../../../interfaces/User";
 import { updateUsersPassword } from "../../../services/wordpressApi/users";
+import RecaptchaDisplay from "../../RecaptchaDisplay";
 import UserForm from "../userForm";
 
 interface Props {
@@ -64,7 +65,7 @@ const UserAddress = ({ currentyUser }: Props) => {
   return (
     <Container>
       <UserForm currentyUser={currentyUser} />
-
+      <RecaptchaDisplay />
       <PasswordConfig>
         <h4>{changePassword}</h4>
         <InputBlock>

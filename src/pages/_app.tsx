@@ -5,6 +5,7 @@ import GlobalStyles from "../styles/globalStyles";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import { NextPage } from "next";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -18,6 +19,15 @@ function MyApp({ Component, pageProps, router }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
+    <GoogleReCaptchaProvider
+    reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+    scriptProps={{
+      async: false,
+      defer: false,
+      appendTo: 'head',
+      nonce: undefined
+    }}
+  >
     <AppProvider>
       {getLayout(
         <>
@@ -51,6 +61,7 @@ function MyApp({ Component, pageProps, router }: AppPropsWithLayout) {
         </>
       )}
     </AppProvider>
+    </GoogleReCaptchaProvider>
   );
 }
 export default MyApp;

@@ -15,6 +15,7 @@ import { AuthUser } from "../../interfaces/AuthUser";
 import useTranslation from "next-translate/useTranslation";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { RiAccountCircleFill } from "react-icons/ri";
+import RecaptchaDisplay from "../RecaptchaDisplay";
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -121,6 +122,7 @@ const LoginForm = () => {
             </a>
           </Link>
         </LoginContainer>
+        <RecaptchaDisplay />
       </Modal>
       {loged ? (
         <div>
