@@ -23,6 +23,8 @@ import BillingShippingForm, {
   IFormValues,
 } from "../../../components/BillingShippingForm";
 import {
+  deleteOrder,
+  updateOrder,
   wc_createOrder,
   _updateOrder,
 } from "../../../services/woocommerceApi/Orders";
@@ -114,6 +116,7 @@ export default function CheckoutMobility() {
   const deliveryTraduction = t("checkout-mobility:delivery");
   const orderCompletedTitle = t("checkout-mobility:orderCompletedTitle");
   const orderCompletedMessage = t("checkout-mobility:orderCompletedMessage");
+  const btnCancelPayment = t("checkout-mobility:btnCancelPayment");
 
   const [_billingShippingData, _setBillingShippingData] =
     useState<OrderValidation>({} as OrderValidation);
@@ -167,7 +170,9 @@ export default function CheckoutMobility() {
   const [openWasOfPayments, setOpenWayOfPayments] = useState(false);
   const [stopTransaction, setStopTransaction] = useState(false);
   const [orderError, setOrderError] = useState<CouponOrderError | null>(null);
-  const [isShippingPrice, setIsShippingPrice] = useState(false);
+  const [cancelTransaction, setCancelTransaction] = useState(false);
+  const [paymentIsCanceled, setPaymentIsCanceled] = useState(false);
+  const [restartPayment, setRestartPayment] = useState(true);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
@@ -311,12 +316,9 @@ export default function CheckoutMobility() {
           }
         });
       });
-      // setIsShippingPrice(true);
     },
     [CHFCurrency, cart, weightMaxTitle, weightMaxDescr]
   );
-
-  //console.log("isShippingPrice: ", isShippingPrice, shippingPrice);
 
   const _handleBillingShippingData = async (values: IFormValues) => {
     const billing = {
@@ -519,15 +521,20 @@ export default function CheckoutMobility() {
   ]);
 
   const checkout = useCallback(async () => {
+    setPaymentIsCanceled(true);
     try {
       if (codePromoState === false && paymentSteps !== 4) {
         return;
       }
 
       if (wayOfPaymentSelected === 0 && isCoupon === false) {
+        setPaymentIsCanceled(false);
         setIsOrder(false);
-        await _sendOrder();
-        setIsOrder(true);
+
+        if (Object.keys(_order).length === 0) {
+          await _sendOrder();
+          setIsOrder(true);
+        }
 
         Report.success(
           `${orderCompletedTitle}`,
@@ -544,6 +551,8 @@ export default function CheckoutMobility() {
       }
 
       if (wayOfPaymentSelected === 0 && isCoupon) {
+        setPaymentIsCanceled(false);
+
         Report.success(
           `${orderCompletedTitle}`,
           `${orderCompletedMessage}`,
@@ -653,6 +662,7 @@ export default function CheckoutMobility() {
     isCoupon,
     orderCompletedMessage,
     orderCompletedTitle,
+    _order,
   ]);
 
   const validateCheckout = useCallback(async () => {
@@ -823,6 +833,7 @@ export default function CheckoutMobility() {
 
   const handleWayOfPayment = (selectedWay: number) => {
     setWayOfPaymentSelected(selectedWay);
+    setRestartPayment(false);
   };
 
   const openWayOfPayments = useCallback(() => {
@@ -851,7 +862,17 @@ export default function CheckoutMobility() {
     return formatedTotal;
   }, []);
 
-  console.log("_shippingMethods.method_id: ", _shippingMethods.method_id);
+  const _deleteOrder = useCallback(async (orderId: number) => {
+    setCancelTransaction(true);
+
+    // const response = await deleteOrder(orderId);
+
+    setCancelTransaction(false);
+    //_setOrder({} as Order);
+    setPaymentIsCanceled(false);
+    setRestartPayment(false);
+    setCheckoutClicked(false);
+  }, []);
 
   return (
     <>
@@ -1047,7 +1068,10 @@ export default function CheckoutMobility() {
                       : "disabled btn_payment_method btn_main"
                   }
                   disabled={
-                    codePromoState || checkoutClicked || paymentSteps !== 4
+                    codePromoState ||
+                    checkoutClicked ||
+                    paymentSteps !== 4 ||
+                    restartPayment === true
                   }
                 >
                   <h2 className="font_responsive">5. {proceedToPayment}</h2>
@@ -1056,7 +1080,7 @@ export default function CheckoutMobility() {
                 </button>
 
                 <Collapse
-                  isOpened={paymentMethodes.length > 0}
+                  isOpened={paymentMethodes.length > 0 && paymentIsCanceled}
                   className="payment_block"
                 >
                   <Payment>
@@ -1128,6 +1152,17 @@ export default function CheckoutMobility() {
                                   </h2>
                                 </span>
                               </div>
+                            </button>
+                            <button
+                              className="btn_cancel_transition"
+                              onClick={() => _deleteOrder(orderIdRef.current)}
+                            >
+                              <span className="btn_end_payment">
+                                <span className="btn_cancel_text">
+                                  {btnCancelPayment}
+                                </span>
+                                <span>{cancelTransaction && <Spiner />}</span>
+                              </span>
                             </button>
                           </div>
                         )}

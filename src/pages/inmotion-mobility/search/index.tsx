@@ -21,6 +21,7 @@ import {
   ResultBlockMobile,
   SearchProductsListMobile,
 } from "../../../styles/SearchPage";
+import { IProduct } from "../../../interfaces/IProducts";
 
 export default function Search() {
   const router = useRouter();
@@ -44,6 +45,7 @@ export default function Search() {
             per_page: 40,
             search: _search,
             lang: router.locale,
+            status: "publish",
           },
           cancelToken: source.token,
         })
@@ -104,7 +106,7 @@ export default function Search() {
       </InputBlock>
 
       <ResultBlockMobile>
-        {searchValue !== undefined && searchValue.length > 0 ? (
+        {searchValue !== undefined || searchValue.length > 0 ? (
           <>
             <h2>
               {resultsText}: {searchValue.length}{" "}

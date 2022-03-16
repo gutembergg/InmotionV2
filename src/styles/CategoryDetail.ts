@@ -322,6 +322,7 @@ export const AddToCartSession = styled.div`
       margin-left: 0px;
     }
   }
+
   .product_detail {
     cursor: pointer;
     text-decoration: none;
@@ -331,6 +332,11 @@ export const AddToCartSession = styled.div`
 
     &:hover {
       color: ${shade(0.2, "#0570A6")};
+    }
+
+    @media (max-width: 460px) {
+      margin-top: 1rem;
+      margin-left: 0;
     }
   }
 

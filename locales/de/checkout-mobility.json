@@ -36,5 +36,6 @@
   "pointOfSale": "Point of sale",
   "delivery": "Delivery",
   "orderCompletedTitle": "Commande enregistré avec succès",
-  "orderCompletedMessage": "Vous allez être transféré"
+  "orderCompletedMessage": "Vous allez être transféré",
+  "btnCancelPayment": "Zahlung abbrechen"
 }

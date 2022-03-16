@@ -153,7 +153,8 @@ export const getOnSaleProducts = async (lang: string): Promise<IProduct[]> => {
 
 export const filterCategoryVisibility = (productList: IProduct[]) => {
   const filteredProductList = productList.filter(
-    (product) => product.catalog_visibility !== "hidden"
+    (product) =>
+      product.catalog_visibility !== "hidden" && product.status === "publish"
   );
 
   return filteredProductList;

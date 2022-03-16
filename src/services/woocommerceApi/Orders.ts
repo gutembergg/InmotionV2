@@ -70,15 +70,16 @@ export const updateCouponsOrder = async (id: number, coupons: ICoupons[]) => {
   return data;
 };
 
-/* export const deleteOrder = async (id: number) => {
+export const deleteOrder = async (id: number) => {
   try {
     const { data } = await wooCommerce.delete(`orders/${id}`);
 
+    // Si tout se passe bien l'order est supprimé, je return true
     return true;
   } catch (error) {
-    throw new Error("")
+    throw new Error("Error delete order");
   }
-}; */
+};
 
 export const getOrder = async (id: number): Promise<Order> => {
   const { data } = await wooCommerce.get(`orders/${id}`);

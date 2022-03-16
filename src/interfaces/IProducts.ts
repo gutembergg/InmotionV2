@@ -36,7 +36,7 @@ interface Acf {
   modele_du_produit: string;
   precommande: boolean;
   video_youtube_en_avant: string;
-  variation_minimal_price:string;
+  variation_minimal_price: string;
 }
 
 export interface IProduct {
@@ -55,6 +55,7 @@ export interface IProduct {
   related_ids: string[];
   euroRegularPrice: number;
   sale_price: string;
+  status: string;
   on_sale: boolean;
   title: string;
   description?: string;
@@ -96,7 +97,6 @@ export interface IProduct {
   weight: string;
   short_description: string;
   isAcfDescription?: boolean;
-  
 }
 
 export interface ProductWithVariations {

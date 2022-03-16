@@ -627,14 +627,27 @@ export const Payment = styled.div`
   }
 
   .payment_container {
-    width: 100%;
-
     .button_block {
       display: flex;
+      width: 100%;
 
       button {
         width: 100%;
         max-width: 340px;
+      }
+
+      .btn_cancel_transition {
+        background: var(--Red);
+        height: 47px;
+        margin-left: 3rem;
+
+        span {
+          font-size: 1.2rem;
+        }
+
+        &:hover {
+          background: ${shade(0.2, "#F2142B")};
+        }
       }
 
       .btn_end_payment {
@@ -649,6 +662,10 @@ export const Payment = styled.div`
           justify-content: center;
           align-items: center;
         }
+
+        span + span {
+          margin-left: 0.6rem;
+        }
       }
 
       .disabled {
@@ -658,6 +675,15 @@ export const Payment = styled.div`
 
       .active {
         background-color: var(--Blue);
+      }
+
+      @media (max-width: 466px) {
+        flex-direction: column;
+
+        button.btn_cancel_transition {
+          margin-top: 1.6rem;
+          margin-left: 0;
+        }
       }
     }
 
