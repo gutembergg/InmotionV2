@@ -398,6 +398,10 @@ export const WayPaymentRadio = styled.div`
   padding-top: 1.2rem;
   padding-bottom: 0.7rem;
 
+  @media (max-width:480px){
+    flex-direction: column;
+    gap: 1rem ;
+  }
   .way_payment_radio {
     display: flex;
     flex-direction: row;
@@ -621,6 +625,12 @@ export const Payment = styled.div`
   display: flex;
   margin-top: 1.4rem;
   margin-bottom: 1rem;
+  @media (max-width:480px){
+    max-width: 100%;
+    margin-top: 0.9rem;
+    margin-bottom: 0.9rem;
+    justify-content: space-around;
+  }
 
   .payment_container.no_list {
     display: none;
@@ -642,7 +652,7 @@ export const Payment = styled.div`
         margin-left: 3rem;
 
         span {
-          font-size: 1.2rem;
+          font-size: 0.9rem;
         }
 
         &:hover {
@@ -652,9 +662,9 @@ export const Payment = styled.div`
 
       .btn_end_payment {
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
         h2 {
           display: flex;
@@ -677,7 +687,7 @@ export const Payment = styled.div`
         background-color: var(--Blue);
       }
 
-      @media (max-width: 466px) {
+      @media (max-width: 480px) {
         flex-direction: column;
 
         button.btn_cancel_transition {
@@ -727,9 +737,12 @@ export const PaymentMethods = styled.li`
   width: 400px;
   padding: 0 1rem;
   opacity: 0;
-
   animation: ${paymentMethodsAnimation} 3s forwards;
-
+  
+  @media (max-width:480px){
+    width: 100%;
+    padding: 0;
+  }
   .methods {
     display: flex;
     flex-direction: row;
@@ -738,8 +751,11 @@ export const PaymentMethods = styled.li`
     padding: 5px 0;
 
     .method_name {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
+      @media (max-width:480px){
+        font-size: 0.9rem;
+      }
     }
   }
 
@@ -755,6 +771,9 @@ export const PaymentMethods = styled.li`
 
   .logo_box {
     margin-right: 0.5rem;
+    @media (max-width:360px){
+      width: 36px;
+    }
   }
 `;
 
@@ -819,6 +838,9 @@ export const IoMdRadioButtonNot = styled(IoMdRadioButtonOff)`
   color: var(--Blue);
 
   margin-right: 1rem;
+  @media (max-width:480px){
+    margin-right: 0.6rem;
+  }
 `;
 
 export const BtnCouponsBlock = styled.div`

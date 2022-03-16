@@ -4,7 +4,7 @@
   "chooseYourShop": "choisissez votre boutique",
   "3DSpecialist": "votre spécialiste en impression 3D",
   "MobilitySpecialist": "votre spécialiste en Mobilité électrique",
-  "slogan": "Votre spécialiste en Trottinettes électrique, vélos électriques et gyroroue. Location de véhicules flexible. Et des conseils fournis par des experts.",
+  "slogan": "Votre spécialiste en Trottinettes électrique, vélos électriques et gyroroues. Location de véhicules à la journée. Conseils fournis par des experts.",
   "PromotedProductTitle": "Nos produits phares",
   "NewProductTitle": "En promotion",
   "TitlePromotedSection": "Pensez à votre sécurité avant tout!",
@@ -15,16 +15,5 @@
   "locationLink": "découvrez nos Tarifs",
   "contactTitle": "Vous avez besoin d'un conseil",
   "contactTxt": "Pour toutes questions ou demandes, nous sommes à votre disposition. Passionnés et nous-mêmes riders, c'est avec expérience et professionalisme que nous vous renseigner",
-  "contactLink": "contactez-nous",
-  "titleSlider1": "Offre spéciale de noël chez Inmotion!",
-  "txtSlider1": "Profitez jusqu'au 5 Janvier de notre promotion de noël. Inmotion vous offre 5% de réduction sur tout le magasin* !",
-  "txtSlider1_2": "Passez vos commandes dès aujourd'hui!",
-  "txtSlider1_3": "CODE PROMO: NOEL",
-  "txtSlider1_4": "*hors produits déjà soldés",
-  "titleSlider2": "Inmotion L9 - Lemotion S1, découvrez-la sans plus attendre! ",
-  "txtSlider2": "Véritable concentré de technologie, cette trottinette met la barre très haut. Autonomie, vitesse, temps de recharge accéléré grâce à ses double ports de charge. Vous voulez en savoir plus? c'est par ici!",
-  "linkSlider2": "Découvrez-la",
-  "titleSlider3": "Envie de vous déplacer rapidement sans encombrements? Alors le P2F est fait pour vous",
-  "txtSlider3": "Petit, léger, et pliable. Grâce au Inmotion P2, vous pourrez facilement vous fondre dans la circulation. L'essayer c'est l'adopter! ",
-  "linkSlider3": "Découvrez le P2 en détail"
+  "contactLink": "contactez-nous"
 }

@@ -33,9 +33,9 @@
   "errCoutryCurrencyDescEUR": "Um das Produkt außerhalb der Schweiz zu liefern, müssen Sie die Währung in EUR haben.",
   "billingAddress": "Rechnungsadresse",
   "totalttc": "Gesamt(inkl. MwSt.):",
-  "pointOfSale": "Point of sale",
-  "delivery": "Delivery",
-  "orderCompletedTitle": "Commande enregistré avec succès",
-  "orderCompletedMessage": "Vous allez être transféré",
+  "pointOfSale": "Verkaufsstelle",
+  "delivery": "Lieferung",
+  "orderCompletedTitle": "Bestellung erfolgreich registriert",
+  "orderCompletedMessage": "Sie werden weitergeleitet",
   "btnCancelPayment": "Zahlung abbrechen"
 }

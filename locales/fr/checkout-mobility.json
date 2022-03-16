@@ -36,6 +36,6 @@
   "pointOfSale": "Point de vente",
   "delivery": "Livraison",
   "orderCompletedTitle": "Commande enregistré avec succès",
-  "orderCompletedMessage": "Vous allez être transféré",
-  "btnCancelPayment": "Annuler paiement"
+  "orderCompletedMessage": "Vous allez être redirigé",
+  "btnCancelPayment": "Annuler le paiement"
 }
