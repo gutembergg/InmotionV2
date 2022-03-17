@@ -25,9 +25,28 @@ const LanguageSelector = ({ closeMobileMenu }: Props) => {
   const backToCart = t("headerMobility:backToCart");
 
   const getSelectedLanguage = (e: React.MouseEvent<HTMLDivElement>) => {
-    router.push({ pathname, query }, asPath, { locale: e.currentTarget.id });
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();  
+    router.push({ pathname, query }, asPath, { locale: e.currentTarget.id }).then((res) => handleStop());;
     setopenObject(!openObject);
     closeMobileMenu && closeMobileMenu();
+  };
+
+  const handleShowDetails = (slug: string) => {
+
   };
 
   const openLanguage = (event: MouseEvent<HTMLDivElement>) => {
