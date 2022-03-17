@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-interface Props {
-  test: string;
-}
 export const StyledMobileHeader = styled.header`
   display: none;
 
@@ -23,7 +20,7 @@ export const StyledMobileHeader = styled.header`
     .contentBg {
       transition: all ease-in 0.3s;
       top: 0;
-      left: 0;
+      right: 0;
       width: 100%;
     }
   }
@@ -84,10 +81,9 @@ export const StyledMobileHeader = styled.header`
     position: fixed;
     z-index: 8900;
     top: 0;
-    left: 0;
     width: 100vw;
     height: 100vh;
-    left: -100vw;
+    right: 0vw;
     overflow-y: scroll;
 
     .logoBox {
@@ -99,13 +95,14 @@ export const StyledMobileHeader = styled.header`
     }
     .contentBg {
       top: 0;
-      left: 0;
+      right: -100vw;
       width: 100vw;
       padding: 10px 10px;
-      position: relative;
+      position: absolute;
       overflow: hidden;
       background-color: var(--White);
       min-height: 100vh;
+      max-width:460px;
     }
     .content {
       position: relative;
@@ -121,12 +118,12 @@ export const StyledMobileHeader = styled.header`
     transition: all ease-in 0.3s;
     background-color: #000000ed;
     top: 0;
-    left: 0;
+    right: 0;
 
     .contentBg {
       transition: all ease-in 0.3s;
       top: 0;
-      left: 0;
+      right: 0;
     }
   }
 

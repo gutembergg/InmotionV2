@@ -96,17 +96,19 @@ export default function ProductDetail({
   const VariationButtons = () => {
     return (
       <>
-        {variations.map((variation) => (
-          <VariationDisplay
-            className={selectedVariation.id === variation.id ? "active" : ""}
-            onClick={() => setSelectedVariation(variation)}
-            key={variation.id}
-          >
-            <VariationData>
-              <h3>{variation.attributes[0].option}</h3>
-            </VariationData>
-          </VariationDisplay>
-        ))}
+        {variations
+          .sort((a, b) => (a.menu_order > b.menu_order ? 1 : -1))
+          .map((variation) => (
+            <VariationDisplay
+              className={selectedVariation.id === variation.id ? "active" : ""}
+              onClick={() => setSelectedVariation(variation)}
+              key={variation.id}
+            >
+              <VariationData>
+                <h3>{variation.attributes[0].option}</h3>
+              </VariationData>
+            </VariationDisplay>
+          ))}
       </>
     );
   };
@@ -310,8 +312,8 @@ export default function ProductDetail({
                     {productWeight}: {product.weight} Kg
                   </p>
                   <p>
-                    {productSize}: {product.dimensions.length}{" "}
-                    X {product.dimensions.width} X {product.dimensions.height}
+                    {productSize}: {product.dimensions.length} X{" "}
+                    {product.dimensions.width} X {product.dimensions.height}
                   </p>
                 </>
               )}
@@ -363,13 +365,11 @@ export default function ProductDetail({
                             }}
                           />
                           <p>
-                            {productWeight}:{" "}
-                            {selectedVariation.weight} Kg
+                            {productWeight}: {selectedVariation.weight} Kg
                           </p>
                           <p>
-                            {productSize}:{" "}
-                            {selectedVariation.dimensions.length} X{" "}
-                            {selectedVariation.dimensions.width} X{" "}
+                            {productSize}: {selectedVariation.dimensions.length}{" "}
+                            X {selectedVariation.dimensions.width} X{" "}
                             {selectedVariation.dimensions.height}
                           </p>
                           <div className="price">
