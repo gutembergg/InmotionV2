@@ -83,7 +83,7 @@ export const StyledMobileHeader = styled.header`
     top: 0;
     width: 100vw;
     height: 100vh;
-    right: 0vw;
+    left: 100vw;
     overflow-y: scroll;
 
     .logoBox {
@@ -95,7 +95,7 @@ export const StyledMobileHeader = styled.header`
     }
     .contentBg {
       top: 0;
-      right: -100vw;
+      right: 100vw;
       width: 100vw;
       padding: 10px 10px;
       position: absolute;
@@ -115,13 +115,13 @@ export const StyledMobileHeader = styled.header`
 
   //opened menu container//
   .mainBlock.open {
-    transition: all ease-in 0.3s;
+    transition: all ease-in 0.1s;
     background-color: #000000ed;
     top: 0;
-    right: 0;
-
+    left: 0;
+    width: 100vw;
     .contentBg {
-      transition: all ease-in 0.3s;
+      transition: all ease-in 0.1s;
       top: 0;
       right: 0;
     }
