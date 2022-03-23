@@ -50,7 +50,7 @@ export const LoginLink = styled.div`
     color: var(--White);
   }
 
-  /* @media (max-width: 1024px) {
+  /* @media (max-width: 1024px ) {
     width: 50px;
     margin-right: 15px;
     svg {
