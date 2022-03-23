@@ -13,18 +13,18 @@ export const LoginContainer = styled.div`
     @media (max-width: 540px) {
       transform: none;
     }
-    &.createAccount{
+    &.createAccount {
       text-decoration: none;
       transform: skew(15deg);
-    font-weight: bold;
-    color: var(--BlueHover);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    &:hover{
-      text-decoration: underline;
-    }
+      font-weight: bold;
+      color: var(--BlueHover);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
   #sendButton {
@@ -45,17 +45,42 @@ export const LoginLink = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
-  
+
   span {
     color: var(--White);
   }
-  
-  @media (max-width: 1024px) {
+
+  /* @media (max-width: 1024px) {
     width: 50px;
     margin-right: 15px;
-    svg{
+    svg {
       fill: var(--Blue);
-
+    }
+    span {
+      width: 0;
+      display: none;
+    }
+  } */
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1400px) {
+    width: 40px;
+    margin-right: 10px;
+    svg {
+      fill: var(--Blue);
+    }
+    span {
+      width: 0;
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    width: 40px;
+    margin-right: 10px;
+    svg {
+      fill: var(--Blue);
+    }
+    span {
+      width: 0;
+      display: none;
     }
   }
 
@@ -73,7 +98,10 @@ export const LoginLink = styled.div`
     display: flex;
     flex-direction: row;
     padding: 0.3rem;
-    @media (max-width: 1024px) {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+      display: none;
+    }
+    @media only screen and (max-width: 1024px) {
       display: none;
     }
   }
@@ -97,17 +125,18 @@ export const MyAccountLink = styled.div`
       display: flex;
       align-items: center;
       @media screen and (max-width: 1024px) {
-        svg{font-size:30px ;}
-        margin: 0 25px ;
+        svg {
+          font-size: 30px;
+        }
+        margin: 0 25px;
       }
-      
+
       span {
         margin-left: 12px;
         margin-right: 20px;
         @media screen and (max-width: 1024px) {
-          display:none;
+          display: none;
         }
-        
       }
     }
   }

@@ -173,6 +173,7 @@ export default function CheckoutMobility() {
   const [cancelTransaction, setCancelTransaction] = useState(false);
   const [paymentIsCanceled, setPaymentIsCanceled] = useState(false);
   const [restartPayment, setRestartPayment] = useState(true);
+  const [isAnticipPay, setIsAnticipPay] = useState(false);
   const [erros, setErros] = useState("");
 
   //------------------------------------------tvaResult------------------------------------------------!!
@@ -530,6 +531,7 @@ export default function CheckoutMobility() {
       if (wayOfPaymentSelected === 0 && isCoupon === false) {
         setPaymentIsCanceled(false);
         setIsOrder(false);
+        setIsAnticipPay(true);
 
         if (Object.keys(_order).length === 0) {
           await _sendOrder();
@@ -552,6 +554,7 @@ export default function CheckoutMobility() {
 
       if (wayOfPaymentSelected === 0 && isCoupon) {
         setPaymentIsCanceled(false);
+        setIsAnticipPay(true);
 
         Report.success(
           `${orderCompletedTitle}`,
@@ -1071,7 +1074,8 @@ export default function CheckoutMobility() {
                     codePromoState ||
                     checkoutClicked ||
                     paymentSteps !== 4 ||
-                    restartPayment === true
+                    restartPayment === true ||
+                    isAnticipPay === true
                   }
                 >
                   <h2 className="font_responsive">5. {proceedToPayment}</h2>
