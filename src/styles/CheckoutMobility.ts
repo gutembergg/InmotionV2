@@ -398,9 +398,9 @@ export const WayPaymentRadio = styled.div`
   padding-top: 1.2rem;
   padding-bottom: 0.7rem;
 
-  @media (max-width:480px){
+  @media (max-width: 480px) {
     flex-direction: column;
-    gap: 1rem ;
+    gap: 1rem;
   }
   .way_payment_radio {
     display: flex;
@@ -409,7 +409,8 @@ export const WayPaymentRadio = styled.div`
   }
 
   span {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
+    color: var(--DarkGray);
   }
 `;
 
@@ -625,7 +626,7 @@ export const Payment = styled.div`
   display: flex;
   margin-top: 1.4rem;
   margin-bottom: 1rem;
-  @media (max-width:480px){
+  @media (max-width: 480px) {
     max-width: 100%;
     margin-top: 0.9rem;
     margin-bottom: 0.9rem;
@@ -662,9 +663,9 @@ export const Payment = styled.div`
 
       .btn_end_payment {
         width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         h2 {
           display: flex;
@@ -738,8 +739,8 @@ export const PaymentMethods = styled.li`
   padding: 0 1rem;
   opacity: 0;
   animation: ${paymentMethodsAnimation} 3s forwards;
-  
-  @media (max-width:480px){
+
+  @media (max-width: 480px) {
     width: 100%;
     padding: 0;
   }
@@ -753,7 +754,7 @@ export const PaymentMethods = styled.li`
     .method_name {
       font-size: 1rem;
       font-weight: 600;
-      @media (max-width:480px){
+      @media (max-width: 480px) {
         font-size: 0.9rem;
       }
     }
@@ -771,10 +772,137 @@ export const PaymentMethods = styled.li`
 
   .logo_box {
     margin-right: 0.5rem;
-    @media (max-width:360px){
+    @media (max-width: 360px) {
       width: 36px;
     }
   }
+`;
+
+export const CGVAccept = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+
+  .control {
+    font-family: arial;
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    padding-top: 3px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+  .control_indicator {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: #ffffff;
+    border: 2px solid var(--Blue);
+    border-radius: 0px;
+  }
+  .control:hover input ~ .control_indicator,
+  .control input:focus ~ .control_indicator {
+    background: #cccccc;
+  }
+
+  .control input:checked ~ .control_indicator {
+    background: #39b720;
+  }
+  .control:hover input:not([disabled]):checked ~ .control_indicator,
+  .control input:checked:focus ~ .control_indicator {
+    background: #0e6647d;
+  }
+  .control input:disabled ~ .control_indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .control_indicator:after {
+    box-sizing: unset;
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  .control input:checked ~ .control_indicator:after {
+    display: block;
+  }
+  .control-checkbox .control_indicator:after {
+    left: 5px;
+    top: 2px;
+    width: 3px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .control-checkbox input:disabled ~ .control_indicator:after {
+    border-color: #7b7b7b;
+  }
+  .control-checkbox .control_indicator::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-left: -1.3rem;
+    margin-top: -1.3rem;
+    background: #2aa1c0;
+    border-radius: 3rem;
+    opacity: 0.6;
+    z-index: 99999;
+    transform: scale(0);
+  }
+  @keyframes s-ripple {
+    0% {
+      transform: scale(0);
+    }
+    20% {
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  @keyframes s-ripple-dup {
+    0% {
+      transform: scale(0);
+    }
+    30% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+  .control-checkbox input + .control_indicator::before {
+    animation: s-ripple 250ms ease-out;
+  }
+  .control-checkbox input:checked + .control_indicator::before {
+    animation-name: s-ripple-dup;
+  }
+  a {
+    color: var(--BlueHover);
+    font-weight: 600;
+  }
+`;
+
+export const ErrorCgv = styled.p`
+  color: var(--TxtRed);
 `;
 
 export const ProductCart = styled.div`
@@ -838,7 +966,7 @@ export const IoMdRadioButtonNot = styled(IoMdRadioButtonOff)`
   color: var(--Blue);
 
   margin-right: 1rem;
-  @media (max-width:480px){
+  @media (max-width: 480px) {
     margin-right: 0.6rem;
   }
 `;

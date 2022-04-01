@@ -35,7 +35,12 @@
   "totalttc": "Total (T.T.C):",
   "pointOfSale": "Point de vente",
   "delivery": "Livraison",
+  "acceptTerms": "J'accepte les",
+  "conditionsgen": "CGV",
+  "requiredCdg": "Vous devez accepter les CGV",
   "orderCompletedTitle": "Commande enregistré avec succès",
   "orderCompletedMessage": "Vous allez être redirigé",
+  "noTaxes": "(Sans taxe paiement)",
+  "withTaxe": "(+ taxes selon carte)",
   "btnCancelPayment": "Annuler le paiement"
 }

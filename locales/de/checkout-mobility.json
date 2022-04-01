@@ -36,6 +36,11 @@
   "pointOfSale": "Verkaufsstelle",
   "delivery": "Lieferung",
   "orderCompletedTitle": "Bestellung erfolgreich registriert",
+  "requiredCdg": "Sie müssen die AGBs akzeptieren",
   "orderCompletedMessage": "Sie werden weitergeleitet",
+  "acceptTerms": "Ich akzeptiere die",
+  "conditionsgen": "AGB",
+  "noTaxes": "(Ohne Zahlungsgebühr)",
+  "withTaxe": "(+ Steuern nach Karte)",
   "btnCancelPayment": "Zahlung abbrechen"
 }

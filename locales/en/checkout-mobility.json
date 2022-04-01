@@ -35,7 +35,12 @@
   "totalttc": "Total (incl. tax): ",
   "pointOfSale": "Point of sale",
   "delivery": "Delivery",
+  "acceptTerms": "I accept the",
+  "conditionsgen": "T&Cs",
+  "requiredCdg": "You must accept the T&Cs",
   "orderCompletedTitle": "Order saved successfully",
   "orderCompletedMessage": "You will be transferred",
+  "noTaxes": "(Without tax payment)",
+  "withTaxe": "(+ taxes according to card)",
   "btnCancelPayment": "Cancel payment"
 }

@@ -40,7 +40,7 @@ import { getShippingZoneMethods } from "../../../services/woocommerceApi/Shippin
 import { ShippingMethods } from "../../../interfaces/ShippingMethods";
 import { Collapse } from "react-collapse";
 import { convertSingleNumber } from "../../../utils/addEuroPriceInProducts";
-
+import Link from "next/link";
 import {
   Container,
   Content,
@@ -57,6 +57,8 @@ import {
   CouponsList,
   PaymentBankTransfert,
   WayPaymentRadio,
+  CGVAccept,
+  ErrorCgv,
 } from "../../../styles/CheckoutMobility";
 
 interface ILineItems {
@@ -106,6 +108,11 @@ export default function CheckoutMobility() {
   const weightMaxTitle = t("checkout-mobility:weightMaxTitle");
   const weightMaxDescr = t("checkout-mobility:weightMaxDescr");
   const errCoutryCurrencyTitle = t("checkout-mobility:errCoutryCurrencyTitle");
+  const acceptTerms = t("checkout-mobility:acceptTerms");
+  const requiredCdg = t("checkout-mobility:requiredCdg");
+  const conditionsgen = t("checkout-mobility:conditionsgen");
+  const withTaxe = t("checkout-mobility:withTaxe");
+  const noTaxes = t("checkout-mobility:noTaxes");
   const errCoutryCurrencyDescrCHF = t(
     "checkout-mobility:errCoutryCurrencyDescCHF"
   );
@@ -174,8 +181,9 @@ export default function CheckoutMobility() {
   const [paymentIsCanceled, setPaymentIsCanceled] = useState(false);
   const [restartPayment, setRestartPayment] = useState(true);
   const [isAnticipPay, setIsAnticipPay] = useState(false);
+  const [cdgAccepted, setcdgAccepted] = useState(false);
   const [erros, setErros] = useState("");
-
+  console.log(cdgAccepted);
   //------------------------------------------tvaResult------------------------------------------------!!
   const CHFCurrency = currentyCurrency === "CHF";
   const tva = CHFCurrency ? 7.7 : 0;
@@ -1047,7 +1055,11 @@ export default function CheckoutMobility() {
                       ) : (
                         <IoMdRadioButtonNot />
                       )}{" "}
-                      <h4>{advancePayment}</h4>
+                      <h4>
+                        {advancePayment}
+                        <br />
+                        <span>{noTaxes}</span>
+                      </h4>
                     </div>
                     <div
                       className="way_payment_radio"
@@ -1058,9 +1070,28 @@ export default function CheckoutMobility() {
                       ) : (
                         <IoMdRadioButtonNot />
                       )}{" "}
-                      <h4>{onlinePayment}</h4>
+                      <h4>
+                        {onlinePayment}
+                        <br />
+                        <span>{withTaxe}</span>
+                      </h4>
                     </div>
                   </WayPaymentRadio>
+                  <CGVAccept>
+                    {" "}
+                    <label className="control control-checkbox">
+                      {acceptTerms}{" "}
+                      <Link href="/inmotion-mobility/conditions-generales">
+                        <a target="_blank">{conditionsgen}</a>
+                      </Link>
+                      <input
+                        type="checkbox"
+                        name="cgv"
+                        onClick={() => setcdgAccepted(!cdgAccepted)}
+                      />
+                      <div className="control_indicator"></div>
+                    </label>
+                  </CGVAccept>
                 </Collapse>
 
                 <button
@@ -1075,13 +1106,17 @@ export default function CheckoutMobility() {
                     checkoutClicked ||
                     paymentSteps !== 4 ||
                     restartPayment === true ||
-                    isAnticipPay === true
+                    isAnticipPay === true ||
+                    cdgAccepted === false
                   }
                 >
                   <h2 className="font_responsive">5. {proceedToPayment}</h2>
 
                   <span>{isOrder === false && <Spiner />}</span>
                 </button>
+                <ErrorCgv>
+                  {!cdgAccepted && paymentSteps === 4 && `${requiredCdg}`}
+                </ErrorCgv>
 
                 <Collapse
                   isOpened={paymentMethodes.length > 0 && paymentIsCanceled}
