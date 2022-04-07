@@ -92,7 +92,6 @@ export default function ProductDetail({
   //check if product is variable or not
   const [selectedVariation, setSelectedVariation] = useState({} as any);
   const isVariable = product?.variations.length > 0 ? true : false;
-
   const VariationButtons = () => {
     return (
       <>
@@ -617,7 +616,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const variations = await getVariations(product.id, lang as string);
   const variationsWithEuroPrice = await addEuroPriceInProducts(variations);
-
   //crossSell ids
   const crossSellIDS = await getProductByID(
     product.cross_sell_ids,

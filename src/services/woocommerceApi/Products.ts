@@ -58,9 +58,8 @@ export const getVariations = async (id: number, lang: string) => {
 // Get  products by ID LISTE//////////////////////////////////////////
 export const getProductByID = async (idListe: string[], lang: string) => {
   const { data } = await wooCommerce.get(
-    `products/?include[cross_sell_ids]=${idListe}&lang=${lang}`
+    `products/?include=${idListe}&lang=${lang}`
   );
-
   return data;
 };
 
