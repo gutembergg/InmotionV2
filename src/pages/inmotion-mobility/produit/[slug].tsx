@@ -576,7 +576,7 @@ export default function ProductDetail({
               </table>
             </Caracteristiques>
           )}
-          {crossSellIDS && Object.keys(crossSellIDS[0]).length > 0 ? (
+          {crossSellIDS !== null ? (
             <RelatedProduct>
               <h2 className="squared">{completEquipement}</h2>
               <CarouselSwiper products={crossSellIDS} />
@@ -633,7 +633,10 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       product: productAcfDescriptionFilter,
-      crossSellIDS: crossSellProductsWithEuroPrice,
+      crossSellIDS:
+        product.cross_sell_ids.length !== 0
+          ? crossSellProductsWithEuroPrice
+          : null,
       variations: variationsWithEuroPrice,
     },
     revalidate: 60 * 2, // 2 min

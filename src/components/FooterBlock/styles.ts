@@ -48,12 +48,14 @@ export const StyledFooterBlock = styled.section`
       height: 100px;
     }
   }
-  a{
+  a {
     text-decoration: none;
     color: var(--Blue);
-    &:hover{
+    margin: 10px 0;
+    display: block;
+    &:hover {
       color: var(--BlueHover);
-      text-decoration: underline ;
+      text-decoration: underline;
     }
   }
 `;

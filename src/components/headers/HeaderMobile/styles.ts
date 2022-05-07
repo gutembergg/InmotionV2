@@ -23,6 +23,12 @@ export const StyledMobileHeader = styled.header`
       right: 0;
       width: 100%;
     }
+    .backgroundMobile {
+      left: 0rem;
+      width: calc(100% - 460px);
+      height: 100vh;
+      position: relative;
+    }
   }
 
   @media screen and (max-width: 1024px) {
@@ -102,7 +108,7 @@ export const StyledMobileHeader = styled.header`
       overflow: hidden;
       background-color: var(--White);
       min-height: 100vh;
-      max-width:460px;
+      max-width: 460px;
     }
     .content {
       position: relative;
@@ -265,55 +271,53 @@ export const MobileMobilityHeader = styled.header`
   position: relative;
   list-style: none;
   font-weight: bold;
-  ul{
-
-  
-  a {
-    cursor: pointer;
-  }
-  > li {
-    padding: 10px;
-    flex: 0 1 auto;
-    list-style: none;
-    width: 100%;
-    border-collapse: content;
+  ul {
     a {
-      width: fit-content;
-      text-decoration: none;
-      color: var(--BlueHover);
+      cursor: pointer;
     }
-    a::before {
-      content: "- ";
-    }
-    > ul {
+    > li {
+      padding: 10px;
+      flex: 0 1 auto;
       list-style: none;
-      border-top: none;
-      z-index: 9999;
-      transition: all ease-in-out 0.1s;
-      width: max-content;
-      visibility: visible;
-      opacity: 1;
-      transform: none;
-      position: relative;
-      box-shadow: none;
-      margin: 0 0 0 10px;
-      transform-origin: 0;
-      padding: 0;
-
-      > li {
-        margin: 10px 0 10px 0;
+      width: 100%;
+      border-collapse: content;
+      a {
+        width: fit-content;
+        text-decoration: none;
+        color: var(--BlueHover);
+      }
+      a::before {
+        content: "- ";
+      }
+      > ul {
+        list-style: none;
+        border-top: none;
+        z-index: 9999;
+        transition: all ease-in-out 0.1s;
+        width: max-content;
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+        position: relative;
+        box-shadow: none;
+        margin: 0 0 0 10px;
+        transform-origin: 0;
         padding: 0;
-        background-color: transparent;
-        font-weight: 600;
-        a {
-          text-decoration: none;
-          color: var(--Blue);
-        }
-        a::before {
-          content: "- ";
+
+        > li {
+          margin: 10px 0 10px 0;
+          padding: 0;
+          background-color: transparent;
+          font-weight: 600;
+          a {
+            text-decoration: none;
+            color: var(--Blue);
+          }
+          a::before {
+            content: "- ";
+          }
         }
       }
     }
   }
-}
 `;

@@ -61,6 +61,12 @@ const FooterBlock = () => {
             <Link href="mailto:&#99;%6fnt%61%63%74&#64;%69%6e&#109;o&#116;%69%6f%6e&#45;&#115;u%69&#115;%73&#101;%2e&#99;h">
               <a>contact@inmotion-suisse.ch</a>
             </Link>
+            <Link href="tel:+41789200232">
+              <a>Tel(FR): 078/920.02.32</a>
+            </Link>
+            <Link href="tel:+41765757427">
+              <a>Tel(DE): 076/575.74.27</a>
+            </Link>
           </address>
         </div>
       </div>

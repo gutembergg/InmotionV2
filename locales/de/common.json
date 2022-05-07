@@ -16,13 +16,13 @@
   "LangBlocked": "Sie können die Sprache nicht von der Bestellseite aus ändern. Gehen Sie zurück zum Warenkorb, um die Änderung vorzunehmen.",
   "CurrencyBlocked": "Sie können die Währung nicht von der Bestellseite aus ändern. Gehen Sie zurück zum Warenkorb, um die Änderung vorzunehmen.",
   "shopTitle": "Willkommen in unserem Geschäft",
-  "InStock":"Im Stock",
-  "OnOrder":"auf Bestellung",
-  "Pieces":"Teile",
-  "OutOfStock":"Nicht lieferbar",
-  "Attention":"Achtung",
-  "productAdded":"Produkt zum Warenkorb hinzugefügt",
-  "productRemoved":"Produkt vom Warenkorb entfernt",
-  "SelectVariation":"Wählen Sie eine Variation, bevor Sie den Artikel in den Warenkorb legen",
-  "NoStockInfo":"Keine informationen"
+  "InStock": "Im Stock",
+  "OnOrder": "8-10 Tage",
+  "Pieces": "Teile",
+  "OutOfStock": "Nicht lieferbar",
+  "Attention": "Achtung",
+  "productAdded": "Produkt zum Warenkorb hinzugefügt",
+  "productRemoved": "Produkt vom Warenkorb entfernt",
+  "SelectVariation": "Wählen Sie eine Variation, bevor Sie den Artikel in den Warenkorb legen",
+  "NoStockInfo": "Keine informationen"
 }

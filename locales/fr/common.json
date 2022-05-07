@@ -16,13 +16,13 @@
   "LangBlocked": "Vous ne pouvez pas changer de langues ici, revenez au panier pour effectuer le changement",
   "CurrencyBlocked": "Vous ne pouvez pas changer de devise ici, revenez au panier pour effectuer le changement",
   "shopTitle": "bienvenue dans notre boutique",
-  "InStock":"En stock",
-  "OnOrder":"sur commande",
-  "Pieces":"pièces",
-  "OutOfStock":"Non disponible",
-  "Attention":"Attention",
-  "productAdded":"Produit ajouté au panier",
-  "productRemoved":"Produit retiré du panier",
-  "SelectVariation":"Choisissez une variation avant de mettre l'article dans le panier",
-  "NoStockInfo":"Aucune information"
+  "InStock": "En stock",
+  "OnOrder": "8-10 jours",
+  "Pieces": "pièces",
+  "OutOfStock": "Non disponible",
+  "Attention": "Attention",
+  "productAdded": "Produit ajouté au panier",
+  "productRemoved": "Produit retiré du panier",
+  "SelectVariation": "Choisissez une variation avant de mettre l'article dans le panier",
+  "NoStockInfo": "Aucune information"
 }
