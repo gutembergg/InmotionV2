@@ -72,11 +72,11 @@ export default function Home({
   return (
     <>
       <HeaderSeo
-        description={"Spécialiste en Trottinettes électrique, vélos électriques et gyroroue. Location de véhicules flexible. Cours gyroroue."}
-        title={"Inmotion-suisse, vélos électriques, trottinettes, gyroroues"}
-        canonical={
-          "https://inmotion-suisse.ch/inmotion-mobility/"
+        description={
+          "Spécialiste en Trottinettes électrique, vélos électriques et gyroroue. Location de véhicules flexible. Cours gyroroue."
         }
+        title={"Inmotion-suisse, vélos électriques, trottinettes, gyroroues"}
+        canonical={"https://inmotion-suisse.ch/inmotion-mobility/"}
         og_locale={"fr_FR"}
         og_title={"article"}
       />
@@ -137,43 +137,52 @@ export default function Home({
               <p>{TextPromotedSection}</p>
               <Link href="/inmotion-mobility/categories/equipements">
                 <motion.a
-                initial={{ background: "#0570A6" }}
-                whileHover={{
-                  scale: 1.02,
-                  transition: { duration: 0.01 },
-                  background: "#03486b",
-                }}
-                style={{ originX: 0.5 }}
-                whileTap={{ scale: 0.88, transition: { duration: 0.01 } }}
+                  initial={{ background: "#0570A6" }}
+                  whileHover={{
+                    scale: 1.02,
+                    transition: { duration: 0.01 },
+                    background: "#03486b",
+                  }}
+                  style={{ originX: 0.5 }}
+                  whileTap={{ scale: 0.88, transition: { duration: 0.01 } }}
                 >
                   {LinkTxtPromotedSection}
-                  </motion.a>
+                </motion.a>
               </Link>
             </motion.div>
           </PromotedSection>
-          <NewProducts>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: {
-                  scale: 0.8,
-                  opacity: 0,
-                },
-                visible: {
-                  scale: 1,
-                  opacity: 1,
-                  transition: {
-                    delay: 0.4,
+          {onSaleProduct[0].image ? (
+            <NewProducts>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: {
+                    scale: 0.8,
+                    opacity: 0,
                   },
-                },
-              }}
-            >
-              <h1 className="squared">{NewProductTitle}</h1>
-            </motion.div>
-            <CarouselSwiper products={onSaleProduct} />
-          </NewProducts>
+                  visible: {
+                    scale: 1,
+                    opacity: 1,
+                    transition: {
+                      delay: 0.4,
+                    },
+                  },
+                }}
+              >
+                <h1 className="squared">{NewProductTitle}</h1>
+              </motion.div>
+              <CarouselSwiper products={onSaleProduct} />
+            </NewProducts>
+          ) : (
+            <div>
+              <br />
+              <br />
+              <br />
+            </div>
+          )}
+
           <RentalSection>
             <motion.div
               className="content"
@@ -185,7 +194,8 @@ export default function Home({
               <h1>{locationTitle}</h1>
               <p>{locationTxt}</p>
               <Link href="/inmotion-mobility/services/location">
-                <motion.a initial={{ background: "#0570A6" }}
+                <motion.a
+                  initial={{ background: "#0570A6" }}
                   whileHover={{
                     scale: 1.02,
                     transition: { duration: 0.01 },
@@ -193,9 +203,9 @@ export default function Home({
                   }}
                   style={{ originX: 0.5 }}
                   whileTap={{ scale: 0.88, transition: { duration: 0.01 } }}
-                  >
-                    {LocationLink}
-                    </motion.a>
+                >
+                  {LocationLink}
+                </motion.a>
               </Link>
             </motion.div>
             <motion.div
@@ -236,8 +246,8 @@ export default function Home({
               <Image
                 src={imageHelp}
                 alt="contact inmotion, service et conseils de professionels "
-                width="280" 
-                height="412" 
+                width="280"
+                height="412"
               />
             </div>
           </HelpSection>
