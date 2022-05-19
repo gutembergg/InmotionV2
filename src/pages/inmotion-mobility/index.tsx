@@ -69,7 +69,6 @@ export default function Home({
     _setOnSaleproduct(onSaleProducts);
   }, [onSaleProducts]);
 
-  console.log(onSaleProduct);
   return (
     <>
       <HeaderSeo
