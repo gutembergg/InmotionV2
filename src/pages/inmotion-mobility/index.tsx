@@ -42,7 +42,7 @@ export default function Home({
   onSaleProducts,
   sliderHome,
 }: Props) {
-  //translation
+  //translations
   const { t } = useTranslation();
   const PromotedProductTitle = t("home:PromotedProductTitle");
   const TitlePromotedSection = t("home:TitlePromotedSection");
