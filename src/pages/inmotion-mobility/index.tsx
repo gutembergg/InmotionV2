@@ -69,6 +69,7 @@ export default function Home({
     _setOnSaleproduct(onSaleProducts);
   }, [onSaleProducts]);
 
+  console.log(onSaleProduct);
   return (
     <>
       <HeaderSeo
@@ -151,7 +152,7 @@ export default function Home({
               </Link>
             </motion.div>
           </PromotedSection>
-          {onSaleProduct[0].image ? (
+          {onSaleProduct[0].id ? (
             <NewProducts>
               <motion.div
                 initial="hidden"
