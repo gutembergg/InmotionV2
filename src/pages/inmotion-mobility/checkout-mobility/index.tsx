@@ -173,7 +173,7 @@ export default function CheckoutMobility() {
   const [positionOrderSection, setPositionOrderSection] = useState(false);
   const [isValidate, setIsValidate] = useState(false);
   const [qtyCartProducts, setQtyCartProducts] = useState(false);
-  const [wayOfPaymentSelected, setWayOfPaymentSelected] = useState(0);
+  const [wayOfPaymentSelected, setWayOfPaymentSelected] = useState(3);
   const [openWasOfPayments, setOpenWayOfPayments] = useState(false);
   const [stopTransaction, setStopTransaction] = useState(false);
   const [orderError, setOrderError] = useState<CouponOrderError | null>(null);

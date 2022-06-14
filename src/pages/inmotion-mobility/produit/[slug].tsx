@@ -70,7 +70,7 @@ export default function ProductDetail({
   const router = useRouter();
   const { cartItem, addToCart } = useCart();
   const { currency } = useCurrency();
-
+  console.log(product);
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
@@ -188,7 +188,6 @@ export default function ProductDetail({
       }
     }
   };
-
   const handleChangeQty = (e: ChangeEvent<HTMLInputElement>) => {
     const quantity = parseInt(e.target.value, 10);
     setProductQty(quantity);
