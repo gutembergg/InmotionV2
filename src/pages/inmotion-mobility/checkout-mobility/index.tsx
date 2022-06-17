@@ -477,6 +477,7 @@ export default function CheckoutMobility() {
       line_items: lineItems,
       coupon_lines: couponsCodeArray,
       shipping_lines: shippingLines,
+      status: "on-hold",
 
       customer_id: Object.keys(user).length > 0 ? user.profile.id : 0,
     };
