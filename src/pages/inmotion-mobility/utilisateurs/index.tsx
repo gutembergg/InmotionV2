@@ -83,6 +83,7 @@ export default function UsersPage() {
     const handleStop = () => {
       Notiflix.Loading.remove();
     };
+
     if (Object.keys(user).length === 0) {
       handleStart();
       router.push("/inmotion-mobility").then((res) => handleStop());
@@ -118,7 +119,9 @@ export default function UsersPage() {
     mounted && (
       <Container>
         <Welcome>
-          <h1>{welcome} {currentyUser.first_name} {currentyUser.last_name}</h1>
+          <h1>
+            {welcome} {currentyUser.first_name} {currentyUser.last_name}
+          </h1>
         </Welcome>
         <Content>
           <SideBarMenuMobile>
