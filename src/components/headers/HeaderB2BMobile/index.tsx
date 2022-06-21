@@ -40,13 +40,10 @@ const HeaderB2BMobile = () => {
   const eScooter = t("headerMobility:e-scooter");
   const equipments = t("headerMobility:equipments");
   const detachedPieces = t("headerMobility:detached-pieces");
-  const occasions = t("headerMobility:occasions");
   const condGenerales = t("headerMobility:condGenerales");
   const confidentiality = t("headerMobility:confidentiality");
-  const rent = t("headerMobility:rent");
   const userManuals = t("headerMobility:userManuals");
   const returnForm = t("headerMobility:returnForm");
-  const cours = t("headerMobility:cours");
 
   const menu = [
     {
@@ -72,14 +69,14 @@ const HeaderB2BMobile = () => {
   ];
 
   const getHref = (slug: string) => {
-    let url = `/inmotion-mobility/categories/${slug}`;
+    let url = `/inmotion-mobility/b2b/${slug}`;
 
     if (slug === "pieces-detachees-mobility") {
-      url = `/inmotion-mobility/categories/pieces-detachees`;
+      url = `/inmotion-mobility/b2b/pieces-detachees`;
     }
 
     if (slug === "equipements") {
-      url = `/inmotion-mobility/categories/equipements`;
+      url = `/inmotion-mobility/b2b/equipements`;
     }
 
     return url;
@@ -155,20 +152,6 @@ const HeaderB2BMobile = () => {
               <ul>
                 <li>
                   <Link href="/inmotion-mobility/b2b">
-                    <a
-                      onClick={() => menuToggle()}
-                      className={
-                        router.pathname === "/inmotion-mobility/b2b"
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      {menuHome}
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/inmotion-mobility/boutique">
                     <a
                       onClick={() => menuToggle()}
                       className={

@@ -13,6 +13,9 @@ const HeaderComponent = () => {
   return (
     <StyledHeader>
       <div className="topBlock">
+        <Link href="/inmotion-mobility/login-b2b">
+          <a className="b2bButton">B2B</a>
+        </Link>
         <Login />
         <CurrencySelector />
         <LanguageSelector />

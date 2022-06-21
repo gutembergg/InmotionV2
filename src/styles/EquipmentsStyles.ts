@@ -53,9 +53,9 @@ export const ButtonSelect = styled.button`
   width: 100%;
   max-width: 300px;
   border: none;
-@media (max-width: 640px){
-  max-width:none
-}
+  @media (max-width: 640px) {
+    max-width: none;
+  }
   &:hover {
     background: var(--BlueHover);
   }
@@ -133,9 +133,64 @@ export const MenuSubCategoriesMobilie = styled.div`
       box-shadow: 0px 7px 8px 0px #2121211c;
 
       list-style: none;
-      @media (max-width: 640px){
-  max-width:none;
-}
+      @media (max-width: 640px) {
+        max-width: none;
+      }
+      .categoiry_item {
+        padding-left: 0.4rem;
+        padding-top: 0.4rem;
+        &:hover {
+          background: var(--LightGray);
+          color: var(--White);
+        }
+      }
+    }
+    a {
+      text-decoration: none;
+      color: var(--Blue);
+      font-weight: 600;
+    }
+  }
+`;
+export const MenuSubCategoriesMobilieB2B = styled.div`
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+    position: relative;
+    width: 100%;
+    .subTitleMenu {
+      background-color: var(--LightGray);
+      color: var(--White);
+      font-weight: 400;
+      text-align: center;
+      margin-left: 0rem;
+    }
+    li {
+      list-style: none;
+      margin-left: 1rem;
+    }
+    .scat {
+      margin-left: 0;
+    }
+    .menu_subcategories {
+      position: absolute;
+      z-index: 9999;
+      top: 20;
+      left: 0;
+      width: 100%;
+      max-width: 300px;
+      background: var(--White);
+      //padding: 0.5rem 0.7rem;
+      line-height: 200%;
+
+      border-top: none;
+      box-shadow: 0px 7px 8px 0px #2121211c;
+
+      list-style: none;
+      @media (max-width: 640px) {
+        max-width: none;
+      }
       .categoiry_item {
         padding-left: 0.4rem;
         padding-top: 0.4rem;
@@ -174,6 +229,50 @@ export const MenuSubCategories = styled.div`
       color: var(--DarkGray);
       font-weight: 600;
       font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    a.active {
+      color: var(--Blue);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+export const MenuSubCategoriesB2B = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2.4rem;
+  flex: 0 0 190px;
+  margin-bottom: 4rem;
+  .skew_button {
+    margin-bottom: 1rem;
+  }
+  .equipementsTitle {
+    display: flex;
+    justify-content: center;
+    background-color: var(--Blue);
+    color: var(--White);
+    font-weight: 700;
+    padding: 5px 10px;
+    margin-top: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .category_name {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.3rem;
+    cursor: pointer;
+
+    a {
+      text-decoration: none;
+      color: var(--DarkGray);
+      font-weight: 600;
+      font-size: 1rem;
       cursor: pointer;
     }
 

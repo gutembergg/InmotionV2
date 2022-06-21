@@ -2,7 +2,6 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { ReactElement, useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 
 import { equipementPaths } from "../../../utils/equipementPaths";
 import HeaderSeo from "../../../components/HeaderSeo";
@@ -15,9 +14,7 @@ import { IProduct } from "../../../interfaces/IProducts";
 import { ICategories } from "../../../interfaces/ICategories";
 import ButtonSkew from "../../../components/ButtonSkew";
 import { IoIosArrowDown } from "react-icons/io";
-import ProductSmallCard from "../../../components/ProductCard/ProductSmallCard";
 import { addEuroPriceInProducts } from "../../../utils/addEuroPriceInProducts";
-import MobileCard from "../../../components/ProductCard/MobileCard";
 
 import {
   Container,
@@ -25,31 +22,40 @@ import {
   FiltersBar,
   ProductsSection,
   Products,
-  MenuSubCategoriesMobilie,
-  MenuSubCategories,
   ButtonSelect,
   PaginateBar,
   ProductsMobile,
+  MenuSubCategoriesB2B,
+  MenuSubCategoriesMobilieB2B,
 } from "../../../styles/EquipmentsStyles";
 import LayoutB2B from "../../../Layout/LayoutB2B";
+import ProductSmallCardB2B from "../../../components/ProductCard/ProductSmallCardB2B";
+import MobileCardB2B from "../../../components/ProductCard/MobileCardB2B";
 
 interface Props {
   productsByCategory: IProduct[];
   currentyCategory: ICategories;
   subCategories: Partial<ICategories[]>;
+  mainCategories: Partial<ICategories[]>;
+  equipementsubCategories: Partial<ICategories[]>;
+  detachedPiecesSubCategories: Partial<ICategories[]>;
 }
 
 export default function EquipementsSubCat({
   productsByCategory,
   currentyCategory,
-  subCategories,
+  mainCategories,
+  equipementsubCategories,
+  detachedPiecesSubCategories,
 }: Props) {
   const menuCategoriesRef = useRef<HTMLDivElement>(null);
   const [openMenuCategories, setOpenMenuCategories] = useState(false);
   const { t } = useTranslation();
-  const menuCategories = t("equipmentsPage:categories");
-  const resultats = t("equipmentsPage:resultats");
-  const equipements = t("equipmentsPage:equipements");
+  const menuCategories = t("b2b:categoriesmenuTitle");
+  const resultats = t("b2b:resultats");
+  const categories = t("b2b:categories");
+  const equipementTXT = t("b2b:equipementTXT");
+  const piecesDetachTXT = t("b2b:piecesDetachTXT");
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
@@ -88,31 +94,91 @@ export default function EquipementsSubCat({
         <Content>
           <ProductsSection>
             <FiltersBar>
-              <MenuSubCategoriesMobilie ref={menuCategoriesRef}>
+              <MenuSubCategoriesMobilieB2B ref={menuCategoriesRef}>
                 <ButtonSelect onClick={handleOpenSubCatMenu}>
                   <p>{menuCategories}</p> <IoIosArrowDown />
                 </ButtonSelect>
                 {openMenuCategories && (
                   <ul className="menu_subcategories">
-                    {subCategories.map((category) => {
+                    {mainCategories.map((category) => {
                       return (
-                        <li
-                          key={category?.slug}
-                          className="categoiry_item"
-                          onClick={handleOpenSubCatMenu}
-                        >
+                        <li key={category?.slug} className="category_name">
                           <Link
                             href={`/inmotion-mobility/b2b/${category?.slug}`}
                             passHref
                           >
-                            <a>{category?.name}</a>
+                            <a
+                              className={
+                                currentyCategory.slug === category?.slug
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              {category?.name}
+                            </a>
                           </Link>
                         </li>
                       );
                     })}
+                    <div className="subTitleMenu">{equipementTXT}</div>
+                    <li className="category_name">
+                      <ul>
+                        {equipementsubCategories.map((category) => {
+                          return (
+                            <li
+                              key={category?.slug}
+                              className="category_name scat"
+                            >
+                              <Link
+                                href={`/inmotion-mobility/b2b/${category?.slug}`}
+                                passHref
+                              >
+                                <a
+                                  className={
+                                    currentyCategory.slug === category?.slug
+                                      ? "active"
+                                      : ""
+                                  }
+                                >
+                                  {category?.name}
+                                </a>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
+                    <div className="subTitleMenu">{piecesDetachTXT}</div>
+                    <li className="category_name">
+                      <ul>
+                        {detachedPiecesSubCategories.map((category) => {
+                          return (
+                            <li
+                              key={category?.slug}
+                              className="category_name scat"
+                            >
+                              <Link
+                                href={`/inmotion-mobility/b2b/${category?.slug}`}
+                                passHref
+                              >
+                                <a
+                                  className={
+                                    currentyCategory.slug === category?.slug
+                                      ? "active"
+                                      : ""
+                                  }
+                                >
+                                  {category?.name}
+                                </a>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>
                   </ul>
                 )}
-              </MenuSubCategoriesMobilie>
+              </MenuSubCategoriesMobilieB2B>
               <PaginateBar>
                 <span>
                   {productsByCategory.length} {resultats}
@@ -123,7 +189,7 @@ export default function EquipementsSubCat({
               {productsByCategory.map((product) => {
                 return (
                   <div key={product.id}>
-                    <MobileCard product={product} />
+                    <MobileCardB2B product={product} />
                   </div>
                 );
               })}
@@ -133,22 +199,22 @@ export default function EquipementsSubCat({
               {productsByCategory.map((product) => {
                 return (
                   <div key={product.id}>
-                    <ProductSmallCard product={product} />
+                    <ProductSmallCardB2B product={product} />
                   </div>
                 );
               })}
             </Products>
           </ProductsSection>
-          <MenuSubCategories>
-            <ul>
+          <MenuSubCategoriesB2B>
+            <ul className="menu_subcategories">
               <div className="skew_button">
-                <ButtonSkew text={equipements} />
+                <ButtonSkew text={categories} />
               </div>
-              {subCategories.map((category) => {
+              {mainCategories.map((category) => {
                 return (
                   <li key={category?.slug} className="category_name">
                     <Link
-                      href={`/inmotion-mobility/categories/equipements/${category?.slug}`}
+                      href={`/inmotion-mobility/b2b/${category?.slug}`}
                       passHref
                     >
                       <a
@@ -164,8 +230,58 @@ export default function EquipementsSubCat({
                   </li>
                 );
               })}
+              <div className="equipementsTitle">{equipementTXT}</div>
+              <li className="category_name">
+                <ul className="menu_subcategories">
+                  {equipementsubCategories.map((category) => {
+                    return (
+                      <li key={category?.slug} className="category_name">
+                        <Link
+                          href={`/inmotion-mobility/b2b/${category?.slug}`}
+                          passHref
+                        >
+                          <a
+                            className={
+                              currentyCategory.slug === category?.slug
+                                ? "active"
+                                : ""
+                            }
+                          >
+                            {category?.name}
+                          </a>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+              <div className="equipementsTitle">{piecesDetachTXT}</div>
+              <li className="category_name">
+                <ul className="menu_subcategories">
+                  {detachedPiecesSubCategories.map((category) => {
+                    return (
+                      <li key={category?.slug} className="category_name">
+                        <Link
+                          href={`/inmotion-mobility/b2b/${category?.slug}`}
+                          passHref
+                        >
+                          <a
+                            className={
+                              currentyCategory.slug === category?.slug
+                                ? "active"
+                                : ""
+                            }
+                          >
+                            {category?.name}
+                          </a>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
             </ul>
-          </MenuSubCategories>
+          </MenuSubCategoriesB2B>
         </Content>
       </Container>
     </>
@@ -205,14 +321,53 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     lang as string
   );
 
-  const _subCategories = await wc_getSub_categories(lang as string, 241);
+  const _mainCategories = await wc_getSub_categories(lang as string, 80);
 
-  const subCategories = _subCategories.map((category: ICategories) => {
-    const name = category.name;
-    const slug = category.slug;
+  //main Categories
+  const mainCategories = _mainCategories.filter(
+    (category: ICategories) =>
+      category.slug !== "non-classe" &&
+      category.slug !== "occasions" &&
+      category.slug !== "occasions-en" &&
+      category.slug !== "gelegenheiten" &&
+      category.slug !== "ausruestungen" &&
+      category.slug !== "abgeloeste-teile" &&
+      category.slug !== "equipments" &&
+      category.slug !== "detached-pieces-3" &&
+      category.slug !== "equipements" &&
+      category.slug !== "pieces-detachees-mobility"
+  );
 
-    return { name, slug };
+  mainCategories.sort((a: any, b: any) => {
+    return a.menu_order - b.menu_order;
   });
+  //equipement Sub Categories
+  const _equipementsubCategories = await wc_getSub_categories(
+    lang as string,
+    241
+  );
+
+  const equipementsubCategories = _equipementsubCategories.map(
+    (category: ICategories) => {
+      const name = category.name;
+      const slug = category.slug;
+
+      return { name, slug };
+    }
+  );
+  const _detachedPiecesSubCategories = await wc_getSub_categories(
+    lang as string,
+    237
+  );
+
+  const detachedPiecesSubCategories = _detachedPiecesSubCategories.map(
+    (category: ICategories) => {
+      const name = category.name;
+      const slug = category.slug;
+
+      return { name, slug };
+    }
+  );
 
   const productsWithEuroDevise = await addEuroPriceInProducts(
     productsByCategory
@@ -221,7 +376,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       productsByCategory: productsWithEuroDevise,
-      subCategories,
+      mainCategories,
+      equipementsubCategories,
+      detachedPiecesSubCategories,
       currentyCategory,
     },
     revalidate: 60 * 2,

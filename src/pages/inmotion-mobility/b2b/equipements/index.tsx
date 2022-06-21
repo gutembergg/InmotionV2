@@ -19,7 +19,7 @@ interface IProps {
 
 export default function EquipementsB2B({ subCategories, category }: IProps) {
   const { t } = useTranslation();
-  const discoverOurEquipment = t("equipmentsPage:discoverOurEquipment");
+  const discoverOurEquipment = t("b2b:discoverOurEquipment");
   return (
     <>
       <HeaderSeo

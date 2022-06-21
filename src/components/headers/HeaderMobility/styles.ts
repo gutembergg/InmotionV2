@@ -14,6 +14,16 @@ export const StyledHeader = styled.header`
     a {
       text-decoration: none;
     }
+    .b2bButton {
+      color: var(--White);
+      font-style: italic;
+      margin-right: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
   .mainBlock {
     width: 100%;

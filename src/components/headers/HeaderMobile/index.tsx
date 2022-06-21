@@ -101,6 +101,9 @@ const HeaderMobile = () => {
           </Link>
         </div>
         <div className="rightContent">
+          <Link href="/inmotion-mobility/login-b2b">
+            <a className="b2bButton">B2B</a>
+          </Link>
           <Login />
           <Cart />
         </div>

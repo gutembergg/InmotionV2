@@ -97,6 +97,13 @@ export interface IProduct {
   weight: string;
   short_description: string;
   isAcfDescription?: boolean;
+  // wcb2b_barcode: ['FASDF ESF SADFAS DF']
+  // wcb2b_group_hide_prices: []
+  // wcb2b_group_prices: [{…}]
+  // wcb2b_group_tier_prices: ['']
+  // wcb2b_max_quantity: ['0']
+  // wcb2b_min_quantity: ['5']
+  // wcb2b_package_quantity: ['2']
 }
 
 export interface ProductWithVariations {

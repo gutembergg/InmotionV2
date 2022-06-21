@@ -79,6 +79,16 @@ export const StyledMobileHeader = styled.header`
     }
     .rightContent {
       display: flex;
+
+      .b2bButton {
+        color: var(--Red);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        font-style: italic;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
     }
   }
   //closed menu container//

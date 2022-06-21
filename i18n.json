@@ -78,6 +78,24 @@
       "searchPage"
     ],
     "/inmotion-mobility/contact": ["headerMobility", "forms", "contactPage"],
-    "/inmotion-mobility/b2b": ["headerMobility", "forms", "b2b"]
+    "/inmotion-mobility/b2b": ["headerMobility", "b2b"],
+    "/inmotion-mobility/login-b2b": ["headerMobility", "b2b"],
+    "/inmotion-mobility/create-b2b-account": ["headerMobility", "b2b"],
+    "/inmotion-mobility/b2b/[slug]": ["headerMobility", "productDetail", "b2b"],
+    "/inmotion-mobility/b2b/produit/[slug]": [
+      "headerMobility",
+      "productDetail",
+      "b2b"
+    ],
+    "/inmotion-mobility/b2b/equipements": [
+      "headerMobility",
+      "productDetail",
+      "b2b"
+    ],
+    "/inmotion-mobility/b2b/pieces-detachees": [
+      "headerMobility",
+      "productDetail",
+      "b2b"
+    ]
   }
 }

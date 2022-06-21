@@ -1,1 +1,14 @@
-{ "welcome": "Willkommen" }
+{
+  "welcome": "Willkommen",
+  "resultats": "Ergebnisse",
+  "categories": "Kategorien",
+  "discoverOurEquipment": "Entdecken Sie unsere Ausrüstung",
+  "showVariationTradution": "Produkt anzeigen",
+  "piecesDetachTXT": "Einzelteile",
+  "equipementTXT": "Ausrüstungen",
+  "connectionTitle": "Willkommen im B2B-Bereich. Bitte loggen Sie sich ein, um in diesem Bereich fortzufahren.",
+  "createAccountLink": "Ein B2B-Konto erstellen",
+  "createAccountTxT": "Noch kein Konto? Stellen Sie einen Antrag für Ihr Unternehmen",
+  "connect": "einloggen",
+  "categoriesmenuTitle": "Kategorien"
+}

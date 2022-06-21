@@ -1,1 +1,14 @@
-{ "welcome": "welcome" }
+{
+  "welcome": "welcome",
+  "discoverOurEquipment": "Discover our equipment",
+  "categories": "Categories",
+  "resultats": "results",
+  "showVariationTradution": "Show",
+  "piecesDetachTXT": "Detached Parts",
+  "equipementTXT": "Equipments",
+  "connectionTitle": "Welcome to the B2B section, please login to continue in this section",
+  "createAccountLink": "Create B2B account",
+  "createAccountTxT": "No B2B account? ask one for your buisness!",
+  "connect": "Connect",
+  "categoriesmenuTitle": "Categories"
+}

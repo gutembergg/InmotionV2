@@ -33,8 +33,6 @@ export default function B2BHome({ mainCategories }: Props) {
   const [currentyUser, setCurrentyUser] = useState<User>({} as User);
   const [mounted, setMounted] = useState(false);
 
-  console.log(user);
-
   //B2B ROUTING VERIFICATION
   useEffect(() => {
     Notiflix.Loading.init({
