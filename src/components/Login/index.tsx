@@ -60,7 +60,7 @@ const LoginForm = () => {
     [userModel]
   );
 
-  //HANDLE FORM SUBMIT
+  //HANDLE FORM SUBMIT-
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     //if no code in value
