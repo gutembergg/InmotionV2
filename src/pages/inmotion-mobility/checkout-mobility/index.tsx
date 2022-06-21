@@ -493,7 +493,7 @@ export default function CheckoutMobility() {
         if (response.id) {
           _setOrder(response);
           setCodePromoState(false);
-
+          updateOrder(response.id, "pending");
           setTotalOrder(Number(response.total));
 
           orderIdRef.current = response.id;
