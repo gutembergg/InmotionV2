@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { ReactElement, useEffect, useRef, useState } from "react";
 
-import { equipementPaths } from "../../../utils/equipementPaths";
+import { b2bPaths } from "../../../utils/b2bPaths";
 import HeaderSeo from "../../../components/HeaderSeo";
 import {
   wc_getCategoriesBySlug,
@@ -31,6 +31,11 @@ import {
 import LayoutB2B from "../../../Layout/LayoutB2B";
 import ProductSmallCardB2B from "../../../components/ProductCard/ProductSmallCardB2B";
 import MobileCardB2B from "../../../components/ProductCard/MobileCardB2B";
+import { User } from "../../../interfaces/User";
+import useUser from "../../../hooks/useUser";
+import Notiflix from "notiflix";
+import router from "next/router";
+import { getUserById } from "../../../services/wordpressApi/users";
 
 interface Props {
   productsByCategory: IProduct[];
@@ -79,28 +84,228 @@ export default function EquipementsSubCat({
     setOpenMenuCategories(!openMenuCategories);
   };
 
-  return (
-    <>
-      <HeaderSeo
-        description={currentyCategory.yoast_head_json.og_title}
-        title={currentyCategory.yoast_head_json.og_title}
-        canonical={`https://inmotion-suisse.ch/inmotion-mobility/b2b/${currentyCategory.name.toLowerCase()}`}
-        og_locale={currentyCategory.yoast_head_json.og_locale}
-        og_title={currentyCategory.yoast_head_json.og_title}
-      />
+  //--------------B2B ROUTING VERIFICATION-----------------
+  const [mounted, setMounted] = useState(false);
 
-      <Container>
-        <h1>{currentyCategory.slug}</h1>
-        <Content>
-          <ProductsSection>
-            <FiltersBar>
-              <MenuSubCategoriesMobilieB2B ref={menuCategoriesRef}>
-                <ButtonSelect onClick={handleOpenSubCatMenu}>
-                  <p>{menuCategories}</p> <IoIosArrowDown />
-                </ButtonSelect>
-                {openMenuCategories && (
+  const { user } = useUser();
+
+  useEffect(() => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    //if NO ACCOUNT
+    if (Object.keys(user).length === 0) {
+      Notiflix.Report.failure(
+        "Erreure",
+        "Vous devez posséder un compte b2b pour accéder a cette section",
+        "Ok",
+        function cb() {
+          handleStart();
+          router.push("/inmotion-mobility").then((res) => handleStop());
+        }
+      );
+    }
+    //if NO VALID B2B account
+    else if (
+      user.profile.wcb2b_group === "0" ||
+      user.profile.wcb2b_group === ""
+    ) {
+      Notiflix.Report.failure(
+        "Erreure",
+        "Vous devez posséder un compte b2b pour accéder a cette section",
+        "Ok",
+        function cb() {
+          handleStart();
+          router.push("/inmotion-mobility").then((res) => handleStop());
+        }
+      );
+    }
+    //if NO ACTIVATED B2B account
+    else if (
+      user.profile.wcb2b_status === "0" ||
+      user.profile.wcb2b_status === ""
+    ) {
+      Notiflix.Report.warning(
+        "Validation Requise",
+        "Votre compte est actuelement en vérification, vous pouvez nous contacter si cela est urgent pour valider votre compte",
+        "Ok",
+        function cb() {
+          handleStart();
+          router.push("/inmotion-mobility").then((res) => handleStop());
+        }
+      );
+    } else {
+      setMounted(true);
+    }
+  }, [user]);
+
+  return (
+    mounted && (
+      <>
+        <HeaderSeo
+          description={currentyCategory.yoast_head_json.og_title}
+          title={currentyCategory.yoast_head_json.og_title}
+          canonical={`https://inmotion-suisse.ch/inmotion-mobility/b2b/${currentyCategory.name.toLowerCase()}`}
+          og_locale={currentyCategory.yoast_head_json.og_locale}
+          og_title={currentyCategory.yoast_head_json.og_title}
+        />
+
+        <Container>
+          <h1>{currentyCategory.slug}</h1>
+          <Content>
+            <ProductsSection>
+              <FiltersBar>
+                <MenuSubCategoriesMobilieB2B ref={menuCategoriesRef}>
+                  <ButtonSelect onClick={handleOpenSubCatMenu}>
+                    <p>{menuCategories}</p> <IoIosArrowDown />
+                  </ButtonSelect>
+                  {openMenuCategories && (
+                    <ul className="menu_subcategories">
+                      {mainCategories.map((category) => {
+                        return (
+                          <li key={category?.slug} className="category_name">
+                            <Link
+                              href={`/inmotion-mobility/b2b/${category?.slug}`}
+                              passHref
+                            >
+                              <a
+                                className={
+                                  currentyCategory.slug === category?.slug
+                                    ? "active"
+                                    : ""
+                                }
+                              >
+                                {category?.name}
+                              </a>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                      <div className="subTitleMenu">{equipementTXT}</div>
+                      <li className="category_name">
+                        <ul>
+                          {equipementsubCategories.map((category) => {
+                            return (
+                              <li
+                                key={category?.slug}
+                                className="category_name scat"
+                              >
+                                <Link
+                                  href={`/inmotion-mobility/b2b/${category?.slug}`}
+                                  passHref
+                                >
+                                  <a
+                                    className={
+                                      currentyCategory.slug === category?.slug
+                                        ? "active"
+                                        : ""
+                                    }
+                                  >
+                                    {category?.name}
+                                  </a>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </li>
+                      <div className="subTitleMenu">{piecesDetachTXT}</div>
+                      <li className="category_name">
+                        <ul>
+                          {detachedPiecesSubCategories.map((category) => {
+                            return (
+                              <li
+                                key={category?.slug}
+                                className="category_name scat"
+                              >
+                                <Link
+                                  href={`/inmotion-mobility/b2b/${category?.slug}`}
+                                  passHref
+                                >
+                                  <a
+                                    className={
+                                      currentyCategory.slug === category?.slug
+                                        ? "active"
+                                        : ""
+                                    }
+                                  >
+                                    {category?.name}
+                                  </a>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </li>
+                    </ul>
+                  )}
+                </MenuSubCategoriesMobilieB2B>
+                <PaginateBar>
+                  <span>
+                    {productsByCategory.length} {resultats}
+                  </span>
+                </PaginateBar>
+              </FiltersBar>
+              <ProductsMobile>
+                {productsByCategory.map((product) => {
+                  return (
+                    <div key={product.id}>
+                      <MobileCardB2B product={product} />
+                    </div>
+                  );
+                })}
+              </ProductsMobile>
+
+              <Products>
+                {productsByCategory.map((product) => {
+                  return (
+                    <div key={product.id}>
+                      <ProductSmallCardB2B product={product} />
+                    </div>
+                  );
+                })}
+              </Products>
+            </ProductsSection>
+            <MenuSubCategoriesB2B>
+              <ul className="menu_subcategories">
+                <div className="skew_button">
+                  <ButtonSkew text={categories} />
+                </div>
+                {mainCategories.map((category) => {
+                  return (
+                    <li key={category?.slug} className="category_name">
+                      <Link
+                        href={`/inmotion-mobility/b2b/${category?.slug}`}
+                        passHref
+                      >
+                        <a
+                          className={
+                            currentyCategory.slug === category?.slug
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          {category?.name}
+                        </a>
+                      </Link>
+                    </li>
+                  );
+                })}
+                <div className="equipementsTitle">{equipementTXT}</div>
+                <li className="category_name">
                   <ul className="menu_subcategories">
-                    {mainCategories.map((category) => {
+                    {equipementsubCategories.map((category) => {
                       return (
                         <li key={category?.slug} className="category_name">
                           <Link
@@ -120,171 +325,39 @@ export default function EquipementsSubCat({
                         </li>
                       );
                     })}
-                    <div className="subTitleMenu">{equipementTXT}</div>
-                    <li className="category_name">
-                      <ul>
-                        {equipementsubCategories.map((category) => {
-                          return (
-                            <li
-                              key={category?.slug}
-                              className="category_name scat"
-                            >
-                              <Link
-                                href={`/inmotion-mobility/b2b/${category?.slug}`}
-                                passHref
-                              >
-                                <a
-                                  className={
-                                    currentyCategory.slug === category?.slug
-                                      ? "active"
-                                      : ""
-                                  }
-                                >
-                                  {category?.name}
-                                </a>
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </li>
-                    <div className="subTitleMenu">{piecesDetachTXT}</div>
-                    <li className="category_name">
-                      <ul>
-                        {detachedPiecesSubCategories.map((category) => {
-                          return (
-                            <li
-                              key={category?.slug}
-                              className="category_name scat"
-                            >
-                              <Link
-                                href={`/inmotion-mobility/b2b/${category?.slug}`}
-                                passHref
-                              >
-                                <a
-                                  className={
-                                    currentyCategory.slug === category?.slug
-                                      ? "active"
-                                      : ""
-                                  }
-                                >
-                                  {category?.name}
-                                </a>
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </li>
                   </ul>
-                )}
-              </MenuSubCategoriesMobilieB2B>
-              <PaginateBar>
-                <span>
-                  {productsByCategory.length} {resultats}
-                </span>
-              </PaginateBar>
-            </FiltersBar>
-            <ProductsMobile>
-              {productsByCategory.map((product) => {
-                return (
-                  <div key={product.id}>
-                    <MobileCardB2B product={product} />
-                  </div>
-                );
-              })}
-            </ProductsMobile>
-
-            <Products>
-              {productsByCategory.map((product) => {
-                return (
-                  <div key={product.id}>
-                    <ProductSmallCardB2B product={product} />
-                  </div>
-                );
-              })}
-            </Products>
-          </ProductsSection>
-          <MenuSubCategoriesB2B>
-            <ul className="menu_subcategories">
-              <div className="skew_button">
-                <ButtonSkew text={categories} />
-              </div>
-              {mainCategories.map((category) => {
-                return (
-                  <li key={category?.slug} className="category_name">
-                    <Link
-                      href={`/inmotion-mobility/b2b/${category?.slug}`}
-                      passHref
-                    >
-                      <a
-                        className={
-                          currentyCategory.slug === category?.slug
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        {category?.name}
-                      </a>
-                    </Link>
-                  </li>
-                );
-              })}
-              <div className="equipementsTitle">{equipementTXT}</div>
-              <li className="category_name">
-                <ul className="menu_subcategories">
-                  {equipementsubCategories.map((category) => {
-                    return (
-                      <li key={category?.slug} className="category_name">
-                        <Link
-                          href={`/inmotion-mobility/b2b/${category?.slug}`}
-                          passHref
-                        >
-                          <a
-                            className={
-                              currentyCategory.slug === category?.slug
-                                ? "active"
-                                : ""
-                            }
+                </li>
+                <div className="equipementsTitle">{piecesDetachTXT}</div>
+                <li className="category_name">
+                  <ul className="menu_subcategories">
+                    {detachedPiecesSubCategories.map((category) => {
+                      return (
+                        <li key={category?.slug} className="category_name">
+                          <Link
+                            href={`/inmotion-mobility/b2b/${category?.slug}`}
+                            passHref
                           >
-                            {category?.name}
-                          </a>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-              <div className="equipementsTitle">{piecesDetachTXT}</div>
-              <li className="category_name">
-                <ul className="menu_subcategories">
-                  {detachedPiecesSubCategories.map((category) => {
-                    return (
-                      <li key={category?.slug} className="category_name">
-                        <Link
-                          href={`/inmotion-mobility/b2b/${category?.slug}`}
-                          passHref
-                        >
-                          <a
-                            className={
-                              currentyCategory.slug === category?.slug
-                                ? "active"
-                                : ""
-                            }
-                          >
-                            {category?.name}
-                          </a>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-            </ul>
-          </MenuSubCategoriesB2B>
-        </Content>
-      </Container>
-    </>
+                            <a
+                              className={
+                                currentyCategory.slug === category?.slug
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              {category?.name}
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              </ul>
+            </MenuSubCategoriesB2B>
+          </Content>
+        </Container>
+      </>
+    )
   );
 }
 
@@ -294,7 +367,7 @@ EquipementsSubCat.getLayout = function getLayout(page: ReactElement) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: equipementPaths,
+    paths: b2bPaths,
     fallback: "blocking",
   };
 };

@@ -13,6 +13,8 @@ import BgHeader from "../../../../public/images/homeMobility/HeadHomeBg.webp";
 import Link from "next/link";
 import { FiSearch } from "react-icons/fi";
 import { Container } from "../../SearchBar/styles";
+import { url } from "inspector";
+import useUser from "../../../hooks/useUser";
 const HeaderMobile = () => {
   const [menuOpen, setmenuOpen] = useState<boolean>(false);
 
@@ -29,7 +31,7 @@ const HeaderMobile = () => {
     menuOpen === false ? setmenuOpen(true) : setmenuOpen(false);
   };
   const router = useRouter();
-
+  const { user } = useUser();
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const menuHome = t("headerMobility:home");
@@ -48,7 +50,7 @@ const HeaderMobile = () => {
   const userManuals = t("headerMobility:userManuals");
   const returnForm = t("headerMobility:returnForm");
   const cours = t("headerMobility:cours");
-
+  const [b2bUrl, setb2bUrl] = useState("");
   const menu = [
     {
       name: eScooter,

@@ -1,7 +1,8 @@
 {
-    "title": "Create an account",
-    "password": "password",
-    "creer": "create an account",
-    "confirmpass": "confirm password"
-  }
-  
+  "title": "Create an account",
+  "password": "password",
+  "creer": "create an account",
+  "confirmpass": "confirm password",
+  "compagnyTXT": "Compagny",
+  "vatNumberTxT": "VAT Number"
+}

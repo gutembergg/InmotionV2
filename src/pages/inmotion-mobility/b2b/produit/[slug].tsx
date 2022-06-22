@@ -117,7 +117,6 @@ export default function ProductDetail({
   };
 
   //----------------------B2B ROUTING VERIFICATION--------------------------------
-  const [currentyUser, setCurrentyUser] = useState<User>({} as User);
   const [mounted, setMounted] = useState(false);
 
   //B2B ROUTING VERIFICATION
@@ -179,11 +178,10 @@ export default function ProductDetail({
       );
     } else {
       setMounted(true);
-      getUserById(user.profile.id).then((_user) => setCurrentyUser(_user));
     }
   }, [user, router]);
 
-  console.log("cuser", currentyUser.wcb2b_group?.discount);
+  // console.log("cuser", currentyUser.wcb2b_group?.discount);
 
   //--------------------loader Product-------------------------
   useEffect(() => {

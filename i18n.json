@@ -80,7 +80,12 @@
     "/inmotion-mobility/contact": ["headerMobility", "forms", "contactPage"],
     "/inmotion-mobility/b2b": ["headerMobility", "b2b"],
     "/inmotion-mobility/login-b2b": ["headerMobility", "b2b"],
-    "/inmotion-mobility/create-b2b-account": ["headerMobility", "b2b"],
+    "/inmotion-mobility/create-b2b-account": [
+      "headerMobility",
+      "b2b",
+      "forms",
+      "createAccount"
+    ],
     "/inmotion-mobility/b2b/[slug]": ["headerMobility", "productDetail", "b2b"],
     "/inmotion-mobility/b2b/produit/[slug]": [
       "headerMobility",

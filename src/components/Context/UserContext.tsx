@@ -1,3 +1,4 @@
+import router from "next/router";
 import Notiflix from "notiflix";
 import {
   createContext,
@@ -19,6 +20,7 @@ interface Children {
 interface IUserContext {
   user: IUserState;
   login: (authUser: AuthUser) => void;
+  b2blogin: (authUser: AuthUser) => void;
   logout: () => void;
   updateStateUser: () => void;
 }
@@ -107,19 +109,96 @@ const UserProvider = ({ children }: Children) => {
   }, [data.token]);
 
   const login = useCallback(async (authUser: AuthUser) => {
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();
     try {
       const getUserData = await userLogin(authUser);
       const userData = await getUserData?.data;
 
       if (!userData) {
         Notiflix.Notify.failure("Mauvais username ou mot de passe");
+        handleStop();
+        return;
+      }
+
+      if (
+        userData.profile.wcb2b_group !== "" ||
+        userData.profile.wcb2b_group !== "0"
+      ) {
+        Notiflix.Report.warning(
+          "Attention",
+          "Votre compte est un compte b2b, vous serez rediriger vers la bonne section",
+          "Ok",
+          function cb() {
+            handleStart();
+            router
+              .push("/inmotion-mobility/login-b2b")
+              .then((res) => handleStop());
+          }
+        );
         return;
       }
 
       if (typeof window !== "undefined") {
+        handleStop();
         localStorage.setItem("inmotion:user", JSON.stringify(userData));
       }
 
+      handleStop();
+      Notiflix.Notify.success("Vous êtes connecté");
+      setData(userData);
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }, []);
+
+  const b2blogin = useCallback(async (authUser: AuthUser) => {
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    handleStart();
+    try {
+      const getUserData = await userLogin(authUser);
+      const userData = await getUserData?.data;
+      console.log("userdata", userData);
+      if (!userData) {
+        Notiflix.Notify.failure("Mauvais username ou mot de passe");
+        handleStop();
+        return;
+      }
+      if (
+        userData.profile.wcb2b_group == "" ||
+        userData.profile.wcb2b_group == "0"
+      ) {
+        Notiflix.Notify.failure("Ce compte n'est pas un compte B2B");
+        handleStop();
+        return;
+      }
+      if (userData.profile.wcb2b_status == "0") {
+        Notiflix.Report.warning(
+          "Attention",
+          "Votre compte est en cours de validation, vous serez avertis dès que votre compte sera actif",
+          "Ok"
+        );
+        handleStop();
+        return;
+      }
+
+      if (typeof window !== "undefined") {
+        handleStop();
+        localStorage.setItem("inmotion:user", JSON.stringify(userData));
+      }
+
+      // handleStop();
+      Notiflix.Notify.success("Vous êtes connecté");
       setData(userData);
     } catch (error) {
       console.log("error:", error);
@@ -135,7 +214,7 @@ const UserProvider = ({ children }: Children) => {
   }, []);
   return (
     <UserContext.Provider
-      value={{ user: data, login, logout, updateStateUser }}
+      value={{ user: data, login, logout, updateStateUser, b2blogin }}
     >
       {children}
     </UserContext.Provider>

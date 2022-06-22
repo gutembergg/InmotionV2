@@ -1,6 +1,12 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
-import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
+import React, {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import LayoutMobility from "../../../Layout/LayoutMobility";
 import IconBlue from "../../../../public/images/icons/iconButton.svg";
 import useTranslation from "next-translate/useTranslation";
@@ -18,6 +24,7 @@ import {
 import Notiflix from "notiflix";
 import useUser from "../../../hooks/useUser";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 //validator of form
 const SignupSchema = Yup.object().shape({
@@ -26,6 +33,18 @@ const SignupSchema = Yup.object().shape({
     .max(70, "Too Long!")
     .required("Required"),
   lastname: Yup.string()
+    .min(2, "Too Short!")
+    .max(70, "Too Long!")
+    .required("Required"),
+  billing_company: Yup.string()
+    .min(2, "Too Short!")
+    .max(70, "Too Long!")
+    .required("Required"),
+  billing_vat: Yup.string()
+    .min(2, "Too Short!")
+    .max(70, "Too Long!")
+    .required("Required"),
+  phone: Yup.string()
     .min(2, "Too Short!")
     .max(70, "Too Long!")
     .required("Required"),
@@ -49,6 +68,9 @@ interface FormContent {
   name: string;
   lastname: string;
   email: string;
+  phone: string;
+  billing_company: string;
+  billing_vat: string;
   password: string;
   password2?: string;
 }
@@ -58,15 +80,42 @@ export default function CreateB2B() {
   const firstName = t("forms:firstName");
   const lastName = t("forms:lastName");
   const title = t("createAccount:title");
+  const phoneTxT = t("forms:phone");
   const password = t("createAccount:password");
   const confirmpass = t("createAccount:confirmpass");
+  const compagnyTXT = t("createAccount:compagnyTXT");
+  const vatNumberTxT = t("createAccount:vatNumberTxT");
   const create = t("createAccount:creer");
   const router = useRouter();
-  const { login } = useUser();
+  const { user } = useUser();
+
+  //Redirect if logged
+  useEffect(() => {
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    if (
+      user.token &&
+      user.profile?.wcb2b_group !== "0" &&
+      user.profile?.wcb2b_group !== "" &&
+      user.profile?.wcb2b_status !== "0" &&
+      user.profile?.wcb2b_status !== ""
+    ) {
+      handleStart();
+      router.push("/inmotion-mobility/b2b").then((res) => handleStop());
+    }
+  }, [user, router]);
 
   const [formValues, setFormValues] = useState<FormContent>({
     name: "",
     lastname: "",
+    billing_company: "",
+    billing_vat: "",
+    phone: "",
     email: "",
     password: "",
     password2: "",
@@ -74,32 +123,47 @@ export default function CreateB2B() {
 
   const handleOnSubmit = useCallback(
     async (event: FormContent) => {
+      const handleStart = () => {
+        Notiflix.Loading.standard("Loading...");
+      };
+      const handleStop = () => {
+        Notiflix.Loading.remove();
+      };
+
+      handleStart();
       delete event.password2;
       const _user = {
         ...event,
-        wcb2b_group: "0",
+        wcb2b_group: "24",
         wcb2b_status: "0",
-        billing_company: "",
-        billing_vat: "",
+        billing_company: event.billing_company,
+        billing_vat: event.billing_vat,
       };
-
+      console.log(_user);
       const response = await createInmotionUsers(_user);
 
       if (response?.data.ID) {
-        Notiflix.Report.success(
-          "Merci pour votre Inscription",
-          "Votre compte à bien été enregistré",
-          "Super !",
-          () => {
-            login({ email: _user.email, password: _user.password });
-            router.back();
-          }
-        );
+        try {
+          let res = await axios.post("/api/node-mail/newB2bUser", _user);
+          console.log("mail Success!", res);
+          handleStop();
+          Notiflix.Report.success(
+            "Merci pour votre Inscription",
+            "Votre compte sera vérifié et un email de confirmation vous sera envoyé lors de sa validation.",
+            "Super !",
+            () => {
+              handleStart();
+              router.push("/inmotion-mobility").then((res) => handleStop());
+            }
+          );
+        } catch (error) {
+          console.log("mail error!", error);
+        }
       } else {
         Notiflix.Report.failure(
           "Une erreure est survenue",
           "Vous possédez déja un compte avec cette adresse mail",
-          "Super !"
+          "ok"
         );
       }
     },
@@ -156,7 +220,19 @@ export default function CreateB2B() {
                   ) : null}
                 </div>
               </FormRow1>
-              <FormBox>
+              <FormRow1>
+                <div className="formElement">
+                  <Field
+                    name="billing_company"
+                    placeholder={compagnyTXT}
+                    onChange={handleChange}
+                    value={formValues.billing_company || ""}
+                  />
+                  {props.errors.billing_company &&
+                  props.touched.billing_company ? (
+                    <div className="errors">{props.errors.billing_company}</div>
+                  ) : null}
+                </div>
                 <div className="formElement">
                   <Field
                     name="email"
@@ -169,6 +245,33 @@ export default function CreateB2B() {
                     <div className="errors">{props.errors.email}</div>
                   ) : null}
                 </div>
+              </FormRow1>
+              <FormBox>
+                <div className="formElement">
+                  <Field
+                    name="billing_vat"
+                    placeholder={vatNumberTxT}
+                    onChange={handleChange}
+                    value={formValues.billing_vat || ""}
+                  />
+                  {props.errors.billing_vat && props.touched.billing_vat ? (
+                    <div className="errors">{props.errors.billing_vat}</div>
+                  ) : null}
+                </div>
+                <div className="formElement">
+                  <Field
+                    name="phone"
+                    placeholder={phoneTxT}
+                    onChange={handleChange}
+                    value={formValues.phone || ""}
+                  />
+                  {props.errors.phone && props.touched.phone ? (
+                    <div className="errors">{props.errors.phone}</div>
+                  ) : null}
+                </div>
+              </FormBox>
+              <br />
+              <FormRow1>
                 <div className="formElement">
                   <Field
                     name="password"
@@ -193,7 +296,7 @@ export default function CreateB2B() {
                     <div className="errors">{props.errors.password2}</div>
                   ) : null}
                 </div>
-              </FormBox>
+              </FormRow1>
               <IconBlock type="submit">
                 <Image src={IconBlue} alt="icon" width={40} height={40} />
               </IconBlock>

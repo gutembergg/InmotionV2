@@ -77,8 +77,7 @@ export const PaginateBar = styled.div`
 export const ProductsSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-
+  justify-content: flex-start;
   width: 100%;
   padding-top: 0.5rem;
   margin-bottom: 1.6rem;

@@ -1,7 +1,8 @@
 {
-    "title": "Neue Konto erstellen",
-    "password": "Passwort",
-    "creer": "Erstellen",
-    "confirmpass": "Bestätige das Passwort"
-  }
-  
+  "title": "Neue Konto erstellen",
+  "password": "Passwort",
+  "creer": "Erstellen",
+  "confirmpass": "Bestätige das Passwort",
+  "compagnyTXT": "Firma",
+  "vatNumberTxT": "MwSt.-Nummer"
+}

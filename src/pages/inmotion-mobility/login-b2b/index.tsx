@@ -28,7 +28,7 @@ export default function LoginB2B() {
   const createAccountLink = t("b2b:createAccountLink");
   const createAccountTxT = t("b2b:createAccountTxT");
 
-  const { login, user } = useUser();
+  const { b2blogin, user } = useUser();
   const [userModel, setUserModel] = useState<AuthUser>({} as AuthUser);
 
   //SetUserModel from inputs change
@@ -55,43 +55,39 @@ export default function LoginB2B() {
       return;
     }
 
-    login(userModel);
+    b2blogin(userModel);
   };
-  //
+  console.log(user);
+
+  //Redirect if logged
   useEffect(() => {
     const handleStart = () => {
       Notiflix.Loading.standard("Loading...");
     };
+
     const handleStop = () => {
       Notiflix.Loading.remove();
     };
-    if (!user.token) {
+    if (
+      user.token &&
+      user.profile?.wcb2b_group !== "0" &&
+      user.profile?.wcb2b_group !== "" &&
+      user.profile?.wcb2b_status !== "0" &&
+      user.profile?.wcb2b_status !== ""
+    ) {
+      handleStart();
+      router.push("/inmotion-mobility/b2b").then((res) => handleStop());
     }
-    if (user.profile.wcb2b_group === "0" || user.profile.wcb2b_group === "") {
-      Notiflix.Report.failure(
-        "Erreure",
-        "Vous devez posséder un compte b2b pour accéder a cette section",
-        "Ok",
-        function cb() {
-          handleStart();
-          router.push("/inmotion-mobility").then((res) => handleStop());
-        }
-      );
-    }
-    if (user.profile.wcb2b_status === "0") {
-      return handleStop();
-    }
-    console.log("logged");
-    console.log(user);
-    router.push("/inmotion-mobility/b2b").then();
-  }, [user, router]);
+  }, [user]);
 
+  //NOTIFLIX PARAMS
   useEffect(() => {
     Notiflix.Notify.init({
       zindex: 9999,
       position: "center-bottom",
     });
   }, []);
+
   return (
     <B2BLogin>
       <div className="logoBox">

@@ -88,6 +88,7 @@ export const StyledMobileHeader = styled.header`
         font-style: italic;
         font-weight: 600;
         letter-spacing: 0.5px;
+        margin-right: 1.7rem;
       }
     }
   }

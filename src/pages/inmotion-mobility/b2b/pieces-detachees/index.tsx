@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import HeaderSeo from "../../../../components/HeaderSeo";
@@ -12,6 +12,11 @@ import { Container, MainContent } from "../../../../styles/Boutique";
 import { Wrapper } from "../../../../styles/PiecesDetacheeIndex";
 import useTranslation from "next-translate/useTranslation";
 import LayoutB2B from "../../../../Layout/LayoutB2B";
+import { User } from "../../../../interfaces/User";
+import useUser from "../../../../hooks/useUser";
+import Notiflix from "notiflix";
+import router from "next/router";
+import { getUserById } from "../../../../services/wordpressApi/users";
 
 interface IProps {
   subCategories: ICategories[];
@@ -24,51 +29,119 @@ export default function PiecesDetacheesB2B({
 }: IProps) {
   const { t } = useTranslation();
   const titleDetachedPieces = t("equipmentsPage:titledtachedPieces");
+  const [mounted, setMounted] = useState(false);
+
+  const { user } = useUser();
+
+  //--------------B2B ROUTING VERIFICATION-----------------
+  useEffect(() => {
+    Notiflix.Loading.init({
+      svgColor: "var(--Blue)",
+      svgSize: "100px",
+      messageColor: "var(--Red)",
+      messageFontSize: "17px",
+      backgroundColor: "rgba(234, 234, 234, 0.856)",
+    });
+
+    const handleStart = () => {
+      Notiflix.Loading.standard("Loading...");
+    };
+    const handleStop = () => {
+      Notiflix.Loading.remove();
+    };
+    //if NO ACCOUNT
+    if (Object.keys(user).length === 0) {
+      Notiflix.Report.failure(
+        "Erreure",
+        "Vous devez posséder un compte b2b pour accéder a cette section",
+        "Ok",
+        function cb() {
+          handleStart();
+          router.push("/inmotion-mobility").then((res) => handleStop());
+        }
+      );
+    }
+    //if NO VALID B2B account
+    else if (
+      user.profile.wcb2b_group === "0" ||
+      user.profile.wcb2b_group === ""
+    ) {
+      Notiflix.Report.failure(
+        "Erreure",
+        "Vous devez posséder un compte b2b pour accéder a cette section",
+        "Ok",
+        function cb() {
+          handleStart();
+          router.push("/inmotion-mobility").then((res) => handleStop());
+        }
+      );
+    }
+    //if NO ACTIVATED B2B account
+    else if (
+      user.profile.wcb2b_status === "0" ||
+      user.profile.wcb2b_status === ""
+    ) {
+      Notiflix.Report.warning(
+        "Validation Requise",
+        "Votre compte est actuelement en vérification, vous pouvez nous contacter si cela est urgent pour valider votre compte",
+        "Ok",
+        function cb() {
+          handleStart();
+          router.push("/inmotion-mobility").then((res) => handleStop());
+        }
+      );
+    } else {
+      setMounted(true);
+    }
+  }, [user]);
+
   return (
-    <>
-      <HeaderSeo
-        description={category.yoast_head_json.og_title}
-        title={category.yoast_head_json.og_title}
-        canonical={`https://inmotion-suisse.ch/inmotion-mobility/b2b/pieces-detachees`}
-        og_locale={category.yoast_head_json.og_locale}
-        og_title={category.yoast_head_json.og_title}
-      />
+    mounted && (
+      <>
+        <HeaderSeo
+          description={category.yoast_head_json.og_title}
+          title={category.yoast_head_json.og_title}
+          canonical={`https://inmotion-suisse.ch/inmotion-mobility/b2b/pieces-detachees`}
+          og_locale={category.yoast_head_json.og_locale}
+          og_title={category.yoast_head_json.og_title}
+        />
 
-      <Wrapper>
-        <Container>
-          <h1>{titleDetachedPieces}</h1>
-          <MainContent>
-            {subCategories.map((category) => {
-              return (
-                <div key={category.id} className="catItem">
-                  <Link href={`/inmotion-mobility/b2b/${category.slug}`}>
-                    <a className="link">
-                      <div className="category_card">
-                        <div className="care_blue_hover"></div>
-                        {category.image?.src && (
-                          <div className="imgBox">
-                            <Image
-                              src={category.image?.src}
-                              alt={category.name}
-                              layout="fill"
-                              objectFit="contain"
-                              placeholder="blur"
-                              blurDataURL={category.image?.src}
-                            />
-                          </div>
-                        )}
+        <Wrapper>
+          <Container>
+            <h1>{titleDetachedPieces}</h1>
+            <MainContent>
+              {subCategories.map((category) => {
+                return (
+                  <div key={category.id} className="catItem">
+                    <Link href={`/inmotion-mobility/b2b/${category.slug}`}>
+                      <a className="link">
+                        <div className="category_card">
+                          <div className="care_blue_hover"></div>
+                          {category.image?.src && (
+                            <div className="imgBox">
+                              <Image
+                                src={category.image?.src}
+                                alt={category.name}
+                                layout="fill"
+                                objectFit="contain"
+                                placeholder="blur"
+                                blurDataURL={category.image?.src}
+                              />
+                            </div>
+                          )}
 
-                        <div className="category_name">{category.name}</div>
-                      </div>
-                    </a>
-                  </Link>
-                </div>
-              );
-            })}
-          </MainContent>
-        </Container>
-      </Wrapper>
-    </>
+                          <div className="category_name">{category.name}</div>
+                        </div>
+                      </a>
+                    </Link>
+                  </div>
+                );
+              })}
+            </MainContent>
+          </Container>
+        </Wrapper>
+      </>
+    )
   );
 }
 
