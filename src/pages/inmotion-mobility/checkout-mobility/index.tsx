@@ -447,8 +447,8 @@ export default function CheckoutMobility() {
     }
 
     const order = {
-      payment_method: "Anticipe",
-      payment_method_title: "Anticipe",
+      payment_method: "bacs",
+      payment_method_title: "bacs",
       currency: currentyCurrency,
       billing: {
         first_name: _billingShippingData.billing?.first_name,
@@ -477,8 +477,6 @@ export default function CheckoutMobility() {
       line_items: lineItems,
       coupon_lines: couponsCodeArray,
       shipping_lines: shippingLines,
-      status: "on-hold",
-
       customer_id: Object.keys(user).length > 0 ? user.profile.id : 0,
     };
 
@@ -493,7 +491,7 @@ export default function CheckoutMobility() {
         if (response.id) {
           _setOrder(response);
           setCodePromoState(false);
-          updateOrder(response.id, "pending");
+          updateOrder(response.id, "on-hold");
           setTotalOrder(Number(response.total));
 
           orderIdRef.current = response.id;
