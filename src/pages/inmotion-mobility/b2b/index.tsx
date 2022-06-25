@@ -29,7 +29,7 @@ export default function B2BHome({ mainCategories }: Props) {
   const { t } = useTranslation();
   const welcomeTXT = t("b2b:welcome");
   const router = useRouter();
-  const { user, logout } = useUser();
+  const { user } = useUser();
   const [currentyUser, setCurrentyUser] = useState<User>({} as User);
   const [mounted, setMounted] = useState(false);
 

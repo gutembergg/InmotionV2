@@ -9,6 +9,7 @@ import {
 } from "react";
 import { AuthUser } from "../../interfaces/AuthUser";
 import {
+  getUserById,
   userLogin,
   validateUserToken,
 } from "../../services/wordpressApi/users";
@@ -29,6 +30,7 @@ export interface IUserState {
   profile: IUser;
   shipping_info: IShippingInfo;
   billing_info: IBillingInfo;
+  userB2BGrp?: IUserB2bGrp;
 }
 
 export interface IUser {
@@ -41,7 +43,15 @@ export interface IUser {
   user_roles: string[];
   wcb2b_group: string;
   wcb2b_status: string;
+  userB2BGrp?: IUserB2bGrp;
 }
+
+export interface IUserB2bGrp {
+  id: number;
+  name: string;
+  discount: string;
+}
+
 export interface IShippingInfo {
   shipping_address_1: string;
   shipping_address_2: string;
@@ -168,7 +178,6 @@ const UserProvider = ({ children }: Children) => {
     try {
       const getUserData = await userLogin(authUser);
       const userData = await getUserData?.data;
-      console.log("userdata", userData);
       if (!userData) {
         Notiflix.Notify.failure("Mauvais username ou mot de passe");
         handleStop();
@@ -194,12 +203,16 @@ const UserProvider = ({ children }: Children) => {
 
       if (typeof window !== "undefined") {
         handleStop();
-        localStorage.setItem("inmotion:user", JSON.stringify(userData));
+        const userGrp = await getUserById(userData.profile.id);
+        const userB2BData = { ...userData, userB2BGrp: userGrp.wcb2b_group };
+        localStorage.setItem("inmotion:user", JSON.stringify(userB2BData));
       }
 
       // handleStop();
       Notiflix.Notify.success("Vous êtes connecté");
-      setData(userData);
+      const userGrp = await getUserById(userData.profile.id);
+      const userB2BData = { ...userData, userB2BGrp: userGrp.wcb2b_group };
+      setData(userB2BData);
     } catch (error) {
       console.log("error:", error);
     }

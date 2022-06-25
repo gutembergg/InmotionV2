@@ -31,11 +31,9 @@ import {
 import LayoutB2B from "../../../Layout/LayoutB2B";
 import ProductSmallCardB2B from "../../../components/ProductCard/ProductSmallCardB2B";
 import MobileCardB2B from "../../../components/ProductCard/MobileCardB2B";
-import { User } from "../../../interfaces/User";
 import useUser from "../../../hooks/useUser";
 import Notiflix from "notiflix";
 import router from "next/router";
-import { getUserById } from "../../../services/wordpressApi/users";
 
 interface Props {
   productsByCategory: IProduct[];

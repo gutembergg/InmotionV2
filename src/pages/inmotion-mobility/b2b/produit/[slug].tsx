@@ -74,6 +74,13 @@ export default function ProductDetail({
   const { cartItem, addToCart } = useCart();
   const { user, logout } = useUser();
   const { currency } = useCurrency();
+  const [mounted, setMounted] = useState(false);
+  // const [currentyUser, setCurrentyUser] = useState<User>({} as User);
+  const [productQuantity, setProductQuantity] = useState(1);
+  const [productMinQuantity, setProductMinQuantity] = useState(1);
+  const [productMaxQuantity, setProductMaxQuantity] = useState(1000);
+  const [productStepQuantity, setproductStep] = useState(1);
+
   // Traductions texts ///////////////////////////////////
   const { t } = useTranslation();
   const btnAddToCart = t("productDetail:addToCart");
@@ -86,40 +93,22 @@ export default function ProductDetail({
   const SelectVariation = t("common:SelectVariation");
   const preorder = t("productDetail:preorder");
   const preorderDate = t("productDetail:preorderDate");
-  const [productQty, setProductQty] = useState(1);
   const priceFrom = t("productDetail:priceFrom");
   const productWeight = t("productDetail:productWeight");
   const productSize = t("productDetail:productSize");
 
-  //----------------------variations--------------------------------
-  //check if product is variable or not
-  const [selectedVariation, setSelectedVariation] = useState({} as any);
+  //consols logs
+  // console.log("router", router);
+  // console.log("user", user);
+  // console.log("currency", currency);
+  // console.log("cartItem", cartItem);
+  // console.log("product", product);
+  // console.log("mounted", mounted);
+  // console.log(user.userB2BGrp?.id);
 
-  const isVariable = product?.variations.length > 0 ? true : false;
-  const VariationButtons = () => {
-    return (
-      <>
-        {variations
-          .sort((a, b) => (a.menu_order > b.menu_order ? 1 : -1))
-          .map((variation) => (
-            <VariationDisplay
-              className={selectedVariation.id === variation.id ? "active" : ""}
-              onClick={() => setSelectedVariation(variation)}
-              key={variation.id}
-            >
-              <VariationData>
-                <h3>{variation.attributes[0].option}</h3>
-              </VariationData>
-            </VariationDisplay>
-          ))}
-      </>
-    );
-  };
+  //set mounted if product is loaded
 
-  //----------------------B2B ROUTING VERIFICATION--------------------------------
-  const [mounted, setMounted] = useState(false);
-
-  //B2B ROUTING VERIFICATION
+  //B2B USER VERIFICATION
   useEffect(() => {
     Notiflix.Loading.init({
       svgColor: "var(--Blue)",
@@ -177,11 +166,41 @@ export default function ProductDetail({
         }
       );
     } else {
-      setMounted(true);
+      if (product?.id) {
+        //------------------------DATA PROCESSING-------------------------
+        setProductQuantity(Number(product.wcb2b_min_quantity[0]));
+        setProductMinQuantity(Number(product.wcb2b_min_quantity[0]));
+        setProductMaxQuantity(Number(product.wcb2b_max_quantity[0]));
+        setproductStep(Number(product.wcb2b_package_quantity[0]));
+        setMounted(true);
+      }
     }
-  }, [user, router]);
+  }, [user, router, product]);
 
-  // console.log("cuser", currentyUser.wcb2b_group?.discount);
+  //----------------------variations--------------------------------
+  // check if product is variable or not
+  const [selectedVariation, setSelectedVariation] = useState({} as any);
+
+  const isVariable = product?.variations.length > 0 ? true : false;
+  const VariationButtons = () => {
+    return (
+      <>
+        {variations
+          .sort((a, b) => (a.menu_order > b.menu_order ? 1 : -1))
+          .map((variation) => (
+            <VariationDisplay
+              className={selectedVariation.id === variation.id ? "active" : ""}
+              onClick={() => setSelectedVariation(variation)}
+              key={variation.id}
+            >
+              <VariationData>
+                <h3>{variation.attributes[0].option}</h3>
+              </VariationData>
+            </VariationDisplay>
+          ))}
+      </>
+    );
+  };
 
   //--------------------loader Product-------------------------
   useEffect(() => {
@@ -213,9 +232,11 @@ export default function ProductDetail({
     // eslint-disable-next-line
   }, [router]);
 
+  //router fallback
   if (router.isFallback) {
     return <div></div>;
   }
+
   //----------------------VIDEO URL-------------------------------------
   const videoUrl = product.meta_data?.filter((meta) => {
     if (meta.key === "video_youtube_en_avant") {
@@ -225,15 +246,57 @@ export default function ProductDetail({
     }
   });
   //________________________TO DO__________________________________
-  //-------------------------GROUP----------------------------------------------------
-  // GET USER GROUP--> GET GROUP INFORMATIONS
-  // console.log(user);
-  // async () => {
-  //   await getUserById(user.profile.id).then((_user) => setCurrentyUser(_user));
-  // };
-  // console.log(currentyUser);
-  // console.log(B2BGroup());
+
   //-----------------------------------PRICE----------------------------------
+  // const mainBlockPrice = () => {
+  //   if (
+  //     mounted &&
+  //     currentyUser. !== "0" &&
+  //     currentyUser.wcb2b_group.discount !== ""
+  //   ) {
+  //     // const productRegPrice =
+  //     // const productEuroRegPrice =
+  //   }
+  //   return !isVariable ? (
+  //     <div className="priceBox">
+  //       <div className="price">
+  //         <div className={product.on_sale ? "regular_price" : ""}>
+  //           {currency === "CHF"
+  //             ? !!product.regular_price &&
+  //               product.regular_price + " " + currency
+  //             : !!product.euroRegularPrice &&
+  //               product.euroRegularPrice + " " + currency}
+  //         </div>
+
+  //         <div className="sale_price">
+  //           {currency === "CHF"
+  //             ? !!product.sale_price && product.sale_price + " " + currency
+  //             : !!product.sale_price && product.euroPrice + " " + currency}
+  //         </div>
+  //         {product.on_sale && <p>{Promotion}</p>}
+  //       </div>
+  //     </div>
+  //   ) : (
+  //     <div className="priceBox">
+  //       <div className="price">
+  //         <div className={product.on_sale ? "" : ""}>
+  //           {priceFrom}{" "}
+  //           {currency === "CHF"
+  //             ? !!product.price && product.price + " " + currency
+  //             : !!product.euroPrice && product.euroPrice + " " + currency}
+  //         </div>
+
+  //         <div className="sale_price">
+  //           {currency === "CHF"
+  //             ? !!product.sale_price && product.sale_price + " " + currency
+  //             : !!product.sale_price && product.euroPrice + " " + currency}
+  //         </div>
+  //         {product.on_sale && <p>{Promotion}</p>}
+  //       </div>
+  //     </div>
+  //   );
+  // };
+
   //CHECK IF GROUP HAS DISCOUNT TRUE PRICE = DISCOUNTED FALSE,NORMAL PRICE
   // CHECK IF PRODUCT HAS GROUP PRICE TRUE DISPLAY GROUP FALSE DISPLAY NORMAL PRICE
   // !!!! IF QUANTITY >= TIER PRICE  THE GROUP DISCOUNT % IS NOT AVAILABLE -
@@ -242,54 +305,71 @@ export default function ProductDetail({
   //GET TABLE GROUP PRICE TABLE
   //SHOW ON PAGE
 
-  //-----------------------------INPUT HANDLE-----------------
-  //CHECK MINIMUM QUANTITY
-  //CHECK MAX QUANTITY
-  //CHECK PACKAGE INCREMENTATION
-
   //----------------------HANDLE TO CART-------------------------------------
-  // const handleAddToCart = (
-  //   product: IProduct,
-  //   originProductName = "",
-  //   categoriesParent?: ProductCategory[]
-  // ) => {
-  //   const hasSelectedVariation = Object.keys(selectedVariation).length > 0;
-  //   const productExist = cartItem.find((item) => item.id === product.id);
+  const handleAddToCart = async (
+    product: IProduct,
+    originProductName = "",
+    categoriesParent?: ProductCategory[]
+  ) => {
+    const hasSelectedVariation = Object.keys(selectedVariation).length > 0;
+    const productExist = cartItem.find((item) => item.id === product.id);
 
-  //   if (productExist) {
-  //     const newCart = [...cartItem];
+    if (productQuantity < productMinQuantity) {
+      Notiflix.Report.failure(
+        "Erreure",
+        "quantité minimale requise ",
+        "Ok",
+        function cb() {
+          setProductQuantity(productMinQuantity);
+        }
+      );
+      return;
+    }
+    if (productQuantity > productMaxQuantity) {
+      Notiflix.Report.failure(
+        "Erreure",
+        "quantité maximale atteinte",
+        "Ok",
+        function cb() {
+          setProductQuantity(productMaxQuantity);
+        }
+      );
+      return;
+    }
+    if (productExist) {
+      const newCart = [...cartItem];
 
-  //     const cart = newCart.map((item) =>
-  //       item.id === product.id
-  //         ? { ...productExist, qty: productExist.qty + productQty }
-  //         : item
-  //     );
+      const cart = newCart.map((item) =>
+        item.id === product.id
+          ? { ...productExist, qty: productExist.qty + productQuantity }
+          : item
+      );
 
-  //     addToCart(cart);
-  //   } else {
-  //     if (hasSelectedVariation) {
-  //       addToCart([
-  //         ...cartItem,
-  //         {
-  //           ...product,
-  //           qty: productQty,
-  //           isVariation: true,
-  //           name: `${originProductName} - ${selectedVariation.attributes[0].option}`,
-  //           categories: categoriesParent || [],
-  //         },
-  //       ]);
-  //     } else {
-  //       addToCart([...cartItem, { ...product, qty: productQty }]);
-  //     }
-  //   }
-  // };
+      addToCart(cart);
+    } else {
+      if (hasSelectedVariation) {
+        addToCart([
+          ...cartItem,
+          {
+            ...product,
+            qty: productQuantity,
+            isVariation: true,
+            name: `${originProductName} - ${selectedVariation.attributes[0].option}`,
+            categories: categoriesParent || [],
+          },
+        ]);
+      } else {
+        addToCart([...cartItem, { ...product, qty: productQuantity }]);
+      }
+    }
+  };
 
   //----------------------HANDLE QUANTITY CHANGE-------------------------------------
-  // const handleChangeQty = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const quantity = parseInt(e.target.value, 10);
-  //   setProductQty(quantity);
-  // };
+  const handleChangeQty = (e: ChangeEvent<HTMLInputElement>) => {
+    const quantity = parseInt(e.target.value, 10);
 
+    setProductQuantity(quantity);
+  };
   //----------------------INFORMATIONS DISPLAY-------------------------------------
   const showInformationTitle = () => {
     const title = (
@@ -322,7 +402,6 @@ export default function ProductDetail({
         />
         <Container>
           <Main>
-            {/* <h1>{currentyUser.wcb2b_group.discount}</h1> */}
             <CardWrapper>
               <ProductCard>
                 {product.images.length === 1 ? (
@@ -354,49 +433,7 @@ export default function ProductDetail({
                     {product.categories[0].name}
                   </span>
                   <h1 className="first_title">{product.name}</h1>
-                  {!isVariable ? (
-                    <div className="priceBox">
-                      <div className="price">
-                        <div className={product.on_sale ? "regular_price" : ""}>
-                          {currency === "CHF"
-                            ? !!product.regular_price &&
-                              product.regular_price + " " + currency
-                            : !!product.euroRegularPrice &&
-                              product.euroRegularPrice + " " + currency}
-                        </div>
-
-                        <div className="sale_price">
-                          {currency === "CHF"
-                            ? !!product.sale_price &&
-                              product.sale_price + " " + currency
-                            : !!product.sale_price &&
-                              product.euroPrice + " " + currency}
-                        </div>
-                        {product.on_sale && <p>{Promotion}</p>}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="priceBox">
-                      <div className="price">
-                        <div className={product.on_sale ? "" : ""}>
-                          {priceFrom}{" "}
-                          {currency === "CHF"
-                            ? !!product.price && product.price + " " + currency
-                            : !!product.euroPrice &&
-                              product.euroPrice + " " + currency}
-                        </div>
-
-                        <div className="sale_price">
-                          {currency === "CHF"
-                            ? !!product.sale_price &&
-                              product.sale_price + " " + currency
-                            : !!product.sale_price &&
-                              product.euroPrice + " " + currency}
-                        </div>
-                        {product.on_sale && <p>{Promotion}</p>}
-                      </div>
-                    </div>
-                  )}
+                  {/* {mainBlockPrice()} */}
                 </ProductLogo>
                 <div className="first_description">
                   <div
@@ -513,6 +550,7 @@ export default function ProductDetail({
                             />
                           </div>
                         </SelectedVariation>
+                        <p>tableau</p>
                       </>
                     )}
                   </VariationProducts>
@@ -520,21 +558,30 @@ export default function ProductDetail({
                 <PriceQuantity>
                   <input
                     type="number"
-                    // onChange={handleChangeQty}
-                    value={productQty}
-                    placeholder="1"
+                    onChange={handleChangeQty}
+                    value={`${productQuantity}`}
+                    placeholder={`${productMinQuantity}`}
+                    min={`${
+                      productMinQuantity === 0 ? "1" : productMinQuantity
+                    }`}
+                    max={`${
+                      productMaxQuantity === 0 ? "1000" : productMaxQuantity
+                    }`}
+                    step={`${
+                      productStepQuantity === 0 ? "1" : productStepQuantity
+                    }`}
                   />
                   {isVariable ? (
                     selectedVariation.id ? (
                       <Button
                         type="button"
-                        // onClick={() =>
-                        //   handleAddToCart(
-                        //     selectedVariation,
-                        //     product.name,
-                        //     product.categories
-                        //   )
-                        // }
+                        onClick={() =>
+                          handleAddToCart(
+                            selectedVariation,
+                            product.name,
+                            product.categories
+                          )
+                        }
                         disabled={
                           selectedVariation.stock_status === "outofstock"
                         }
